@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Signup Page</title>
     <link rel="stylesheet" href="login.css"></link>
     <!-- Optional: Link a CSS file for styling -->
     <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 <body>
     <div class="login-container">
-        <h1>Login</h1>
+        <h1>Sign Up</h1>
         <!-- The form element starts here -->
         <form action="account.html">
             <div class="input-group">
@@ -21,11 +21,15 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Enter Password" required>
             </div>
-            <button type="submit">Login</button>
+            <div class="input-group">
+                <label for="password">Repeat Password</label>
+                <input type="password" id="password" name="password" placeholder="Repeat Password" required>
+            </div>
+            <button type="submit">Sign Up</button>
         </form>
         <!-- Optional: Links for other actions -->
-        <form action="signup.html">
-            <button type="submit">Sign Up</button>
+        <form action="login.html">
+            <button type="submit">Back to Login</button>
         </form>
     </div>
 </body>
