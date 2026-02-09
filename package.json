@@ -1,0 +1,26 @@
+{
+  "name": "blite",
+  "version": "1.0.0",
+  "description": "Blite, a character sheet editor for Dungeons and Dragons 5E",
+  "homepage": "https://github.com/CianMonaghan/curly-waffle#readme",
+  "bugs": {
+    "url": "https://github.com/CianMonaghan/curly-waffle/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CianMonaghan/curly-waffle.git"
+  },
+  "license": "ISC",
+  "author": "Cian Monaghan, Evan Archer, Nick Claeys",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongodb": "^7.1.0",
+    "mongoose": "^9.1.6",
+    "nodemon": "^3.1.11"
+  }
+}
