@@ -5,8 +5,21 @@ const port = 3000;
 
 /**
  * DATABASE
- * TODO: Set up database
+ * TODO: create database schema w/ mongoose
  */
+
+const {MongoClient} = require("mongodb");
+const mongoose = require("mongoose");
+const mongoURL = "mongodb://localhost:27017";
+mongoose.connect(mongoURL)
+  .then(() => {
+    console.log('MongoDB connected successfully!');
+  })
+  .catch((err) => {
+    console.error('MongoDB connection error:', err);
+    process.exit(1);
+  });
+const client = new MongoClient(mongoURL);
 
 /**
  * ROUTES
