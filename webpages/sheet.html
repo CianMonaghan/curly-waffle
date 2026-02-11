@@ -6,11 +6,21 @@
     <link rel="stylesheet" href="sheet.css"></link>
 </head>
 <body>
-    <iframe src="character_box.html" width="35%" height="800" frameborder=1></iframe>
-    <div class="sheet-container">
-        <form action="account.html">
-            <button type="submit">Return to Account Page</button>
-        </form>
+    <div class="container">
+        <div> <!--Column 1-->
+            <iframe src="character_box.html" width="100%" height="800" frameborder=1></iframe>
+        </div>
+        <div> <!--Column 2-->
+            <div class="button-container">
+                <form action="account.html"> 
+                    <button type="submit">Return to Account Page</button>
+                </form>
+            </div>
+            <div> <!--Character Sheet-->
+                <h1>Character Name</h1>
+                <p>Race Class Subclass Level</p>
+            </div>
+        </div>
     </div>
 </body>
 </html>

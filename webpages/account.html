@@ -9,19 +9,22 @@
     <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 <body>
-    <div class="button-container">
-        <h3>Would you like to create or load a character sheet?</h3>
-        <!-- The form element starts here -->
-        <form action="create_character.html">
-            <button type="submit">Create Character</button>
-        </form>
-        <form action="sheet.html">
-            <button type="submit">Load Character</button>
-        </form>
-        <form action="login.html">
-            <button type="submit">Return to Login</button>
-        </form>
+    <div class="container">
+        <div> <!--Column 1-->
+            <iframe src="character_box.html" width="100%" height="800" frameborder=1></iframe>
+        </div>
+        <div> <!--Column 2-->
+            <h3>Would you like to create or load a character sheet?</h3>
+            <form action="create_character.html">
+                <button type="submit">Create Character</button>
+            </form>
+            <form action="sheet.html">
+                <button type="submit">Load Character</button>
+            </form>
+            <form action="login.html">
+                <button type="submit">Return to Login</button>
+            </form>
     </div>
-    <iframe src="character_box.html" width="35%" height="800" frameborder=1></iframe>
+    </div>
 </body>
 </html>
