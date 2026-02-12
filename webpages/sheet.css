@@ -13,3 +13,33 @@
     margin-right: 300px;
     margin-top: 30px;
 }
+
+
+/*Ability Scores*/
+.ability-container {
+    width: 50px;
+    display: grid;
+    grid-template-rows: 1fr 1.5fr 1fr;
+    margin: 10px;
+}
+
+.ability {
+    border: 1px solid black;
+    text-align: center;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+#ability1 {
+    font-size: medium;
+}
+
+#ability2 {
+    font-size: 30px;
+}
+
+#ability3 {
+    font-size: medium;
+}
