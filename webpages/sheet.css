@@ -1,6 +1,6 @@
 .container {
   display: grid;
-  grid-template-columns: 1fr 2fr; /* Creates two equal-width columns */
+  grid-template-columns: 1fr 1fr 2fr; /* Creates two equal-width columns */
   gap: 20px; /* Adds space between columns */
 }
 
@@ -12,6 +12,32 @@
     width: 25%; /* Or any specific width/max-width */
     margin-right: 300px;
     margin-top: 30px;
+}
+
+.box {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+/*Saving Throws and Skills*/
+.skill-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 5fr;
+    border: 1px solid black;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.skill-column-container {
+    margin: 3px;
+}
+
+.bubble {
+  height: 7px;
+  width: 7px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
 }
 
 
