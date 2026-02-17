@@ -1,6 +1,6 @@
 .container {
   display: grid;
-  grid-template-columns: 1fr 1fr 2fr; /* Creates two equal-width columns */
+  grid-template-columns: 1fr 3fr; /* Creates two equal-width columns */
   gap: 20px; /* Adds space between columns */
 }
 
@@ -9,15 +9,16 @@
 }
 
 .sheet-container {
-    width: 25%; /* Or any specific width/max-width */
-    margin-right: 300px;
-    margin-top: 30px;
+  display: grid;
+  grid-template-columns: 0.25fr 0.55fr 1.25fr 0.8fr 0.8fr; /* Creates two equal-width columns */
+  gap: 20px; /* Adds space between columns */
 }
 
 .box {
     border: 1px solid black;
     padding: 5px;
 }
+
 
 /*Saving Throws and Skills*/
 .skill-container {
@@ -68,4 +69,24 @@
 
 #ability3 {
     font-size: medium;
+}
+
+
+/*Health and Attacks Column*/
+.health-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
+}
+
+.below-health-container {
+    display: grid;
+    grid-template-columns: 1.25fr 1.75fr;
+    text-align: center;
+}
+
+.movement-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    text-align: center;
 }
