@@ -7,8 +7,8 @@
 </head>
 <body>
     <div class="container">
-        <div> <!--Column 1-->
-            <iframe src="character_box.html" width="100%" height="800" frameborder=1></iframe>
+        <div class="sticky-container"> <!--Column 1-->
+            <iframe src="character_box.html" width="100%" height="100%" frameborder=1></iframe>
         </div>
         <div> <!--Column 2-->
             <div class="button-container">
@@ -18,7 +18,37 @@
             </div>
             <div> <!--Character Sheet-->
                 <h1>Character Name</h1>
-                <p>Race Class Subclass Level</p>
+
+                <div style="display: flex; flex-direction: row; margin-bottom: 20px;">
+                    <div style="margin-right: 10px;">
+                        <div class="box" style="font-size: 12px; display:inline; margin-right: -5px;">Race:</div>
+                        <div class="box" style="font-size: 12px; display:inline;">null</div>
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <div class="box" style="font-size: 12px; display:inline; margin-right: -5px;">Primary Class:</div>
+                        <div class="box" style="font-size: 12px; display:inline;">null</div>
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <div class="box" style="font-size: 12px; display:inline; margin-right: -5px;">Subclass:</div>
+                        <div class="box" style="font-size: 12px; display:inline;">null</div>
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <div class="box" style="font-size: 12px; display:inline; margin-right: -5px;">Level:</div>
+                        <div class="box" style="font-size: 12px; display:inline;">0</div>
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <div class="box" style="font-size: 12px; display:inline; margin-right: -5px;">Secondary Class:</div>
+                        <div class="box" style="font-size: 12px; display:inline;">null</div>
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <div class="box" style="font-size: 12px; display:inline; margin-right: -5px;">Subclass:</div>
+                        <div class="box" style="font-size: 12px; display:inline;">null</div>
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <div class="box" style="font-size: 12px; display:inline; margin-right: -5px;">Level:</div>
+                        <div class="box" style="font-size: 12px; display:inline;">0</div>
+                    </div>
+                </div>
 
                 <div class="sheet-container">
                     <div> <!--Ability Column-->
@@ -55,25 +85,25 @@
                     </div>
 
                     <div>
-                        <div class="box" style="font-size: 14px; display:inline;">
-                            <u>Inspiration:</u>
-                        </div>
-                        <div class="box" style="font-size: 14px; width: 30%; display:inline;">
-                            0
-                        </div>
-
-                        <p></p>
-
-                        <div class="box" style="font-size: 14px; display:inline;">
-                            <u>Proficiency:</u>
-                        </div>
-                        <div class="box" style="font-size: 14px; display:inline;">
-                            +0
+                        <div style="margin-top: 10px;">
+                            <div class="box" style="font-size: 14px; display:inline;">
+                                <u>Inspiration:</u>
+                            </div>
+                            <div class="box" style="font-size: 14px; width: 30%; display:inline;">
+                                0
+                            </div>
                         </div>
 
-                        <p></p>
+                        <div style="margin-top: 25px;">
+                            <div class="box" style="font-size: 14px; display:inline;">
+                                <u>Proficiency:</u>
+                            </div>
+                            <div class="box" style="font-size: 14px; width: 30%; display:inline;">
+                                +0
+                            </div>
+                        </div>
 
-                        <div class="box">
+                        <div class="box" style="margin-top: 25px;">
                             <body>
                                 Saving Throws
                             </body>
@@ -114,7 +144,7 @@
                         <p></p>
 
                         <!--Skills-->
-                        <div class="box">
+                        <div class="box" style="margin-top: 25px;">
                             <body>
                                 Skills
                             </body>
@@ -188,8 +218,14 @@
 
                         <p></p>
 
-                        <u style="font-size: 11px">Passive Perception</u>
-                        <div class="box" style="font-size: 12px; width: 10px; text-align: center; display: inline;">20</div>
+                        <div style="margin-top: 25px;">
+                            <div class="box" style="font-size: 12px; display:inline;">
+                                <u>Passive Perception:</u>
+                            </div>
+                            <div class="box" style="font-size: 12px; width: 30px; display:inline;">
+                                +0
+                            </div>
+                        </div>
                     </div>
                 
                     <div> <!-- Health and Attacks -->
@@ -309,7 +345,7 @@
                                 Weapons
                             </body>
                         </div>
-                        <div class="box" style="height: 20%">
+                        <div class="box" style="height: 120px">
                             <body>
                                 
                             </body>
@@ -320,7 +356,7 @@
                                 Proficiencies
                             </body>
                         </div>
-                        <div class="box" style="height: 20%">
+                        <div class="box" style="height: 120px">
                             <body>
                                 
                             </body>
@@ -334,7 +370,7 @@
                                 Features
                             </body>
                         </div>
-                        <div class="box" style="height: 100%">
+                        <div class="box" style="height: 650px">
                             <body>
                                 
                             </body>
@@ -347,16 +383,210 @@
                                 Inventory
                             </body>
                         </div>
-                        <div class="box" style="height: 100%">
+                        <div class="currency-container">
+                            <div style="border-right: 1px solid black;">CP</div>
+                            <div style="border-right: 1px solid black;">EP</div>
+                            <div style="border-right: 1px solid black;">GP</div>
+                            <div>PP</div>
+                        </div>
+                        <div class="currency-container">
+                            <div style="border-right: 1px solid black;">0</div>
+                            <div style="border-right: 1px solid black;">0</div>
+                            <div style="border-right: 1px solid black;">0</div>
+                            <div>0</div>
+                        </div>
+                        <div class="box" style="height: 610px">
                             <body>
                                 
                             </body>
                         </div>
                     </div>
                 </div>
+            </div>
 
+            <p></p>
+
+            <!-- Spells -->
+            <div class="movement-container">
+                <div style="margin: 10px;">
+                    <div class="box" style="text-align: center;">
+                        Spellcasting Ability
+                    </div>
+                    <div class="box" style="text-align: center;">
+                        Null
+                    </div>
+                </div>
+
+                <div style="margin: 10px;">
+                    <div class="box" style="text-align: center;">
+                        Spell Save DC
+                    </div>
+                    <div class="box" style="text-align: center;">
+                        0
+                    </div>
+                </div>
+
+                <div style="margin: 10px;">
+                    <div class="box" style="text-align: center;">
+                        Spell Attack Bonus
+                    </div>
+                    <div class="box" style="text-align: center;">
+                        0
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cantrip-Level 3-->
+            <div class="outside-spell-container">
+                <div class="spell-container">
+                    <div class="slot-container" style="align-items: center;">
+                        <div id="slot">Spell Level</div>
+                        <div id="slot">Slot Amount</div>
+                        <div id="slot">Slots Used</div>
+                    </div>
+                    <div class="slot-container" style="align-items: center;">
+                        <div id="slot">Cantrip</div>
+                        <div id="slot">0</div>
+                        <div id="slot">0</div>
+                    </div>
+                    <div>Put spells here</div>
+                </div>
+
+                <div class="spell-container">
+                    <div class="slot-container" style="align-items: center;">
+                        <div id="slot">Spell Level</div>
+                        <div id="slot">Slot Amount</div>
+                        <div id="slot">Slots Used</div>
+                    </div>
+                    <div class="slot-container" style="align-items: center;">
+                        <div id="slot">1</div>
+                        <div id="slot">0</div>
+                        <div id="slot">0</div>
+                    </div>
+                    <div>Put spells here</div>
+                </div>
+
+                <div class="spell-container">
+                    <div class="slot-container" style="align-items: center;">
+                        <div id="slot">Spell Level</div>
+                        <div id="slot">Slot Amount</div>
+                        <div id="slot">Slots Used</div>
+                    </div>
+                    <div class="slot-container" style="align-items: center;">
+                        <div id="slot">2</div>
+                        <div id="slot">0</div>
+                        <div id="slot">0</div>
+                    </div>
+                    <div>Put spells here</div>
+                </div>
+
+                <div class="spell-container">
+                    <div class="slot-container" style="align-items: center;">
+                        <div id="slot">Spell Level</div>
+                        <div id="slot">Slot Amount</div>
+                        <div id="slot">Slots Used</div>
+                    </div>
+                    <div class="slot-container" style="align-items: center;">
+                        <div id="slot">3</div>
+                        <div id="slot">0</div>
+                        <div id="slot">0</div>
+                    </div>
+                    <div>Put spells here</div>
+                </div>
+            </div>
+
+            <!--Levels 4-7-->
+            <div class="outside-spell-container">
+                <div class="spell-container">
+                    <div class="slot-container" style="align-items: center;">
+                        <div id="slot">Spell Level</div>
+                        <div id="slot">Slot Amount</div>
+                        <div id="slot">Slots Used</div>
+                    </div>
+                    <div class="slot-container" style="align-items: center;">
+                        <div id="slot">4</div>
+                        <div id="slot">0</div>
+                        <div id="slot">0</div>
+                    </div>
+                    <div>Put spells here</div>
+                </div>
+
+                <div class="spell-container">
+                    <div class="slot-container" style="align-items: center;">
+                        <div id="slot">Spell Level</div>
+                        <div id="slot">Slot Amount</div>
+                        <div id="slot">Slots Used</div>
+                    </div>
+                    <div class="slot-container" style="align-items: center;">
+                        <div id="slot">5</div>
+                        <div id="slot">0</div>
+                        <div id="slot">0</div>
+                    </div>
+                    <div>Put spells here</div>
+                </div>
+
+                <div class="spell-container">
+                    <div class="slot-container" style="align-items: center;">
+                        <div id="slot">Spell Level</div>
+                        <div id="slot">Slot Amount</div>
+                        <div id="slot">Slots Used</div>
+                    </div>
+                    <div class="slot-container" style="align-items: center;">
+                        <div id="slot">6</div>
+                        <div id="slot">0</div>
+                        <div id="slot">0</div>
+                    </div>
+                    <div>Put spells here</div>
+                </div>
+
+                <div class="spell-container">
+                    <div class="slot-container" style="align-items: center;">
+                        <div id="slot">Spell Level</div>
+                        <div id="slot">Slot Amount</div>
+                        <div id="slot">Slots Used</div>
+                    </div>
+                    <div class="slot-container" style="align-items: center;">
+                        <div id="slot">7</div>
+                        <div id="slot">0</div>
+                        <div id="slot">0</div>
+                    </div>
+                    <div>Put spells here</div>
+                </div>
+            </div>
+
+            <!--Levels 8-9-->
+            <div class="outside-spell-container">
+                <div class="spell-container">
+                    <div class="slot-container" style="align-items: center;">
+                        <div id="slot">Spell Level</div>
+                        <div id="slot">Slot Amount</div>
+                        <div id="slot">Slots Used</div>
+                    </div>
+                    <div class="slot-container" style="align-items: center;">
+                        <div id="slot">8</div>
+                        <div id="slot">0</div>
+                        <div id="slot">0</div>
+                    </div>
+                    <div>Put spells here</div>
+                </div>
+
+                <div class="spell-container">
+                    <div class="slot-container" style="align-items: center;">
+                        <div id="slot">Spell Level</div>
+                        <div id="slot">Slot Amount</div>
+                        <div id="slot">Slots Used</div>
+                    </div>
+                    <div class="slot-container" style="align-items: center;">
+                        <div id="slot">9</div>
+                        <div id="slot">0</div>
+                        <div id="slot">0</div>
+                    </div>
+                    <div>Put spells here</div>
+                </div>
             </div>
         </div>
+
+
     </div>
 </body>
 </html>

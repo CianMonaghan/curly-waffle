@@ -1,7 +1,16 @@
 .container {
-  display: grid;
-  grid-template-columns: 1fr 3fr; /* Creates two equal-width columns */
-  gap: 20px; /* Adds space between columns */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start; /* Important! Without this, sticky won't work */
+    gap: 20px;
+}
+
+.sticky-container {
+    position: sticky;
+    top: 0;
+    width: 320px;        /* Give it a fixed width */
+    flex-shrink: 0;      /* Prevent it from shrinking */
+    height: 100vh;       /* Optional: constrain height to viewport */
 }
 
 .button-container {
@@ -12,11 +21,19 @@
   display: grid;
   grid-template-columns: 0.25fr 0.55fr 1.25fr 0.8fr 0.8fr; /* Creates two equal-width columns */
   gap: 20px; /* Adds space between columns */
+  min-height: 700px;
 }
 
 .box {
     border: 1px solid black;
     padding: 5px;
+}
+
+.currency-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    text-align: center;
+    border: 1px solid black;
 }
 
 
@@ -47,7 +64,10 @@
     width: 50px;
     display: grid;
     grid-template-rows: 1fr 1.5fr 1fr;
-    margin: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 25px;
 }
 
 .ability {
@@ -89,4 +109,34 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     text-align: center;
+}
+
+/*Spells*/
+.outside-spell-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin: 5px;
+}
+
+.spell-container {
+    display: grid;
+    grid-template-rows: 1fr 1fr 4fr;
+    margin: 5px;
+    border: 1px solid black;
+    font-size: 11px;
+}
+
+.slot-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr;
+    text-align: center;
+    border-bottom: 1px solid black;
+}
+
+#slot {
+    border-right:1px solid black;
+}
+
+#slot:last-child {
+    border: 0px;
 }
