@@ -1,0 +1,244 @@
+{
+    "name": "Character1",
+    "alignment": "Neutral",
+    "stats": [
+        {
+            "stat": "Strength",
+            "score": 10
+        },
+        {
+            "stat": "Dexterity",
+            "score": 10
+        },
+        {
+            "stat": "Constitution",
+            "score": 10
+        },
+        {
+            "stat": "Intelligence",
+            "score": 10
+        },
+        {
+            "stat": "Wisdom",
+            "score": 10
+        },
+        {
+            "stat": "Charisma",
+            "score": 10
+        }
+    ],
+    "hitpoints": {
+        "current-hit-points": 50,
+        "temp-hp": 0
+    },
+    "speed": 30,
+    "initiative": 0,
+    "size": "medium",
+    "prof-bonus": 2,
+    "saves": [
+        {
+            "stat": "Strength",
+            "save": 0
+        },
+        {
+            "stat": "Dexterity",
+            "save": 0
+        },
+        {
+            "stat": "Constitution",
+            "save": 0
+        },
+        {
+            "stat": "Intelligence",
+            "save": 2
+        },
+        {
+            "stat": "Wisdom",
+            "save": 2
+        },
+        {
+            "stat":"Charisma",
+            "save": 0
+        }
+    ],
+    "armor-class": 10,
+    "languages": ["Common", "Elvish", "Abyssal"],
+    "race" : {
+        "id": "r-1",
+        "name": "variant-human"
+    },
+    "background": "backgroundObject",
+    "classes": [
+        {
+            "id": "c-1",
+            "local-id": 1,
+            "class": "class1",
+            "classObject": "classObject"
+        }
+    ],
+    "subclasses": [
+        {
+            "id": "sc-1",
+            "local-id": 1,
+            "class": "class1",
+            "subclass": "subclass1",
+            "subclassObject": "subclassObject"
+        }
+    ],
+    "features": [
+        {
+            "id": "f-1",
+            "local-id": 1,
+            "feature": "feature1",
+            "featureObject": "raceFeature1"
+        },
+        {
+            "id": "f-2",
+            "local-id": 1,
+            "feature": "feature2",
+            "featureObject": "classFeature1"
+        }
+    ],
+    "inventory": {
+            "currency": [
+                {
+                    "currencyName": "pp",
+                    "amount": 10
+                },
+                {
+                    "currencyName": "gp",
+                    "amount": 10
+                },
+                {
+                    "currencyName": "ep",
+                    "amount": 10
+                },
+                {
+                    "currencyName": "sp",
+                    "amount": 10
+                },
+                {
+                    "currencyName": "cp",
+                    "amount": 10
+                }
+            ],
+            "items": [
+                {
+                    "id": "i-1",
+                    "local-id": 1,
+                    "name": "item1",
+                    "type": "mundane",
+                    "description": "Lorem ipsum (not the bad guys)",
+                    "equipped": true,
+                    "features-on-obtain": ["itemFeature1", "itemFeature2", "itemFeature3"],
+                    "features-on-lose": ["itemFeature1-loss", "itemFeature2-loss", "itemFeature3-loss"],
+                    "features-on-equip": ["itemFeature4", "itemFeature5", "itemFeature6"],
+                    "features-on-unequip": ["itemFeature4-loss", "itemFeature5-loss", "itemFeature6-loss"]
+                },
+                {
+                    "id": "wp-1",
+                    "local-id": 1,
+                    "name": "swurd",
+                    "type": "weapon",
+                    "description": "Lorem ipsum swurdum",
+                    "equipped": true,
+                    "features-on-obtain": ["itemFeature1", "itemFeature2", "itemFeature3"],
+                    "features-on-lose": ["itemFeature1-loss", "itemFeature2-loss", "itemFeature3-loss"],
+                    "features-on-equip": ["itemFeature4", "itemFeature5", "itemFeature6"],
+                    "features-on-unequip": ["itemFeature4-loss", "itemFeature5-loss", "itemFeature6-loss"],
+                    "dice": {
+                        "oneHand": {
+                            "num": 1,
+                            "sides": 12
+                        },
+                        "twoHand": null
+                    },
+                    "range": null,
+                    "primary-stat": ["Strength", "Intelligence"],
+                    "martial": true,
+                    "impovised": false,
+                    "attack-bonus": 2,
+                    "damage-bonus": 0,
+                    "proficent": true
+                },
+                {
+                    "id": "wi-1",
+                    "local-id": 1,
+                    "name": "oorb",
+                    "type": "wounderous",
+                    "description": "Lorem ipsum oorbum",
+                    "equipped": true,
+                    "features-on-obtain": ["itemFeature1", "itemFeature2", "itemFeature3"],
+                    "features-on-lose": ["itemFeature1-loss", "itemFeature2-loss", "itemFeature3-loss"],
+                    "features-on-equip": ["itemFeature4", "itemFeature5", "itemFeature6"],
+                    "features-on-unequip": ["itemFeature4-loss", "itemFeature5-loss", "itemFeature6-loss"],
+                    "attuned": true,
+                    "features-on-attune": ["attuneFeature1", "attuneFeature2"],
+                    "features-on-detune": ["attuneFeature1-loss", "attuneFeature2-loss"]
+                }
+            ]
+        },
+        "active-features": [
+            {
+                "feature":"feature1",
+                "applied-feature-record": [
+                    {
+                        "applied-modifications": [
+                            {
+                                "feature-instance-id": "02162026-a-2359",
+                                "source-id": "r-1",
+                                "feature-id": "f-1",
+                                "trigger": "on-equip",
+                                "applied": [
+                                    {
+                                        "modification": "add-strength",
+                                        "reversalData": {}
+                                    },
+                                    {
+                                        "modification": "add-intelligence",
+                                        "reversalData": {}
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "feature":"feature2",
+                "applied-feature-record": [
+                    {
+                        "applied-modifications": [
+                            {
+                                "feature-instance-id": "02172026-a-0000",
+                                "source-id": "c-2",
+                                "feature-id": "f-1",
+                                "trigger": "on-delete",
+                                "applied": [
+                                    {
+                                        "modification": "add-strength",
+                                        "reversalData": {}
+                                    },
+                                    {
+                                        "modification": "add-intelligence",
+                                        "reversalData": {}
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "equipped-weapons": [
+            {
+                "id": "wp-1",
+                "name": "swurd",
+                "damage": "1d12 slashing",
+                "reference-id": {
+                    "id": "wp-1",
+                    "local-id": 1
+                }
+            }
+        ]
+}
