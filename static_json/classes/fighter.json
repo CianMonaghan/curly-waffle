@@ -1,0 +1,82 @@
+{
+    "id": "c-1",
+    "name": "Fighter",
+    "caster": false,
+    "casterStat": null,
+    "level": 0,
+    "casterLevel": null,
+    "class-hp": 0,
+    "features": [
+        {
+            "id": "full-armor",
+            "name": "Armor Proficiency (All Armor)",
+            "description": "You have proficiency in all armor and shields.",
+            "trigger": "onAdd"
+
+        },
+        {
+            "id": "full-weapons",
+            "name": "Weapon Proficiency (Simple and Martial)",
+            "description": "You have proficiency in simple weapons and martial weapons.",
+            "trigger": "onAdd"
+            
+        },
+        {
+            "id": "fighter-fighting-style",
+            "name": "Fighting Style",
+            "description": "You have a particular style of fighting as your specialty. Choose one of the following options.",
+            "trigger": "onAdd"
+
+        },
+        {
+            "id": "second-wind",
+            "name": "Second Wind",
+            "description": "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level. \n Once you use this feature, you must finish a short or long rest before you can use it again.",
+            "trigger": "onAdd"
+
+        },
+        {
+            "id": "action-surge-x1",
+            "name": "Action Surge",
+            "description": "You can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action. \n Once you use this feature, you must finish a short or long rest before you can use it again.",
+            "trigger": "onAdd"
+
+        }
+    ],
+    "skill-prof": [
+        {
+            "skill":"Acrobatics",
+            "prof": false
+        },
+        {
+            "skill":"Animal Handling",
+            "prof": false
+        },
+        {
+            "skill":"Athletics",
+            "prof": false
+        },
+        {
+            "skill":"History",
+            "prof": false
+        },
+        {
+            "skill":"Insight",
+            "prof": false
+        },
+        {
+            "skill":"Intimidation",
+            "prof": false
+        },
+        {
+            "skill":"Perception",
+            "prof": false
+        },
+        {
+            "skill":"Survival",
+            "prof": false
+        }
+    ],
+    "saving-throws": ["Strength", "Constitution"],
+    "spell-list": null
+}
