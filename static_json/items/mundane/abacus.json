@@ -1,0 +1,11 @@
+{
+    "id": "i-1",
+    "local-id": 0,
+    "name": "Abacus",
+    "description": "A standard tool used to make calculations.",
+    "equipped": false,
+    "features-on-obtain": null,
+    "features-on-lose": null,
+    "features-on-equip": null,
+    "features-on-unequip": null
+}

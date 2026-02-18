@@ -1,0 +1,42 @@
+{
+    "id": "wp-1",
+    "local-id": 0,
+    "name": "Club",
+    "type": "weapon",
+    "description": "A simple melee weapon.",
+    "equipped": false,
+    "features-on-obtain": null,
+    "features-on-lose": null,
+    "features-on-equip": [
+        {
+            "id": "attack-club",
+            "name": "Attack (Club)",
+            "description": null,
+            "trigger": "onEquip"
+
+        }
+    ],
+    "features-on-unequip": [
+        {
+            "id": "loss-attack-club",
+            "name": null,
+            "description": null,
+            "trigger": "onUnequip"
+
+        }
+    ],
+    "dice": {
+        "oneHand": {
+            "num": 1,
+            "sides": 4
+        },
+        "twoHand": null
+    },
+    "range": null,
+    "primary-stat": ["Strength"],
+    "martial": false,
+    "improvised": false,
+    "attack-bonus": 0,
+    "damage-bonus": 0,
+    "prof": true
+}
