@@ -1,0 +1,30 @@
+{
+    "id": "wi-XX",
+    "local-id": 0,
+    "name": "Example",
+    "description": "Example text that could go here. Perhaps some lore or how the weapon works on a meta-level. \n Perhaps even multiple lines. \n How about another for good measure?",
+    "equipped": false,
+    "features-on-obtain": null,
+    "features-on-lose": null,
+    "features-on-equip": [
+        {
+            
+        }
+    ],
+    "features-on-unequip": [
+        {
+
+        }
+    ],
+     "attuned": true,
+    "features-on-attune": [
+        {
+
+        }
+    ],
+    "features-on-detune": [
+        {
+
+        }
+    ]
+}
