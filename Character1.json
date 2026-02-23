@@ -28,13 +28,13 @@
         }
     ],
     "hitpoints": {
-        "current-hit-points": 50,
-        "temp-hp": 0
+        "current_hit_points": 50,
+        "temp_hp": 0
     },
     "speed": 30,
     "initiative": 0,
     "size": "medium",
-    "prof-bonus": 2,
+    "prof_bonus": 2,
     "saves": [
         {
             "stat": "Strength",
@@ -61,7 +61,7 @@
             "save": 0
         }
     ],
-    "armor-class": 10,
+    "armor_class": 10,
     "languages": ["Common", "Elvish", "Abyssal"],
     "race" : {
         "id": "r-1",

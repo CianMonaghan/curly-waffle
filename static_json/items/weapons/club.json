@@ -1,13 +1,13 @@
 {
     "id": "wp-1",
-    "local-id": 0,
+    "local_id": 0,
     "name": "Club",
     "type": "weapon",
     "description": "A simple melee weapon.",
     "equipped": false,
-    "features-on-obtain": null,
-    "features-on-lose": null,
-    "features-on-equip": [
+    "features_on_obtain": null,
+    "features_on_lose": null,
+    "features_on_equip": [
         {
             "id": "attack-club",
             "name": "Attack (Club)",
@@ -16,7 +16,7 @@
 
         }
     ],
-    "features-on-unequip": [
+    "features_on_unequip": [
         {
             "id": "loss-attack-club",
             "name": null,
@@ -33,10 +33,10 @@
         "twoHand": null
     },
     "range": null,
-    "primary-stat": ["Strength"],
+    "primary_stat": ["Strength"],
     "martial": false,
     "improvised": false,
-    "attack-bonus": 0,
-    "damage-bonus": 0,
+    "attack_bonus": 0,
+    "damage_bonus": 0,
     "prof": true
 }
