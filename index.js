@@ -5,7 +5,7 @@ const port = 3000;
 
 /**
  * DATABASE
- * TODO: create database schema w/ mongoose
+ * //TODO: create database schema w/ mongoose
  */
 
 const {MongoClient} = require("mongodb");
@@ -27,7 +27,18 @@ const featureSchema = new mongoose.Schema({
     description: String,
     trigger: String,
     //TODO: fill in here
-}, {_id: false})
+}, {_id: false});
+
+const appliedModSchema = new mongoose.Schema({
+    feature_instance_id: {type: String, unique: true},
+    source_id: String,
+    feature_id: String,
+    trigger: String,
+    applied: [{
+        modification: String,
+        reversalData: {}
+    }]
+}, {_id: false});
 
 const backgroundSchema = new mongoose.Schema({
     id: { type: String, unique: true, required: true },
@@ -109,14 +120,14 @@ const weaponSchema = new mongoose.Schema({
     attack_bonus: Number,
     damage_bonus: Number,
     prof: true
-}, {_id: false})
+}, {_id: false});
 
 const wonderousSchema = new mongoose.Schema({
     base_item: itemSchema, //FIXME: remove this?
     attuned: Boolean,
     features_on_attune: [featureSchema],
     features_on_detune: [featureSchema]
-}, {_id: false})
+}, {_id: false});
 
 const subclassSchema = new mongoose.Schema({
     id: { type: String, unique: true, required: true},
@@ -124,7 +135,7 @@ const subclassSchema = new mongoose.Schema({
     class: String,
     description: String,
     features: [featureSchema]
-}, {_id: false})
+}, {_id: false});
 
 const characterSchema = new mongoose.Schema({
     _id: {type: Number, unique: true, required: true},
@@ -159,13 +170,26 @@ const characterSchema = new mongoose.Schema({
         }],
         items: [{}]
     }],
-    //TODO: Add active features
-    equipped_weapons: [weaponSchema]
-})
+    active_features: [{
+        feature: {type: String, unique: true, required: true},
+        applied_feature_record: [{
+            applied_modifications: [appliedModSchema]
+        }]
+    }],
+    equipped_weapons: [{
+        id: {type: String, unique: true, required: true},
+        name: String,
+        damage: String,
+        reference_id: {
+            //id: {type: String, unique: true, required: true} //do we really need this one?
+            local_id: {type: Number, min: 0, required: true}
+        }
+    }]
+});
 
 /**
  * ROUTES
- * TODO: remove .html from pathnames after html update
+ * //TODO: remove .html from pathnames after html update
  */
 app.get('/', async (req, res) => {
     app.use(express.static(__dirname));

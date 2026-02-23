@@ -178,16 +178,16 @@
                 }
             ]
         },
-        "active-features": [
+        "active_features": [
             {
                 "feature":"feature1",
-                "applied-feature-record": [
+                "applied_feature_record": [
                     {
-                        "applied-modifications": [
+                        "applied_modifications": [
                             {
-                                "feature-instance-id": "02162026-a-2359",
-                                "source-id": "r-1",
-                                "feature-id": "f-1",
+                                "feature_instance_id": "02162026-a-2359",
+                                "source_id": "r-1",
+                                "feature_id": "f-1",
                                 "trigger": "on-equip",
                                 "applied": [
                                     {
@@ -206,13 +206,13 @@
             },
             {
                 "feature":"feature2",
-                "applied-feature-record": [
+                "applied_feature_record": [
                     {
-                        "applied-modifications": [
+                        "applied_modifications": [
                             {
-                                "feature-instance-id": "02172026-a-0000",
-                                "source-id": "c-2",
-                                "feature-id": "f-1",
+                                "feature_instance_id": "02172026-a-0000",
+                                "source_id": "c-2",
+                                "feature_id": "f-1",
                                 "trigger": "on-delete",
                                 "applied": [
                                     {
@@ -230,14 +230,14 @@
                 ]
             }
         ],
-        "equipped-weapons": [
+        "equipped_weapons": [
             {
                 "id": "wp-1",
                 "name": "swurd",
                 "damage": "1d12 slashing",
-                "reference-id": {
+                "reference_id": {
                     "id": "wp-1",
-                    "local-id": 1
+                    "local_id": 1
                 }
             }
         ]
