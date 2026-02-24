@@ -1,0 +1,100 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start; /* Important! Without this, sticky won't work */
+    margin: 20px;
+    gap: 20px;
+}
+
+body {
+    font-family: sans-serif;
+    padding: 20px;
+}
+.field-row {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.field-row label {
+    min-width: 160px;
+}
+.character-class-box {
+    border: 1px solid black;
+    padding: 12px;
+    margin-top: 12px;
+}
+.class-box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.class-box-body {
+    display: flex;
+    gap: 30px;
+    margin-top: 10px;
+}
+.class-left {
+    min-width: 200px;
+}
+.class-right {
+    flex: 1;
+    border-left: 1px solid black;
+    padding-left: 16px;
+}
+.skill-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 6px;
+}
+.feature-block {
+    border-top: 1px solid black;
+    padding-top: 8px;
+    margin-top: 8px;
+}
+.feature-block:first-child {
+    border-top: none;
+    margin-top: 0;
+}
+.feature-title {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+.feature-options {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-left: 10px;
+    margin-top: 4px;
+}
+.asi-row {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin-top: 4px;
+}
+.asi-row input[type="number"] {
+    width: 45px;
+}
+button {
+    cursor: pointer;
+    border: 1px solid black;
+    background: white;
+    padding: 4px 10px;
+}
+button:hover {
+    background: #eee;
+}
+#addClassBtn {
+    margin-top: 14px;
+    padding: 6px 14px;
+}
+.return-form {
+    margin-top: 20px;
+}
+.no-features-msg {
+    color: #555;
+    font-style: italic;
+}

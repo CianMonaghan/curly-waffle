@@ -3,12 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <title>Character Sheet Creation</title>
+    <link rel="stylesheet" href="create_character.css"></link>
 </head>
 <body>
-    <h1>Hello, User!</h1>
-    <p>Character sheet creation will be on this page</p>
-    <form action="account.html">
+    <h1>Character Editor</h1>
+
+    <!-- Return -->
+    <div class="return-form">
+        <form action="account.html">
             <button type="submit">Return</button>
-    </form>
+        </form>
+    </div>
+
+    <div class="container">
+        <div> <!-- Class Column -->
+            <!-- Basic Info -->
+            <div class="field-row">
+                <label for="character-name">Character Name</label>
+                <input type="text" id="character-name" name="character-name" required>
+            </div>
+            <div class="field-row">
+                <label for="race">Character Race</label>
+                <select name="race" id="race">
+                    <option value="Human">Human</option>
+                    <option value="Elf">Elf</option>
+                    <option value="Dwarf">Dwarf</option>
+                </select>
+            </div>
+            <div class="field-row">
+                <label for="background">Character Background</label>
+                <select name="background" id="background">
+                    <option value="Acolyte">Acolyte</option>
+                    <option value="Folk Hero">Folk Hero</option>
+                    <option value="Hermit">Hermit</option>
+                </select>
+            </div>
+
+            <!-- Class Boxes -->
+            <div id="classContainer"></div>
+            <button id="addClassBtn">+ Add Character Class</button>
+        </div>
+
+        <div> <!-- Race and Background Column -->
+
+        </div>
+
+    </div>
+
+    <template id="classTemplate">
+        <div class="character-class-box">
+            <div class="class-box-header">
+                <strong class="class-title">Class 1</strong>
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <label><input type="checkbox" class="primary-class-cb"> Set Primary Class</label>
+                    <button class="remove-btn">Remove</button>
+                </div>
+            </div>
+
+            <div class="field-row">
+                <label>Class</label>
+                <select class="class-select">
+                    <option value="Fighter">Fighter</option>
+                    <option value="Wizard">Wizard</option>
+                    <option value="Monk">Monk</option>
+                    <option value="Warlock">Warlock</option>
+                </select>
+            </div>
+            <div class="field-row">
+                <label>Subclass</label>
+                <select class="subclass-select"></select>
+            </div>
+            <div class="field-row">
+                <label>Level</label>
+                <input type="number" class="level-input" min="1" max="20" value="1" style="width:60px;">
+            </div>
+
+            <div class="class-box-body">
+                <div class="class-left">
+                    <strong class="skill-count-label">Skills:</strong>
+                    <div class="skill-list"></div>
+                </div>
+                <div class="class-right">
+                    <div class="feature-container"></div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="create_character.js"></script>
 </body>
 </html>
