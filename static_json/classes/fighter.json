@@ -5,7 +5,7 @@
     "casterStat": null,
     "level": 0,
     "casterLevel": null,
-    "class-hp": 0,
+    "class_hp": 0,
     "features": [
         {
             "id": "full-armor",
@@ -43,7 +43,7 @@
 
         }
     ],
-    "skill-prof": [
+    "skill_prof": [
         {
             "skill":"Acrobatics",
             "prof": false
@@ -77,6 +77,6 @@
             "prof": false
         }
     ],
-    "saving-throws": ["Strength", "Constitution"],
-    "spell-list": null
+    "saving_throws": ["Strength", "Constitution"],
+    "spell_list": null
 }
