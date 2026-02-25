@@ -146,7 +146,8 @@ const characterSchema = new mongoose.Schema({
         score: {type: Number, min: 0, max: 30, required: true}
     }], required: true },
     hitpoints: {type: [{
-        hit
+        current_hit_points: {type: Number, min: 0, required: true},
+        temp_hp: {type: Number, min:0, required: true}
     }], required: true},
     speed: {type: Number, min: 0},
     initiative: Number,
@@ -168,7 +169,7 @@ const characterSchema = new mongoose.Schema({
             currencyName: String,
             amount: {type: Number, min: 0}
         }],
-        items: [{}]
+        items: [{}] //only for items,weapons, wonderous items, etc
     }],
     active_features: [{
         feature: {type: String, unique: true, required: true},
@@ -181,7 +182,6 @@ const characterSchema = new mongoose.Schema({
         name: String,
         damage: String,
         reference_id: {
-            //id: {type: String, unique: true, required: true} //do we really need this one?
             local_id: {type: Number, min: 0, required: true}
         }
     }]

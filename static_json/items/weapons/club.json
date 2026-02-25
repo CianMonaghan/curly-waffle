@@ -32,7 +32,7 @@
         },
         "twoHand": null
     },
-    "range": null,
+    "range": 5,
     "primary_stat": ["Strength"],
     "martial": false,
     "improvised": false,
