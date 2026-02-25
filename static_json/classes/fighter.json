@@ -12,7 +12,7 @@
             "name": "Armor Proficiency (All Armor)",
             "description": "You have proficiency in all armor and shields.",
             "trigger": "onAdd"
-
+            
         },
         {
             "id": "full-weapons",
