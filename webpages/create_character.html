@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Character Sheet Creation</title>
-    <link rel="stylesheet" href="create_character.css"></link>
+    <link rel="stylesheet" href="create_character.css">
 </head>
 <body>
     <h1>Character Editor</h1>
 
-    <!-- Return -->
     <div class="return-form">
         <form action="account.html">
             <button type="submit">Return</button>
@@ -16,27 +15,23 @@
     </div>
 
     <div class="container">
-        <div> <!-- Class Column -->
-            <!-- Basic Info -->
+        <div>
+            <!-- Cjaracter Name/Race/Background -->
             <div class="field-row">
                 <label for="character-name">Character Name</label>
                 <input type="text" id="character-name" name="character-name" required>
             </div>
+
             <div class="field-row">
-                <label for="race">Character Race</label>
-                <select name="race" id="race">
-                    <option value="Human">Human</option>
-                    <option value="Elf">Elf</option>
-                    <option value="Dwarf">Dwarf</option>
-                </select>
+                <label>Character Race</label>
+                <button type="button" class="popup-btn" id="race-btn">Select Race ▾</button>
+                <input type="hidden" id="race" name="race">
             </div>
+
             <div class="field-row">
-                <label for="background">Character Background</label>
-                <select name="background" id="background">
-                    <option value="Acolyte">Acolyte</option>
-                    <option value="Folk Hero">Folk Hero</option>
-                    <option value="Hermit">Hermit</option>
-                </select>
+                <label>Character Background</label>
+                <button type="button" class="popup-btn" id="background-btn">Select Background ▾</button>
+                <input type="hidden" id="background" name="background">
             </div>
 
             <!-- Class Boxes -->
@@ -44,12 +39,57 @@
             <button id="addClassBtn">+ Add Character Class</button>
         </div>
 
-        <div> <!-- Race and Background Column -->
+        <!-- Right Column: Race & Background Info Panels -->
+        <div class="info-column">
+
+            <div id="race-info-panel" class="info-panel hidden">
+                <div class="info-panel-header">
+                    <span class="info-panel-label">Race</span>
+                    <button type="button" class="info-panel-edit-btn" onclick="openPopup('race')">Change ▾</button>
+                </div>
+                <div class="info-panel-content"></div>
+            </div>
+
+            <div id="background-info-panel" class="info-panel hidden">
+                <div class="info-panel-header">
+                    <span class="info-panel-label">Background</span>
+                    <button type="button" class="info-panel-edit-btn" onclick="openPopup('background')">Change ▾</button>
+                </div>
+                <div class="info-panel-content"></div>
+            </div>
 
         </div>
-
     </div>
 
+    <!-- Race/Background Popup -->
+    <div id="popup-overlay" class="popup-overlay hidden">
+        <div class="popup-modal">
+
+            <div class="popup-modal-header">
+                <strong id="popup-title">Choose</strong>
+                <button type="button" id="popup-close" class="popup-close-btn">✕</button>
+            </div>
+
+            <div class="popup-modal-body">
+                <!-- Left side -->
+                <div class="popup-sidebar">
+                    <div id="popup-list" class="popup-list"></div>
+                </div>
+
+                <!-- Right side -->
+                <div id="popup-detail" class="popup-detail">
+                    <p class="popup-placeholder">Select an option to see details.</p>
+                </div>
+            </div>
+
+            <div class="popup-modal-footer">
+                <button type="button" id="popup-confirm" class="popup-confirm-btn" disabled>Confirm Selection</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Class Template -->
     <template id="classTemplate">
         <div class="character-class-box">
             <div class="class-box-header">

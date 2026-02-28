@@ -1,24 +1,284 @@
-.container {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start; /* Important! Without this, sticky won't work */
-    margin: 20px;
-    gap: 20px;
-}
-
 body {
     font-family: sans-serif;
     padding: 20px;
 }
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin: 20px;
+    gap: 0;
+    width: calc(100vw - 80px);
+}
+
+.container > div:first-child {
+    width: 50%;
+    flex-shrink: 0;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+
 .field-row {
     margin-bottom: 10px;
     display: flex;
     align-items: center;
     gap: 8px;
 }
+
 .field-row label {
     min-width: 160px;
 }
+
+/* Buttons */
+button {
+    cursor: pointer;
+    border: 1px solid black;
+    background: white;
+    padding: 4px 10px;
+}
+button:hover { background: #eee; }
+
+#addClassBtn {
+    margin-top: 14px;
+    padding: 6px 14px;
+}
+
+.return-form { margin-top: 20px; }
+
+/* Race/Background buttons */
+.popup-btn {
+    min-width: 180px;
+    text-align: left;
+    padding: 5px 10px;
+}
+.popup-btn.has-value {
+    font-weight: bold;
+}
+
+/* Race/Background Popups */
+.popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.popup-overlay.hidden { display: none; }
+
+/* Popup Modal */
+.popup-modal {
+    background: white;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    width: 760px;
+    max-width: 95vw;
+    max-height: 85vh;
+    overflow: hidden;
+}
+
+.popup-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid black;
+    flex-shrink: 0;
+}
+
+.popup-close-btn {
+    border: none;
+    background: none;
+    font-size: 1.1rem;
+    padding: 2px 6px;
+    line-height: 1;
+}
+.popup-close-btn:hover { background: #eee; }
+
+/* Popup Modal Body: sidebar + detail */
+.popup-modal-body {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.popup-sidebar {
+    width: 180px;
+    flex-shrink: 0;
+    border-right: 1px solid #ccc;
+    overflow-y: auto;
+}
+
+.popup-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.popup-list-item {
+    padding: 10px 14px;
+    text-align: left;
+    border: none;
+    border-bottom: 1px solid #eee;
+    background: white;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+.popup-list-item:hover   { background: #f5f5f5; }
+.popup-list-item.active  { background: #e8e8e8; font-weight: bold; }
+
+/* Detail Panel */
+.popup-detail {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 20px;
+}
+
+.popup-placeholder {
+    color: #888;
+    font-style: italic;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.popup-detail-title {
+    margin: 0 0 10px;
+    font-size: 1.25rem;
+}
+
+.popup-detail-desc {
+    font-size: 0.9rem;
+    color: #333;
+    line-height: 1.5;
+    margin-bottom: 14px;
+}
+
+/* Background skill/tool/lang meta strip */
+.popup-meta {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+    background: #f7f7f7;
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    margin-bottom: 14px;
+}
+
+.popup-features-label {
+    font-weight: bold;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #555;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 4px;
+}
+
+.popup-features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.popup-feature {
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+    padding: 10px 12px;
+}
+
+.popup-feature-name {
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+}
+
+.popup-feature-desc {
+    font-size: 0.85rem;
+    color: #444;
+    line-height: 1.5;
+}
+
+/* ── Modal Footer ────────────────────────────────────────────────────── */
+.popup-modal-footer {
+    border-top: 1px solid black;
+    padding: 10px 16px;
+    display: flex;
+    justify-content: flex-end;
+    flex-shrink: 0;
+}
+
+.popup-confirm-btn {
+    padding: 6px 20px;
+    font-weight: bold;
+}
+.popup-confirm-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+.popup-confirm-btn:not(:disabled):hover {
+    background: #222;
+    color: white;
+}
+
+
+/* Class Info Panels */
+.info-column {
+    width: 50%;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: sticky;
+    top: 20px;
+    align-self: flex-start;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    padding-left: 20px;
+    border-left: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+.info-panel {
+    border: 1px solid black;
+}
+.info-panel.hidden { display: none; }
+
+.info-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid black;
+    background: #f2f2f2;
+}
+
+.info-panel-label {
+    font-weight: bold;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #444;
+}
+
+.info-panel-edit-btn {
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-color: #aaa;
+    color: #333;
+}
+
+.info-panel-content {
+    padding: 14px;
+    font-size: 0.88rem;
+}
+
+/* Reuse popup-detail styles inside the panel */
+.info-panel-content .popup-detail-title { font-size: 1.1rem; }
+.info-panel-content .popup-feature { background: #fafafa; }
 .character-class-box {
     border: 1px solid black;
     padding: 12px;
@@ -35,20 +295,24 @@ body {
     gap: 30px;
     margin-top: 10px;
 }
-.class-left {
-    min-width: 200px;
-}
+.class-left { min-width: 200px; }
 .class-right {
     flex: 1;
     border-left: 1px solid black;
     padding-left: 16px;
 }
+
+
+/* Skills */
 .skill-list {
     display: flex;
     flex-direction: column;
     gap: 4px;
     margin-top: 6px;
 }
+
+
+/* Class Features */
 .feature-block {
     border-top: 1px solid black;
     padding-top: 8px;
@@ -75,26 +339,28 @@ body {
     align-items: center;
     margin-top: 4px;
 }
-.asi-row input[type="number"] {
-    width: 45px;
-}
-button {
-    cursor: pointer;
-    border: 1px solid black;
-    background: white;
-    padding: 4px 10px;
-}
-button:hover {
-    background: #eee;
-}
-#addClassBtn {
-    margin-top: 14px;
-    padding: 6px 14px;
-}
-.return-form {
-    margin-top: 20px;
-}
+.asi-row input[type="number"] { width: 45px; }
+
 .no-features-msg {
     color: #555;
     font-style: italic;
+}
+
+
+/* Subclass Features */
+.subclass-feature-block {
+    margin-top: 6px;
+    padding: 8px 10px;
+    background: #f5f5f5;
+    border-left: 3px solid #888;
+}
+.subclass-feature-name {
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-bottom: 3px;
+}
+.subclass-feature-desc {
+    font-size: 0.875rem;
+    color: #333;
+    line-height: 1.5;
 }

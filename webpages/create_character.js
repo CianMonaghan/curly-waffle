@@ -67,10 +67,196 @@ const CLASS_DATA = {
     }
 };
 
+
+/* Subclass Beta */
+
+const SUBCLASS_DATA = {
+    "Champion": {
+        id: "sc-1",
+        name: "Champion",
+        class: "fighter",
+        description: "The archetypal Champion focuses on the development of raw physical power honed to deadly perfection.\nThose who model themselves on this archetype combine rigorous training with physical excellence to deal devastating blows.",
+        features: [
+            { id: "improved-crit",             name: "Improved Critical",         level: 3,  description: "Your weapon attacks score a critical hit on a roll of 19 or 20." },
+            { id: "remarkable-athlete",         name: "Remarkable Athlete",        level: 7,  description: "You can add half your proficiency bonus (rounded up) to any Strength, Dexterity, or Constitution check you make that doesn't already use your proficiency bonus.\nIn addition, when you make a running long jump, the distance you can cover increases by a number of feet equal to your Strength modifier." },
+            { id: "fighter-fighting-style-add", name: "Additional Fighting Style", level: 10, description: "You can choose a second option from the Fighting Style class feature." },
+            { id: "superior-crit",              name: "Superior Critical",         level: 15, description: "Your weapon attacks score a critical hit on a roll of 18–20." },
+            { id: "survivor",                   name: "Survivor",                  level: 18, description: "At the start of each of your turns, you regain hit points equal to 5 + your Constitution modifier if you have no more than half of your hit points left. You don't gain this benefit if you have 0 hit points." }
+        ]
+    }
+    // Add more subclasses here — key must match the subclass name string in CLASS_DATA
+};
+
+/*  Race and Background Beta */
+
+const RACE_DATA = [
+    {
+        id: "r-2",
+        name: "Hill Dwarf",
+        description: "As a hill dwarf, you have keen senses, deep intuition, and remarkable resilience.\nThe gold dwarves of Faerun in their mighty southern kingdom are hill dwarves, as are the exiled Neidar and the debased Klar of Krynn in the Dragonlance setting.",
+        features: [
+            { id: "feat-asi-con-2",    name: "Ability Score Increase (CON +2)", description: "Your Constitution score increases by 2." },
+            { id: "speed-25-dwarf",    name: "Speed",                           description: "Your base walking speed is 25 feet. Your speed is not reduced by heavy armor." },
+            { id: "darkvision-60",     name: "Darkvision",                      description: "You can see in dim light within 60 ft as if bright, and in darkness as if dim. You can't discern color in darkness, only shades of gray." },
+            { id: "dwarf-resilience",  name: "Dwarven Resilience",              description: "You have advantage on saving throws against poison, and resistance to poison damage." },
+            { id: "dwarf-weapon-prof", name: "Dwarven Weapon Training",         description: "You have proficiency with the battleaxe, handaxe, light hammer, and warhammer." },
+            { id: "dwarf-tool-prof",   name: "Tool Proficiency",                description: "You gain proficiency with one artisan's tool of your choice: smith's tools, brewer's supplies, or mason's tools." },
+            { id: "stonecunning",      name: "Stonecunning",                    description: "Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient and add double your proficiency bonus." },
+            { id: "dwarf-lang",        name: "Languages",                       description: "You can speak, read, and write Common and Dwarvish." },
+            { id: "feat-asi-wis-1",   name: "Ability Score Increase (WIS +1)", description: "Your Wisdom score increases by 1." },
+            { id: "dwarf-toughness",  name: "Dwarven Toughness",               description: "Your hit point maximum increases by 1, and it increases by 1 every time you gain a level." },
+        ]
+    }
+];
+
+const BACKGROUND_DATA = [
+    {
+        id: "b-1",
+        name: "Acolyte",
+        description: "You have spent your life in the service of a temple to a specific god or pantheon of gods. You act as an intermediary between the realm of the holy and the mortal world, performing sacred rites and offering sacrifices in order to conduct worshipers into the presence of the divine.\nChoose a god, a pantheon of gods, or some other quasi-divine being, and work with your DM to detail the nature of your religious service.",
+        skill_prof: [
+            { skill: "Insight",   prof: true },
+            { skill: "Religion",  prof: true }
+        ],
+        tool_prof: null,
+        lang_prof: ["Language of your choice", "Language of your choice"],
+        features: [
+            {
+                id: "shelter-faithful",
+                name: "Shelter of the Faithful",
+                description: "As an acolyte, you command the respect of those who share your faith, and you can perform the religious ceremonies of your deity. You and your adventuring companions can expect to receive free healing and care at a temple, shrine, or other established presence of your faith, though you must provide any material components needed for spells."
+            }
+        ]
+    }
+];
+
+/* Race and Background Functions */
+
+let currentPopupField = null;
+
+const overlay      = document.getElementById('popup-overlay');
+const popupTitle   = document.getElementById('popup-title');
+const popupList    = document.getElementById('popup-list');
+const popupDetail  = document.getElementById('popup-detail');
+const popupClose   = document.getElementById('popup-close');
+const confirmBtn   = document.getElementById('popup-confirm');
+
+let pendingSelection = null; // holds the option object before confirm
+
+function openPopup(field) {
+    currentPopupField = field;
+    pendingSelection  = null;
+    confirmBtn.disabled = true;
+
+    const dataset = field === 'race' ? RACE_DATA : BACKGROUND_DATA;
+    popupTitle.textContent = field === 'race' ? 'Choose a Race' : 'Choose a Background';
+
+    // Race/Background Features
+    popupList.innerHTML = '';
+    dataset.forEach(item => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.classList.add('popup-list-item');
+        btn.textContent = item.name;
+
+        const hiddenVal = document.getElementById(field).value;
+        if (hiddenVal === item.id) {
+            btn.classList.add('active');
+            showDetail(item);
+            pendingSelection = item;
+            confirmBtn.disabled = false;
+        }
+
+        btn.addEventListener('click', () => {
+            popupList.querySelectorAll('.popup-list-item').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            showDetail(item);
+            pendingSelection = item;
+            confirmBtn.disabled = false;
+        });
+
+        popupList.appendChild(btn);
+    });
+
+    // If nothing pre-selected, clear detail panel
+    if (!pendingSelection) popupDetail.innerHTML = '<p class="popup-placeholder">Select an option to see details.</p>';
+
+    overlay.classList.remove('hidden');
+}
+
+function showDetail(item) {
+    popupDetail.innerHTML = buildInfoHTML(item);
+}
+
+function confirmSelection() {
+    if (!pendingSelection || !currentPopupField) return;
+
+    document.getElementById(currentPopupField).value = pendingSelection.id;
+    const btn = document.getElementById(`${currentPopupField}-btn`);
+    btn.textContent = `${pendingSelection.name} ▾`;
+    btn.classList.add('has-value');
+
+    renderSidebarPanel(currentPopupField, pendingSelection);
+    overlay.classList.add('hidden');
+}
+
+function buildInfoHTML(item) {
+    const isBackground = 'skill_prof' in item;
+
+    let metaHTML = '';
+    if (isBackground) {
+        const skills = item.skill_prof ? item.skill_prof.filter(s => s.prof).map(s => s.skill).join(', ') : '—';
+        const tools  = item.tool_prof  ? item.tool_prof : '—';
+        const langs  = item.lang_prof  ? item.lang_prof.join(', ') : '—';
+        metaHTML = `
+            <div class="popup-meta">
+                <span><strong>Skills:</strong> ${skills}</span>
+                <span><strong>Tools:</strong> ${tools}</span>
+                <span><strong>Languages:</strong> ${langs}</span>
+            </div>`;
+    }
+
+    const featuresHTML = item.features.map(f => `
+        <div class="popup-feature">
+            <div class="popup-feature-name">${f.name}</div>
+            <div class="popup-feature-desc">${f.description}</div>
+        </div>`).join('');
+
+    return `
+        <h2 class="popup-detail-title">${item.name}</h2>
+        <p class="popup-detail-desc">${item.description.replace(/\n/g, '<br><br>')}</p>
+        ${metaHTML}
+        <div class="popup-features-label">Features</div>
+        <div class="popup-features-list">${featuresHTML}</div>
+    `;
+}
+
+function renderSidebarPanel(field, item) {
+    const panelId  = field === 'race' ? 'race-info-panel' : 'background-info-panel';
+    const panel    = document.getElementById(panelId);
+    const content  = panel.querySelector('.info-panel-content');
+    content.innerHTML = buildInfoHTML(item);
+    panel.classList.remove('hidden');
+}
+
+function closePopup() {
+    overlay.classList.add('hidden');
+    currentPopupField = null;
+    pendingSelection  = null;
+}
+
+document.getElementById('race-btn').addEventListener('click',       () => openPopup('race'));
+document.getElementById('background-btn').addEventListener('click', () => openPopup('background'));
+popupClose.addEventListener('click',  closePopup);
+confirmBtn.addEventListener('click',  confirmSelection);
+overlay.addEventListener('click', e => { if (e.target === overlay) closePopup(); });
+document.addEventListener('keydown',  e => { if (e.key === 'Escape') closePopup(); });
+
+
 /* Class Functions */
 
 let classCount = 0;
-let boxUid = 0;
+let boxUid     = 0;
 
 function enforceSkillLimit(skillList, max) {
     const checked = skillList.querySelectorAll('.skill-cb:checked');
@@ -92,12 +278,10 @@ function buildFeature(level, feature, uid) {
         const desc = document.createElement('div');
         desc.textContent = feature.description ?? '';
         block.appendChild(desc);
-
     } else if (feature.type === 'choice') {
         const prompt = document.createElement('div');
         prompt.textContent = 'Select one:';
         block.appendChild(prompt);
-
         const options = document.createElement('div');
         options.classList.add('feature-options');
         const radioName = `feat_lvl${level}_uid${uid}`;
@@ -107,7 +291,6 @@ function buildFeature(level, feature, uid) {
             options.appendChild(label);
         });
         block.appendChild(options);
-
     } else if (feature.type === 'asi') {
         const row = document.createElement('div');
         row.classList.add('asi-row');
@@ -121,29 +304,80 @@ function buildFeature(level, feature, uid) {
             <select>${attrs}</select>
         `;
         block.appendChild(row);
-
     } else if (feature.type === 'subclass') {
-        const note = document.createElement('div');
-        note.style.fontStyle = 'italic';
-        note.style.color = '#555';
-        note.textContent = 'Feature determined by your subclass choice.';
-        block.appendChild(note);
+        if (feature.subclassFeatures && feature.subclassFeatures.length > 0) {
+            feature.subclassFeatures.forEach(sf => {
+                const sfBlock = document.createElement('div');
+                sfBlock.classList.add('subclass-feature-block');
+                sfBlock.innerHTML = `
+                    <div class="subclass-feature-name">${sf.name}</div>
+                    <div class="subclass-feature-desc">${sf.description.replace(/\n/g, '<br><br>')}</div>
+                `;
+                block.appendChild(sfBlock);
+            });
+        } else {
+            const note = document.createElement('div');
+            note.style.fontStyle = 'italic';
+            note.style.color = '#555';
+            note.textContent = 'Feature determined by your subclass choice.';
+            block.appendChild(note);
+        }
     }
 
     return block;
 }
 
+function renderFeaturesOnly(box, uid) {
+    const selectedClass  = box.querySelector('.class-select').value;
+    const selectedLevel  = Math.min(Math.max(parseInt(box.querySelector('.level-input').value) || 1, 1), 20);
+    const selectedSub    = box.querySelector('.subclass-select').value;
+    const data           = CLASS_DATA[selectedClass];
+    const subData        = SUBCLASS_DATA[selectedSub] || null;
+
+    // Pre-group subclass features by level for fast lookup
+    const subByLevel = {};
+    if (subData) {
+        subData.features.forEach(f => {
+            const lvl = parseInt(f.level);
+            if (!subByLevel[lvl]) subByLevel[lvl] = [];
+            subByLevel[lvl].push(f);
+        });
+    }
+
+    const featureContainer = box.querySelector('.feature-container');
+    featureContainer.innerHTML = '';
+    let anyFeature = false;
+    for (let lvl = 1; lvl <= selectedLevel; lvl++) {
+        if (data.features[lvl]) {
+            const feat = { ...data.features[lvl] };
+            // If this is a subclass slot, inject any subclass features at this level
+            if (feat.type === 'subclass' && subByLevel[lvl]) {
+                feat.subclassFeatures = subByLevel[lvl];
+            }
+            featureContainer.appendChild(buildFeature(lvl, feat, uid));
+            anyFeature = true;
+        }
+    }
+    if (!anyFeature) {
+        const msg = document.createElement('div');
+        msg.classList.add('no-features-msg');
+        msg.textContent = 'No features at this level.';
+        featureContainer.appendChild(msg);
+    }
+}
+
 function renderClassBox(box, uid) {
-    const selectedClass = box.querySelector('.class-select').value;
-    const selectedLevel = Math.min(Math.max(parseInt(box.querySelector('.level-input').value) || 1, 1), 20);
-    const data = CLASS_DATA[selectedClass];
+    const selectedClass  = box.querySelector('.class-select').value;
+    const selectedLevel  = Math.min(Math.max(parseInt(box.querySelector('.level-input').value) || 1, 1), 20);
+    const data           = CLASS_DATA[selectedClass];
 
-    /* Subclasses */
     const subclassSelect = box.querySelector('.subclass-select');
+    // Only rebuild subclass options when class changes (preserve selection otherwise)
+    const prevSub = subclassSelect.value;
     subclassSelect.innerHTML = data.subclasses.map(s => `<option value="${s}">${s}</option>`).join('');
+    if (data.subclasses.includes(prevSub)) subclassSelect.value = prevSub;
 
-    /* Skills */
-    const skillList = box.querySelector('.skill-list');
+    const skillList  = box.querySelector('.skill-list');
     const skillLabel = box.querySelector('.skill-count-label');
     skillLabel.textContent = `Skills (pick ${data.numSkills}):`;
     skillList.innerHTML = '';
@@ -156,24 +390,7 @@ function renderClassBox(box, uid) {
         cb.addEventListener('change', () => enforceSkillLimit(skillList, data.numSkills));
     });
 
-    /* Features */
-    const featureContainer = box.querySelector('.feature-container');
-    featureContainer.innerHTML = '';
-
-    let anyFeature = false;
-    for (let lvl = 1; lvl <= selectedLevel; lvl++) {
-        if (data.features[lvl]) {
-            featureContainer.appendChild(buildFeature(lvl, data.features[lvl], uid));
-            anyFeature = true;
-        }
-    }
-
-    if (!anyFeature) {
-        const msg = document.createElement('div');
-        msg.classList.add('no-features-msg');
-        msg.textContent = 'No features at this level.';
-        featureContainer.appendChild(msg);
-    }
+    renderFeaturesOnly(box, uid);
 }
 
 document.getElementById('addClassBtn').addEventListener('click', () => {
@@ -182,21 +399,16 @@ document.getElementById('addClassBtn').addEventListener('click', () => {
     const uid = boxUid;
 
     const template = document.getElementById('classTemplate');
-    const clone = template.content.cloneNode(true);
-
+    const clone    = template.content.cloneNode(true);
     clone.querySelector('.class-title').textContent = `Class ${classCount}`;
-
     clone.querySelector('.remove-btn').addEventListener('click', function () {
         this.closest('.character-class-box').remove();
     });
 
     document.getElementById('classContainer').appendChild(clone);
-
-    // Grab the actual DOM node now that it's appended
     const box = document.getElementById('classContainer').lastElementChild;
-
     box.querySelector('.class-select').addEventListener('change', () => renderClassBox(box, uid));
-    box.querySelector('.level-input').addEventListener('change', () => renderClassBox(box, uid));
-
+    box.querySelector('.level-input').addEventListener('change',  () => renderClassBox(box, uid));
+    box.querySelector('.subclass-select').addEventListener('change', () => renderFeaturesOnly(box, uid));
     renderClassBox(box, uid);
 });
