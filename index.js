@@ -98,11 +98,7 @@ const itemSchema = new mongoose.Schema({
     features_on_obtain: [featureSchema],
     features_on_loss: [featureSchema],
     features_on_equip: [featureSchema],
-    features_on_unequip: [featureSchema]
-}, {_id: false});
-
-const weaponSchema = new mongoose.Schema({
-    base_item: itemSchema, //FIXME: remove this?
+    features_on_unequip: [featureSchema],
     dice : {
         oneHand: {
             num: {type: Number, min: 1, required: true},
@@ -119,11 +115,7 @@ const weaponSchema = new mongoose.Schema({
     improvised: Boolean,
     attack_bonus: Number,
     damage_bonus: Number,
-    prof: true
-}, {_id: false});
-
-const wonderousSchema = new mongoose.Schema({
-    base_item: itemSchema, //FIXME: remove this?
+    prof: Boolean,
     attuned: Boolean,
     features_on_attune: [featureSchema],
     features_on_detune: [featureSchema]

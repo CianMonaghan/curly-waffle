@@ -7,5 +7,16 @@
     "features_on_obtain": null,
     "features_on_lose": null,
     "features_on_equip": null,
-    "features_on_unequip": null
+    "features_on_unequip": null,
+    "dice": null,
+    "range": null,
+    "primary_stat": null,
+    "martial": null,
+    "improvised": null,
+    "attack_bonus": null,
+    "damage_bonus": null,
+    "prof": null,
+    "attuned": null,
+    "features_on_attune": null,
+    "features_on_detune": null
 }

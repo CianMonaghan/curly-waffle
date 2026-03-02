@@ -1,0 +1,38 @@
+{
+    "id": "wi-5",
+    "local_id": 0,
+    "name": "Amulet of Health",
+    "description": "Wondrous item, rare (requires attunement) /n Your Constitution score is 19 while you wear this amulet. It has no effect on you if your Constitution is 19 or higher without it.",
+    "equipped": false,
+    "features_on_obtain": null,
+    "features_on_lose": null,
+    "features_on_equip": null,
+    "features_on_unequip": null,
+    "dice": null,
+    "range": null,
+    "primary_stat": null,
+    "martial": null,
+    "improvised": null,
+    "attack_bonus": null,
+    "damage_bonus": null,
+    "prof": null,
+    "attuned": true,
+    "features_on_attune": [
+        {
+            "id": "con-score-set-19",
+            "name": null,
+            "description": null,
+            "trigger": "onAttune"
+
+        }
+    ],
+    "features_on_detune": [
+        {
+            "id": "loss-con-score-set-19",
+            "name": null,
+            "description": null,
+            "trigger": "onDetune"
+
+        }
+    ]
+}
