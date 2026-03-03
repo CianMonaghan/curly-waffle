@@ -183,8 +183,10 @@ const characterSchema = new mongoose.Schema({
  * ROUTES
  * //TODO: remove .html from pathnames after html update
  */
+app.use(express.static(path.join(__dirname, 'webpages')));  // serves CSS, JS, images
+app.use(express.static(__dirname));  // fallback for root-level files
+
 app.get('/', async (req, res) => {
-    app.use(express.static(__dirname));
     res.sendFile(path.join(__dirname,'webpages','login.html'));
 });
 

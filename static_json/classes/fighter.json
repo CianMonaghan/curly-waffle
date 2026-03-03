@@ -10,6 +10,7 @@
         {
             "id": "full-armor",
             "name": "Armor Proficiency (All Armor)",
+            "level": 1,
             "description": "You have proficiency in all armor and shields.",
             "trigger": "onAdd"
             
@@ -17,6 +18,7 @@
         {
             "id": "full-weapons",
             "name": "Weapon Proficiency (Simple and Martial)",
+            "level": 1,
             "description": "You have proficiency in simple weapons and martial weapons.",
             "trigger": "onAdd"
             
@@ -24,6 +26,7 @@
         {
             "id": "fighter-fighting-style",
             "name": "Fighting Style",
+            "level": 1,
             "description": "You have a particular style of fighting as your specialty. Choose one of the following options.",
             "trigger": "onAdd"
 
@@ -31,6 +34,7 @@
         {
             "id": "second-wind",
             "name": "Second Wind",
+            "level": 1,
             "description": "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level. \n Once you use this feature, you must finish a short or long rest before you can use it again.",
             "trigger": "onAdd"
 
@@ -38,6 +42,7 @@
         {
             "id": "action-surge-x1",
             "name": "Action Surge",
+            "level": 2,
             "description": "You can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action. \n Once you use this feature, you must finish a short or long rest before you can use it again.",
             "trigger": "onAdd"
 
