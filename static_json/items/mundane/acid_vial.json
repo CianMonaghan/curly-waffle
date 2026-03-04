@@ -1,5 +1,6 @@
 {
-    "id": "i-2",
+    "type": "item",
+    "id": 0,
     "local_id": 0,
     "name": "Acid (vial)",
     "description": "A vial of potent acid.",

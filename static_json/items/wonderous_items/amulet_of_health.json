@@ -1,5 +1,6 @@
 {
-    "id": "wi-5",
+    "type":"wonderous-item",
+    "id": 4,
     "local_id": 0,
     "name": "Amulet of Health",
     "description": "Wondrous item, rare (requires attunement) /n Your Constitution score is 19 while you wear this amulet. It has no effect on you if your Constitution is 19 or higher without it.",

@@ -25,8 +25,7 @@ const featureSchema = new mongoose.Schema({
     id: { type: String, unique: true },
     name: String,
     description: String,
-    trigger: String,
-    //TODO: fill in here
+    trigger: String
 }, {_id: false});
 
 const appliedModSchema = new mongoose.Schema({

@@ -1,5 +1,6 @@
 {
-    "id": "c-1",
+    "type": "class",
+    "id": 0,
     "name": "Fighter",
     "caster": false,
     "casterStat": null,

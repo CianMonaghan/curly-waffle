@@ -1,8 +1,8 @@
 {
-    "id": "wp-1",
+    "type": "weapon",
+    "id": 0,
     "local_id": 0,
     "name": "Club",
-    "type": "weapon",
     "description": "A simple melee weapon.",
     "equipped": false,
     "features_on_obtain": null,
