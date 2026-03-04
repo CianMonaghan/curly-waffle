@@ -6,7 +6,10 @@ const CLASS_DATA = {
         skills: ["Athletics", "Acrobatics", "History", "Insight", "Intimidation", "Perception", "Survival"],
         subclasses: ["Champion", "Battle Master", "Eldritch Knight"],
         features: {
-            1: { name: "Fighting Style", type: "choice", options: ["Archery", "Defense", "Dueling", "Great Weapon Fighting", "Protection", "Two-Weapon Fighting"] },
+            1: [
+                { name: "Fighting Style", type: "choice", options: ["Archery", "Defense", "Dueling", "Great Weapon Fighting", "Protection", "Two-Weapon Fighting"] },
+                { name: "Second Wind", type: "resource", uses: "1", description: "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level. \n Once you use this feature, you must finish a short or long rest before you can use it again."},
+            ],
             2: { name: "Action Surge", type: "passive", description: "On your turn, you can take one additional action. You can use this once per short or long rest." },
             3: { name: "Martial Archetype", type: "subclass" },
             4: { name: "Ability Score Improvement", type: "asi" },
@@ -16,6 +19,16 @@ const CLASS_DATA = {
             8: { name: "Ability Score Improvement", type: "asi" },
             9: { name: "Indomitable", type: "passive", description: "You can reroll a saving throw that you fail. You must use the new roll." },
             10: { name: "Martial Archetype Feature", type: "subclass" },
+            11: {},
+            12: {},
+            13: {},
+            14: {},
+            15: { name: "Martial Archetype Feature", type: "subclass" },
+            16: {},
+            17: {},
+            18: { name: "Martial Archetype Feature", type: "subclass" },
+            19: {},
+            20: {}
         }
     },
     Wizard: {
@@ -76,13 +89,13 @@ const SUBCLASS_DATA = {
         name: "Champion",
         class: "fighter",
         description: "The archetypal Champion focuses on the development of raw physical power honed to deadly perfection.\nThose who model themselves on this archetype combine rigorous training with physical excellence to deal devastating blows.",
-        features: [
-            { id: "improved-crit",             name: "Improved Critical",         level: 3,  description: "Your weapon attacks score a critical hit on a roll of 19 or 20." },
-            { id: "remarkable-athlete",         name: "Remarkable Athlete",        level: 7,  description: "You can add half your proficiency bonus (rounded up) to any Strength, Dexterity, or Constitution check you make that doesn't already use your proficiency bonus.\nIn addition, when you make a running long jump, the distance you can cover increases by a number of feet equal to your Strength modifier." },
-            { id: "fighter-fighting-style-add", name: "Additional Fighting Style", level: 10, description: "You can choose a second option from the Fighting Style class feature." },
-            { id: "superior-crit",              name: "Superior Critical",         level: 15, description: "Your weapon attacks score a critical hit on a roll of 18–20." },
-            { id: "survivor",                   name: "Survivor",                  level: 18, description: "At the start of each of your turns, you regain hit points equal to 5 + your Constitution modifier if you have no more than half of your hit points left. You don't gain this benefit if you have 0 hit points." }
-        ]
+        features: {
+            3:  { id: "improved-crit",              name: "Improved Critical",           description: "Your weapon attacks score a critical hit on a roll of 19 or 20." },
+            7:  { id: "remarkable-athlete",         name: "Remarkable Athlete",          description: "You can add half your proficiency bonus (rounded up) to any Strength, Dexterity, or Constitution check you make that doesn't already use your proficiency bonus.\nIn addition, when you make a running long jump, the distance you can cover increases by a number of feet equal to your Strength modifier." },
+            10: { id: "fighter-fighting-style-add", name: "Additional Fighting Style",   description: "You can choose a second option from the Fighting Style class feature." },
+            15: { id: "superior-crit",              name: "Superior Critical",           description: "Your weapon attacks score a critical hit on a roll of 18–20." },
+            18: { id: "survivor",                   name: "Survivor",                    description: "At the start of each of your turns, you regain hit points equal to 5 + your Constitution modifier if you have no more than half of your hit points left. You don't gain this benefit if you have 0 hit points." }
+        }
     }
     // Add more subclasses here — key must match the subclass name string in CLASS_DATA
 };
@@ -196,6 +209,21 @@ function confirmSelection() {
     btn.textContent = `${pendingSelection.name} ▾`;
     btn.classList.add('has-value');
 
+    // ✅ Update backgroundSkills and refresh all class boxes
+    if (currentPopupField === 'background') {
+        backgroundSkills.clear();
+        if (pendingSelection.skill_prof) {
+            pendingSelection.skill_prof
+                .filter(s => s.prof)
+                .forEach(s => backgroundSkills.add(s.skill));
+        }
+        // Refresh all class skill lists to reflect new background
+        document.querySelectorAll('.character-class-box').forEach(box => {
+            const uid = box.dataset.uid;
+            renderClassBox(box, uid);
+        });
+    }
+
     renderSidebarPanel(currentPopupField, pendingSelection);
     overlay.classList.add('hidden');
 }
@@ -257,10 +285,11 @@ document.addEventListener('keydown',  e => { if (e.key === 'Escape') closePopup(
 
 let classCount = 0;
 let boxUid     = 0;
+let backgroundSkills = new Set();
 
 function enforceSkillLimit(skillList, max) {
-    const checked = skillList.querySelectorAll('.skill-cb:checked');
-    skillList.querySelectorAll('.skill-cb').forEach(cb => {
+    const checked = skillList.querySelectorAll('.skill-cb:checked:not(:disabled)');
+    skillList.querySelectorAll('.skill-cb:not(:disabled)').forEach(cb => {
         cb.disabled = !cb.checked && checked.length >= max;
     });
 }
@@ -275,6 +304,10 @@ function buildFeature(level, feature, uid) {
     block.appendChild(title);
 
     if (feature.type === 'passive') {
+        const desc = document.createElement('div');
+        desc.textContent = feature.description ?? '';
+        block.appendChild(desc);
+    } else if (feature.type === 'resource') {
         const desc = document.createElement('div');
         desc.textContent = feature.description ?? '';
         block.appendChild(desc);
@@ -337,10 +370,8 @@ function renderFeaturesOnly(box, uid) {
     // Pre-group subclass features by level for fast lookup
     const subByLevel = {};
     if (subData) {
-        subData.features.forEach(f => {
-            const lvl = parseInt(f.level);
-            if (!subByLevel[lvl]) subByLevel[lvl] = [];
-            subByLevel[lvl].push(f);
+        Object.entries(subData.features).forEach(([lvl, f]) => {
+        subByLevel[parseInt(lvl)] = [f];
         });
     }
 
@@ -349,12 +380,27 @@ function renderFeaturesOnly(box, uid) {
     let anyFeature = false;
     for (let lvl = 1; lvl <= selectedLevel; lvl++) {
         if (data.features[lvl]) {
-            const feat = { ...data.features[lvl] };
-            // If this is a subclass slot, inject any subclass features at this level
-            if (feat.type === 'subclass' && subByLevel[lvl]) {
-                feat.subclassFeatures = subByLevel[lvl];
-            }
-            featureContainer.appendChild(buildFeature(lvl, feat, uid));
+            const feats = Array.isArray(data.features[lvl])
+                ? data.features[lvl]
+                : [data.features[lvl]];
+
+            feats.forEach(feat => {
+                const f = { ...feat };
+                if (f.type === 'subclass' && subByLevel[lvl]) {
+                    f.subclassFeatures = subByLevel[lvl];
+                }
+                featureContainer.appendChild(buildFeature(lvl, f, uid));
+                anyFeature = true;
+            });
+        } else {
+            // ✅ Filler for levels with no defined features
+            const filler = document.createElement('div');
+            filler.classList.add('feature-block');
+            filler.innerHTML = `
+                <div class="feature-title">Level ${lvl}</div>
+                <div style="font-style: italic; color: #555;">No new features at this level.</div>
+            `;
+            featureContainer.appendChild(filler);
             anyFeature = true;
         }
     }
@@ -382,8 +428,14 @@ function renderClassBox(box, uid) {
     skillLabel.textContent = `Skills (pick ${data.numSkills}):`;
     skillList.innerHTML = '';
     data.skills.forEach(skill => {
+        const fromBackground = backgroundSkills.has(skill);
         const label = document.createElement('label');
-        label.innerHTML = `<input type="checkbox" class="skill-cb"> ${skill}`;
+        label.innerHTML = `<input type="checkbox" class="skill-cb" ${fromBackground ? 'checked disabled' : ''}> ${skill}`;
+        if (fromBackground) {
+            label.style.opacity = '0.5';
+            label.style.cursor = 'not-allowed';
+            label.title = 'Granted by background';
+        }
         skillList.appendChild(label);
     });
     skillList.querySelectorAll('.skill-cb').forEach(cb => {
@@ -407,6 +459,7 @@ document.getElementById('addClassBtn').addEventListener('click', () => {
 
     document.getElementById('classContainer').appendChild(clone);
     const box = document.getElementById('classContainer').lastElementChild;
+    box.dataset.uid = uid;
     box.querySelector('.class-select').addEventListener('change', () => renderClassBox(box, uid));
     box.querySelector('.level-input').addEventListener('change',  () => renderClassBox(box, uid));
     box.querySelector('.subclass-select').addEventListener('change', () => renderFeaturesOnly(box, uid));
