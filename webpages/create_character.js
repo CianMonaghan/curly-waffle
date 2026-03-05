@@ -356,10 +356,7 @@ function buildFeature(level, feature, uid) {
         row.classList.add('asi-row');
         const attrs = ['STR','DEX','CON','INT','WIS','CHA'].map(a => `<option>${a}</option>`).join('');
         row.innerHTML = `
-            <span>+</span>
-            <input type="number" min="1" max="2" value="2">
-            <select>${attrs}</select>
-            <span>or +1</span>
+            <span> +1</span>
             <select>${attrs}</select>
             <select>${attrs}</select>
         `;
