@@ -1,0 +1,50 @@
+{
+   
+    "type": "class",
+    "id": 1,
+    "name": "Monk",
+    "level": 0,
+    "class_hp": 0,
+
+    "armor": null,
+    "weapons": ["Simple", "Shortswords"],
+    "tools": ["One Artisan Tool or Musical Instrument"],
+    "saving_throws": ["Strength", "Dexterity"],
+    "numSkills": 2,
+    "skill_prof": ["Acrobatics", "Athletics", "History", "Insight", "Religion", "Stealth"],
+
+    "equipment": [
+        { "options": ["Shortsword", "Simple Weapon"] },
+        { "options": ["Dungeoneer's pack", "Explorer's pack"] },
+        { "options": ["10 Darts"] }
+    ],
+
+    "caster": false,
+    "casterLevel": null,
+    "casterStat": null,
+    "spell_list": null,
+
+    "subclasses": ["Way of the Open Hand", "Way of Shadow", "Way of the Four Elements"],
+    "features": {
+            "1": { "feature_name": "Unarmored Defense", "feature_type": "passive", "description": "While not wearing armor or wielding a shield, your AC equals 10 + your Dexterity modifier + your Wisdom modifier." },
+            "2": { "feature_name": "Ki", "feature_type": "passive", "description": "You have ki points equal to your monk level. You can spend them to fuel Flurry of Blows, Patient Defense, and Step of the Wind. Ki points refresh on a short or long rest." },
+            "3": { "feature_name": "Monastic Tradition", "feature_type": "subclass" },
+            "4": { "feature_name": "Ability Score Improvement", "feature_type": "asi" },
+            "5": { "feature_name": "Stunning Strike", "feature_type": "passive", "description": "When you hit another creature with a melee weapon attack, you can spend 1 ki point to attempt a stunning strike. The target must succeed on a Constitution saving throw or be stunned until the end of your next turn." },
+            "6": { "feature_name": "Monastic Tradition Feature", "feature_type": "subclass" },
+            "7": { "feature_name": "Evasion", "feature_type": "passive", "description": "When subjected to an effect that allows a Dexterity saving throw for half damage, you instead take no damage on a success and half on a failure." },
+            "8": { "feature_name": "Ability Score Improvement", "feature_type": "asi" },
+            "9": { "feature_name": "Unarmored Movement Improvement", "feature_type": "passive", "description": "You can move along vertical surfaces and across liquids on your turn without falling during the move." },
+            "10": {},
+            "11": { "feature_name": "Monastic Tradition Feature", "feature_type": "subclass" },
+            "12": {},
+            "13": {},
+            "14": {},
+            "15": {},
+            "16": {},
+            "17": { "feature_name": "Monastic Tradition Feature", "feature_type": "subclass" },
+            "18": {},
+            "19": {},
+            "20": {}
+        }
+}

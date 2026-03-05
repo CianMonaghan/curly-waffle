@@ -1,0 +1,51 @@
+{
+   
+    "type": "class",
+    "id": 3,
+    "name": "Wizard",
+    "level": 0,
+    "class_hp": 0,
+
+    "armor": null,
+    "weapons": ["Daggers", "Darts", "Slings", "Quarterstaffs", "Light Crossbows"],
+    "tools": null,
+    "saving_throws": ["Intelligence", "Wisdom"],
+    "numSkills": 2,
+    "skill_prof": ["Arcana", "History", "Insight", "Investigation", "Medicine", "Religion"],
+
+    "equipment": [
+        { "options": ["Quarterstaff", "Dagger"] },
+        { "options": ["Component Pouch", "Arcane Focus"] },
+        { "options": ["Scholar's Pack", "Explorer's Pack"] },
+        { "options": ["Spellbook"] }
+    ],
+
+    "caster": true,
+    "casterLevel": 0,
+    "casterStat": "Intelligence",
+    "spell_list": [],
+
+    "subclasses": ["School of Evocation", "School of Illusion", "School of Necromancy"],
+    "features": {
+            "1": { "feature_name": "Arcane Recovery", "feature_type": "passive", "description": "Once per day during a short rest, you can recover expended spell slots with a combined level equal to half your wizard level (rounded up)." },
+            "2": { "feature_name": "Arcane Tradition", "feature_type": "subclass" },
+            "3": {},
+            "4": { "feature_name": "Ability Score Improvement", "feature_type": "asi" },
+            "5": {},
+            "6": { "feature_name": "Arcane Tradition Feature", "feature_type": "subclass" },
+            "7": {},
+            "8": { "feature_name": "Ability Score Improvement", "feature_type": "asi" },
+            "9": {},
+            "10": { "feature_name": "Arcane Tradition Feature", "feature_type": "subclass" },
+            "11": {},
+            "12": {},
+            "13": {},
+            "14": { "feature_name": "Arcane Tradition Feature", "feature_type": "subclass" },
+            "15": {},
+            "16": {},
+            "17": {},
+            "18": {},
+            "19": {},
+            "20": {}
+        }
+}
