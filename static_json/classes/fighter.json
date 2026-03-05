@@ -1,88 +1,54 @@
 {
+   
     "type": "class",
     "id": 0,
     "name": "Fighter",
-    "caster": false,
-    "casterStat": null,
     "level": 0,
-    "casterLevel": null,
     "class_hp": 0,
-    "features": [
-        {
-            "id": "full-armor",
-            "name": "Armor Proficiency (All Armor)",
-            "level": 1,
-            "description": "You have proficiency in all armor and shields.",
-            "trigger": "onAdd"
-            
-        },
-        {
-            "id": "full-weapons",
-            "name": "Weapon Proficiency (Simple and Martial)",
-            "level": 1,
-            "description": "You have proficiency in simple weapons and martial weapons.",
-            "trigger": "onAdd"
-            
-        },
-        {
-            "id": "fighter-fighting-style",
-            "name": "Fighting Style",
-            "level": 1,
-            "description": "You have a particular style of fighting as your specialty. Choose one of the following options.",
-            "trigger": "onAdd"
 
-        },
-        {
-            "id": "second-wind",
-            "name": "Second Wind",
-            "level": 1,
-            "description": "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level. \n Once you use this feature, you must finish a short or long rest before you can use it again.",
-            "trigger": "onAdd"
-
-        },
-        {
-            "id": "action-surge-x1",
-            "name": "Action Surge",
-            "level": 2,
-            "description": "You can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action. \n Once you use this feature, you must finish a short or long rest before you can use it again.",
-            "trigger": "onAdd"
-
-        }
-    ],
-    "skill_prof": [
-        {
-            "skill":"Acrobatics",
-            "prof": false
-        },
-        {
-            "skill":"Animal Handling",
-            "prof": false
-        },
-        {
-            "skill":"Athletics",
-            "prof": false
-        },
-        {
-            "skill":"History",
-            "prof": false
-        },
-        {
-            "skill":"Insight",
-            "prof": false
-        },
-        {
-            "skill":"Intimidation",
-            "prof": false
-        },
-        {
-            "skill":"Perception",
-            "prof": false
-        },
-        {
-            "skill":"Survival",
-            "prof": false
-        }
-    ],
+    "armor": ["All", "Shields"],
+    "weapons": ["Simple", "Martial"],
+    "tools": null,
     "saving_throws": ["Strength", "Constitution"],
-    "spell_list": null
+    "numSkills": 2,
+    "skill_prof": ["Athletics", "Acrobatics", "History", "Insight", "Intimidation", "Perception", "Survival"],
+
+    "equipment": [
+        { "options": ["Chain mail", ["Leather Armor", "Longbow", "20 Arrows"]] },
+        { "options": [["Martial Weapon", "Shield"], "2 Martial Weapons"] },
+        { "options": [["Light Crossbow", "20 Bolts"], "2 Handaxes"] },
+        { "options": ["Dungeoneer's pack", "Explorer's pack"] }
+    ],
+
+    "caster": false,
+    "casterLevel": null,
+    "casterStat": null,
+    "spell_list": null,
+
+    "subclasses": ["Champion", "Battle Master", "Eldritch Knight"],
+    "features": {
+            "1": [
+                { "feature_name": "Fighting Style", "feature_type": "choice", "options": ["Archery", "Defense", "Dueling", "Great Weapon Fighting", "Protection", "Two-Weapon Fighting"] },
+                { "feature_name": "Second Wind", "feature_type": "resource", "uses": "1", "description": "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level. \n Once you use this feature, you must finish a short or long rest before you can use it again."}
+            ],
+            "2": { "feature_name": "Action Surge", "feature_type": "passive", "description": "On your turn, you can take one additional action. You can use this once per short or long rest." },
+            "3": { "feature_name": "Martial Archetype", "feature_type": "subclass" },
+            "4": { "feature_name": "Ability Score Improvement", "feature_type": "asi" },
+            "5": { "feature_name": "Extra Attack", "feature_type": "passive", "description": "You can attack twice when you take the Attack action on your turn." },
+            "6": { "feature_name": "Ability Score Improvement", "feature_type": "asi" },
+            "7": { "feature_name": "Martial Archetype Feature", "feature_type": "subclass" },
+            "8": { "feature_name": "Ability Score Improvement", "feature_type": "asi" },
+            "9": { "feature_name": "Indomitable", "feature_type": "passive", "description": "You can reroll a saving throw that you fail. You must use the new roll." },
+            "10": { "feature_name": "Martial Archetype Feature", "feature_type": "subclass" },
+            "11": {},
+            "12": {},
+            "13": {},
+            "14": {},
+            "15": { "feature_name": "Martial Archetype Feature", "feature_type": "subclass" },
+            "16": {},
+            "17": {},
+            "18": { "feature_name": "Martial Archetype Feature", "feature_type": "subclass" },
+            "19": {},
+            "20": {}
+        }
 }

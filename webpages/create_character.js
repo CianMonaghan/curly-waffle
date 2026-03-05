@@ -1,9 +1,13 @@
 /*  Beta Classes */
 
+const CLASS_DATA = {};
+
+/*
 const CLASS_DATA = {
     Fighter: {
+        type: "class",
         numSkills: 2,
-        skills: ["Athletics", "Acrobatics", "History", "Insight", "Intimidation", "Perception", "Survival"],
+        skill_prof: ["Athletics", "Acrobatics", "History", "Insight", "Intimidation", "Perception", "Survival"],
         subclasses: ["Champion", "Battle Master", "Eldritch Knight"],
         features: {
             1: [
@@ -79,6 +83,8 @@ const CLASS_DATA = {
         }
     }
 };
+
+*/
 
 
 /* Subclass Beta */
@@ -287,6 +293,27 @@ let classCount = 0;
 let boxUid     = 0;
 let backgroundSkills = new Set();
 
+async function loadAllClasses() {
+    const res        = await fetch('/api/classes');
+    const classFiles = await res.json();
+
+    await Promise.all(classFiles.map(async fileName => {
+        const fileRes = await fetch(`/static_json/classes/${fileName}.json`);
+        const data    = await fileRes.json();
+        CLASS_DATA[data.name] = data;
+    }));
+}
+
+function populateClassSelects() {
+    document.querySelectorAll('.class-select').forEach(select => {
+        const current = select.value;
+        select.innerHTML = Object.keys(CLASS_DATA)
+            .map(name => `<option value="${name}">${name}</option>`)
+            .join('');
+        if (CLASS_DATA[current]) select.value = current;
+    });
+}
+
 function enforceSkillLimit(skillList, max) {
     const checked = skillList.querySelectorAll('.skill-cb:checked:not(:disabled)');
     skillList.querySelectorAll('.skill-cb:not(:disabled)').forEach(cb => {
@@ -300,18 +327,18 @@ function buildFeature(level, feature, uid) {
 
     const title = document.createElement('div');
     title.classList.add('feature-title');
-    title.textContent = `Level ${level} – ${feature.name}`;
+    title.textContent = `Level ${level} – ${feature.feature_name}`;
     block.appendChild(title);
 
-    if (feature.type === 'passive') {
+    if (feature.feature_type === 'passive') {
         const desc = document.createElement('div');
         desc.textContent = feature.description ?? '';
         block.appendChild(desc);
-    } else if (feature.type === 'resource') {
+    } else if (feature.feature_type === 'resource') {
         const desc = document.createElement('div');
         desc.textContent = feature.description ?? '';
         block.appendChild(desc);
-    } else if (feature.type === 'choice') {
+    } else if (feature.feature_type === 'choice') {
         const prompt = document.createElement('div');
         prompt.textContent = 'Select one:';
         block.appendChild(prompt);
@@ -324,7 +351,7 @@ function buildFeature(level, feature, uid) {
             options.appendChild(label);
         });
         block.appendChild(options);
-    } else if (feature.type === 'asi') {
+    } else if (feature.feature_type === 'asi') {
         const row = document.createElement('div');
         row.classList.add('asi-row');
         const attrs = ['STR','DEX','CON','INT','WIS','CHA'].map(a => `<option>${a}</option>`).join('');
@@ -337,7 +364,7 @@ function buildFeature(level, feature, uid) {
             <select>${attrs}</select>
         `;
         block.appendChild(row);
-    } else if (feature.type === 'subclass') {
+    } else if (feature.feature_type === 'subclass') {
         if (feature.subclassFeatures && feature.subclassFeatures.length > 0) {
             feature.subclassFeatures.forEach(sf => {
                 const sfBlock = document.createElement('div');
@@ -367,7 +394,6 @@ function renderFeaturesOnly(box, uid) {
     const data           = CLASS_DATA[selectedClass];
     const subData        = SUBCLASS_DATA[selectedSub] || null;
 
-    // Pre-group subclass features by level for fast lookup
     const subByLevel = {};
     if (subData) {
         Object.entries(subData.features).forEach(([lvl, f]) => {
@@ -393,7 +419,6 @@ function renderFeaturesOnly(box, uid) {
                 anyFeature = true;
             });
         } else {
-            // ✅ Filler for levels with no defined features
             const filler = document.createElement('div');
             filler.classList.add('feature-block');
             filler.innerHTML = `
@@ -412,6 +437,27 @@ function renderFeaturesOnly(box, uid) {
     }
 }
 
+function renderEquipment(box, uid) {
+    const selectedClass = box.querySelector('.class-select').value;
+    const data = CLASS_DATA[selectedClass];
+    const container = box.querySelector('.equipment-container');
+    container.innerHTML = '';
+
+    if (!data.equipment) return;
+
+    data.equipment.forEach((row, i) => {
+        const block = document.createElement('div');
+        block.classList.add('feature-block');
+        row.options.forEach((opt, j) => {
+            const label = document.createElement('label');
+            label.innerHTML = `<input type="radio" name="equip_${uid}_${i}" value="${j}"> 
+                               ${String.fromCharCode(97 + j)}) ${opt}`;
+            block.appendChild(label);
+        });
+        container.appendChild(block);
+    });
+}
+
 function renderClassBox(box, uid) {
     const selectedClass  = box.querySelector('.class-select').value;
     const selectedLevel  = Math.min(Math.max(parseInt(box.querySelector('.level-input').value) || 1, 1), 20);
@@ -423,11 +469,13 @@ function renderClassBox(box, uid) {
     subclassSelect.innerHTML = data.subclasses.map(s => `<option value="${s}">${s}</option>`).join('');
     if (data.subclasses.includes(prevSub)) subclassSelect.value = prevSub;
 
+    renderEquipment(box, uid);
+
     const skillList  = box.querySelector('.skill-list');
     const skillLabel = box.querySelector('.skill-count-label');
     skillLabel.textContent = `Skills (pick ${data.numSkills}):`;
     skillList.innerHTML = '';
-    data.skills.forEach(skill => {
+    data.skill_prof.forEach(skill => {
         const fromBackground = backgroundSkills.has(skill);
         const label = document.createElement('label');
         label.innerHTML = `<input type="checkbox" class="skill-cb" ${fromBackground ? 'checked disabled' : ''}> ${skill}`;
@@ -445,23 +493,34 @@ function renderClassBox(box, uid) {
     renderFeaturesOnly(box, uid);
 }
 
-document.getElementById('addClassBtn').addEventListener('click', () => {
-    classCount++;
-    boxUid++;
-    const uid = boxUid;
+async function init() {
+    await loadAllClasses();
 
-    const template = document.getElementById('classTemplate');
-    const clone    = template.content.cloneNode(true);
-    clone.querySelector('.class-title').textContent = `Class ${classCount}`;
-    clone.querySelector('.remove-btn').addEventListener('click', function () {
-        this.closest('.character-class-box').remove();
+    document.getElementById('addClassBtn').addEventListener('click', () => {
+        classCount++;
+        boxUid++;
+        const uid = boxUid;
+
+        const template = document.getElementById('classTemplate');
+        const clone    = template.content.cloneNode(true);
+        clone.querySelector('.class-title').textContent = `Class ${classCount}`;
+        clone.querySelector('.remove-btn').addEventListener('click', function () {
+            this.closest('.character-class-box').remove();
+        });
+
+        const classSelect = clone.querySelector('.class-select');
+        classSelect.innerHTML = Object.keys(CLASS_DATA)
+            .map(name => `<option value="${name}">${name}</option>`)
+            .join('');
+
+        document.getElementById('classContainer').appendChild(clone);
+        const box = document.getElementById('classContainer').lastElementChild;
+        box.dataset.uid = uid;
+        box.querySelector('.class-select').addEventListener('change', () => renderClassBox(box, uid));
+        box.querySelector('.level-input').addEventListener('change',  () => renderClassBox(box, uid));
+        box.querySelector('.subclass-select').addEventListener('change', () => renderFeaturesOnly(box, uid));
+        renderClassBox(box, uid);
     });
+}
 
-    document.getElementById('classContainer').appendChild(clone);
-    const box = document.getElementById('classContainer').lastElementChild;
-    box.dataset.uid = uid;
-    box.querySelector('.class-select').addEventListener('change', () => renderClassBox(box, uid));
-    box.querySelector('.level-input').addEventListener('change',  () => renderClassBox(box, uid));
-    box.querySelector('.subclass-select').addEventListener('change', () => renderFeaturesOnly(box, uid));
-    renderClassBox(box, uid);
-});
+init();

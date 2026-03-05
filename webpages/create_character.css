@@ -202,7 +202,7 @@ button:hover { background: #eee; }
     line-height: 1.5;
 }
 
-/* ── Modal Footer ────────────────────────────────────────────────────── */
+/* Modal Footer */
 .popup-modal-footer {
     border-top: 1px solid black;
     padding: 10px 16px;
@@ -311,6 +311,26 @@ button:hover { background: #eee; }
     margin-top: 6px;
 }
 
+/* Equipment */
+.equipment-container .feature-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.equipment-container label {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    white-space: normal;
+    word-break: break-word;
+    max-width: 220px;
+}
+
+.equipment-container input[type="radio"] {
+    margin-top: 3px;
+    flex-shrink: 0;
+}
 
 /* Class Features */
 .feature-block {

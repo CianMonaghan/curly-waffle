@@ -1,4 +1,5 @@
 const express = require("express");
+const fs = require('fs');
 const path = require('path');
 const app = express();
 const port = 3000;
@@ -182,6 +183,19 @@ const characterSchema = new mongoose.Schema({
  * ROUTES
  * //TODO: remove .html from pathnames after html update
  */
+
+/* Grab Class JSON files */
+app.use('/static_json', express.static(path.join(__dirname, 'static_json')));
+
+app.get('/api/classes', (req, res) => {
+    const dir = path.join(__dirname, 'static_json/classes');
+    const files = fs.readdirSync(dir)
+        .filter(f => f.endsWith('.json'))
+        .map(f => f.replace('.json', ''));
+    res.json(files);
+});
+
+/* Grab webpages */
 app.use(express.static(path.join(__dirname, 'webpages')));  // serves CSS, JS, images
 app.use(express.static(__dirname));  // fallback for root-level files
 
