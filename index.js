@@ -188,7 +188,7 @@ const characterSchema = new mongoose.Schema({
 app.use('/static_json', express.static(path.join(__dirname, 'static_json')));
 
 app.get('/api/classes', (req, res) => {
-    const dir = path.join(__dirname, 'static_json/classes');
+    const dir = path.join(__dirname, 'static_json\\classes');
     const files = fs.readdirSync(dir)
         .filter(f => f.endsWith('.json'))
         .map(f => f.replace('.json', ''));
