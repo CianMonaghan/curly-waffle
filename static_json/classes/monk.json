@@ -24,7 +24,6 @@
     "casterStat": null,
     "spell_list": null,
 
-    "subclasses": ["Way of the Open Hand", "Way of Shadow", "Way of the Four Elements"],
     "features": {
             "1": { "feature_name": "Unarmored Defense", "feature_type": "passive", "description": "While not wearing armor or wielding a shield, your AC equals 10 + your Dexterity modifier + your Wisdom modifier." },
             "2": { "feature_name": "Ki", "feature_type": "passive", "description": "You have ki points equal to your monk level. You can spend them to fuel Flurry of Blows, Patient Defense, and Step of the Wind. Ki points refresh on a short or long rest." },

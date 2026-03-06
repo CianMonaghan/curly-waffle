@@ -27,7 +27,6 @@
     "casterStat": "Charisma",
     "spell_list": [],
 
-    "subclasses": ["The Fiend", "The Great Old One", "The Archfey"],
     "features": {
             "1": { "feature_name": "Otherworldly Patron", "feature_type": "subclass" },
             "2": { "feature_name": "Eldritch Invocations", "feature_type": "choice", "options": ["Agonizing Blast", "Armor of Shadows", "Beast Speech", "Beguiling Influence", "Devil's Sight", "Eldritch Sight", "Mask of Many Faces", "Misty Visions", "Repelling Blast", "Thief of Five Fates"] },
