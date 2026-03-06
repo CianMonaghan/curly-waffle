@@ -4,46 +4,12 @@
     "name": "Champion",
     "class": "fighter",
     "description":"The archetypal Champion focuses on the development of raw physical power honed to deadly perfection. \n Those who model themselves on this archetype combine rigorous training with physical excellence to deal devastating blows.", 
-    "features": [
-        {
-            "id": "improved-crit",
-            "name": "Improved Critical",
-            "level": "3",
-            "description": "Your weapon attacks score a critical hit on a roll of 19 or 20.",
-            "trigger": "onAdd"
+    "features": {
+        "3":  { "id": "improved-crit",              "feature_name": "Improved Critical",           "feature_type": "passive",  "description": "Your weapon attacks score a critical hit on a roll of 19 or 20." },
+        "7":  { "id": "remarkable-athlete",         "feature_name": "Remarkable Athlete",          "feature_type": "passive",  "description": "You can add half your proficiency bonus (rounded up) to any Strength, Dexterity, or Constitution check you make that doesn't already use your proficiency bonus.\nIn addition, when you make a running long jump, the distance you can cover increases by a number of feet equal to your Strength modifier." },
+        "10": { "id": "fighter-fighting-style-add", "feature_name": "Additional Fighting Style",   "feature_type": "choice",  "options": ["Archery", "Defense", "Dueling", "Great Weapon Fighting", "Protection", "Two-Weapon Fighting"], "description": "You can choose a second option from the Fighting Style class feature." },
+        "15": { "id": "superior-crit",              "feature_name": "Superior Critical",           "feature_type": "passive",  "description": "Your weapon attacks score a critical hit on a roll of 18–20." },
+        "18": { "id": "survivor",                   "feature_name": "Survivor",                    "feature_type": "passive",  "description": "At the start of each of your turns, you regain hit points equal to 5 + your Constitution modifier if you have no more than half of your hit points left. You don't gain this benefit if you have 0 hit points." }
+    }
 
-        },
-        {
-            "id": "remarkable-athlete",
-            "name": "Remarkable Athlete",
-            "level": "7",
-            "description": "You can add half your proficiency bonus (rounded up) to any Strength, Dexterity, or Constitution check you make that doesn't already use your proficiency bonus. \n In addition, when you make a running long jump, the distance you can cover increases by a number of feet equal to your Strength modifier.",
-            "trigger": "onAdd"
-
-        },
-        {
-            "id": "fighter-fighting-style-add",
-            "name": "Additional Fighting Style",
-            "level": "10",
-            "description": "You can choose a second option from the Fighting Style class feature.",
-            "trigger": "onAdd"
-
-        },
-        {
-            "id": "superior-crit",
-            "name": "Superior Critical",
-            "level": "15",
-            "description": "Your weapon attacks score a critical hit on a roll of 18-20.",
-            "trigger": "onAdd"
-
-        },
-        {
-            "id": "survivor",
-            "name": "Survivor",
-            "level": "18",
-            "description": "You attain the pinnacle of resilience in battle. At the start of each of your turns, you regain hit points equal to 5 + your Constitution modifier if you have no more than half of your hit points left. You don't gain this benefit if you have 0 hit points.",
-            "trigger": "onAdd"
-            
-        }
-    ]
 }

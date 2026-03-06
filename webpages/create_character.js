@@ -1,94 +1,9 @@
-/*  Beta Classes */
-
 const CLASS_DATA = {};
-
-/*
-const CLASS_DATA = {
-    Fighter: {
-        type: "class",
-        numSkills: 2,
-        skill_prof: ["Athletics", "Acrobatics", "History", "Insight", "Intimidation", "Perception", "Survival"],
-        subclasses: ["Champion", "Battle Master", "Eldritch Knight"],
-        features: {
-            1: [
-                { name: "Fighting Style", type: "choice", options: ["Archery", "Defense", "Dueling", "Great Weapon Fighting", "Protection", "Two-Weapon Fighting"] },
-                { name: "Second Wind", type: "resource", uses: "1", description: "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level. \n Once you use this feature, you must finish a short or long rest before you can use it again."},
-            ],
-            2: { name: "Action Surge", type: "passive", description: "On your turn, you can take one additional action. You can use this once per short or long rest." },
-            3: { name: "Martial Archetype", type: "subclass" },
-            4: { name: "Ability Score Improvement", type: "asi" },
-            5: { name: "Extra Attack", type: "passive", description: "You can attack twice when you take the Attack action on your turn." },
-            6: { name: "Ability Score Improvement", type: "asi" },
-            7: { name: "Martial Archetype Feature", type: "subclass" },
-            8: { name: "Ability Score Improvement", type: "asi" },
-            9: { name: "Indomitable", type: "passive", description: "You can reroll a saving throw that you fail. You must use the new roll." },
-            10: { name: "Martial Archetype Feature", type: "subclass" },
-            11: {},
-            12: {},
-            13: {},
-            14: {},
-            15: { name: "Martial Archetype Feature", type: "subclass" },
-            16: {},
-            17: {},
-            18: { name: "Martial Archetype Feature", type: "subclass" },
-            19: {},
-            20: {}
-        }
-    },
-    Wizard: {
-        numSkills: 2,
-        skills: ["Arcana", "History", "Insight", "Investigation", "Medicine", "Religion"],
-        subclasses: ["School of Evocation", "School of Abjuration", "School of Illusion", "School of Necromancy"],
-        features: {
-            1: { name: "Arcane Recovery", type: "passive", description: "Once per day during a short rest, you can recover expended spell slots with a combined level equal to half your wizard level (rounded up)." },
-            2: { name: "Arcane Tradition", type: "subclass" },
-            4: { name: "Ability Score Improvement", type: "asi" },
-            6: { name: "Arcane Tradition Feature", type: "subclass" },
-            8: { name: "Ability Score Improvement", type: "asi" },
-            10: { name: "Arcane Tradition Feature", type: "subclass" },
-        }
-    },
-    Monk: {
-        numSkills: 2,
-        skills: ["Acrobatics", "Athletics", "History", "Insight", "Religion", "Stealth"],
-        subclasses: ["Way of the Open Hand", "Way of Shadow", "Way of the Four Elements"],
-        features: {
-            1: { name: "Unarmored Defense", type: "passive", description: "While not wearing armor or wielding a shield, your AC equals 10 + your Dexterity modifier + your Wisdom modifier." },
-            2: { name: "Ki", type: "passive", description: "You have ki points equal to your monk level. You can spend them to fuel Flurry of Blows, Patient Defense, and Step of the Wind. Ki points refresh on a short or long rest." },
-            3: { name: "Monastic Tradition", type: "subclass" },
-            4: { name: "Ability Score Improvement", type: "asi" },
-            5: { name: "Stunning Strike", type: "passive", description: "When you hit another creature with a melee weapon attack, you can spend 1 ki point to attempt a stunning strike. The target must succeed on a Constitution saving throw or be stunned until the end of your next turn." },
-            6: { name: "Monastic Tradition Feature", type: "subclass" },
-            7: { name: "Evasion", type: "passive", description: "When subjected to an effect that allows a Dexterity saving throw for half damage, you instead take no damage on a success and half on a failure." },
-            8: { name: "Ability Score Improvement", type: "asi" },
-            9: { name: "Unarmored Movement Improvement", type: "passive", description: "You can move along vertical surfaces and across liquids on your turn without falling during the move." },
-            10: { name: "Monastic Tradition Feature", type: "subclass" },
-        }
-    },
-    Warlock: {
-        numSkills: 2,
-        skills: ["Arcana", "Deception", "History", "Intimidation", "Investigation", "Nature", "Religion"],
-        subclasses: ["The Fiend", "The Great Old One", "The Archfey"],
-        features: {
-            1: { name: "Otherworldly Patron", type: "subclass" },
-            2: { name: "Eldritch Invocations", type: "choice", options: ["Agonizing Blast", "Armor of Shadows", "Beast Speech", "Beguiling Influence", "Devil's Sight", "Eldritch Sight", "Mask of Many Faces", "Misty Visions", "Repelling Blast", "Thief of Five Fates"] },
-            3: { name: "Pact Boon", type: "choice", options: ["Pact of the Blade", "Pact of the Chain", "Pact of the Tome"] },
-            4: { name: "Ability Score Improvement", type: "asi" },
-            5: { name: "Otherworldly Patron Feature", type: "subclass" },
-            6: { name: "Otherworldly Patron Feature", type: "subclass" },
-            7: { name: "Eldritch Invocation (Additional)", type: "passive", description: "You learn an additional Eldritch Invocation of your choice." },
-            8: { name: "Ability Score Improvement", type: "asi" },
-            9: { name: "Mystic Arcanum (5th level)", type: "passive", description: "You gain a 5th-level spell from your patron's list as a mystic arcanum, usable once per long rest without expending a spell slot." },
-            10: { name: "Otherworldly Patron Feature", type: "subclass" },
-        }
-    }
-};
-
-*/
-
+const SUBCLASS_DATA = {};
 
 /* Subclass Beta */
 
+/*
 const SUBCLASS_DATA = {
     "Champion": {
         id: "sc-1",
@@ -105,6 +20,7 @@ const SUBCLASS_DATA = {
     }
     // Add more subclasses here — key must match the subclass name string in CLASS_DATA
 };
+*/
 
 /*  Race and Background Beta */
 
@@ -304,6 +220,22 @@ async function loadAllClasses() {
     }));
 }
 
+async function loadAllSubclasses() {
+    const res = await fetch('/api/subclasses');
+    const subclassFiles = await res.json();
+
+    await Promise.all(subclassFiles.map(async fileName => {
+        const fileRes = await fetch(`/static_json/subclasses/${fileName}.json`);
+        const data = await fileRes.json();
+
+        // Normalize to match CLASS_DATA keys (e.g. "Fighter" not "fighter")
+        const classKey = data.class.charAt(0).toUpperCase() + data.class.slice(1);
+
+        if (!SUBCLASS_DATA[classKey]) SUBCLASS_DATA[classKey] = [];
+        SUBCLASS_DATA[classKey].push(data);
+    }));
+}
+
 function populateClassSelects() {
     document.querySelectorAll('.class-select').forEach(select => {
         const current = select.value;
@@ -367,7 +299,7 @@ function buildFeature(level, feature, uid) {
                 const sfBlock = document.createElement('div');
                 sfBlock.classList.add('subclass-feature-block');
                 sfBlock.innerHTML = `
-                    <div class="subclass-feature-name">${sf.name}</div>
+                    <div class="subclass-feature-name">${sf.feature_name}</div>
                     <div class="subclass-feature-desc">${sf.description.replace(/\n/g, '<br><br>')}</div>
                 `;
                 block.appendChild(sfBlock);
@@ -387,9 +319,11 @@ function buildFeature(level, feature, uid) {
 function renderFeaturesOnly(box, uid) {
     const selectedClass  = box.querySelector('.class-select').value;
     const selectedLevel  = Math.min(Math.max(parseInt(box.querySelector('.level-input').value) || 1, 1), 20);
-    const selectedSub    = box.querySelector('.subclass-select').value;
     const data           = CLASS_DATA[selectedClass];
-    const subData        = SUBCLASS_DATA[selectedSub] || null;
+
+    const selectedSub = box.querySelector('.subclass-select').value;
+    const subList = SUBCLASS_DATA[selectedClass] || [];
+    const subData = subList.find(s => s.name === selectedSub) || null;
 
     const subByLevel = {};
     if (subData) {
@@ -408,13 +342,17 @@ function renderFeaturesOnly(box, uid) {
                 : [data.features[lvl]];
 
             feats.forEach(feat => {
-                const f = { ...feat };
-                if (f.type === 'subclass' && subByLevel[lvl]) {
-                    f.subclassFeatures = subByLevel[lvl];
-                }
+            const f = { ...feat };
+            if (f.feature_type === 'subclass' && subByLevel[lvl]) {
+                // Call buildFeature for each subclass feature directly
+                subByLevel[lvl].forEach(sf => {
+                    featureContainer.appendChild(buildFeature(lvl, sf, uid));
+                });
+            } else {
                 featureContainer.appendChild(buildFeature(lvl, f, uid));
-                anyFeature = true;
-            });
+            }
+            anyFeature = true;
+        });
         } else {
             const filler = document.createElement('div');
             filler.classList.add('feature-block');
@@ -460,11 +398,12 @@ function renderClassBox(box, uid) {
     const selectedLevel  = Math.min(Math.max(parseInt(box.querySelector('.level-input').value) || 1, 1), 20);
     const data           = CLASS_DATA[selectedClass];
 
-    const subclassSelect = box.querySelector('.subclass-select');
-    // Only rebuild subclass options when class changes (preserve selection otherwise)
+   const subclassSelect = box.querySelector('.subclass-select');
     const prevSub = subclassSelect.value;
-    subclassSelect.innerHTML = data.subclasses.map(s => `<option value="${s}">${s}</option>`).join('');
-    if (data.subclasses.includes(prevSub)) subclassSelect.value = prevSub;
+
+    const available = SUBCLASS_DATA[selectedClass] || [];
+    subclassSelect.innerHTML = available.map(s => `<option value="${s.name}">${s.name}</option>`).join('');
+    if (available.find(s => s.name === prevSub)) subclassSelect.value = prevSub;
 
     renderEquipment(box, uid);
 
@@ -491,7 +430,7 @@ function renderClassBox(box, uid) {
 }
 
 async function init() {
-    await loadAllClasses();
+    await Promise.all([loadAllClasses(), loadAllSubclasses()]);
 
     document.getElementById('addClassBtn').addEventListener('click', () => {
         classCount++;

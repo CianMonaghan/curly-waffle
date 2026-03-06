@@ -25,7 +25,6 @@
     "casterStat": null,
     "spell_list": null,
 
-    "subclasses": ["Champion", "Battle Master", "Eldritch Knight"],
     "features": {
             "1": [
                 { "feature_name": "Fighting Style", "feature_type": "choice", "options": ["Archery", "Defense", "Dueling", "Great Weapon Fighting", "Protection", "Two-Weapon Fighting"] },
