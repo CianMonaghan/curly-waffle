@@ -184,7 +184,8 @@ const characterSchema = new mongoose.Schema({
  * //TODO: remove .html from pathnames after html update
  */
 
-/* Grab Class JSON files */
+
+/* Grab JSON data files */
 app.use('/static_json', express.static(path.join(__dirname, 'static_json')));
 
 app.get('/api/classes', (req, res) => {
@@ -202,6 +203,23 @@ app.get('/api/subclasses', (req, res) => {
         .map(f => f.replace('.json', ''));
     res.json(files);
 });
+
+app.get('/api/backgrounds', (req, res) => {
+    const dir = path.join(__dirname, 'static_json\\backgrounds');
+    const files = fs.readdirSync(dir)
+        .filter(f => f.endsWith('.json'))
+        .map(f => f.replace('.json', ''));
+    res.json(files);
+});
+
+app.get('/api/races', (req, res) => {
+    const dir = path.join(__dirname, 'static_json\\races');
+    const files = fs.readdirSync(dir)
+        .filter(f => f.endsWith('.json'))
+        .map(f => f.replace('.json', ''));
+    res.json(files);
+});
+
 
 /* Grab webpages */
 app.use(express.static(path.join(__dirname, 'webpages')));  // serves CSS, JS, images

@@ -1,69 +1,59 @@
 const CLASS_DATA = {};
 const SUBCLASS_DATA = {};
+const BACKGROUND_DATA = {};
+const RACE_DATA = {};
 
-/* Subclass Beta */
+/* Load JSON data files */
 
-/*
-const SUBCLASS_DATA = {
-    "Champion": {
-        id: "sc-1",
-        name: "Champion",
-        class: "fighter",
-        description: "The archetypal Champion focuses on the development of raw physical power honed to deadly perfection.\nThose who model themselves on this archetype combine rigorous training with physical excellence to deal devastating blows.",
-        features: {
-            3:  { id: "improved-crit",              name: "Improved Critical",           description: "Your weapon attacks score a critical hit on a roll of 19 or 20." },
-            7:  { id: "remarkable-athlete",         name: "Remarkable Athlete",          description: "You can add half your proficiency bonus (rounded up) to any Strength, Dexterity, or Constitution check you make that doesn't already use your proficiency bonus.\nIn addition, when you make a running long jump, the distance you can cover increases by a number of feet equal to your Strength modifier." },
-            10: { id: "fighter-fighting-style-add", name: "Additional Fighting Style",   description: "You can choose a second option from the Fighting Style class feature." },
-            15: { id: "superior-crit",              name: "Superior Critical",           description: "Your weapon attacks score a critical hit on a roll of 18–20." },
-            18: { id: "survivor",                   name: "Survivor",                    description: "At the start of each of your turns, you regain hit points equal to 5 + your Constitution modifier if you have no more than half of your hit points left. You don't gain this benefit if you have 0 hit points." }
-        }
-    }
-    // Add more subclasses here — key must match the subclass name string in CLASS_DATA
-};
-*/
+async function loadAllClasses() {
+    const res        = await fetch('/api/classes');
+    const classFiles = await res.json();
 
-/*  Race and Background Beta */
+    await Promise.all(classFiles.map(async fileName => {
+        const fileRes = await fetch(`/static_json/classes/${fileName}.json`);
+        const data    = await fileRes.json();
+        CLASS_DATA[data.name] = data;
+    }));
+}
 
-const RACE_DATA = [
-    {
-        id: "r-2",
-        name: "Hill Dwarf",
-        description: "As a hill dwarf, you have keen senses, deep intuition, and remarkable resilience.\nThe gold dwarves of Faerun in their mighty southern kingdom are hill dwarves, as are the exiled Neidar and the debased Klar of Krynn in the Dragonlance setting.",
-        features: [
-            { id: "feat-asi-con-2",    name: "Ability Score Increase (CON +2)", description: "Your Constitution score increases by 2." },
-            { id: "speed-25-dwarf",    name: "Speed",                           description: "Your base walking speed is 25 feet. Your speed is not reduced by heavy armor." },
-            { id: "darkvision-60",     name: "Darkvision",                      description: "You can see in dim light within 60 ft as if bright, and in darkness as if dim. You can't discern color in darkness, only shades of gray." },
-            { id: "dwarf-resilience",  name: "Dwarven Resilience",              description: "You have advantage on saving throws against poison, and resistance to poison damage." },
-            { id: "dwarf-weapon-prof", name: "Dwarven Weapon Training",         description: "You have proficiency with the battleaxe, handaxe, light hammer, and warhammer." },
-            { id: "dwarf-tool-prof",   name: "Tool Proficiency",                description: "You gain proficiency with one artisan's tool of your choice: smith's tools, brewer's supplies, or mason's tools." },
-            { id: "stonecunning",      name: "Stonecunning",                    description: "Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient and add double your proficiency bonus." },
-            { id: "dwarf-lang",        name: "Languages",                       description: "You can speak, read, and write Common and Dwarvish." },
-            { id: "feat-asi-wis-1",   name: "Ability Score Increase (WIS +1)", description: "Your Wisdom score increases by 1." },
-            { id: "dwarf-toughness",  name: "Dwarven Toughness",               description: "Your hit point maximum increases by 1, and it increases by 1 every time you gain a level." },
-        ]
-    }
-];
+async function loadAllSubclasses() {
+    const res = await fetch('/api/subclasses');
+    const subclassFiles = await res.json();
 
-const BACKGROUND_DATA = [
-    {
-        id: "b-1",
-        name: "Acolyte",
-        description: "You have spent your life in the service of a temple to a specific god or pantheon of gods. You act as an intermediary between the realm of the holy and the mortal world, performing sacred rites and offering sacrifices in order to conduct worshipers into the presence of the divine.\nChoose a god, a pantheon of gods, or some other quasi-divine being, and work with your DM to detail the nature of your religious service.",
-        skill_prof: [
-            { skill: "Insight",   prof: true },
-            { skill: "Religion",  prof: true }
-        ],
-        tool_prof: null,
-        lang_prof: ["Language of your choice", "Language of your choice"],
-        features: [
-            {
-                id: "shelter-faithful",
-                name: "Shelter of the Faithful",
-                description: "As an acolyte, you command the respect of those who share your faith, and you can perform the religious ceremonies of your deity. You and your adventuring companions can expect to receive free healing and care at a temple, shrine, or other established presence of your faith, though you must provide any material components needed for spells."
-            }
-        ]
-    }
-];
+    await Promise.all(subclassFiles.map(async fileName => {
+        const fileRes = await fetch(`/static_json/subclasses/${fileName}.json`);
+        const data = await fileRes.json();
+
+        // Normalize to match CLASS_DATA keys (e.g. "Fighter" not "fighter")
+        const classKey = data.class.charAt(0).toUpperCase() + data.class.slice(1);
+
+        if (!SUBCLASS_DATA[classKey]) SUBCLASS_DATA[classKey] = [];
+        SUBCLASS_DATA[classKey].push(data);
+    }));
+}
+
+async function loadAllBackgrounds() {
+    const res        = await fetch('/api/backgrounds');
+    const classFiles = await res.json();
+
+    await Promise.all(classFiles.map(async fileName => {
+        const fileRes = await fetch(`/static_json/backgrounds/${fileName}.json`);
+        const data    = await fileRes.json();
+        BACKGROUND_DATA[data.name] = data;
+    }));
+}
+
+async function loadAllRaces() {
+    const res        = await fetch('/api/races');
+    const classFiles = await res.json();
+
+    await Promise.all(classFiles.map(async fileName => {
+        const fileRes = await fetch(`/static_json/races/${fileName}.json`);
+        const data    = await fileRes.json();
+        RACE_DATA[data.name] = data;
+    }));
+}
+
 
 /* Race and Background Functions */
 
@@ -83,7 +73,7 @@ function openPopup(field) {
     pendingSelection  = null;
     confirmBtn.disabled = true;
 
-    const dataset = field === 'race' ? RACE_DATA : BACKGROUND_DATA;
+    const dataset = field === 'race' ? Object.values(RACE_DATA) : Object.values(BACKGROUND_DATA);
     popupTitle.textContent = field === 'race' ? 'Choose a Race' : 'Choose a Background';
 
     // Race/Background Features
@@ -131,7 +121,6 @@ function confirmSelection() {
     btn.textContent = `${pendingSelection.name} ▾`;
     btn.classList.add('has-value');
 
-    // ✅ Update backgroundSkills and refresh all class boxes
     if (currentPopupField === 'background') {
         backgroundSkills.clear();
         if (pendingSelection.skill_prof) {
@@ -208,33 +197,6 @@ document.addEventListener('keydown',  e => { if (e.key === 'Escape') closePopup(
 let classCount = 0;
 let boxUid     = 0;
 let backgroundSkills = new Set();
-
-async function loadAllClasses() {
-    const res        = await fetch('/api/classes');
-    const classFiles = await res.json();
-
-    await Promise.all(classFiles.map(async fileName => {
-        const fileRes = await fetch(`/static_json/classes/${fileName}.json`);
-        const data    = await fileRes.json();
-        CLASS_DATA[data.name] = data;
-    }));
-}
-
-async function loadAllSubclasses() {
-    const res = await fetch('/api/subclasses');
-    const subclassFiles = await res.json();
-
-    await Promise.all(subclassFiles.map(async fileName => {
-        const fileRes = await fetch(`/static_json/subclasses/${fileName}.json`);
-        const data = await fileRes.json();
-
-        // Normalize to match CLASS_DATA keys (e.g. "Fighter" not "fighter")
-        const classKey = data.class.charAt(0).toUpperCase() + data.class.slice(1);
-
-        if (!SUBCLASS_DATA[classKey]) SUBCLASS_DATA[classKey] = [];
-        SUBCLASS_DATA[classKey].push(data);
-    }));
-}
 
 function populateClassSelects() {
     document.querySelectorAll('.class-select').forEach(select => {
@@ -430,7 +392,7 @@ function renderClassBox(box, uid) {
 }
 
 async function init() {
-    await Promise.all([loadAllClasses(), loadAllSubclasses()]);
+    await Promise.all([loadAllClasses(), loadAllSubclasses(), loadAllBackgrounds(), loadAllRaces()]);
 
     document.getElementById('addClassBtn').addEventListener('click', () => {
         classCount++;
