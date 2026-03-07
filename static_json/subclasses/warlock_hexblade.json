@@ -1,0 +1,9 @@
+{
+    "type": "subclass",
+    "id": 5,
+    "name": "Hexblade",
+    "class": "warlock",
+    "description": null, 
+
+    "features": {}
+}

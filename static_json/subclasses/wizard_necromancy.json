@@ -1,0 +1,9 @@
+{
+    "type": "subclass",
+    "id": 7,
+    "name": "Necromancy",
+    "class": "wizard",
+    "description": null, 
+
+    "features": {}
+}

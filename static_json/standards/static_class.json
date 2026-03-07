@@ -41,5 +41,55 @@
             "18": {},
             "19": {},
             "20": {}
+        },
+
+
+    
+    "comment": "Ignore this section when making a class, just for extra info on building features",
+    "class_feature_types": {
+        "passive": {
+            "comment": "This type is for features that don't require any addition to any character traits and just adds an ability that is always active",
+            "feature_name": null,
+            "feature_type": "passive",
+            "description": null
+        },
+
+        "resource": {
+            "comment": "This type is for features that have an amount of times you can use it per period of time",
+            "feature_name": null,
+            "feature_type": "resource",
+            "description": null,
+            "uses": null
+        },
+
+        "choice": {
+            "comment": "This type is for features that require you to choose between an amount of options",
+            "feature_name": null,
+            "feature_type": "choice",
+            "description": null,
+            "options": []
+        },
+
+        "external_choice": {
+            "comment": "This type is for features that require you to choose between an amount of options from one of the external lists",
+            "feature_name": null,
+            "feature_type": "external_choice",
+            "external_list": null,
+            "description": null,
+            "options": []
+        },
+
+        "asi": {
+            "comment": "This type is for asi levels",
+            "feature_name": "Ability Score Improvement",
+            "feature_type": "asi"
+        },
+
+        "subclass": {
+            "comment": "This type checks if you would get a feature from a subclass at this level, then calls the subclass you chose to grab the feature",
+            "feature_name": null,
+            "feature_type": "subclass"
         }
+    }
 }
+

@@ -1,0 +1,9 @@
+{
+    "type": "subclass",
+    "id": 4,
+    "name": "Fiend",
+    "class": "warlock",
+    "description": null, 
+
+    "features": {}
+}

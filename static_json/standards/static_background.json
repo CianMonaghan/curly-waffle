@@ -1,0 +1,20 @@
+{
+    "type": "background",
+    "id": null,
+    "name": null,
+    "description": null,
+    "skill_prof": [
+        { "skill": null, "prof": true },
+        { "skill": null, "prof": true }
+    ],
+    "tool_prof": null,
+    "lang_prof": [],
+    "features": [
+        {
+            "id": null,
+            "name": null, 
+            "description": null,
+            "trigger": null
+        }
+    ]
+}

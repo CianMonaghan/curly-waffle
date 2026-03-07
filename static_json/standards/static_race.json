@@ -1,0 +1,14 @@
+{
+    "type": "race",
+    "id": null,
+    "name": null,
+    "description": null,
+    "features": [
+        {
+            "id": null,
+            "name": null,
+            "description": null,
+            "trigger": null
+        }
+    ]
+}

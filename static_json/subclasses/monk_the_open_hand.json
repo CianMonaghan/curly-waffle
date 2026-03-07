@@ -1,0 +1,9 @@
+{
+    "type": "subclass",
+    "id": 3,
+    "name": "Way of the Open Hand",
+    "class": "monk",
+    "description": null, 
+
+    "features": {}
+}

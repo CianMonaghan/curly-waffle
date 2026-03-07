@@ -1,0 +1,22 @@
+{
+    "skill_list": {
+         "Acrobatics":        {"prof": false},
+         "Animal Handling":   {"prof": false},
+         "Arcana":            {"prof": false},
+         "Athletics":         {"prof": false},
+         "Deception":         {"prof": false},
+         "History":           {"prof": false},
+         "Insight":           {"prof": false},
+         "Intimidation":      {"prof": false},
+         "Investigation":     {"prof": false},
+         "Medicine":          {"prof": false},
+         "Nature":            {"prof": false},
+         "Perception":        {"prof": false},
+         "Performance":       {"prof": false},
+         "Persuasion":        {"prof": false},
+         "Religion":          {"prof": false},
+         "Sleight of Hand":   {"prof": false},
+         "Stealth":           {"prof": false},
+         "Survival":          {"prof": false}
+    }
+}

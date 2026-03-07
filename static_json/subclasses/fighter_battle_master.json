@@ -1,0 +1,9 @@
+{
+    "type": "subclass",
+    "id": 1,
+    "name": "Battle Master",
+    "class": "fighter",
+    "description": null, 
+
+    "features": {}
+}

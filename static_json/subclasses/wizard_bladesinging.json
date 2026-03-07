@@ -1,0 +1,9 @@
+{
+    "type": "subclass",
+    "id": 6,
+    "name": "Bladesinging",
+    "class": "wizard",
+    "description": null, 
+
+    "features": {}
+}

@@ -1,0 +1,9 @@
+{
+    "type": "subclass",
+    "id": 2,
+    "name": "Way of Mercy",
+    "class": "monk",
+    "description": null, 
+
+    "features": {}
+}
