@@ -529,7 +529,7 @@ function buildCharacterPayload() {
 
 
 // Save character handler
-function saveCharacter() {
+async function saveCharacter() {
   const payload = buildCharacterPayload();
 
   // basic validation
@@ -538,14 +538,34 @@ function saveCharacter() {
     return;
   }
 
-  // convert to formatted JSON
+  // ---------- send to server ----------
+  try {
+    const res = await fetch("/api/characters", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok) {
+      alert(data.error || "Failed to save character.");
+      return;
+    }
+
+    console.log("Character saved to server:", data);
+  } catch (err) {
+    console.error(err);
+    alert("Network error while saving character.");
+    return;
+  }
+
+  // ---------- download JSON ----------
   const jsonString = JSON.stringify(payload, null, 2);
 
-  // create downloadable file
   const blob = new Blob([jsonString], { type: "application/json" });
   const url = URL.createObjectURL(blob);
 
-  // create temporary download link
   const a = document.createElement("a");
   a.href = url;
   a.download = `${payload.name.replace(/\s+/g, "_")}_character.json`;
@@ -557,6 +577,7 @@ function saveCharacter() {
   URL.revokeObjectURL(url);
 
   console.log("Character JSON:", payload);
+  alert("Character saved!");
 }
 
 // attach the handler
