@@ -220,6 +220,13 @@ app.get('/api/races', (req, res) => {
     res.json(files);
 });
 
+app.post('/api/characters', (req, res) => {
+    characterJSON = parseCharacter(req.body) //TODO: Implement parseCharacter in own js file
+    //check if it matches the schema?
+    //push it to the database
+    //send back the characterJSON to display on front-end
+});
+
 
 /* Grab webpages */
 app.use(express.static(path.join(__dirname, 'webpages')));  // serves CSS, JS, images
