@@ -90,51 +90,51 @@
 
     <!-- Class Template -->
     <template id="classTemplate">
-    <div class="character-class-box">
-        <div class="class-box-header">
-            <strong class="class-title">Class 1</strong>
-            <div style="display:flex; align-items:center; gap:12px;">
-                <label><input type="checkbox" class="primary-class-cb"> Set Primary Class</label>
-                <button class="remove-btn">Remove</button>
+        <div class="character-class-box">
+            <div class="class-box-header">
+                <strong class="class-title">Class 1</strong>
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <label><input type="checkbox" class="primary-class-cb"> Set Primary Class</label>
+                    <button class="remove-btn">Remove</button>
+                </div>
+            </div>
+
+            <div class="field-row">
+                <label>Class</label>
+                <select class="class-select">
+                    <option value="Fighter">Fighter</option>
+                    <option value="Wizard">Wizard</option>
+                    <option value="Monk">Monk</option>
+                    <option value="Warlock">Warlock</option>
+                </select>
+            </div>
+            <div class="field-row">
+                <label>Subclass</label>
+                <select class="subclass-select"></select>
+            </div>
+            <div class="field-row">
+                <label>Level</label>
+                <input type="number" class="level-input" min="1" max="20" value="1" style="width:60px;">
+            </div>
+
+            <div class="class-box-body">
+                <div class="class-left">
+                    <strong class="skill-count-label">Skills:</strong>
+                    <div class="skill-list"></div>
+
+                    <!-- Equipment sits under skills, both are creation-time choices -->
+                    <strong class="equipment-label">Equipment:</strong>
+                    <p style="font-size:0.85em; color:#555; margin:2px 0 6px;">
+                        In addition to equipment from your background:
+                    </p>
+                    <div class="equipment-container"></div>
+                </div>
+                <div class="class-right">
+                    <div class="feature-container"></div>
+                </div>
             </div>
         </div>
-
-        <div class="field-row">
-            <label>Class</label>
-            <select class="class-select">
-                <option value="Fighter">Fighter</option>
-                <option value="Wizard">Wizard</option>
-                <option value="Monk">Monk</option>
-                <option value="Warlock">Warlock</option>
-            </select>
-        </div>
-        <div class="field-row">
-            <label>Subclass</label>
-            <select class="subclass-select"></select>
-        </div>
-        <div class="field-row">
-            <label>Level</label>
-            <input type="number" class="level-input" min="1" max="20" value="1" style="width:60px;">
-        </div>
-
-        <div class="class-box-body">
-            <div class="class-left">
-                <strong class="skill-count-label">Skills:</strong>
-                <div class="skill-list"></div>
-
-                <!-- Equipment sits under skills, both are creation-time choices -->
-                <strong class="equipment-label">Equipment:</strong>
-                <p style="font-size:0.85em; color:#555; margin:2px 0 6px;">
-                    In addition to equipment from your background:
-                </p>
-                <div class="equipment-container"></div>
-            </div>
-            <div class="class-right">
-                <div class="feature-container"></div>
-            </div>
-        </div>
-    </div>
-</template>
+    </template>
 
     <script src="create_character.js"></script>
 </body>
