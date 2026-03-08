@@ -184,13 +184,14 @@ function closePopup() {
     pendingSelection  = null;
 }
 
+
 document.getElementById('race-btn').addEventListener('click',       () => openPopup('race'));
 document.getElementById('background-btn').addEventListener('click', () => openPopup('background'));
+document.getElementById('saveCharacterBtn').addEventListener('click', saveCharacter);
 popupClose.addEventListener('click',  closePopup);
 confirmBtn.addEventListener('click',  confirmSelection);
 overlay.addEventListener('click', e => { if (e.target === overlay) closePopup(); });
 document.addEventListener('keydown',  e => { if (e.key === 'Escape') closePopup(); });
-
 
 /* Class Functions */
 
@@ -434,15 +435,17 @@ init();
 function getSelectedRaceObj() {
   const el = document.getElementById("race");
   const id = el ? el.value : "";
-  if (typeof RACE_DATA === "undefined") return null;
-  return RACE_DATA.find(r => r.id === id) || null;
+  if (!id) return null;
+
+  return Object.values(RACE_DATA).find(r => r.id === id) || null;
 }
 
 function getSelectedBackgroundObj() {
   const el = document.getElementById("background");
   const id = el ? el.value : "";
-  if (typeof BACKGROUND_DATA === "undefined") return null;
-  return BACKGROUND_DATA.find(b => b.id === id) || null;
+  if (!id) return null;
+
+  return Object.values(BACKGROUND_DATA).find(b => b.id === id) || null;
 }
 
 // Background skills should come from BACKGROUND_DATA (source-of-truth)
@@ -525,42 +528,39 @@ function buildCharacterPayload() {
 }
 
 
-//temp save handler
-(function attachSaveHandler() {
-  const btn = document.getElementById("saveCharacterBtn");
-  if (!btn) return;
+// Save character handler
+function saveCharacter() {
+  const payload = buildCharacterPayload();
 
-  btn.addEventListener("click", () => {
+  // basic validation
+  if (!payload.name) {
+    alert("Please enter a character name.");
+    return;
+  }
 
-    const payload = buildCharacterPayload();
+  // convert to formatted JSON
+  const jsonString = JSON.stringify(payload, null, 2);
 
-    // basic validation
-    if (!payload.name) {
-      alert("Please enter a character name.");
-      return;
-    }
+  // create downloadable file
+  const blob = new Blob([jsonString], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
 
-    // convert to formatted JSON
-    const jsonString = JSON.stringify(payload, null, 2);
+  // create temporary download link
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `${payload.name.replace(/\s+/g, "_")}_character.json`;
 
-    // create downloadable file
-    const blob = new Blob([jsonString], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
+  document.body.appendChild(a);
+  a.click();
 
-    // create temporary download link
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${payload.name.replace(/\s+/g, "_")}_character.json`;
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 
-    document.body.appendChild(a);
-    a.click();
+  console.log("Character JSON:", payload);
+}
 
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-
-    console.log("Character JSON:", payload);
-  });
-})();
+// attach the handler
+document.getElementById('saveCharacterBtn').addEventListener('click', saveCharacter);
 
 
 // Wire up the Save button: POST JSON to the server
