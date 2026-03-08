@@ -437,7 +437,7 @@ function getSelectedRaceObj() {
   const id = el ? el.value : "";
   if (!id) return null;
 
-  return Object.values(RACE_DATA).find(r => r.id === id) || null;
+  return Object.values(RACE_DATA).find(r => r.id === Number(id)) || null;
 }
 
 function getSelectedBackgroundObj() {
@@ -445,7 +445,7 @@ function getSelectedBackgroundObj() {
   const id = el ? el.value : "";
   if (!id) return null;
 
-  return Object.values(BACKGROUND_DATA).find(b => b.id === id) || null;
+  return Object.values(BACKGROUND_DATA).find(b => b.id === Number(id)) || null;
 }
 
 // Background skills should come from BACKGROUND_DATA (source-of-truth)
