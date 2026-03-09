@@ -1,8 +1,11 @@
 const express = require("express");
 const fs = require('fs');
 const path = require('path');
+const { parseCharacter } = require('./parseCharacter');
 const app = express();
 const port = 3000;
+
+app.use(express.json());
 
 /**
  * DATABASE
@@ -221,10 +224,14 @@ app.get('/api/races', (req, res) => {
 });
 
 app.post('/api/characters', (req, res) => {
-    characterJSON = parseCharacter(req.body) //TODO: Implement parseCharacter in own js file
-    //check if it matches the schema?
-    //push it to the database
-    //send back the characterJSON to display on front-end
+    try {
+        const character = parseCharacter(req.body);
+        //TODO: validate against schema then push to database
+        res.json(character);
+    } catch (err) {
+        console.error('[POST /api/characters]', err);
+        res.status(500).json({ error: err.message });
+    }
 });
 
 
