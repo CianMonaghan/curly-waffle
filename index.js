@@ -223,6 +223,14 @@ app.get('/api/races', (req, res) => {
     res.json(files);
 });
 
+app.get('/api/external_lists', (req, res) => {
+    const dir = path.join(__dirname, 'static_json\\external_lists');
+    const files = fs.readdirSync(dir)
+        .filter(f => f.endsWith('.json'))
+        .map(f => f.replace('.json', ''));
+    res.json(files);
+});
+
 app.post('/api/characters', (req, res) => {
     try {
         const character = parseCharacter(req.body);

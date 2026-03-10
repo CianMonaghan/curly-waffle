@@ -2,6 +2,7 @@ const CLASS_DATA = {};
 const SUBCLASS_DATA = {};
 const BACKGROUND_DATA = {};
 const RACE_DATA = {};
+const EXTERNAL_LISTS = {};
 
 /* Load JSON data files */
 
@@ -51,6 +52,17 @@ async function loadAllRaces() {
         const fileRes = await fetch(`/static_json/races/${fileName}.json`);
         const data    = await fileRes.json();
         RACE_DATA[data.name] = data;
+    }));
+}
+
+async function loadAllExternalLists() {
+    const res        = await fetch('/api/external_lists');
+    const classFiles = await res.json();
+
+    await Promise.all(classFiles.map(async fileName => {
+        const fileRes = await fetch(`/static_json/external_lists/${fileName}.json`);
+        const data    = await fileRes.json();
+        EXTERNAL_LISTS[data.name] = data.options;
     }));
 }
 
@@ -187,7 +199,6 @@ function closePopup() {
 
 document.getElementById('race-btn').addEventListener('click',       () => openPopup('race'));
 document.getElementById('background-btn').addEventListener('click', () => openPopup('background'));
-document.getElementById('saveCharacterBtn').addEventListener('click', saveCharacter);
 popupClose.addEventListener('click',  closePopup);
 confirmBtn.addEventListener('click',  confirmSelection);
 overlay.addEventListener('click', e => { if (e.target === overlay) closePopup(); });
@@ -198,6 +209,7 @@ document.addEventListener('keydown',  e => { if (e.key === 'Escape') closePopup(
 let classCount = 0;
 let boxUid     = 0;
 let backgroundSkills = new Set();
+let primaryClassUid = null;
 
 function populateClassSelects() {
     document.querySelectorAll('.class-select').forEach(select => {
@@ -216,27 +228,52 @@ function enforceSkillLimit(skillList, max) {
     });
 }
 
-function buildFeature(level, feature, uid) {
+function buildFeature(level, feature, uid, featureContainer = null) {
+
     const block = document.createElement('div');
     block.classList.add('feature-block');
+
+    block.dataset.featureName = feature.feature_name;
+
+    const isOptional = feature.optional === true;
 
     const title = document.createElement('div');
     title.classList.add('feature-title');
     title.textContent = `Level ${level} – ${feature.feature_name}`;
     block.appendChild(title);
 
-    if (feature.feature_type === 'passive') {
+    if (isOptional) {
+        const toggle = document.createElement('label');
+        toggle.classList.add('optional-toggle');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.classList.add('optional-cb');
+        toggle.appendChild(checkbox);
+        toggle.append(' Include this optional feature?');
+        block.appendChild(toggle);
+
+        const content = document.createElement('div');
+        content.classList.add('optional-content');
+        content.style.display = 'none';
+        block.appendChild(content);
+
+        checkbox.addEventListener('change', () => {
+            content.style.display = checkbox.checked ? 'block' : 'none';
+        });
+
+        block._contentTarget = content;
+    }
+
+    const target = block._contentTarget ?? block;
+
+    if (feature.feature_type === 'passive' || feature.feature_type === 'resource') {
         const desc = document.createElement('div');
         desc.textContent = feature.description ?? '';
-        block.appendChild(desc);
-    } else if (feature.feature_type === 'resource') {
-        const desc = document.createElement('div');
-        desc.textContent = feature.description ?? '';
-        block.appendChild(desc);
+        target.appendChild(desc);
     } else if (feature.feature_type === 'choice') {
         const prompt = document.createElement('div');
         prompt.textContent = 'Select one:';
-        block.appendChild(prompt);
+        target.appendChild(prompt);
         const options = document.createElement('div');
         options.classList.add('feature-options');
         const radioName = `feat_lvl${level}_uid${uid}`;
@@ -245,7 +282,7 @@ function buildFeature(level, feature, uid) {
             label.innerHTML = `<input type="radio" name="${radioName}"> ${opt}`;
             options.appendChild(label);
         });
-        block.appendChild(options);
+        target.appendChild(options);
     } else if (feature.feature_type === 'asi') {
         const row = document.createElement('div');
         row.classList.add('asi-row');
@@ -255,7 +292,7 @@ function buildFeature(level, feature, uid) {
             <select>${attrs}</select>
             <select>${attrs}</select>
         `;
-        block.appendChild(row);
+        target.appendChild(row);
     } else if (feature.feature_type === 'subclass') {
         if (feature.subclassFeatures && feature.subclassFeatures.length > 0) {
             feature.subclassFeatures.forEach(sf => {
@@ -265,15 +302,79 @@ function buildFeature(level, feature, uid) {
                     <div class="subclass-feature-name">${sf.feature_name}</div>
                     <div class="subclass-feature-desc">${sf.description.replace(/\n/g, '<br><br>')}</div>
                 `;
-                block.appendChild(sfBlock);
+                target.appendChild(sfBlock);
             });
         } else {
             const note = document.createElement('div');
             note.style.fontStyle = 'italic';
             note.style.color = '#555';
             note.textContent = 'Feature determined by your subclass choice.';
-            block.appendChild(note);
+            target.appendChild(note);
         }
+    } else if (feature.feature_type === 'external_choice') {
+        const list = EXTERNAL_LISTS[feature.external_list] || [];
+        const numChoices = feature.numChoices ?? 1;
+        const radioName = `extchoice_lvl${level}_uid${uid}`;
+
+        const prompt = document.createElement('div');
+        prompt.textContent = `Choose ${numChoices}:`;
+        target.appendChild(prompt);
+
+        list.forEach((option, i) => {
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('feature-block');
+
+            const inputType = numChoices === 1 ? 'radio' : 'checkbox';
+            const label = document.createElement('label');
+            label.innerHTML = `<input type="${inputType}" name="${radioName}" value="${option.name}"> <strong>${option.name}</strong>`;
+            wrapper.appendChild(label);
+
+            if (option.description) {
+                const desc = document.createElement('div');
+                desc.style.marginLeft = '1.5em';
+                desc.textContent = option.description;
+                wrapper.appendChild(desc);
+            }
+
+            target.appendChild(wrapper);
+        });
+
+    } else if (feature.feature_type === 'modifier') {
+        const desc = document.createElement('div');
+        desc.textContent = feature.description ?? '';
+        target.appendChild(desc);
+
+        block.dataset.statToMod   = feature.stat_to_mod   ?? '';
+        block.dataset.modification = feature.modification ?? '';
+
+    } else if (feature.feature_type === 'upgrade') {
+        if (featureContainer) {
+            const prior = [...featureContainer.querySelectorAll('.feature-block')]
+                .find(b => b.dataset.featureName === feature.feature_to_upgrade);
+
+            if (prior) {
+                const oldTitle = prior.querySelector('.feature-title');
+                if (oldTitle) oldTitle.innerHTML += ' <span class="upgrade-badge">↑ Upgraded</span>';
+
+                if (feature.description) {
+                    const upgradeNote = document.createElement('div');
+                    upgradeNote.classList.add('upgrade-note');
+                    upgradeNote.textContent = `[Level ${level} upgrade] ${feature.description}`;
+                    prior.appendChild(upgradeNote);
+                } else if (feature.new_value) {
+                    const upgradeNote = document.createElement('div');
+                    upgradeNote.classList.add('upgrade-note');
+                    upgradeNote.textContent = `[Level ${level} upgrade] Uses increased to ${feature.new_value}.`;
+                    prior.appendChild(upgradeNote);
+                }
+            }
+        }
+
+        const ref = document.createElement('div');
+        ref.style.fontStyle = 'italic';
+        ref.style.color = '#555';
+        ref.textContent = `Upgrades "${feature.feature_to_upgrade}" — see above.`;
+        target.appendChild(ref);
     }
 
     return block;
@@ -307,12 +408,11 @@ function renderFeaturesOnly(box, uid) {
             feats.forEach(feat => {
             const f = { ...feat };
             if (f.feature_type === 'subclass' && subByLevel[lvl]) {
-                // Call buildFeature for each subclass feature directly
                 subByLevel[lvl].forEach(sf => {
-                    featureContainer.appendChild(buildFeature(lvl, sf, uid));
+                    featureContainer.appendChild(buildFeature(lvl, sf, uid, featureContainer));  // NEW
                 });
             } else {
-                featureContainer.appendChild(buildFeature(lvl, f, uid));
+                featureContainer.appendChild(buildFeature(lvl, f, uid, featureContainer));      // NEW
             }
             anyFeature = true;
         });
@@ -346,12 +446,22 @@ function renderEquipment(box, uid) {
     data.equipment.forEach((row, i) => {
         const block = document.createElement('div');
         block.classList.add('feature-block');
-        row.options.forEach((opt, j) => {
-            const label = document.createElement('label');
-            label.innerHTML = `<input type="radio" name="equip_${uid}_${i}" value="${j}"> 
-                               ${String.fromCharCode(97 + j)}) ${opt}`;
+
+        if (row.options.length === 1) {
+            // Fixed item — no choice needed
+            const label = document.createElement('div');
+            label.textContent = row.options[0];
             block.appendChild(label);
-        });
+        } else {
+            // Multiple options — render as radio buttons
+            row.options.forEach((opt, j) => {
+                const label = document.createElement('label');
+                label.innerHTML = `<input type="radio" name="equip_${uid}_${i}" value="${j}"> 
+                                   ${String.fromCharCode(97 + j)}) ${opt}`;
+                block.appendChild(label);
+            });
+        }
+
         container.appendChild(block);
     });
 }
@@ -393,7 +503,7 @@ function renderClassBox(box, uid) {
 }
 
 async function init() {
-    await Promise.all([loadAllClasses(), loadAllSubclasses(), loadAllBackgrounds(), loadAllRaces()]);
+    await Promise.all([loadAllClasses(), loadAllSubclasses(), loadAllBackgrounds(), loadAllRaces(), loadAllExternalLists()]).catch(err => console.error('Init failed:', err));;
 
     document.getElementById('addClassBtn').addEventListener('click', () => {
         classCount++;
@@ -403,6 +513,7 @@ async function init() {
         const template = document.getElementById('classTemplate');
         const clone    = template.content.cloneNode(true);
         clone.querySelector('.class-title').textContent = `Class ${classCount}`;
+
         clone.querySelector('.remove-btn').addEventListener('click', function () {
             this.closest('.character-class-box').remove();
         });
@@ -415,6 +526,22 @@ async function init() {
         document.getElementById('classContainer').appendChild(clone);
         const box = document.getElementById('classContainer').lastElementChild;
         box.dataset.uid = uid;
+
+        const primaryCb = box.querySelector('.primary-class-cb');
+        primaryCb.addEventListener('change', () => {
+            if (primaryCb.checked) {
+                primaryClassUid = uid;
+                
+                document.querySelectorAll('.character-class-box').forEach(b => {
+                    if (b.dataset.uid != uid) {
+                        b.querySelector('.primary-class-cb').checked = false;
+                    }
+                });
+            } else {
+                primaryClassUid = null;
+            }
+        });
+
         box.querySelector('.class-select').addEventListener('change', () => renderClassBox(box, uid));
         box.querySelector('.level-input').addEventListener('change',  () => renderClassBox(box, uid));
         box.querySelector('.subclass-select').addEventListener('change', () => renderFeaturesOnly(box, uid));

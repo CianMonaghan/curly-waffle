@@ -29,8 +29,10 @@
             "1": [
                 { 
                     "feature_name": "Fighting Style", 
-                    "feature_type": "choice", 
-                    "options": ["Archery", "Defense", "Dueling", "Great Weapon Fighting", "Protection", "Two-Weapon Fighting"] 
+                    "feature_type": "external_choice", 
+                    "external_list": "fighting_styles",
+                    "numChoices": 1,
+                    "options": "all" 
                 },
                 { 
                     "feature_name": "Second Wind", 
@@ -54,7 +56,7 @@
                 "feature_type": "asi" 
             },
             "5": { 
-                "feature_name": "Extra Attack (2nd Attack)", 
+                "feature_name": "Extra Attack", 
                 "feature_type": "passive", 
                 "description": "You can attack twice when you take the Attack action on your turn." 
             },
@@ -81,19 +83,21 @@
                 "feature_type": "subclass" 
             },
             "11": { 
-                "feature_name": "Extra Attack (3rd Attack)", 
-                "feature_type": "passive", 
-                "description": "You can attack three when you take the Attack action on your turn." 
+                "feature_name": "Extra Attack Upgrade", 
+                "feature_type": "upgrade", 
+                "feature_to_upgrade": "Extra Attack",
+                "new_value": "3",
+                "description": "You can attack three times when you take the Attack action on your turn." 
             },    
             "12": { 
                 "feature_name": "Ability Score Improvement", 
                 "feature_type": "asi" 
             },
             "13": { 
-                "feature_name": "Indomitable", 
-                "feature_type": "resource", 
-                "uses": "1", 
-                "description": "You can reroll a saving throw that you fail. You must use the new roll." 
+                "feature_name": "Indomitable Upgrade", 
+                "feature_type": "upgrade", 
+                "feature_to_upgrade": "Indomitable",
+                "new_value": "2"  
             },
             "14": { 
                 "feature_name": "Ability Score Improvement", 
@@ -109,16 +113,16 @@
             },
             "17": [
                 { 
-                    "feature_name": "Action Surge", 
-                    "feature_type": "resource", 
-                    "uses": "2", 
-                    "description": "On your turn, you can take one additional action. You regain all uses when you finish a short or long rest before you can use it again." 
+                    "feature_name": "Action Surge Upgrade", 
+                    "feature_type": "upgrade", 
+                    "feature_to_upgrade": "Action Surge",
+                    "new_value": "2" 
                 },
                 { 
-                    "feature_name": "Indomitable", 
-                    "feature_type": "resource", 
-                    "uses": "1", 
-                    "description": "You can reroll a saving throw that you fail. You must use the new roll. You regain all uses when you finish a short or long rest."
+                    "feature_name": "Indomitable Upgrade", 
+                    "feature_type": "upgrade", 
+                    "feature_to_upgrade": "Indomitable",
+                    "new_value": "3" 
                 }
             ],
             "18": { 
@@ -130,8 +134,10 @@
                 "feature_type": "asi" 
             },
             "20": { 
-                "feature_name": "Extra Attack (4th Attack)", 
-                "feature_type": "passive", 
+                "feature_name": "Extra Attack Upgrade", 
+                "feature_type": "upgrade", 
+                "feature_to_upgrade": "Extra Attack",
+                "new_value": "4",
                 "description": "You can attack four times when you take the Attack action on your turn." 
             }
         }

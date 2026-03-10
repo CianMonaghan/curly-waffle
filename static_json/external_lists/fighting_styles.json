@@ -1,0 +1,11 @@
+{
+    "name": "fighting_styles",
+    "options": [
+        { "name": "Archery", "description": "You gain a +2 bonus to attack rolls you make with ranged weapons." },
+        { "name": "Defense", "description": "While you are wearing armor, you gain a +1 bonus to AC." },
+        { "name": "Dueling", "description": "When wielding a melee weapon in one hand and no other weapons, +2 to damage rolls." },
+        { "name": "Great Weapon Fighting", "description": "Reroll 1s and 2s on damage dice when using two-handed or versatile weapons." },
+        { "name": "Protection", "description": "Use your reaction to impose disadvantage on an attack against an ally within 5 feet." },
+        { "name": "Two-Weapon Fighting", "description": "Add your ability modifier to the off-hand attack's damage roll." }
+    ]
+}

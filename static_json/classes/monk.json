@@ -28,7 +28,9 @@
             "1": [
                 { 
                     "feature_name": "Unarmored Defense", 
-                    "feature_type": "passive", 
+                    "feature_type": "modifier",
+                    "stat_to_mod": "AC",
+                    "modification": "10 + Dexterity modifier + Wisdom modifier", 
                     "description": "While not wearing armor or wielding a shield, your AC equals 10 + your Dexterity modifier + your Wisdom modifier." 
                 },
                 { 
@@ -61,12 +63,15 @@
                 },
                 { 
                     "feature_name": "Unarmored Movement", 
-                    "feature_type": "passive", 
+                    "feature_type": "modifier", 
+                    "stat_to_mod": "Speed",
+                    "modification": "+ 10",
                     "description": "Your base speed increases by 10 feet." 
                 },
                 { 
                     "feature_name": "Dedicated Weapon (Optional)", 
                     "feature_type": "passive", 
+                    "optional": "true",
                     "description": "When you finish a long rest, you may touch a weapon that you are proficient with, is a simple or melee weapon, and lacks the heavy or special properties to make it your monk weapon," 
                 }
             
@@ -84,6 +89,7 @@
                 { 
                     "feature_name": "Ki-Fueled Attack (Optional)", 
                     "feature_type": "passive", 
+                    "optional": "true",
                     "description": "If you spend 1 or more ki points as part of your turn, you may make one attack with an unarmed strike or with a monk weapon as a bonus action." 
                 }
             ],
@@ -100,6 +106,7 @@
                 { 
                     "feature_name": "Quickened Healing (Optional)", 
                     "feature_type": "passive", 
+                    "optional": "true",
                     "description": "As an action, you can spend 2 ki points and roll a Martial Arts die. You regain a number of hit points equal to the number rolled plus your proficiency bonus." 
                 }
             ],
@@ -117,6 +124,7 @@
                 { 
                     "feature_name": "Focused Aim (Optional)", 
                     "feature_type": "passive", 
+                    "optional": "true",
                     "description": "When you miss with an attack roll, you can spend 1 to 3 ki points to increase your attack roll by 2 for each of these ki points you spend." 
                 }
             ],
@@ -132,7 +140,9 @@
                 },
                 { 
                     "feature_name": "Unarmored Movement Improvement", 
-                    "feature_type": "passive", 
+                    "feature_type": "upgrade",
+                    "feature_to_upgrade": "Unarmored Movement",
+                    "new_value": "+ 15", 
                     "description": "Your base speed increases by 15 feet." 
                 }
             ],
@@ -154,7 +164,8 @@
             },
             "9": { 
                 "feature_name": "Unarmored Movement Improvement", 
-                "feature_type": "passive", 
+                "feature_type": "upgrade", 
+                "feature_to_upgrade": "Unarmored Movement",
                 "description": "You can move along vertical surfaces and across liquids on your turn without falling during the move." 
             },
             "10": [
@@ -165,7 +176,9 @@
                 },
                 { 
                     "feature_name": "Unarmored Movement Improvement", 
-                    "feature_type": "passive", 
+                    "feature_type": "upgrade",
+                    "feature_to_upgrade": "Unarmored Movement",
+                    "new_value": "+ 20",  
                     "description": "Your base speed increases by 20 feet." 
                 }
             ],
@@ -185,12 +198,16 @@
             "14": [
                 { 
                     "feature_name": "Diamond Soul", 
-                    "feature_type": "passive", 
+                    "feature_type": "modifier",
+                    "stat_to_mod": "all skills",
+                    "modification": "+ prof_bonus",
                     "description": "Your mastery of ki grants you proficiency in all saving throws. Additionally, whenever you make a saving throw and fail, you can spend 1 ki point to reroll it and take the second result." 
                 },
                 { 
                     "feature_name": "Unarmored Movement Improvement", 
-                    "feature_type": "passive", 
+                    "feature_type": "upgrade",
+                    "feature_to_upgrade": "Unarmored Movement",
+                    "new_value": "+ 25",  
                     "description": "Your base speed increases by 25 feet." 
                 }
             ],
