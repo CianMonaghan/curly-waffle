@@ -27,30 +27,112 @@
 
     "features": {
             "1": [
-                { "feature_name": "Fighting Style", "feature_type": "choice", "options": ["Archery", "Defense", "Dueling", "Great Weapon Fighting", "Protection", "Two-Weapon Fighting"] },
-                { "feature_name": "Second Wind", "feature_type": "resource", "uses": "1", "description": "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level. \n Once you use this feature, you must finish a short or long rest before you can use it again."}
+                { 
+                    "feature_name": "Fighting Style", 
+                    "feature_type": "choice", 
+                    "options": ["Archery", "Defense", "Dueling", "Great Weapon Fighting", "Protection", "Two-Weapon Fighting"] 
+                },
+                { 
+                    "feature_name": "Second Wind", 
+                    "feature_type": "resource", 
+                    "uses": "1", 
+                    "description": "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level. \n Once you use this feature, you must finish a short or long rest before you can use it again."
+                }
             ],
-            "2": { "feature_name": "Action Surge", "feature_type": "resource", "uses": "1", "description": "On your turn, you can take one additional action. Once you use this feature, you must finish a short or long rest before you can use it again." },
-            "3": { "feature_name": "Martial Archetype", "feature_type": "subclass" },
-            "4": { "feature_name": "Ability Score Improvement", "feature_type": "asi" },
-            "5": { "feature_name": "Extra Attack (2nd Attack)", "feature_type": "passive", "description": "You can attack twice when you take the Attack action on your turn." },
-            "6": { "feature_name": "Ability Score Improvement", "feature_type": "asi" },
-            "7": { "feature_name": "Martial Archetype Feature", "feature_type": "subclass" },
-            "8": { "feature_name": "Ability Score Improvement", "feature_type": "asi" },
-            "9": { "feature_name": "Indomitable", "feature_type": "resource", "uses": "1", "description": "You can reroll a saving throw that you fail. You must use the new roll. You regain all uses when you finish a short or long rest." },
-            "10": { "feature_name": "Martial Archetype Feature", "feature_type": "subclass" },
-            "11": { "feature_name": "Extra Attack (3rd Attack)", "feature_type": "passive", "description": "You can attack three when you take the Attack action on your turn." },    
-            "12": { "feature_name": "Ability Score Improvement", "feature_type": "asi" },
-            "13": { "feature_name": "Indomitable", "feature_type": "resource", "uses": "1", "description": "You can reroll a saving throw that you fail. You must use the new roll." },
-            "14": { "feature_name": "Ability Score Improvement", "feature_type": "asi" },
-            "15": { "feature_name": "Martial Archetype Feature", "feature_type": "subclass" },
-            "16": { "feature_name": "Ability Score Improvement", "feature_type": "asi" },
+            "2": { 
+                "feature_name": "Action Surge", 
+                "feature_type": "resource", 
+                "uses": "1", 
+                "description": "On your turn, you can take one additional action. Once you use this feature, you must finish a short or long rest before you can use it again." 
+            },
+            "3": { 
+                "feature_name": "Martial Archetype", 
+                "feature_type": "subclass" 
+            },
+            "4": { 
+                "feature_name": "Ability Score Improvement", 
+                "feature_type": "asi" 
+            },
+            "5": { 
+                "feature_name": "Extra Attack (2nd Attack)", 
+                "feature_type": "passive", 
+                "description": "You can attack twice when you take the Attack action on your turn." 
+            },
+            "6": { 
+                "feature_name": "Ability Score Improvement", 
+                "feature_type": "asi" 
+            },
+            "7": { 
+                "feature_name": "Martial Archetype Feature", 
+                "feature_type": "subclass" 
+            },
+            "8": { 
+                "feature_name": "Ability Score Improvement", 
+                "feature_type": "asi" 
+            },
+            "9": { 
+                "feature_name": "Indomitable", 
+                "feature_type": "resource", 
+                "uses": "1", 
+                "description": "You can reroll a saving throw that you fail. You must use the new roll. You regain all uses when you finish a short or long rest." 
+            },
+            "10": { 
+                "feature_name": "Martial Archetype Feature", 
+                "feature_type": "subclass" 
+            },
+            "11": { 
+                "feature_name": "Extra Attack (3rd Attack)", 
+                "feature_type": "passive", 
+                "description": "You can attack three when you take the Attack action on your turn." 
+            },    
+            "12": { 
+                "feature_name": "Ability Score Improvement", 
+                "feature_type": "asi" 
+            },
+            "13": { 
+                "feature_name": "Indomitable", 
+                "feature_type": "resource", 
+                "uses": "1", 
+                "description": "You can reroll a saving throw that you fail. You must use the new roll." 
+            },
+            "14": { 
+                "feature_name": "Ability Score Improvement", 
+                "feature_type": "asi"
+             },
+            "15": { 
+                "feature_name": "Martial Archetype Feature", 
+                "feature_type": "subclass" 
+            },
+            "16": { 
+                "feature_name": "Ability Score Improvement", 
+                "feature_type": "asi" 
+            },
             "17": [
-                { "feature_name": "Action Surge", "feature_type": "resource", "uses": "2", "description": "On your turn, you can take one additional action. You regain all uses when you finish a short or long rest before you can use it again." },
-                { "feature_name": "Indomitable", "feature_type": "resource", "uses": "1", "description": "You can reroll a saving throw that you fail. You must use the new roll. You regain all uses when you finish a short or long rest."}
+                { 
+                    "feature_name": "Action Surge", 
+                    "feature_type": "resource", 
+                    "uses": "2", 
+                    "description": "On your turn, you can take one additional action. You regain all uses when you finish a short or long rest before you can use it again." 
+                },
+                { 
+                    "feature_name": "Indomitable", 
+                    "feature_type": "resource", 
+                    "uses": "1", 
+                    "description": "You can reroll a saving throw that you fail. You must use the new roll. You regain all uses when you finish a short or long rest."
+                }
             ],
-            "18": { "feature_name": "Martial Archetype Feature", "feature_type": "subclass" },
-            "19": { "feature_name": "Ability Score Improvement", "feature_type": "asi" },
-            "20": { "feature_name": "Extra Attack (4th Attack)", "feature_type": "passive", "description": "You can attack four times when you take the Attack action on your turn." }
+            "18": { 
+                "feature_name": "Martial Archetype Feature", 
+                "feature_type": "subclass" 
+            },
+            "19": { 
+                "feature_name": "Ability Score Improvement", 
+                "feature_type": "asi" 
+            },
+            "20": { 
+                "feature_name": "Extra Attack (4th Attack)", 
+                "feature_type": "passive", 
+                "description": "You can attack four times when you take the Attack action on your turn." 
+            }
         }
 }

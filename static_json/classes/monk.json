@@ -26,60 +26,200 @@
 
     "features": {
             "1": [
-                { "feature_name": "Unarmored Defense", "feature_type": "passive", "description": "While not wearing armor or wielding a shield, your AC equals 10 + your Dexterity modifier + your Wisdom modifier." },
-                { "feature_name": "Martial ARts", "feature_type": "passive", "description": "While unarmed or wielding a weapon without the heavy or two-handed property, you may use Dexterity instead of Strength for its attack and damage rolls, you may roll your Martial Arts die for damage in place of the nomral damage of the weapon, and when you make an attack with one of these weapons as your action, you may make an unarmed attack as a bonus action." }
+                { 
+                    "feature_name": "Unarmored Defense", 
+                    "feature_type": "passive", 
+                    "description": "While not wearing armor or wielding a shield, your AC equals 10 + your Dexterity modifier + your Wisdom modifier." 
+                },
+                { 
+                    "feature_name": "Martial Arts", 
+                    "feature_type": "passive", 
+                    "description": "While unarmed or wielding a weapon without the heavy or two-handed property, you may use Dexterity instead of Strength for its attack and damage rolls, you may roll your Martial Arts die for damage in place of the nomral damage of the weapon, and when you make an attack with one of these weapons as your action, you may make an unarmed attack as a bonus action." 
+                }
             ],
             "2": [
-                { "feature_name": "Ki", "feature_type": "resource", "uses": "level", "description": "You have ki points equal to your monk level. You can spend them to fuel various Ki features. Some Ki features require a saving throw which is equal to 8 + your proficiency bonus + your Wisdom modifier. Ki points refresh on a short or long rest." },
-                { "feature_name": "Flurry of Blows", "feature_type": "passive", "description": "Immediately after you take the Attack action on your turn, you can spend 1 ki point to make two unarmed strikes as a bonus action." },
-                { "feature_name": "Patient Defense", "feature_type": "passive", "description": "You can spend 1 ki point to take the Dodge action as a bonus action on your turn." },
-                { "feature_name": "Step of the Wind", "feature_type": "passive", "description": "You can spend 1 ki point to take the Disengage or Dash action as a bonus action on your turn, and your jump distance is doubled for the turn." },
-                { "feature_name": "Unarmored Movement", "feature_type": "passive", "description": "Your base speed increases by 10 feet." },
-                { "feature_name": "Dedicated Weapon (Optional)", "feature_type": "passive", "description": "When you finish a long rest, you may touch a weapon that you are proficient with, is a simple or melee weapon, and lacks the heavy or special properties to make it your monk weapon," }
+                { 
+                    "feature_name": "Ki", 
+                    "feature_type": "resource", 
+                    "uses": "level", 
+                    "description": "You have ki points equal to your monk level. You can spend them to fuel various Ki features. Some Ki features require a saving throw which is equal to 8 + your proficiency bonus + your Wisdom modifier. Ki points refresh on a short or long rest." 
+                },
+                { 
+                    "feature_name": "Flurry of Blows", 
+                    "feature_type": "passive", 
+                    "description": "Immediately after you take the Attack action on your turn, you can spend 1 ki point to make two unarmed strikes as a bonus action." 
+                },
+                { 
+                    "feature_name": "Patient Defense", 
+                    "feature_type": "passive", 
+                    "description": "You can spend 1 ki point to take the Dodge action as a bonus action on your turn." 
+                },
+                { 
+                    "feature_name": "Step of the Wind", 
+                    "feature_type": "passive", 
+                    "description": "You can spend 1 ki point to take the Disengage or Dash action as a bonus action on your turn, and your jump distance is doubled for the turn." 
+                },
+                { 
+                    "feature_name": "Unarmored Movement", 
+                    "feature_type": "passive", 
+                    "description": "Your base speed increases by 10 feet." 
+                },
+                { 
+                    "feature_name": "Dedicated Weapon (Optional)", 
+                    "feature_type": "passive", 
+                    "description": "When you finish a long rest, you may touch a weapon that you are proficient with, is a simple or melee weapon, and lacks the heavy or special properties to make it your monk weapon," 
+                }
             
             ],
             "3": [
-                { "feature_name": "Monastic Tradition", "feature_type": "subclass" },
-                { "feature_name": "Deflect Missiles", "feature_type": "passive", "description": "You may use your reaction to reduce damage of a ranged weapon attack by 1d10 + your Dexterity modifier + your monk level. If you reduce the damage to 0, you can catch the missile if you have a free hand and it is small enough to hold. Additonally, if you catch it as part of the same reaction you may spend a ki point ot make a rnaged attack with the missile at a range of 20/60 and you make the attack with proficiency."},
-                { "feature_name": "Ki-Fueled Attack (Optional)", "feature_type": "passive", "description": "If you spend 1 or more ki points as part of your turn, you may make one attack with an unarmed strike or with a monk weapon as a bonus action." }
+                { 
+                    "feature_name": "Monastic Tradition", 
+                    "feature_type": "subclass" 
+                },
+                { 
+                    "feature_name": "Deflect Missiles", 
+                    "feature_type": "passive", 
+                    "description": "You may use your reaction to reduce damage of a ranged weapon attack by 1d10 + your Dexterity modifier + your monk level. If you reduce the damage to 0, you can catch the missile if you have a free hand and it is small enough to hold. Additonally, if you catch it as part of the same reaction you may spend a ki point ot make a rnaged attack with the missile at a range of 20/60 and you make the attack with proficiency."
+                },
+                { 
+                    "feature_name": "Ki-Fueled Attack (Optional)", 
+                    "feature_type": "passive", 
+                    "description": "If you spend 1 or more ki points as part of your turn, you may make one attack with an unarmed strike or with a monk weapon as a bonus action." 
+                }
             ],
             "4": [
-                { "feature_name": "Ability Score Improvement", "feature_type": "asi" },
-                { "feature_name": "Slow Fall", "feature_type": "passive", "description": "You can use your reaction when you fall to reduce any falling damage you take by an amount equal to five times your monk level." },
-                { "feature_name": "Quickened Healing (Optional)", "feature_type": "passive", "description": "As an action, you can spend 2 ki points and roll a Martial Arts die. You regain a number of hit points equal to the number rolled plus your proficiency bonus." }
+                { 
+                    "feature_name": "Ability Score Improvement", 
+                    "feature_type": "asi" 
+                },
+                { 
+                    "feature_name": "Slow Fall", 
+                    "feature_type": "passive", 
+                    "description": "You can use your reaction when you fall to reduce any falling damage you take by an amount equal to five times your monk level." 
+                },
+                { 
+                    "feature_name": "Quickened Healing (Optional)", 
+                    "feature_type": "passive", 
+                    "description": "As an action, you can spend 2 ki points and roll a Martial Arts die. You regain a number of hit points equal to the number rolled plus your proficiency bonus." 
+                }
             ],
             "5": [
-                { "feature_name": "Stunning Strike", "feature_type": "passive", "description": "When you hit another creature with a melee weapon attack, you can spend 1 ki point to attempt a stunning strike. The target must succeed on a Constitution saving throw or be stunned until the end of your next turn." },
-                { "feature_name": "Extra Attack", "feature_type": "passive", "description": "You can attack twice when you take the Attack action on your turn." },
-                { "feature_name": "Focused Aim (Optional)", "feature_type": "passive", "description": "When you miss with an attack roll, you can spend 1 to 3 ki points to increase your attack roll by 2 for each of these ki points you spend." }
+                { 
+                    "feature_name": "Stunning Strike", 
+                    "feature_type": "passive", 
+                    "description": "When you hit another creature with a melee weapon attack, you can spend 1 ki point to attempt a stunning strike. The target must succeed on a Constitution saving throw or be stunned until the end of your next turn." 
+                },
+                { 
+                    "feature_name": "Extra Attack", 
+                    "feature_type": "passive", 
+                    "description": "You can attack twice when you take the Attack action on your turn." 
+                },
+                { 
+                    "feature_name": "Focused Aim (Optional)", 
+                    "feature_type": "passive", 
+                    "description": "When you miss with an attack roll, you can spend 1 to 3 ki points to increase your attack roll by 2 for each of these ki points you spend." 
+                }
             ],
             "6": [
-                { "feature_name": "Monastic Tradition Feature", "feature_type": "subclass" },
-                { "feature_name": "Ki-Empowered Strikes", "feature_type": "passive", "description": "Your unarmed strikes count as magical for the purpose of overcoming resistance and immunity to nonmagical attacks and damage." },
-                { "feature_name": "Unarmored Movement Improvement", "feature_type": "passive", "description": "Your base speed increases by 15 feet." }
+                { 
+                    "feature_name": "Monastic Tradition Feature", 
+                    "feature_type": "subclass" 
+                },
+                { 
+                    "feature_name": "Ki-Empowered Strikes", 
+                    "feature_type": "passive", 
+                    "description": "Your unarmed strikes count as magical for the purpose of overcoming resistance and immunity to nonmagical attacks and damage." 
+                },
+                { 
+                    "feature_name": "Unarmored Movement Improvement", 
+                    "feature_type": "passive", 
+                    "description": "Your base speed increases by 15 feet." 
+                }
             ],
             "7": [
-                { "feature_name": "Evasion", "feature_type": "passive", "description": "When subjected to an effect that allows a Dexterity saving throw for half damage, you instead take no damage on a success and half on a failure." },
-                { "feature_name": "Stillness of Mind", "feature_type": "passive", "description": "You can use your action to end one effect on yourself that is causing you to be charmed or frightened."}
+                { 
+                    "feature_name": "Evasion", 
+                    "feature_type": "passive", 
+                    "description": "When subjected to an effect that allows a Dexterity saving throw for half damage, you instead take no damage on a success and half on a failure." 
+                },
+                { 
+                    "feature_name": "Stillness of Mind", 
+                    "feature_type": "passive", 
+                    "description": "You can use your action to end one effect on yourself that is causing you to be charmed or frightened."
+                }
             ],
-            "8": { "feature_name": "Ability Score Improvement", "feature_type": "asi" },
-            "9": { "feature_name": "Unarmored Movement Improvement", "feature_type": "passive", "description": "You can move along vertical surfaces and across liquids on your turn without falling during the move." },
+            "8": { 
+                "feature_name": "Ability Score Improvement", 
+                "feature_type": "asi" 
+            },
+            "9": { 
+                "feature_name": "Unarmored Movement Improvement", 
+                "feature_type": "passive", 
+                "description": "You can move along vertical surfaces and across liquids on your turn without falling during the move." 
+            },
             "10": [
-                { "feature_name": "Purity of Body", "feature_type": "passive", "description": "Your mastery of the ki flowing through you makes you immune to disease and poison." },
-                { "feature_name": "Unarmored Movement Improvement", "feature_type": "passive", "description": "Your base speed increases by 20 feet." }
+                { 
+                    "feature_name": "Purity of Body", 
+                    "feature_type": "passive", 
+                    "description": "Your mastery of the ki flowing through you makes you immune to disease and poison." 
+                },
+                { 
+                    "feature_name": "Unarmored Movement Improvement", 
+                    "feature_type": "passive", 
+                    "description": "Your base speed increases by 20 feet." 
+                }
             ],
-            "11": { "feature_name": "Monastic Tradition Feature", "feature_type": "subclass" },
-            "12": { "feature_name": "Ability Score Improvement", "feature_type": "asi" },
-            "13": { "feature_name": "Tongue of the Sun and Moon", "feature_type": "passive", "description": "You learn to touch the ki of other minds so that you understand all spoken languages. Moreover, any creature that can understand a language can understand what you say."},
+            "11": { 
+                "feature_name": "Monastic Tradition Feature", 
+                "feature_type": "subclass" 
+            },
+            "12": { 
+                "feature_name": "Ability Score Improvement", 
+                "feature_type": "asi" 
+            },
+            "13": { 
+                "feature_name": "Tongue of the Sun and Moon", 
+                "feature_type": "passive", 
+                "description": "You learn to touch the ki of other minds so that you understand all spoken languages. Moreover, any creature that can understand a language can understand what you say."
+            },
             "14": [
-                { "feature_name": "Diamond Soul", "feature_type": "passive", "description": "Your mastery of ki grants you proficiency in all saving throws. Additionally, whenever you make a saving throw and fail, you can spend 1 ki point to reroll it and take the second result." },
-                { "feature_name": "Unarmored Movement Improvement", "feature_type": "passive", "description": "Your base speed increases by 25 feet." }
+                { 
+                    "feature_name": "Diamond Soul", 
+                    "feature_type": "passive", 
+                    "description": "Your mastery of ki grants you proficiency in all saving throws. Additionally, whenever you make a saving throw and fail, you can spend 1 ki point to reroll it and take the second result." 
+                },
+                { 
+                    "feature_name": "Unarmored Movement Improvement", 
+                    "feature_type": "passive", 
+                    "description": "Your base speed increases by 25 feet." 
+                }
             ],
-            "15": { "feature_name": "Timeless Body", "feature_type": "passive", "description": "Your ki sustains you so that you suffer none of the frailty of old age, and you can't be aged magically. You can still die of old age, however. In addition, you no longer need food or water."},
-            "16": { "feature_name": "Ability Score Improvement", "feature_type": "asi" },
-            "17": { "feature_name": "Monastic Tradition Feature", "feature_type": "subclass" },
-            "18": { "feature_name": "Empty Body", "feature_type": "passive", "description": "You can use your action to spend 4 ki points to become invisible for 1 minute. During that time, you also have resistance to all damage but force damage. Additionally, you can spend 8 ki points to cast the astral projection spell, without needing material components. When you do so, you can't take any other creatures with you."},
-            "19": { "feature_name": "Ability Score Improvement", "feature_type": "asi" },
-            "20": { "feature_name": "Perfect Self", "feature_type": "passive", "description": "When you roll for initiative and have no ki points remaining, you regain 4 ki points."}
+            "15": { 
+                "feature_name": "Timeless Body", 
+                "feature_type": "passive", 
+                "description": "Your ki sustains you so that you suffer none of the frailty of old age, and you can't be aged magically. You can still die of old age, however. In addition, you no longer need food or water."
+            },
+            "16": { 
+                "feature_name": "Ability Score Improvement", 
+                "feature_type": "asi" 
+            },
+            "17": { 
+                "feature_name": "Monastic Tradition Feature", 
+                "feature_type": "subclass" 
+            },
+            "18": { 
+                "feature_name": "Empty Body", 
+                "feature_type": "passive",
+                "description": "You can use your action to spend 4 ki points to become invisible for 1 minute. During that time, you also have resistance to all damage but force damage. Additionally, you can spend 8 ki points to cast the astral projection spell, without needing material components. When you do so, you can't take any other creatures with you."
+            },
+            "19": { 
+                "feature_name": "Ability Score Improvement", 
+                "feature_type": "asi" 
+            },
+            "20": { 
+                "feature_name": "Perfect Self", 
+                "feature_type": "passive", 
+                "description": "When you roll for initiative and have no ki points remaining, you regain 4 ki points."
+            }
         }
 }
