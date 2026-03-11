@@ -164,7 +164,7 @@ const characterSchema = new mongoose.Schema({
             currencyName: String,
             amount: {type: Number, min: 0}
         }],
-        items: [{}] //only for items,weapons, wonderous items, etc
+        items: [itemSchema]
     }],
     active_features: [{
         feature: {type: String, unique: true, required: true},
