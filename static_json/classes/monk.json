@@ -27,7 +27,7 @@
     "features": {
             "1": [
                 { "feature_name": "Unarmored Defense", "feature_type": "passive", "description": "While not wearing armor or wielding a shield, your AC equals 10 + your Dexterity modifier + your Wisdom modifier." },
-                { "feature_name": "Martial ARts", "feature_type": "passive", "description": "While unarmed or wielding a weapon without the heavy or two-handed property, you may use Dexterity instead of Strength for its attack and damage rolls, you may roll your Martial Arts die for damage in place of the nomral damage of the weapon, and when you make an attack with one of these weapons as your action, you may make an unarmed attack as a bonus action." }
+                { "feature_name": "Martial Arts", "feature_type": "passive", "description": "While unarmed or wielding a weapon without the heavy or two-handed property, you may use Dexterity instead of Strength for its attack and damage rolls, you may roll your Martial Arts die for damage in place of the nomral damage of the weapon, and when you make an attack with one of these weapons as your action, you may make an unarmed attack as a bonus action." }
             ],
             "2": [
                 { "feature_name": "Ki", "feature_type": "resource", "uses": "level", "description": "You have ki points equal to your monk level. You can spend them to fuel various Ki features. Some Ki features require a saving throw which is equal to 8 + your proficiency bonus + your Wisdom modifier. Ki points refresh on a short or long rest." },
