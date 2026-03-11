@@ -1,4 +1,5 @@
 {
+    "name": "full_caster",
     "spell_slots": {
         "3": {
             "1st level": "2",
