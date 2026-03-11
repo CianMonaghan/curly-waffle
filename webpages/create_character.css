@@ -384,3 +384,18 @@ button:hover { background: #eee; }
     color: #333;
     line-height: 1.5;
 }
+
+/* Upgraded Features */
+.upgrade-badge {
+    font-size: 0.75em;
+    color: #b87c00;
+    font-weight: bold;
+}
+
+.upgrade-note {
+    margin-top: 0.4em;
+    color: #5a3e00;
+    font-style: italic;
+    border-left: 3px solid #b87c00;
+    padding-left: 0.5em;
+}

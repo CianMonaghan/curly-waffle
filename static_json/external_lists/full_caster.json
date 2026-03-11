@@ -1,0 +1,224 @@
+{
+    "spell_slots": {
+        "1": {
+            "1st level": "2",
+            "2nd level": "0",
+            "3rd level": "0",
+            "4th level": "0",
+            "5th level": "0",
+            "6th level": "0",
+            "7th level": "0",
+            "8th level": "0",
+            "9th level": "0"
+        },
+        "2": {
+            "1st level": "3",
+            "2nd level": "0",
+            "3rd level": "0",
+            "4th level": "0",
+            "5th level": "0",
+            "6th level": "0",
+            "7th level": "0",
+            "8th level": "0",
+            "9th level": "0"
+        },
+        "3": {
+            "1st level": "4",
+            "2nd level": "2",
+            "3rd level": "0",
+            "4th level": "0",
+            "5th level": "0",
+            "6th level": "0",
+            "7th level": "0",
+            "8th level": "0",
+            "9th level": "0"
+        },
+        "4": {
+            "1st level": "4",
+            "2nd level": "3",
+            "3rd level": "0",
+            "4th level": "0",
+            "5th level": "0",
+            "6th level": "0",
+            "7th level": "0",
+            "8th level": "0",
+            "9th level": "0"
+        },
+        "5": {
+            "1st level": "4",
+            "2nd level": "3",
+            "3rd level": "2",
+            "4th level": "0",
+            "5th level": "0",
+            "6th level": "0",
+            "7th level": "0",
+            "8th level": "0",
+            "9th level": "0"
+        },
+        "6": {
+            "1st level": "4",
+            "2nd level": "3",
+            "3rd level": "3",
+            "4th level": "0",
+            "5th level": "0",
+            "6th level": "0",
+            "7th level": "0",
+            "8th level": "0",
+            "9th level": "0"
+        },
+        "7": {
+            "1st level": "4",
+            "2nd level": "3",
+            "3rd level": "3",
+            "4th level": "1",
+            "5th level": "0",
+            "6th level": "0",
+            "7th level": "0",
+            "8th level": "0",
+            "9th level": "0"
+        },
+        "8": {
+            "1st level": "4",
+            "2nd level": "3",
+            "3rd level": "3",
+            "4th level": "2",
+            "5th level": "0",
+            "6th level": "0",
+            "7th level": "0",
+            "8th level": "0",
+            "9th level": "0"
+        },
+        "9": {
+            "1st level": "4",
+            "2nd level": "3",
+            "3rd level": "3",
+            "4th level": "3",
+            "5th level": "1",
+            "6th level": "0",
+            "7th level": "0",
+            "8th level": "0",
+            "9th level": "0"
+        },
+        "10": {
+            "1st level": "4",
+            "2nd level": "3",
+            "3rd level": "3",
+            "4th level": "3",
+            "5th level": "2",
+            "6th level": "0",
+            "7th level": "0",
+            "8th level": "0",
+            "9th level": "0"
+        },
+        "11": {
+            "1st level": "4",
+            "2nd level": "3",
+            "3rd level": "3",
+            "4th level": "3",
+            "5th level": "2",
+            "6th level": "1",
+            "7th level": "0",
+            "8th level": "0",
+            "9th level": "0"
+        },
+        "12": {
+            "1st level": "4",
+            "2nd level": "3",
+            "3rd level": "3",
+            "4th level": "3",
+            "5th level": "2",
+            "6th level": "1",
+            "7th level": "0",
+            "8th level": "0",
+            "9th level": "0"
+        },
+        "13": {
+            "1st level": "4",
+            "2nd level": "3",
+            "3rd level": "3",
+            "4th level": "3",
+            "5th level": "2",
+            "6th level": "1",
+            "7th level": "1",
+            "8th level": "0",
+            "9th level": "0"
+        },
+        "14": {
+            "1st level": "4",
+            "2nd level": "3",
+            "3rd level": "3",
+            "4th level": "3",
+            "5th level": "2",
+            "6th level": "1",
+            "7th level": "1",
+            "8th level": "0",
+            "9th level": "0"
+        },
+        "15": {
+            "1st level": "4",
+            "2nd level": "3",
+            "3rd level": "3",
+            "4th level": "3",
+            "5th level": "2",
+            "6th level": "1",
+            "7th level": "1",
+            "8th level": "1",
+            "9th level": "0"
+        },
+        "16": {
+            "1st level": "4",
+            "2nd level": "3",
+            "3rd level": "3",
+            "4th level": "3",
+            "5th level": "2",
+            "6th level": "1",
+            "7th level": "1",
+            "8th level": "1",
+            "9th level": "0"
+        },
+        "17": {
+            "1st level": "4",
+            "2nd level": "3",
+            "3rd level": "3",
+            "4th level": "3",
+            "5th level": "2",
+            "6th level": "1",
+            "7th level": "1",
+            "8th level": "1",
+            "9th level": "1"
+        },
+        "18": {
+            "1st level": "4",
+            "2nd level": "3",
+            "3rd level": "3",
+            "4th level": "3",
+            "5th level": "3",
+            "6th level": "1",
+            "7th level": "1",
+            "8th level": "1",
+            "9th level": "1"
+        },
+        "19": {
+            "1st level": "4",
+            "2nd level": "3",
+            "3rd level": "3",
+            "4th level": "3",
+            "5th level": "3",
+            "6th level": "2",
+            "7th level": "1",
+            "8th level": "1",
+            "9th level": "1"
+        },
+        "20": {
+            "1st level": "4",
+            "2nd level": "3",
+            "3rd level": "3",
+            "4th level": "3",
+            "5th level": "3",
+            "6th level": "2",
+            "7th level": "2",
+            "8th level": "1",
+            "9th level": "1"
+        }
+    }
+}
