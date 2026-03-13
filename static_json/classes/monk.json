@@ -142,6 +142,7 @@
                     "feature_name": "Unarmored Movement Improvement", 
                     "feature_type": "upgrade",
                     "feature_to_upgrade": "Unarmored Movement",
+                    "stat_to_upgrade": "modification",
                     "new_value": "+ 15", 
                     "description": "Your base speed increases by 15 feet." 
                 }
@@ -178,6 +179,7 @@
                     "feature_name": "Unarmored Movement Improvement", 
                     "feature_type": "upgrade",
                     "feature_to_upgrade": "Unarmored Movement",
+                    "stat_to_upgrade": "modification",
                     "new_value": "+ 20",  
                     "description": "Your base speed increases by 20 feet." 
                 }
@@ -207,6 +209,7 @@
                     "feature_name": "Unarmored Movement Improvement", 
                     "feature_type": "upgrade",
                     "feature_to_upgrade": "Unarmored Movement",
+                    "stat_to_upgrade": "modification",
                     "new_value": "+ 25",  
                     "description": "Your base speed increases by 25 feet." 
                 }

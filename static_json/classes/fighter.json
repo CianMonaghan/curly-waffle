@@ -86,7 +86,6 @@
                 "feature_name": "Extra Attack Upgrade", 
                 "feature_type": "upgrade", 
                 "feature_to_upgrade": "Extra Attack",
-                "new_value": "3",
                 "description": "You can attack three times when you take the Attack action on your turn." 
             },    
             "12": { 
@@ -97,6 +96,7 @@
                 "feature_name": "Indomitable Upgrade", 
                 "feature_type": "upgrade", 
                 "feature_to_upgrade": "Indomitable",
+                "stat_to_upgrade": "uses",
                 "new_value": "2"  
             },
             "14": { 
@@ -116,12 +116,14 @@
                     "feature_name": "Action Surge Upgrade", 
                     "feature_type": "upgrade", 
                     "feature_to_upgrade": "Action Surge",
+                    "stat_to_upgrade": "uses",
                     "new_value": "2" 
                 },
                 { 
                     "feature_name": "Indomitable Upgrade", 
                     "feature_type": "upgrade", 
                     "feature_to_upgrade": "Indomitable",
+                    "stat_to_upgrade": "uses",
                     "new_value": "3" 
                 }
             ],
@@ -137,7 +139,6 @@
                 "feature_name": "Extra Attack Upgrade", 
                 "feature_type": "upgrade", 
                 "feature_to_upgrade": "Extra Attack",
-                "new_value": "4",
                 "description": "You can attack four times when you take the Attack action on your turn." 
             }
         }

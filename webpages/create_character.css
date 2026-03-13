@@ -1,6 +1,7 @@
 body {
     font-family: sans-serif;
     padding: 20px;
+    min-width: 780px;
 }
 
 .container {
@@ -10,6 +11,7 @@ body {
     margin: 20px;
     gap: 0;
     width: calc(100vw - 80px);
+    min-width: 700px;
 }
 
 .container > div:first-child {
@@ -17,6 +19,7 @@ body {
     flex-shrink: 0;
     padding-right: 20px;
     box-sizing: border-box;
+    min-width: 320px;
 }
 
 .field-row {
@@ -240,6 +243,7 @@ button:hover { background: #eee; }
     padding-left: 20px;
     border-left: 1px solid #ddd;
     box-sizing: border-box;
+    min-width: 280px;
 }
 
 .info-panel {
@@ -279,27 +283,40 @@ button:hover { background: #eee; }
 /* Reuse popup-detail styles inside the panel */
 .info-panel-content .popup-detail-title { font-size: 1.1rem; }
 .info-panel-content .popup-feature { background: #fafafa; }
+
 .character-class-box {
     border: 1px solid black;
     padding: 12px;
     margin-top: 12px;
+    overflow-x: auto;
 }
+
 .class-box-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
 }
+
 .class-box-body {
     display: flex;
     gap: 30px;
     margin-top: 10px;
+    overflow-x: auto;
 }
-.class-left { min-width: 200px; }
+
+.class-left {
+    min-width: 200px;
+    flex-shrink: 0;
+}
+
 .class-right {
     flex: 1;
     border-left: 1px solid black;
     padding-left: 16px;
+    min-width: 180px;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 
@@ -366,6 +383,34 @@ button:hover { background: #eee; }
     font-style: italic;
 }
 
+/* Group Features by Level */
+.level-group {
+    margin-bottom: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.level-header {
+    background: #ffffff;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 6px 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.level-group .feature-block {
+    border-top: 1px solid #ccc;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    padding: 8px 12px;
+}
+
+.level-group .feature-block:first-of-type {
+    border-top: none;
+}
+
 
 /* Subclass Features */
 .subclass-feature-block {
@@ -398,4 +443,35 @@ button:hover { background: #eee; }
     font-style: italic;
     border-left: 3px solid #b87c00;
     padding-left: 0.5em;
+}
+
+/* External List Features */
+.external-choice-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 4px;
+}
+
+.external-choice-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 4px;
+}
+
+.external-choice-item.has-tooltip {
+    cursor: help;
+    border-bottom: 1px dotted #888;
+}
+
+.external-choice-item.has-tooltip:hover {
+    background: #f5f5f5;
+}
+
+.external-choice-requirement {
+    font-size: 0.75em;
+    color: #888;
+    font-style: italic;
+    margin-left: 1.4em;
 }

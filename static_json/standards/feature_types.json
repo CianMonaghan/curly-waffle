@@ -46,6 +46,7 @@
         "feature_name": null,
         "feature_type": "upgrade",
         "feature_to_upgrade": null,
+        "stat_to_upgrade": null,
         "new_value": null,
         "description": null
     },
