@@ -1,22 +1,10 @@
-{
-    "standard_lang_list": [
-        "Common",
-        "Dwarvish",
-        "Elvish",
-        "Giant",
-        "Gnomish",
-        "Goblin",
-        "Halfling",
-        "Orc"
-    ],
-    "exotic_lang_list": [
-        "Abyssal",
-        "Celestial",
-        "Deep Speech",
-        "Draconic",
-        "Infernal",
-        "Primordial",
-        "Sylvan",
-        "Undercommon"
-    ]
-}
+[
+    {
+        "name": "standard_languages",
+        "options": ["Common", "Dwarvish", "Elvish", "Giant", "Gnomish", "Goblin", "Halfling", "Orc"]
+    },
+    {
+        "name": "exotic_languages",
+        "options": ["Abyssal", "Celestial", "Deep Speech", "Draconic", "Infernal", "Primordial", "Sylvan", "Undercommon"]
+    }
+]

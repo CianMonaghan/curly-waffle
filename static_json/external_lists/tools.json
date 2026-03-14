@@ -1,0 +1,18 @@
+[
+    {
+        "name": "artisans_tools",
+        "options": ["Alchemist's Supplies", "Brewer's Supplies", "Calligrapher's Supplies", "Carpenter's Tools", "Cartographer's Tools", "Cobbler's Tools", "Cook's Utensils", "Glassblower's Tools", "Jeweler's Tools", "Leatherworker's Tools", "Mason's Tools", "Painter's Supplies", "Potter's Tools", "Smith's Tools", "Tinker's Tools", "Weaver's Tools", "Woodcarver's Tools"]
+    },
+    {
+        "name": "gaming_set",
+        "options": ["Dice Set", "Dragonchess Set", "Playing Card Set", "Three-Dragon Ante Set"]
+    },
+    {
+        "name": "musical_instrument",
+        "options": ["Bagpipes", "Drums", "Dulcimer", "Flute", "Lute", "Lyre", "Horn", "Pan Flute", "Shawm", "Viol"]
+    },
+    {
+        "name": "miscellaneous",
+        "options": ["Disguise Kit", "Forgery Kit", "Herbalism Kit", "Poisoner's Kit", "Thieves Tools"]
+    }
+]

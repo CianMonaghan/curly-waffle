@@ -62,7 +62,14 @@ async function loadAllExternalLists() {
     await Promise.all(classFiles.map(async fileName => {
         const fileRes = await fetch(`/static_json/external_lists/${fileName}.json`);
         const data    = await fileRes.json();
-        EXTERNAL_LISTS[data.name] = data.options;
+
+        if (Array.isArray(data)) {
+            data.forEach(entry => {
+                EXTERNAL_LISTS[entry.name] = entry.options;
+            });
+        } else {
+            EXTERNAL_LISTS[data.name] = data.options;
+        }
     }));
 }
 
@@ -79,6 +86,86 @@ const popupClose   = document.getElementById('popup-close');
 const confirmBtn   = document.getElementById('popup-confirm');
 
 let pendingSelection = null; // holds the option object before confirm
+
+function buildLangProfHTML(langProf, itemId) {
+    if (!langProf || langProf.length === 0) return '<span>—</span>';
+
+    return langProf.map((entry, i) => {
+        if (entry.type === 'fixed') {
+            return `<span class="lang-fixed">${entry.value}</span>`;
+        }
+
+        const standard = EXTERNAL_LISTS['standard_languages'] ?? [];
+        const exotic   = EXTERNAL_LISTS['exotic_languages']   ?? [];
+
+        const options = entry.type === 'standard' ? standard
+                      : entry.type === 'exotic'   ? exotic
+                      : [...standard, ...exotic];
+
+        const optionHTML = ['— choose —', ...options]
+            .map(l => `<option value="${l}">${l}</option>`)
+            .join('');
+
+        return `<select id="lang_${itemId}_${i}" class="lang-select" data-item-id="${itemId}" data-index="${i}">
+                    ${optionHTML}
+                </select>`;
+    }).join(' ');
+}
+
+function wireLanguageSelects(container, itemId) {
+    const selects = [...container.querySelectorAll(`.lang-select[data-item-id="${itemId}"]`)];
+
+    selects.forEach(sel => {
+        sel.addEventListener('change', () => {
+            const chosen = new Set(selects.map(s => s.value).filter(v => v !== '— choose —'));
+
+            selects.forEach(other => {
+                [...other.options].forEach(opt => {
+                    if (opt.value === '— choose —') return;
+                    // Disable if chosen by a DIFFERENT select
+                    opt.disabled = chosen.has(opt.value) && other.value !== opt.value;
+                });
+            });
+        });
+    });
+}
+
+function buildToolProfHTML(toolProf, itemId) {
+    if (!toolProf || toolProf.length === 0) return '<span>—</span>';
+
+    return toolProf.map((entry, i) => {
+        if (entry.type === 'fixed') {
+            return `<span class="tool-fixed">${entry.value}</span>`;
+        }
+
+        const options = EXTERNAL_LISTS[entry.type] ?? [];
+        const optionHTML = ['— choose —', ...options]
+            .map(t => `<option value="${t}">${t}</option>`)
+            .join('');
+
+        return `<select id="tool_${itemId}_${i}" class="tool-select" data-item-id="${itemId}" data-index="${i}">
+                    ${optionHTML}
+                </select>`;
+    }).join(' ');
+}
+
+function wireToolSelects(container, itemId) {
+    const selects = [...container.querySelectorAll(`.tool-select[data-item-id="${itemId}"]`)];
+
+    selects.forEach(sel => {
+        sel.addEventListener('change', () => {
+            const chosen = new Set(selects.map(s => s.value).filter(v => v !== '— choose —'));
+
+            selects.forEach(other => {
+                [...other.options].forEach(opt => {
+                    if (opt.value === '— choose —') return;
+                    // Disable if chosen by a DIFFERENT select
+                    opt.disabled = chosen.has(opt.value) && other.value !== opt.value;
+                });
+            });
+        });
+    });
+}
 
 function openPopup(field) {
     currentPopupField = field;
@@ -123,6 +210,8 @@ function openPopup(field) {
 
 function showDetail(item) {
     popupDetail.innerHTML = buildInfoHTML(item);
+    if (item.lang_prof) wireLanguageSelects(popupDetail, item.id);
+    if (item.tool_prof) wireToolSelects(popupDetail, item.id);
 }
 
 function confirmSelection() {
@@ -140,12 +229,30 @@ function confirmSelection() {
                 .filter(s => s.prof)
                 .forEach(s => backgroundSkills.add(s.skill));
         }
-        // Refresh all class skill lists to reflect new background
         document.querySelectorAll('.character-class-box').forEach(box => {
             const uid = box.dataset.uid;
             renderClassBox(box, uid);
         });
+
+        // Save chosen languages from the popup selects
+        pendingSelection._chosenLanguages = [];
+        popupDetail.querySelectorAll('.lang-select').forEach(sel => {
+            pendingSelection._chosenLanguages.push(sel.value); // store even '— choose —'
+        });
+        (pendingSelection.lang_prof || [])
+            .filter(e => e.type === 'fixed')
+            .forEach(e => pendingSelection._chosenLanguages.push(e.value));
+
+        // Save chosen tools from the popup selects
+        pendingSelection._chosenTools = [];
+        popupDetail.querySelectorAll('.tool-select').forEach(sel => {
+            pendingSelection._chosenTools.push(sel.value);
+        });
+        (pendingSelection.tool_prof || [])
+            .filter(e => e.type === 'fixed')
+            .forEach(e => pendingSelection._chosenTools.push(e.value));
     }
+
 
     renderSidebarPanel(currentPopupField, pendingSelection);
     overlay.classList.add('hidden');
@@ -157,13 +264,11 @@ function buildInfoHTML(item) {
     let metaHTML = '';
     if (isBackground) {
         const skills = item.skill_prof ? item.skill_prof.filter(s => s.prof).map(s => s.skill).join(', ') : '—';
-        const tools  = item.tool_prof  ? item.tool_prof : '—';
-        const langs  = item.lang_prof  ? item.lang_prof.join(', ') : '—';
         metaHTML = `
             <div class="popup-meta">
                 <span><strong>Skills:</strong> ${skills}</span>
-                <span><strong>Tools:</strong> ${tools}</span>
-                <span><strong>Languages:</strong> ${langs}</span>
+                <span><strong>Tools:</strong> ${buildToolProfHTML(item.tool_prof, item.id)}</span>
+                <span><strong>Languages:</strong> ${buildLangProfHTML(item.lang_prof, item.id)}</span>
             </div>`;
     }
 
@@ -183,10 +288,33 @@ function buildInfoHTML(item) {
 }
 
 function renderSidebarPanel(field, item) {
-    const panelId  = field === 'race' ? 'race-info-panel' : 'background-info-panel';
-    const panel    = document.getElementById(panelId);
-    const content  = panel.querySelector('.info-panel-content');
+    const panelId = field === 'race' ? 'race-info-panel' : 'background-info-panel';
+    const panel   = document.getElementById(panelId);
+    const content = panel.querySelector('.info-panel-content');
     content.innerHTML = buildInfoHTML(item);
+    if (item.lang_prof) wireLanguageSelects(content, item.id);
+    if (item.tool_prof) wireToolSelects(content, item.id);
+
+    // Restore previously chosen languages
+    if (item._chosenLanguages) {
+        const selects = [...content.querySelectorAll('.lang-select')];
+        selects.forEach((sel, i) => {
+            if (item._chosenLanguages[i]) sel.value = item._chosenLanguages[i];
+        });
+        // Re-run wire so duplicate prevention reflects restored values
+        if (item.lang_prof) wireLanguageSelects(content, item.id);
+    }
+
+    // Restore previously chosen tools
+    if (item._chosenTools) {
+        const selects = [...content.querySelectorAll('.tool-select')];
+        selects.forEach((sel, i) => {
+            if (item._chosenTools[i]) sel.value = item._chosenTools[i];
+        });
+        // Re-run wire so duplicate prevention reflects restored values
+        if (item.tool_prof) wireToolSelects(content, item.id);
+    }
+
     panel.classList.remove('hidden');
 }
 
