@@ -7,6 +7,50 @@
         "description": null
     },
 
+    "modifier": {
+        "comment": "This type is for features modify an aspect of the character",
+        "feature_name": null,
+        "feature_type": "modifier",
+        "stat_to_mod": null,
+        "modification": null,
+        "description": null
+    },
+
+    "upgrade": {
+        "comment": "This type is for features that get better over time so they don't overlap (can be used on resource or modification feature types",
+        "feature_name": null,
+        "feature_type": "upgrade",
+        "feature_to_upgrade": null,
+        "stat_to_upgrade": null,
+        "new_value": null,
+        "description": null
+    },
+
+    "spell_list_addition": {
+        "comment": "This type is for features that add a spell to your spell_list. Cannot be used with classes/subclasses that don't have a spell_list.",
+        "feature_name": null,
+        "feature_type": "spell_list_addition",
+        "spells_to_add": [
+            { "spell_level": "spell_name" }
+        ],
+        "description": null
+    },
+
+    "asi": {
+        "comment": "This type is for asi levels",
+        "feature_name": "Ability Score Improvement",
+        "feature_type": "asi"
+    },
+
+    "subclass": {
+        "comment": "This type checks if you would get a feature from a subclass at this level, then calls the subclass you chose to grab the feature",
+        "feature_name": null,
+        "feature_type": "subclass"
+    },
+
+
+    "comment": "Feature Subtypes",
+
     "resource": {
         "comment": "This type is for features that have an amount of times you can use it per period of time",
         "feature_name": null,
@@ -32,34 +76,11 @@
         "options": []
     },
 
-    "modifier": {
-        "comment": "This type is for features modify an aspect of the character",
+    "save_dc": {
+        "comment": "This type os for features that make a save dc",
         "feature_name": null,
-        "feature_type": "modifier",
-        "stat_to_mod": null,
-        "modification": null,
-        "description": null
-    },
-
-    "upgrade": {
-        "comment": "This type is for features that get better over time so they don't overlap (can be used on resource or modification feature types",
-        "feature_name": null,
-        "feature_type": "upgrade",
-        "feature_to_upgrade": null,
-        "stat_to_upgrade": null,
-        "new_value": null,
-        "description": null
-    },
-
-    "asi": {
-        "comment": "This type is for asi levels",
-        "feature_name": "Ability Score Improvement",
-        "feature_type": "asi"
-    },
-
-    "subclass": {
-        "comment": "This type checks if you would get a feature from a subclass at this level, then calls the subclass you chose to grab the feature",
-        "feature_name": null,
-        "feature_type": "subclass"
+        "feature_type": "save_dc",
+        "save_dc": null
     }
+
 }
