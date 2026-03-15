@@ -5,5 +5,36 @@
     "class": "warlock",
     "description": null, 
 
-    "features": {}
+    "spell_list_additions": [
+        { "1st Level": ["Burning Hands", "Command"] },
+        { "2nd Level": ["Blindness/Deafness", "Scorching Ray"] },
+        { "3rd Level": ["Fireball", "Stinking Cloud"] },
+        { "4th Level": ["Fire Shield", "Wall of Fire"] },
+        { "5th Level": ["Flame Strike", "Hallow"] }
+    ],
+
+    "features": {
+        "1": {
+            "feature_name": "Dark One's Blessing",
+            "feature_type": "passive",
+            "description": "When you reduce a hostile creature to 0 hit points, you gain temporary hit points equal to your Charisma modifier + your warlock level (minimum of 1)."
+        },
+        "6": {
+            "feature_name": "Dark One's Own Luck",
+            "feature_type": "resource",
+            "description": "You can call on your patron to alter fate in your favor. When you make an ability check or a saving throw, you can use this feature to add a d10 to your roll. You can do so after seeing the initial roll but before any of the roll's effects occur. Once you use this feature, you can't use it again until you finish a short or long rest.",
+            "uses": "1"
+        },
+        "10": {
+            "feature_name": "Fiendish Resilience",
+            "feature_type": "passive",
+            "description": "You can choose one damage type when you finish a short or long rest. You gain resistance to that damage type until you choose a different one with this feature. Damage from magical weapons or silver weapons ignores this resistance."
+        },
+        "14": {
+            "feature_name": "Hurl Through Hell",
+            "feature_type": "resource",
+            "description": "When you hit a creature with an attack, you can use this feature to instantly transport the target through the lower planes. The creature disappears and hurtles through a nightmare landscape. At the end of your next turn, the target returns to the space it previously occupied, or the nearest unoccupied space. If the target is not a fiend, it takes 10d10 psychic damage as it reels from its horrific experience. Once you use this feature, you can't use it again until you finish a long rest.",
+            "uses": "1"
+        }
+    }
 }
