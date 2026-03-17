@@ -1,28 +1,32 @@
 {
-    "type": "weapon",
-    "id": 0,
+    "type": "wp",
+    "id": 1,
     "local_id": 0,
-    "name": "Club",
-    "description": "A simple melee weapon.",
+    "name": "Dagger",
+    "description": "A simple melee or ranged weapon.",
     "equipped": false,
     "features_on_obtain": null,
     "features_on_lose": null,
     "features_on_equip": [
         {
-            "id": "attack-club",
-            "name": "Melee Attack (Club)",
+            "id": "attack-dagger-melee",
+            "name": "Melee Attack (Dagger)",
             "description": null,
             "trigger": "onEquip"
-
+        },
+        {
+            "id": "attack-dagger-range",
+            "name": "Ranged Attack (Dagger)",
+            "description": null,
+            "trigger": "onEquip"
         }
     ],
     "features_on_unequip": [
         {
-            "id": "loss-attack-club",
+            "id": "loss-attack-dagger",
             "name": null,
             "description": null,
             "trigger": "onUnequip"
-
         }
     ],
     "dice": {
@@ -33,7 +37,7 @@
         "twoHand": null
     },
     "range": 5,
-    "primary_stat": ["Strength"],
+    "primary_stat": ["Strength", "Dexterity"],
     "martial": false,
     "improvised": false,
     "attack_bonus": 0,

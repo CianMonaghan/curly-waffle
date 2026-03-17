@@ -1,34 +1,38 @@
 {
-    "type": "weapon",
-    "id": 0,
+    "type": "wp",
+    "id": 3,
     "local_id": 0,
-    "name": "Club",
-    "description": "A simple melee weapon.",
+    "name": "Handaxe",
+    "description": "A simple melee or ranged weapon.",
     "equipped": false,
     "features_on_obtain": null,
     "features_on_lose": null,
     "features_on_equip": [
         {
-            "id": "attack-club",
-            "name": "Melee Attack (Club)",
+            "id": "attack-handaxe-melee",
+            "name": "Melee Attack (Handaxe)",
             "description": null,
             "trigger": "onEquip"
-
+        },
+        {
+            "id": "attack-handaxe-range",
+            "name": "Ranged Attack (Handaxe)",
+            "description": null,
+            "trigger": "onEquip"
         }
     ],
     "features_on_unequip": [
         {
-            "id": "loss-attack-club",
+            "id": "loss-attack-handaxe",
             "name": null,
             "description": null,
             "trigger": "onUnequip"
-
         }
     ],
     "dice": {
         "oneHand": {
             "num": 1,
-            "sides": 4
+            "sides": 6
         },
         "twoHand": null
     },

@@ -24,6 +24,8 @@ mongoose.connect(mongoURL)
     process.exit(1);
   });
 const client = new MongoClient(mongoURL);
+const bliteDB = client.db("bliteDB");
+const characters = bliteDB.collection("characters");
 
 const featureSchema = new mongoose.Schema({
     id: { type: String, unique: true },
@@ -133,7 +135,6 @@ const subclassSchema = new mongoose.Schema({
 }, {_id: false});
 
 const characterSchema = new mongoose.Schema({
-    _id: {type: Number, unique: true, required: true},
     name: {type: String, required: true},
     alignment: String,
     stats: {type: [{
@@ -182,6 +183,7 @@ const characterSchema = new mongoose.Schema({
     }]
 });
 
+const character = mongoose.model("character", characterSchema);
 /**
  * ROUTES
  * //TODO: remove .html from pathnames after html update
@@ -231,14 +233,18 @@ app.get('/api/external_lists', (req, res) => {
     res.json(files);
 });
 
-app.post('/api/characters', (req, res) => {
+app.post('/api/characters', async (req, res) => {
     try {
-        const character = parseCharacter(req.body);
-        //TODO: validate against schema then push to database
-        res.json(character);
+        const characterFile = parseCharacter(req.body);
+        //console.log(characterFile);
+        //console.log(character.create(characterFile));
+        //await characters.insertOne(character.create(characterFile));
+        //console.log("Data saved.");
+        //redirect to the sheet page w/ the data
+        return res.status(200);
     } catch (err) {
         console.error('[POST /api/characters]', err);
-        res.status(500).json({ error: err.message });
+        return res.status(500).json({ error: err.message });
     }
 });
 

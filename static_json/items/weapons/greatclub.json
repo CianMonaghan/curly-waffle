@@ -1,36 +1,34 @@
 {
-    "type": "weapon",
-    "id": 0,
+    "type": "wp",
+    "id": 2,
     "local_id": 0,
-    "name": "Club",
+    "name": "Greatclub",
     "description": "A simple melee weapon.",
     "equipped": false,
     "features_on_obtain": null,
     "features_on_lose": null,
     "features_on_equip": [
         {
-            "id": "attack-club",
-            "name": "Melee Attack (Club)",
+            "id": "attack-greatclub",
+            "name": "Melee Attack (Greatclub)",
             "description": null,
             "trigger": "onEquip"
-
         }
     ],
     "features_on_unequip": [
         {
-            "id": "loss-attack-club",
+            "id": "loss-attack-greatclub",
             "name": null,
             "description": null,
             "trigger": "onUnequip"
-
         }
     ],
     "dice": {
-        "oneHand": {
+        "oneHand": null,
+        "twoHand": {
             "num": 1,
-            "sides": 4
-        },
-        "twoHand": null
+            "sides": 8
+        }
     },
     "range": 5,
     "primary_stat": ["Strength"],
