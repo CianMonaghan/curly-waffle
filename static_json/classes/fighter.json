@@ -29,21 +29,24 @@
             "1": [
                 { 
                     "feature_name": "Fighting Style", 
-                    "feature_type": "external_choice", 
+                    "feature_type": "passive",
+                    "subtypetype": "external_choice", 
                     "external_list": "fighting_styles",
                     "numChoices": 1,
                     "options": "all" 
                 },
                 { 
                     "feature_name": "Second Wind", 
-                    "feature_type": "resource", 
+                    "feature_type": "passive",
+                    "subtype": "resource", 
                     "uses": "1", 
                     "description": "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level. \n Once you use this feature, you must finish a short or long rest before you can use it again."
                 }
             ],
             "2": { 
                 "feature_name": "Action Surge", 
-                "feature_type": "resource", 
+                "feature_type": "passive",
+                "subtype": "resource", 
                 "uses": "1", 
                 "description": "On your turn, you can take one additional action. Once you use this feature, you must finish a short or long rest before you can use it again." 
             },
@@ -74,7 +77,8 @@
             },
             "9": { 
                 "feature_name": "Indomitable", 
-                "feature_type": "resource", 
+                "feature_type": "passive",
+                "subtype": "resource",  
                 "uses": "1", 
                 "description": "You can reroll a saving throw that you fail. You must use the new roll. You regain all uses when you finish a short or long rest." 
             },

@@ -28,7 +28,8 @@
     "features": {
             "1": { 
                 "feature_name": "Arcane Recovery", 
-                "feature_type": "resource", 
+                "feature_type": "passive",
+                "subtype": "resource", 
                 "uses": "1", 
                 "description": "Once per day during a short rest, you can recover expended spell slots with a combined level equal to half your wizard level (rounded up)." 
             },

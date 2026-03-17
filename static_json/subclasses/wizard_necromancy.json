@@ -21,6 +21,10 @@
         "6": {
             "feature_name": "Undead Thralls",
             "feature_type": "passive",
+            "subtype": "spell_list_addition",
+            "spells_to_add": [
+                { "3rd Level": "Animate Dead" }
+            ],
             "description": "You add the Animate Dead spell to your spellbook if it is not there already. When you cast Animate Dead, you can target one additional corpse or pile of bones, creating another zombie or skeleton, as appropriate. Whenever you create an undead using a necromancy spell, it has additional benefits: The creature's hit point maximum is increased by an amount equal to your wizard level. The creature adds your proficiency bonus to its weapon damage rolls."
         },
         "10": {

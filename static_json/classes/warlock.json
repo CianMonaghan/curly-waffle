@@ -34,7 +34,8 @@
             },
             "2": { 
                 "feature_name": "Eldritch Invocations", 
-                "feature_type": "external_choice",
+                "feature_type": "passive",
+                "subtype": "external_choice",
                 "external_list": "eldritch_invocations", 
                 "numChoices": "2",
                 "options": "all",
@@ -42,7 +43,8 @@
             },
             "3": { 
                 "feature_name": "Pact Boon", 
-                "feature_type": "choice", 
+                "feature_type": "passive",
+                "subtype": "choice", 
                 "options": ["Pact of the Blade", "Pact of the Chain", "Pact of the Tome", "Pact of the Talisman"] 
             },
             "4": { 
@@ -87,7 +89,8 @@
             },
             "11": { 
                 "feature_name": "Mystic Arcanum (6th level)", 
-                "feature_type": "resource", 
+                "feature_type": "passive",
+                "subtype": "resource",
                 "uses": "1", 
                 "description": "You gain a 6th-level spell from the warlock spell list as a mystic arcanum, you may cast this spell once per long rest without expending a spell slot." 
             },
@@ -107,7 +110,8 @@
             ],
             "13": { 
                 "feature_name": "Mystic Arcanum (7th level)", 
-                "feature_type": "resource", 
+                "feature_type": "passive",
+                "subtype": "resource", 
                 "uses": "1", 
                 "description": "You gain a 7th-level spell from the warlock spell list as a mystic arcanum, you may cast this spell once per long rest without expending a spell slot." 
             },
@@ -118,7 +122,8 @@
             "15": [
                 { 
                     "feature_name": "Mystic Arcanum (8th level)", 
-                    "feature_type": "resource", 
+                    "feature_type": "passive",
+                    "subtype": "resource", 
                     "uses": "1", 
                     "description": "You gain a 8th-level spell from the warlock spell list as a mystic arcanum, you may cast this spell once per long rest without expending a spell slot." 
                 },
@@ -137,7 +142,8 @@
             },
             "17": { 
                 "feature_name": "Mystic Arcanum (9th level)", 
-                "feature_type": "resource", 
+                "feature_type": "passive",
+                "subtype": "resource",
                 "uses": "1", 
                 "description": "You gain a 9th-level spell from the warlock spell list as a mystic arcanum, you may cast this spell once per long rest without expending a spell slot." 
             },
@@ -155,7 +161,8 @@
             },
             "20": { 
                 "feature_name": "Eldritch Master", 
-                "feature_type": "resource", 
+                "feature_type": "passive",
+                "subtype": "resource",
                 "uses": "1", 
                 "description": "You can spend 1 minute entreating your patron for aid to regain all your expended spell slots from your Pact Magic feature. Once you regain spell slots with this feature, you must finish a long rest before you can do so again."
             }

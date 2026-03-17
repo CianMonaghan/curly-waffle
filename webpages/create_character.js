@@ -392,7 +392,6 @@ function buildFeature(level, feature, uid, featureContainer = null) {
 
     const block = document.createElement('div');
     block.classList.add('feature-block');
-
     block.dataset.featureName = feature.feature_name;
 
     const isOptional = feature.optional === true || feature.optional === 'true';
@@ -426,33 +425,26 @@ function buildFeature(level, feature, uid, featureContainer = null) {
 
     const target = block._contentTarget ?? block;
 
-    if (feature.feature_type === 'passive' || feature.feature_type === 'resource') {
+    // Feature Types
+    if (feature.feature_type === 'passive') {
         const desc = document.createElement('div');
         desc.textContent = feature.description ?? '';
         target.appendChild(desc);
-    } else if (feature.feature_type === 'choice') {
-        const prompt = document.createElement('div');
-        prompt.textContent = 'Select one:';
-        target.appendChild(prompt);
-        const options = document.createElement('div');
-        options.classList.add('feature-options');
-        const radioName = `feat_lvl${level}_uid${uid}`;
-        feature.options.forEach(opt => {
-            const label = document.createElement('label');
-            label.innerHTML = `<input type="radio" name="${radioName}"> ${opt}`;
-            options.appendChild(label);
-        });
-        target.appendChild(options);
+
+    } else if (feature.feature_type === 'modifier') {
+        const desc = document.createElement('div');
+        desc.textContent = feature.description ?? '';
+        target.appendChild(desc);
+        block.dataset.statToMod    = feature.stat_to_mod   ?? '';
+        block.dataset.modification = feature.modification  ?? '';
+
     } else if (feature.feature_type === 'asi') {
         const row = document.createElement('div');
         row.classList.add('asi-row');
         const attrs = ['STR','DEX','CON','INT','WIS','CHA'].map(a => `<option>${a}</option>`).join('');
-        row.innerHTML = `
-            <span> +1</span>
-            <select>${attrs}</select>
-            <select>${attrs}</select>
-        `;
+        row.innerHTML = `<span> +1</span><select>${attrs}</select><select>${attrs}</select>`;
         target.appendChild(row);
+
     } else if (feature.feature_type === 'subclass') {
         if (feature.subclassFeatures && feature.subclassFeatures.length > 0) {
             feature.subclassFeatures.forEach(sf => {
@@ -471,71 +463,6 @@ function buildFeature(level, feature, uid, featureContainer = null) {
             note.textContent = 'Feature determined by your subclass choice.';
             target.appendChild(note);
         }
-    } else if (feature.feature_type === 'external_choice') {
-        const list = EXTERNAL_LISTS[feature.external_list] || [];
-        const numChoices = feature.numChoices ?? 1;
-        const radioName = `extchoice_lvl${level}_uid${uid}`;
-
-        // store on the feature-block for upgrade access
-        block.dataset.externalList = feature.external_list;
-        block.dataset.radioName = radioName;
-        block.dataset.numChoices = numChoices;
-
-        const prompt = document.createElement('div');
-        prompt.classList.add('external-choice-prompt');
-        prompt.textContent = `Choose ${numChoices}:`;
-        target.appendChild(prompt);
-
-        const optionsWrapper = document.createElement('div');
-        optionsWrapper.classList.add('external-choice-list');
-        optionsWrapper.dataset.listName = feature.external_list;
-        optionsWrapper.dataset.radioName = radioName;
-        optionsWrapper.dataset.numChoices = numChoices;
-
-        list.forEach((option) => {
-            const inputType = numChoices === 1 ? 'radio' : 'checkbox';
-            const label = document.createElement('label');
-            label.classList.add('external-choice-item');
-            label.innerHTML = `<input type="${inputType}" name="${radioName}" value="${option.name}"> ${option.name}`;
-
-            if (option.description) {
-                label.title = option.description;
-                label.classList.add('has-tooltip');
-            }
-
-            if (option.requirement) {
-                const req = document.createElement('div');
-                req.classList.add('external-choice-requirement');
-                req.textContent = `Requires: ${option.requirement}`;
-                label.appendChild(req);
-            }
-
-            optionsWrapper.appendChild(label);
-        });
-
-        if (numChoices > 1) {
-            optionsWrapper.querySelectorAll(`input[name="${radioName}"]`).forEach(cb => {
-                cb.addEventListener('change', () => {
-                    enforceExternalChoiceLimit(optionsWrapper, radioName, numChoices);
-                    syncExternalChoicesAcrossBoxes(feature.external_list);
-                });
-            });
-        } else {
-            // radios still need cross-box sync
-            optionsWrapper.querySelectorAll(`input[name="${radioName}"]`).forEach(cb => {
-                cb.addEventListener('change', () => syncExternalChoicesAcrossBoxes(feature.external_list));
-            });
-        }
-
-        target.appendChild(optionsWrapper);
-
-    } else if (feature.feature_type === 'modifier') {
-        const desc = document.createElement('div');
-        desc.textContent = feature.description ?? '';
-        target.appendChild(desc);
-
-        block.dataset.statToMod   = feature.stat_to_mod   ?? '';
-        block.dataset.modification = feature.modification ?? '';
 
     } else if (feature.feature_type === 'upgrade') {
         if (featureContainer) {
@@ -553,7 +480,7 @@ function buildFeature(level, feature, uid, featureContainer = null) {
                     : null;
 
                 if (newMax !== null) {
-                    const listName = prior.dataset.externalList;
+                    const listName  = prior.dataset.externalList;
                     const radioName = prior.dataset.radioName;
                     prior.dataset.numChoices = newMax;
 
@@ -596,6 +523,119 @@ function buildFeature(level, feature, uid, featureContainer = null) {
         ref.textContent = `Upgrades "${feature.feature_to_upgrade}" — see above.`;
         target.appendChild(ref);
     }
+
+    // Feature Subtypes 
+    const subtypes = Array.isArray(feature.subtype) ? feature.subtype : [];
+
+    subtypes.forEach(subtype => {
+        switch (subtype) {
+
+            case 'resource': {
+                if (feature.uses != null) {
+                    const uses = document.createElement('div');
+                    uses.classList.add('feature-uses');
+                    uses.textContent = `Uses: ${feature.uses}`;
+                    target.appendChild(uses);
+                }
+                break;
+            }
+
+            case 'choice': {
+                const numChoices = feature.numChoices ?? 1;
+                const prompt = document.createElement('div');
+                prompt.textContent = numChoices > 1 ? `Choose ${numChoices}:` : 'Choose one:';
+                target.appendChild(prompt);
+
+                const options = document.createElement('div');
+                options.classList.add('feature-options');
+                const radioName = `feat_lvl${level}_uid${uid}_choice`;
+
+                (feature.options ?? []).forEach(opt => {
+                    const label = document.createElement('label');
+                    label.innerHTML = `<input type="radio" name="${radioName}"> ${opt}`;
+                    options.appendChild(label);
+                });
+                target.appendChild(options);
+                break;
+            }
+
+            case 'external_choice': {
+                const list       = EXTERNAL_LISTS[feature.external_list] || [];
+                const numChoices = feature.numChoices ?? 1;
+                const radioName  = `extchoice_lvl${level}_uid${uid}`;
+
+                block.dataset.externalList = feature.external_list;
+                block.dataset.radioName    = radioName;
+                block.dataset.numChoices   = numChoices;
+
+                const prompt = document.createElement('div');
+                prompt.classList.add('external-choice-prompt');
+                prompt.textContent = `Choose ${numChoices}:`;
+                target.appendChild(prompt);
+
+                const optionsWrapper = document.createElement('div');
+                optionsWrapper.classList.add('external-choice-list');
+                optionsWrapper.dataset.listName   = feature.external_list;
+                optionsWrapper.dataset.radioName  = radioName;
+                optionsWrapper.dataset.numChoices = numChoices;
+
+                list.forEach(option => {
+                    const inputType = numChoices === 1 ? 'radio' : 'checkbox';
+                    const label = document.createElement('label');
+                    label.classList.add('external-choice-item');
+                    label.innerHTML = `<input type="${inputType}" name="${radioName}" value="${option.name}"> ${option.name}`;
+
+                    if (option.description) {
+                        label.title = option.description;
+                        label.classList.add('has-tooltip');
+                    }
+                    if (option.requirement) {
+                        const req = document.createElement('div');
+                        req.classList.add('external-choice-requirement');
+                        req.textContent = `Requires: ${option.requirement}`;
+                        label.appendChild(req);
+                    }
+                    optionsWrapper.appendChild(label);
+                });
+
+                optionsWrapper.querySelectorAll(`input[name="${radioName}"]`).forEach(cb => {
+                    cb.addEventListener('change', () => {
+                        if (numChoices > 1) enforceExternalChoiceLimit(optionsWrapper, radioName, numChoices);
+                        syncExternalChoicesAcrossBoxes(feature.external_list);
+                    });
+                });
+
+                target.appendChild(optionsWrapper);
+                break;
+            }
+
+            case 'save_dc': {
+                // Rendered like passive — actual DC calculation handled elsewhere
+                if (feature.save_dc != null) {
+                    const dc = document.createElement('div');
+                    dc.classList.add('feature-save-dc');
+                    dc.textContent = `Save DC: ${feature.save_dc}`;
+                    target.appendChild(dc);
+                }
+                break;
+            }
+
+            case 'spell_list_addition': {
+                // Rendered like passive — spell slot logic handled elsewhere
+                if (feature.spells_to_add) {
+                    const spellDiv = document.createElement('div');
+                    spellDiv.classList.add('feature-spells');
+                    const lines = feature.spells_to_add.map(entry => {
+                        const [lvl, name] = Object.entries(entry)[0];
+                        return `${name} (level ${lvl})`;
+                    });
+                    spellDiv.textContent = `Spells added: ${lines.join(', ')}`;
+                    target.appendChild(spellDiv);
+                }
+                break;
+            }
+        }
+    });
 
     return block;
 }

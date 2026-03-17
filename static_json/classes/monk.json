@@ -42,8 +42,10 @@
             "2": [
                 { 
                     "feature_name": "Ki", 
-                    "feature_type": "resource", 
+                    "feature_type": "passive",
+                    "subtype": ["save_dc", "resource"],  
                     "uses": "level", 
+                    "save_dc": "8 + prof_bonus + Wisdom modifier",
                     "description": "You have ki points equal to your monk level. You can spend them to fuel various Ki features. Some Ki features require a saving throw which is equal to 8 + your proficiency bonus + your Wisdom modifier. Ki points refresh on a short or long rest." 
                 },
                 { 

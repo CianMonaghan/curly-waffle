@@ -21,7 +21,8 @@
         },
         "6": {
             "feature_name": "Dark One's Own Luck",
-            "feature_type": "resource",
+            "feature_type": "passive",
+            "subtype": "resource",
             "description": "You can call on your patron to alter fate in your favor. When you make an ability check or a saving throw, you can use this feature to add a d10 to your roll. You can do so after seeing the initial roll but before any of the roll's effects occur. Once you use this feature, you can't use it again until you finish a short or long rest.",
             "uses": "1"
         },
@@ -32,7 +33,8 @@
         },
         "14": {
             "feature_name": "Hurl Through Hell",
-            "feature_type": "resource",
+            "feature_type": "passive",
+            "subtype": "resource",
             "description": "When you hit a creature with an attack, you can use this feature to instantly transport the target through the lower planes. The creature disappears and hurtles through a nightmare landscape. At the end of your next turn, the target returns to the space it previously occupied, or the nearest unoccupied space. If the target is not a fiend, it takes 10d10 psychic damage as it reels from its horrific experience. Once you use this feature, you can't use it again until you finish a long rest.",
             "uses": "1"
         }

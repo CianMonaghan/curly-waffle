@@ -26,16 +26,6 @@
         "description": null
     },
 
-    "spell_list_addition": {
-        "comment": "This type is for features that add a spell to your spell_list. Cannot be used with classes/subclasses that don't have a spell_list.",
-        "feature_name": null,
-        "feature_type": "spell_list_addition",
-        "spells_to_add": [
-            { "spell_level": "spell_name" }
-        ],
-        "description": null
-    },
-
     "asi": {
         "comment": "This type is for asi levels",
         "feature_name": "Ability Score Improvement",
@@ -52,35 +42,37 @@
     "comment": "Feature Subtypes",
 
     "resource": {
-        "comment": "This type is for features that have an amount of times you can use it per period of time",
-        "feature_name": null,
-        "feature_type": "resource",
-        "description": null,
+        "comment": "This subtype is for features that have an amount of times you can use it per period of time",
+        "subtype": "resource",
         "uses": null
     },
 
     "choice": {
-        "comment": "This type is for features that require you to choose between an amount of options",
-        "feature_name": null,
-        "feature_type": "choice",
+        "comment": "This subtype is for features that require you to choose between an amount of options from one of the external lists",
+        "subtype": "choice",
         "numChoices": null,
         "options": []
     },
 
     "external_choice": {
-        "comment": "This type is for features that require you to choose between an amount of options from one of the external lists",
-        "feature_name": null,
-        "feature_type": "external_choice",
+        "comment": "This subtype is for features that require you to choose between an amount of options from one of the external lists",
+        "subtype": "external_choice",
         "external_list": null,
         "numChoices": null,
         "options": []
     },
 
     "save_dc": {
-        "comment": "This type os for features that make a save dc",
-        "feature_name": null,
-        "feature_type": "save_dc",
+        "comment": "This subtype os for features that make a save dc",
+        "subtype": "save_dc",
         "save_dc": null
-    }
+    },
 
+    "spell_list_addition": {
+        "comment": "This subtype is for features that add a spell to your spell_list. Cannot be used with classes/subclasses that don't have a spell_list.",
+        "subtype": "spell_list_addition",
+        "spells_to_add": [
+            { "spell_level": "spell_name" }
+        ]
+    }
 }

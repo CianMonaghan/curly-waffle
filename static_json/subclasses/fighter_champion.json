@@ -17,7 +17,8 @@
         },
         "10": { 
             "feature_name": "Additional Fighting Style",   
-            "feature_type": "external_choice",
+            "feature_type": "passive",
+            "subtype": "external_choice",
             "external_list": "fighting_styles",
             "numChoices": 1,
             "options": ["Archery", "Defense", "Dueling", "Great Weapon Fighting", "Protection", "Two-Weapon Fighting"], 

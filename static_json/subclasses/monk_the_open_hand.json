@@ -13,7 +13,8 @@
         },
         "6": {
             "feature_name": "Wholeness of Body",
-            "feature_type": "resource",
+            "feature_type": "passive",
+            "subtype": "resource",
             "description": "You gain the ability to heal yourself. As an action, you can regain hit points equal to three times your monk level. You must finish a long rest before you can use this feature again.",
             "uses": "1"
         },
