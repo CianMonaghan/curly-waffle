@@ -5,5 +5,91 @@
     "class": "fighter",
     "description": null, 
 
-    "features": {}
+    "features": {
+        "3": [
+            {
+                "feature_name": "Combat Superiority",
+                "feature_type": "passive",
+                "subtype": ["resource", "external_choice", "save_dc"],
+                "description": "You learn maneuvers that are fueled by special dice called superiority dice. You learn three maneuvers of your choice. Many maneuvers enhance an attack in some way. You can use only one maneuver per attack. You learn two additional maneuvers of your choice at 7th, 10th, and 15th level. Each time you learn new maneuvers. You have four superiority dice, which are d8s. A superiority die is expended when you use it. You regain all of your expended superiority dice when you finish a short or long rest. You gain another superiority die at 7th level and one more at 15th level. Some of your maneuvers require your target to make a saving throw to resist the maneuver's effects.",
+
+                "uses": "4",
+
+                "external_list": "battle_master_maneuvers",
+                "numChoices": "3",
+                "options": "all",
+
+                "save_dc": "8 + prof_bonus + Strength or Dexterity modifier (your choice)"
+            },
+            {
+                "feature_name": "Student of War",
+                "feature_type": "passive",
+                "subtype": "external_choice",
+                "external_list": "tools",
+                "numChoices": "1",
+                "options": "artisans_tools"
+            }
+        ],
+        "7": [
+             {
+                "feature_name": "Know Your Enemy",
+                "feature_type": "passive",
+                "description": "If you spend at least 1 minute observing or interacting with another creature outside combat, you can learn certain information about its capabilities compared to your own. The DM tells you if the creature is your equal, superior, or inferior in regard to two of the following characteristics of your choice: Strength score, Dexterity score, Constitution score, Armor Class, Current hit points, Total class levels, if any, Fighter class levels, if any."
+            },
+            {
+                "feature_name": "Combat Superiority Improvement",
+                "feature_type": "upgrade",
+                "feature_to_upgrade": "Combat Superiority",
+                "stat_to_upgrade": "uses",
+                "new_value": "5"
+            },
+            {
+                "feature_name": "Combat Superiority Improvement",
+                "feature_type": "upgrade",
+                "feature_to_upgrade": "Combat Superiority",
+                "stat_to_upgrade": "numChoices",
+                "new_value": "5"
+            }
+        ],
+        "10": [
+            {
+                "feature_name": "Improved Combat Superiority",
+                "feature_type": "passive",
+                "description": "Your superiority dice turn into d10s."
+            },
+            {
+                "feature_name": "Combat Superiority Improvement",
+                "feature_type": "upgrade",
+                "feature_to_upgrade": "Combat Superiority",
+                "stat_to_upgrade": "numChoices",
+                "new_value": "7"
+            }
+        ],
+        "15": [
+            {
+                "feature_name": "Relentless",
+                "feature_type": "passive",
+                "description": "When you roll initiative and have no superiority dice remaining, you regain 1 superiority die."
+            },
+            {
+                "feature_name": "Combat Superiority Improvement",
+                "feature_type": "upgrade",
+                "feature_to_upgrade": "Combat Superiority",
+                "stat_to_upgrade": "uses",
+                "new_value": "6"
+            },
+            {
+                "feature_name": "Combat Superiority Improvement",
+                "feature_type": "upgrade",
+                "feature_to_upgrade": "Combat Superiority",
+                "stat_to_upgrade": "numChoices",
+                "new_value": "9"
+            }
+        ],
+        "18": {
+            "feature_name": "Improved Combat Superiority",
+            "feature_type": "passive",
+            "description": "Your superiority dice turn into d12s."
+        }
+    }
 }

@@ -5,20 +5,28 @@
     "class": "warlock",
     "description": null, 
 
-    "spell_list_additions": [
-        { "1st Level": ["Burning Hands", "Command"] },
-        { "2nd Level": ["Blindness/Deafness", "Scorching Ray"] },
-        { "3rd Level": ["Fireball", "Stinking Cloud"] },
-        { "4th Level": ["Fire Shield", "Wall of Fire"] },
-        { "5th Level": ["Flame Strike", "Hallow"] }
-    ],
 
     "features": {
-        "1": {
-            "feature_name": "Dark One's Blessing",
-            "feature_type": "passive",
-            "description": "When you reduce a hostile creature to 0 hit points, you gain temporary hit points equal to your Charisma modifier + your warlock level (minimum of 1)."
-        },
+        "1": [
+            {
+                "feature_name": "Expanded Spell List",
+                "feature_type": "passive",
+                "subtype": "spell_list_addition",
+                "spells_to_add": [
+                    { "1st Level": ["Burning Hands", "Command"] },
+                    { "2nd Level": ["Blindness/Deafness", "Scorching Ray"] },
+                    { "3rd Level": ["Fireball", "Stinking Cloud"] },
+                    { "4th Level": ["Fire Shield", "Wall of Fire"] },
+                    { "5th Level": ["Flame Strike", "Hallow"] }
+                ],
+                "description": "1st Level: Burning Hands, Command, 2nd Level: Blindness/Deafness, Scorching Ray, 3rd Level: Fireball, Stinking Cloud, 4th Level: Fire Shield, Wall of Fire, 5th Level: Flame Strike, Hallow"
+            },
+            {
+                "feature_name": "Dark One's Blessing",
+                "feature_type": "passive",
+                "description": "When you reduce a hostile creature to 0 hit points, you gain temporary hit points equal to your Charisma modifier + your warlock level (minimum of 1)."
+            }
+        ],
         "6": {
             "feature_name": "Dark One's Own Luck",
             "feature_type": "passive",
