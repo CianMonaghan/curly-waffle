@@ -1,29 +1,29 @@
 {
     "type": "wp",
-    "id": 4,
+    "id": 7,
     "local_id": 0,
-    "name": "Dagger",
-    "description": "A simple melee or ranged weapon.",
+    "name": "Quarterstaff",
+    "description": "A simple melee weapon.",
     "equipped": false,
     "features_on_obtain": null,
     "features_on_lose": null,
     "features_on_equip": [
         {
-            "id": "attack-dagger-melee",
-            "name": "Melee Attack (Dagger)",
+            "id": "attack-quarterstaff-onehand",
+            "name": "Melee Attack (Quarterstaff, One-Handed)",
             "description": null,
             "trigger": "onEquip"
         },
         {
-            "id": "attack-dagger-range",
-            "name": "Ranged Attack (Dagger)",
+            "id": "attack-quarterstaff-twohand",
+            "name": "Melee Attack (Quarterstaff, Two-Handed)",
             "description": null,
             "trigger": "onEquip"
         }
     ],
     "features_on_unequip": [
         {
-            "id": "loss-attack-dagger",
+            "id": "loss-attack-quarterstaff",
             "name": null,
             "description": null,
             "trigger": "onUnequip"
@@ -34,16 +34,19 @@
             "num": 1,
             "sides": 6
         },
-        "twoHand": null
+        "twoHand": {
+            "num": 1,
+            "sides": 8
+        }
     },
-    "range": [null,30,120],
-    "primary_stat": ["Strength", "Dexterity"],
+    "range": [5,null,null],
+    "primary_stat": ["Strength"],
     "martial": false,
     "improvised": false,
     "attack_bonus": 0,
     "damage_bonus": 0,
     "prof": true,
-    "attuned": null,
+    "attuned": false,
     "features_on_attune": null,
     "features_on_detune": null
 }

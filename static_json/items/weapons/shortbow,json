@@ -1,23 +1,23 @@
 {
     "type": "wp",
-    "id": 2,
+    "id": 12,
     "local_id": 0,
-    "name": "Greatclub",
-    "description": "A simple melee weapon.",
+    "name": "Shortbow",
+    "description": "A simple ranged weapon.",
     "equipped": false,
     "features_on_obtain": null,
     "features_on_lose": null,
     "features_on_equip": [
         {
-            "id": "attack-greatclub",
-            "name": "Melee Attack (Greatclub)",
+            "id": "attack-sbow",
+            "name": "Ranged Attack (Shortbow)",
             "description": null,
             "trigger": "onEquip"
         }
     ],
     "features_on_unequip": [
         {
-            "id": "loss-attack-greatclub",
+            "id": "loss-attack-sbow",
             "name": null,
             "description": null,
             "trigger": "onUnequip"
@@ -27,17 +27,17 @@
         "oneHand": null,
         "twoHand": {
             "num": 1,
-            "sides": 8
+            "sides": 6
         }
     },
-    "range": [5,null,null],
-    "primary_stat": ["Strength"],
+    "range": [null, 80, 320],
+    "primary_stat": ["Dexterity"],
     "martial": false,
     "improvised": false,
     "attack_bonus": 0,
     "damage_bonus": 0,
     "prof": true,
-    "attuned": null,
-    "features_on_attune": null,
-    "features_on_detune": null
+    "attuned": false,
+    "features_on_attune": false,
+    "features_on_detune": false
 }

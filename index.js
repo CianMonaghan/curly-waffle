@@ -114,7 +114,7 @@ const itemSchema = new mongoose.Schema({
             sides: {type: Number, min: 1, required: true}
         }
     },
-    range: {type: Number, min: 5},
+    range: [],
     primary_stat: [String],
     martial: Boolean,
     improvised: Boolean,
@@ -134,7 +134,7 @@ const subclassSchema = new mongoose.Schema({
     features: [featureSchema]
 }, {_id: false});
 
-const characterSchema = new mongoose.Schema({
+const characterSchema = new mongoose.Schema({//accountID?
     name: {type: String, required: true},
     alignment: String,
     stats: {type: [{
@@ -240,7 +240,7 @@ app.post('/api/characters', async (req, res) => {
         //console.log(character.create(characterFile));
         //await characters.insertOne(character.create(characterFile));
         //console.log("Data saved.");
-        //redirect to the sheet page w/ the data
+        //res.redirect(303, '/sheet.html'); //redirect
         return res.status(200);
     } catch (err) {
         console.error('[POST /api/characters]', err);
@@ -270,7 +270,14 @@ app.get('/create_character.html', async (req,res)=>{
 });
 
 app.get('/sheet.html', async (req,res)=>{
-    res.sendFile(path.join(__dirname,'webpages','sheet.html'));
+    //default to first character associated with account if no other character
+    if(req.body == null){
+        res.sendFile(path.join(__dirname,'webpages','sheet.html'));
+    } else {
+        //await characters.findOne({name = req.body.name, accountId = req.body.accountId}) //req.body.name will contain the character name of the character we want to find in the server
+        //show the sheet with the character info put in
+        res.sendFile(path.join(__dirname,'webpages','sheet.html'));
+    }
 });
 
 app.get('/signup.html', async (req,res)=>{

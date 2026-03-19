@@ -36,7 +36,7 @@
         },
         "twoHand": null
     },
-    "range": 5,
+    "range": [5,20,60],
     "primary_stat": ["Strength", "Dexterity"],
     "martial": false,
     "improvised": false,

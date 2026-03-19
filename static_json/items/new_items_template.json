@@ -27,7 +27,7 @@
             "sides": 0
         }
     },
-    "range": null,
+    "range": [],
     "primary_stat": [],
     "martial": false,
     "improvised": false,

@@ -1,49 +1,43 @@
 {
     "type": "wp",
-    "id": 4,
+    "id": 10,
     "local_id": 0,
-    "name": "Dagger",
-    "description": "A simple melee or ranged weapon.",
+    "name": "Light Crossbow",
+    "description": "A simple ranged weapon",
     "equipped": false,
     "features_on_obtain": null,
     "features_on_lose": null,
     "features_on_equip": [
         {
-            "id": "attack-dagger-melee",
-            "name": "Melee Attack (Dagger)",
-            "description": null,
-            "trigger": "onEquip"
-        },
-        {
-            "id": "attack-dagger-range",
-            "name": "Ranged Attack (Dagger)",
+            "id": "attack-lcrossbow",
+            "name": "Ranged Attack (Light Crossbow)",
             "description": null,
             "trigger": "onEquip"
         }
     ],
     "features_on_unequip": [
         {
-            "id": "loss-attack-dagger",
+            "id": "loss-attack-lcrossbow",
             "name": null,
             "description": null,
             "trigger": "onUnequip"
         }
     ],
     "dice": {
-        "oneHand": {
+        "oneHand": null,
+        "twoHand": {
             "num": 1,
-            "sides": 6
-        },
-        "twoHand": null
+            "sides": 8
+        }
     },
-    "range": [null,30,120],
-    "primary_stat": ["Strength", "Dexterity"],
+    "range": [null, 80, 320],
+    "primary_stat": ["Dexterity"],
     "martial": false,
     "improvised": false,
     "attack_bonus": 0,
     "damage_bonus": 0,
     "prof": true,
-    "attuned": null,
+    "attuned": false,
     "features_on_attune": null,
     "features_on_detune": null
 }

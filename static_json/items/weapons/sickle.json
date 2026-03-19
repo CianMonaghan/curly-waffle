@@ -1,29 +1,23 @@
 {
     "type": "wp",
-    "id": 4,
+    "id": 8,
     "local_id": 0,
-    "name": "Dagger",
-    "description": "A simple melee or ranged weapon.",
+    "name": "Sickle",
+    "description": "A simple melee weapon.",
     "equipped": false,
     "features_on_obtain": null,
     "features_on_lose": null,
     "features_on_equip": [
         {
-            "id": "attack-dagger-melee",
-            "name": "Melee Attack (Dagger)",
-            "description": null,
-            "trigger": "onEquip"
-        },
-        {
-            "id": "attack-dagger-range",
-            "name": "Ranged Attack (Dagger)",
+            "id": "attack-sickle",
+            "name": "Melee Attack (Sickle)",
             "description": null,
             "trigger": "onEquip"
         }
     ],
     "features_on_unequip": [
         {
-            "id": "loss-attack-dagger",
+            "id": "loss-attack-sickle",
             "name": null,
             "description": null,
             "trigger": "onUnequip"
@@ -32,18 +26,18 @@
     "dice": {
         "oneHand": {
             "num": 1,
-            "sides": 6
+            "sides": 4
         },
         "twoHand": null
     },
-    "range": [null,30,120],
-    "primary_stat": ["Strength", "Dexterity"],
+    "range": [5,null,null],
+    "primary_stat": ["Strength"],
     "martial": false,
     "improvised": false,
     "attack_bonus": 0,
     "damage_bonus": 0,
     "prof": true,
-    "attuned": null,
+    "attuned": false,
     "features_on_attune": null,
     "features_on_detune": null
 }
