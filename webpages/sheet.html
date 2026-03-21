@@ -17,82 +17,82 @@
                 </form>
             </div>
             <div> <!--Character Sheet-->
-                <h1>  Character Name  </h1>
+                <h1 id="char-name">  Character Name  </h1>
 
                 <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
                     <div style="margin-right: 10px;">
                         <div class="box" style="font-size: 12px; display:inline; margin-right: -5px;">  Race:  </div>
-                        <div class="box" style="font-size: 12px; display:inline;">  null  </div>
+                        <div class="box" style="font-size: 12px; display:inline;" id="race-val">  null  </div>
                     </div>
                     <div style="margin-right: 10px;">
                         <div class="box" style="font-size: 12px; display:inline; margin-right: -5px;">  Primary Class:  </div>
-                        <div class="box" style="font-size: 12px; display:inline;">  null  </div>
+                        <div class="box" style="font-size: 12px; display:inline;" id="class-val">  null  </div>
                     </div>
                     <div style="margin-right: 10px;">
                         <div class="box" style="font-size: 12px; display:inline; margin-right: -5px;">  Subclass:  </div>
-                        <div class="box" style="font-size: 12px; display:inline;">  null  </div>
+                        <div class="box" style="font-size: 12px; display:inline;" id="subclass-val">  null  </div>
                     </div>
                     <div style="margin-right: 10px;">
                         <div class="box" style="font-size: 12px; display:inline; margin-right: -5px;">  Level:  </div>
-                        <div class="box" style="font-size: 12px; display:inline;">  0  </div>
+                        <div class="box" style="font-size: 12px; display:inline;" id="level-val">  0  </div>
                     </div>
                     <div style="margin-right: 10px;">
                         <div class="box" style="font-size: 12px; display:inline; margin-right: -5px;">  Secondary Class:  </div>
-                        <div class="box" style="font-size: 12px; display:inline;">  null  </div>
+                        <div class="box" style="font-size: 12px; display:inline;" id="class2-val">  null  </div>
                     </div>
                     <div style="margin-right: 10px;">
                         <div class="box" style="font-size: 12px; display:inline; margin-right: -5px;">  Subclass:  </div>
-                        <div class="box" style="font-size: 12px; display:inline;">  null  </div>
+                        <div class="box" style="font-size: 12px; display:inline;" id="subclass2-val">  null  </div>
                     </div>
                     <div style="margin-right: 10px;">
                         <div class="box" style="font-size: 12px; display:inline; margin-right: -5px;">  Level:  </div>
-                        <div class="box" style="font-size: 12px; display:inline;">  0  </div>
+                        <div class="box" style="font-size: 12px; display:inline;" id="level2-val">  0  </div>
                     </div>
                 </div>
 
                 <div class="sheet-container">
                     <div> <!--Ability Column-->
                         <div class="ability-container">
-                            <div class="ability" id="ability1">  Str  </div>
-                            <div class="ability" id="ability2">  0  </div>
-                            <div class="ability" id="ability3">  +0  </div>
+                            <div class="ability">  Str  </div>
+                            <div class="ability" id="score-0">  0  </div>
+                            <div class="ability" id="mod-0">  +0  </div>
                         </div>
                         <div class="ability-container">
-                            <div class="ability" id="ability1">  Dex  </div>
-                            <div class="ability" id="ability2">  0  </div>
-                            <div class="ability" id="ability3">  +0  </div>
+                            <div class="ability">  Dex  </div>
+                            <div class="ability" id="score-1">  0  </div>
+                            <div class="ability" id="mod-1">  +0  </div>
                         </div>
                         <div class="ability-container">
-                            <div class="ability" id="ability1">  Con  </div>
-                            <div class="ability" id="ability2">  0  </div>
-                            <div class="ability" id="ability3">  +0  </div>
+                            <div class="ability">  Con  </div>
+                            <div class="ability" id="score-2">  0  </div>
+                            <div class="ability" id="mod-2">  +0  </div>
                         </div>
                         <div class="ability-container">
-                            <div class="ability" id="ability1">  Int  </div>
-                            <div class="ability" id="ability2">  0  </div>
-                            <div class="ability" id="ability3">  +0  </div>
+                            <div class="ability">  Int  </div>
+                            <div class="ability" id="score-3">  0  </div>
+                            <div class="ability" id="mod-3">  +0  </div>
                         </div>
                         <div class="ability-container">
-                            <div class="ability" id="ability1">  Wis  </div>
-                            <div class="ability" id="ability2">  0  </div>
-                            <div class="ability" id="ability3">  +0  </div>
+                            <div class="ability">  Wis  </div>
+                            <div class="ability" id="score-4">  0  </div>
+                            <div class="ability" id="mod-4">  +0  </div>
                         </div>
                         <div class="ability-container">
-                            <div class="ability" id="ability1">  Cha  </div>
-                            <div class="ability" id="ability2">  0  </div>
-                            <div class="ability" id="ability3">  +0  </div>
+                            <div class="ability">  Cha  </div>
+                            <div class="ability" id="score-5">  0  </div>
+                            <div class="ability" id="mod-5">  +0  </div>
                         </div>
                     </div>
 
                     <div>
                         <div style="margin-top: 10px;">
                             <div class="box" style="font-size: 14px; display:inline;"><u>  Inspiration:  </u></div>
-                            <div class="box" style="font-size: 14px; width: 30%; display:inline;">  0  </div>
+                            <div class="box" style="font-size: 14px; width: 30%; display:inline;" id="inspiration-val">  0  </div>
                         </div>
 
                         <div style="margin-top: 25px;">
                             <div class="box" style="font-size: 14px; display:inline;"><u>  Proficiency:  </u></div>
-                            <div class="box" style="font-size: 14px; width: 30%; display:inline;">  +0  </div>
+                            <div class="box" style="font-size: 14px; width: 30%; display:inline;" id="prof-val">  +0  </div>
                         </div>
 
                         <!--Saving Throws-->
@@ -100,12 +100,12 @@
                             <body>Saving Throws</body>
                         </div>
                         <div class="skill-container">
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Strength  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Dexterity  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Constitution  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Intelligence  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Wisdom  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Charisma  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="save-0">  0  </u></span><span>  Strength  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="save-1">  0  </u></span><span>  Dexterity  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="save-2">  0  </u></span><span>  Constitution  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="save-3">  0  </u></span><span>  Intelligence  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="save-4">  0  </u></span><span>  Wisdom  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="save-5">  0  </u></span><span>  Charisma  </span></div>
                         </div>
 
                         <p></p>
@@ -115,31 +115,31 @@
                             <body>Skills</body>
                         </div>
                         <div class="skill-container">
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Acrobatics  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Animal Handling  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Arcana  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Athletics  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Deception  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  History  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Insight  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Intimidation  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Investigation  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Medicine  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Nature  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Perception  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Performance  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Persuasion  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Religion  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Sleight of Hand  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Stealth  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u>  0  </u></span><span>  Survival  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-acrobatics">  0  </u></span><span>  Acrobatics  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-animal-handling">  0  </u></span><span>  Animal Handling  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-arcana">  0  </u></span><span>  Arcana  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-athletics">  0  </u></span><span>  Athletics  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-deception">  0  </u></span><span>  Deception  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-history">  0  </u></span><span>  History  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-insight">  0  </u></span><span>  Insight  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-intimidation">  0  </u></span><span>  Intimidation  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-investigation">  0  </u></span><span>  Investigation  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-medicine">  0  </u></span><span>  Medicine  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-nature">  0  </u></span><span>  Nature  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-perception">  0  </u></span><span>  Perception  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-performance">  0  </u></span><span>  Performance  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-persuasion">  0  </u></span><span>  Persuasion  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-religion">  0  </u></span><span>  Religion  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-sleight-of-hand">  0  </u></span><span>  Sleight of Hand  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-stealth">  0  </u></span><span>  Stealth  </span></div>
+                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-survival">  0  </u></span><span>  Survival  </span></div>
                         </div>
 
                         <p></p>
 
                         <div style="margin-top: 25px;">
                             <div class="box" style="font-size: 12px; display:inline;"><u>  Passive Perception:  </u></div>
-                            <div class="box" style="font-size: 12px; width: 30px; display:inline;">  +0  </div>
+                            <div class="box" style="font-size: 12px; width: 30px; display:inline;" id="passive-perc">  +0  </div>
                         </div>
                     </div>
                 
@@ -149,8 +149,8 @@
                             <div class="box">  Max Health  </div>
                         </div>
                         <div class="health-container">
-                            <div class="box" style="height: 40px; font-size: 30px;">  0  </div>
-                            <div class="box" style="height: 40px; font-size: 30px;">  0  </div>
+                            <div class="box" style="height: 40px; font-size: 30px;" id="hp-current">  0  </div>
+                            <div class="box" style="height: 40px; font-size: 30px;" id="hp-max">  0  </div>
                         </div>
 
                         <p></p>
@@ -160,8 +160,8 @@
                             <div class="box">  Reduced Max Health  </div>
                         </div>
                         <div class="health-container">
-                            <div class="box" style="height: 40px; font-size: 30px;">  0  </div>
-                            <div class="box" style="height: 40px; font-size: 30px;">  0  </div>
+                            <div class="box" style="height: 40px; font-size: 30px;" id="hp-temp">  0  </div>
+                            <div class="box" style="height: 40px; font-size: 30px;" id="hp-reduced">  0  </div>
                         </div>
 
                         <p></p>
@@ -170,15 +170,15 @@
                             <div style="margin-right: 5px;">
                                 <div class="box" style="text-align: center;">  Hit Dice  </div>
                                 <div class="health-container" style="height: 59px;">
-                                    <div class="box" style="font-size: 25px; padding-top: 15px;">  0d0  </div>
-                                    <div class="box" style="font-size: 25px; padding-top: 15px;">  0d0  </div>
+                                    <div class="box" style="font-size: 25px; padding-top: 15px;" id="hit-dice-1">  0d0  </div>
+                                    <div class="box" style="font-size: 25px; padding-top: 15px;" id="hit-dice-2">  0d0  </div>
                                 </div>
                             </div>
                             
                             <div>
                                 <div class="box" style="text-align: center;">  Death Saves  </div>
                                 <div class="health-container">
-                                    <div class="box">  Successe  </div>
+                                    <div class="box">  Successes  </div>
                                     <div class="box">
                                         <span class="bubble"></span>
                                         <span class="bubble"></span>
@@ -201,31 +201,31 @@
                         <div class="movement-container">
                             <div style="margin: 10px;">
                                 <div class="box" style="text-align: center;">  AC  </div>
-                                <div class="box" style="text-align: center;">  0  </div>
+                                <div class="box" style="text-align: center;" id="ac-val">  0  </div>
                             </div>
 
                             <div style="margin: 10px;">
                                 <div class="box" style="text-align: center;">  Initiative  </div>
-                                <div class="box" style="text-align: center;">  0  </div>
+                                <div class="box" style="text-align: center;" id="init-val">  0  </div>
                             </div>
 
                             <div style="margin: 10px;">
                                 <div class="box" style="text-align: center;">  Speed  </div>
-                                <div class="box" style="text-align: center;">  0  </div>
+                                <div class="box" style="text-align: center;" id="speed-val">  0  </div>
                             </div>
                         </div>
                         
                         <div class="box">
                             <body>  Weapons  </body>
                         </div>
-                        <div class="box" style="height: 120px">
+                        <div class="box" style="height: 120px" id="weapons-list">
                             <body></body>
                         </div>
 
                         <div class="box">
                             <body>  Proficiencies  </body>
                         </div>
-                        <div class="box" style="height: 120px">
+                        <div class="box" style="height: 120px" id="prof-list">
                             <body></body>
                         </div>
 
@@ -235,7 +235,7 @@
                         <div class="box">
                             <body>  Features  </body>
                         </div>
-                        <div class="box" style="height: 650px">
+                        <div class="box" style="height: 650px" id="features-list">
                             <body></body>
                         </div>
                     </div>
@@ -251,12 +251,12 @@
                             <div>  PP  </div>
                         </div>
                         <div class="currency-container">
-                            <div style="border-right: 1px solid black;">  0  </div>
-                            <div style="border-right: 1px solid black;">  0  </div>
-                            <div style="border-right: 1px solid black;">  0  </div>
-                            <div>  0  </div>
+                            <div style="border-right: 1px solid black;" id="currency-cp">  0  </div>
+                            <div style="border-right: 1px solid black;" id="currency-ep">  0  </div>
+                            <div style="border-right: 1px solid black;" id="currency-gp">  0  </div>
+                            <div id="currency-pp">  0  </div>
                         </div>
-                        <div class="box" style="height: 610px">
+                        <div class="box" style="height: 610px" id="inventory-list">
                             <body></body>
                         </div>
                     </div>
@@ -269,17 +269,17 @@
             <div class="movement-container">
                 <div style="margin: 10px;">
                     <div class="box" style="text-align: center;">  Spellcasting Ability  </div>
-                    <div class="box" style="text-align: center;">  Null  </div>
+                    <div class="box" style="text-align: center;" id="spell-ability">  Null  </div>
                 </div>
 
                 <div style="margin: 10px;">
                     <div class="box" style="text-align: center;">  Spell Save DC  </div>
-                    <div class="box" style="text-align: center;">  0  </div>
+                    <div class="box" style="text-align: center;" id="spell-dc">  0  </div>
                 </div>
 
                 <div style="margin: 10px;">
                     <div class="box" style="text-align: center;">  Spell Attack Bonus  </div>
-                    <div class="box" style="text-align: center;">  0  </div>
+                    <div class="box" style="text-align: center;" id="spell-atk">  0  </div>
                 </div>
             </div>
 
@@ -293,10 +293,10 @@
                     </div>
                     <div class="slot-container" style="align-items: center;">
                         <div id="slot">  Cantrip  </div>
-                        <div id="slot">  0  </div>
-                        <div id="slot">  0  </div>
+                        <div id="slot-amt-0">  0  </div>
+                        <div id="slot-used-0">  0  </div>
                     </div>
-                    <div>  Put spells here  </div>
+                    <div id="spell-list-0">  Put spells here  </div>
                 </div>
 
                 <div class="spell-container">
@@ -307,10 +307,10 @@
                     </div>
                     <div class="slot-container" style="align-items: center;">
                         <div id="slot">  1  </div>
-                        <div id="slot">  0  </div>
-                        <div id="slot">  0  </div>
+                        <div id="slot-amt-1">  0  </div>
+                        <div id="slot-used-1">  0  </div>
                     </div>
-                    <div>  Put spells here  </div>
+                    <div id="spell-list-1">  Put spells here  </div>
                 </div>
 
                 <div class="spell-container">
@@ -321,10 +321,10 @@
                     </div>
                     <div class="slot-container" style="align-items: center;">
                         <div id="slot">  2  </div>
-                        <div id="slot">  0  </div>
-                        <div id="slot">  0  </div>
+                        <div id="slot-amt-2">  0  </div>
+                        <div id="slot-used-2">  0  </div>
                     </div>
-                    <div>  Put spells here  </div>
+                    <div id="spell-list-2">  Put spells here  </div>
                 </div>
 
                 <div class="spell-container">
@@ -335,10 +335,10 @@
                     </div>
                     <div class="slot-container" style="align-items: center;">
                         <div id="slot">  3  </div>
-                        <div id="slot">  0  </div>
-                        <div id="slot">  0  </div>
+                        <div id="slot-amt-3">  0  </div>
+                        <div id="slot-used-3">  0  </div>
                     </div>
-                    <div>  Put spells here  </div>
+                    <div id="spell-list-3">  Put spells here  </div>
                 </div>
             </div>
 
@@ -352,10 +352,10 @@
                     </div>
                     <div class="slot-container" style="align-items: center;">
                         <div id="slot">  4  </div>
-                        <div id="slot">  0  </div>
-                        <div id="slot">  0  </div>
+                        <div id="slot-amt-4">  0  </div>
+                        <div id="slot-used-4">  0  </div>
                     </div>
-                    <div>  Put spells here  </div>
+                    <div id="spell-list-4">  Put spells here  </div>
                 </div>
 
                 <div class="spell-container">
@@ -366,10 +366,10 @@
                     </div>
                     <div class="slot-container" style="align-items: center;">
                         <div id="slot">  5  </div>
-                        <div id="slot">  0  </div>
-                        <div id="slot">  0  </div>
+                        <div id="slot-amt-5">  0  </div>
+                        <div id="slot-used-5">  0  </div>
                     </div>
-                    <div>  Put spells here  </div>
+                    <div id="spell-list-5">  Put spells here  </div>
                 </div>
 
                 <div class="spell-container">
@@ -380,10 +380,10 @@
                     </div>
                     <div class="slot-container" style="align-items: center;">
                         <div id="slot">  6  </div>
-                        <div id="slot">  0  </div>
-                        <div id="slot">  0  </div>
+                        <div id="slot-amt-6">  0  </div>
+                        <div id="slot-used-6">  0  </div>
                     </div>
-                    <div>  Put spells here  </div>
+                    <div id="spell-list-6">  Put spells here  </div>
                 </div>
 
                 <div class="spell-container">
@@ -394,10 +394,10 @@
                     </div>
                     <div class="slot-container" style="align-items: center;">
                         <div id="slot">  7  </div>
-                        <div id="slot">  0  </div>
-                        <div id="slot">  0  </div>
+                        <div id="slot-amt-7">  0  </div>
+                        <div id="slot-used-7">  0  </div>
                     </div>
-                    <div>  Put spells here  </div>
+                    <div id="spell-list-7">  Put spells here  </div>
                 </div>
             </div>
 
@@ -411,10 +411,10 @@
                     </div>
                     <div class="slot-container" style="align-items: center;">
                         <div id="slot">  8  </div>
-                        <div id="slot">  0  </div>
-                        <div id="slot">  0  </div>
+                        <div id="slot-amt-8">  0  </div>
+                        <div id="slot-used-8">  0  </div>
                     </div>
-                    <div>  Put spells here  </div>
+                    <div id="spell-list-8">  Put spells here  </div>
                 </div>
 
                 <div class="spell-container">
@@ -425,15 +425,15 @@
                     </div>
                     <div class="slot-container" style="align-items: center;">
                         <div id="slot">  9  </div>
-                        <div id="slot">  0  </div>
-                        <div id="slot">  0  </div>
+                        <div id="slot-amt-9">  0  </div>
+                        <div id="slot-used-9">  0  </div>
                     </div>
-                    <div>  Put spells here  </div>
+                    <div id="spell-list-9">  Put spells here  </div>
                 </div>
             </div>
         </div>
-
-
     </div>
+
+    <script src="sheet.js"></script>
 </body>
 </html>

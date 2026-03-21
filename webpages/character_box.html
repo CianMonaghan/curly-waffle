@@ -4,13 +4,39 @@
   <link rel="stylesheet" href="character_box.css">
 </head>
 <body>
-  <div class="box">
-    <h2>Character Name</h2>
-    <p>
-      Races<br>
-      Classes and Level
-    </p>
-  </div>
-  
+  <div id="character-list"></div>
 </body>
+
+<script>
+  async function loadCharacters() {
+      const res = await fetch('/api/characters');
+      const chars = await res.json();
+      const list = document.getElementById('character-list');
+
+      chars.forEach(char => {
+          // Build class/level string e.g. "Fighter 8 / Wizard 2"
+          const classLine = char.classes
+              ?.map(c => `${c.name} ${c.level}`)
+              .join(' / ') ?? 'No Class';
+
+          const card = document.createElement('div');
+          card.className = 'box';
+          card.style.cursor = 'pointer';
+          card.innerHTML = `
+              <h2>${char.name}</h2>
+              <p>
+                  ${char.race?.name ?? 'No Race'}<br>
+                  ${classLine}
+              </p>
+          `;
+
+          card.addEventListener('click', () => {
+              window.parent.location.href = `/sheet.html?id=${char._id}`;
+          });
+
+          list.appendChild(card);
+      });
+  }
+  loadCharacters();
+</script>
 </html>

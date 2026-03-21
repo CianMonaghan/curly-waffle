@@ -249,6 +249,25 @@ app.post('/api/characters', async (req, res) => {
 });
 
 
+app.get('/api/characters/:id', async (req, res) => {
+    try {
+        const char = await character.findById(req.params.id);
+        if (!char) return res.status(404).json({ error: 'Not found' });
+        res.json(char);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.get('/api/characters', async (req, res) => {
+    try {
+        const chars = await character.find({}, 'name race classes'); // lean projection
+        res.json(chars);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 /* Grab webpages */
 app.use(express.static(path.join(__dirname, 'webpages')));  // serves CSS, JS, images
 app.use(express.static(__dirname));  // fallback for root-level files
