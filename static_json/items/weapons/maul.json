@@ -1,0 +1,57 @@
+{
+    "type": "wp",
+    "id": 22,
+    "local_id": 0,
+    "name": "Maul",
+    "description": "A martial melee weapon.",
+    "equipped": false,
+    "features_on_obtain": [
+        {
+            "id": "heavy-weapon",
+            "name": null,
+            "description": null,
+            "trigger": "onAdd"
+        }
+    ],
+    "features_on_lose": [
+        {
+            "id": "loss-heavy-weapon",
+            "name": null,
+            "description": null,
+            "trigger": "onLose"
+        }
+    ],
+    "features_on_equip": [
+        {
+            "id": "attack-maul",
+            "name": "Melee Attack (Maul)",
+            "description": null,
+            "trigger": "onEquip"
+        }
+    ],
+    "features_on_unequip": [
+        {
+            "id": "loss-attack-maul",
+            "name": null,
+            "description": null,
+            "trigger": "onUnequip"
+        }
+    ],
+    "dice": {
+        "oneHand": null,
+        "twoHand": {
+            "num": 2,
+            "sides": 6
+        }
+    },
+    "range": [5,null,null],
+    "primary_stat": ["Strength"],
+    "martial": true,
+    "improvised": false,
+    "attack_bonus": 0,
+    "damage_bonus": 0,
+    "prof": true,
+    "attuned": false,
+    "features_on_attune": null,
+    "features_on_detune": null
+}

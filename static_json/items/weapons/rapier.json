@@ -1,0 +1,43 @@
+{
+    "type": "wp",
+    "id": 24,
+    "local_id": 0,
+    "name": "Rapier",
+    "description": "A martial melee weapon.",
+    "equipped": false,
+    "features_on_obtain": null,
+    "features_on_lose": null,
+    "features_on_equip": [
+        {
+            "id": "attack-rapier",
+            "name": "Melee Attack (Rapier)",
+            "description": null,
+            "trigger": "onEquip"
+        }
+    ],
+    "features_on_unequip": [
+        {
+            "id": "loss-attack-rapier",
+            "name": null,
+            "description": null,
+            "trigger": "onUnequip"
+        }
+    ],
+    "dice": {
+        "oneHand": {
+            "num": 1,
+            "sides": 8
+        },
+        "twoHand": null
+    },
+    "range": [5,null,null],
+    "primary_stat": ["Strength", "Dexterity"],
+    "martial": true,
+    "improvised": false,
+    "attack_bonus": 0,
+    "damage_bonus": 0,
+    "prof": true,
+    "attuned": false,
+    "features_on_attune": null,
+    "features_on_detune": null
+}

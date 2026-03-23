@@ -238,8 +238,8 @@ app.post('/api/characters', async (req, res) => {
         const characterFile = parseCharacter(req.body);
         //console.log(characterFile);
         //console.log(character.create(characterFile));
-        //await characters.insertOne(character.create(characterFile));
-        //console.log("Data saved.");
+        await characters.insertOne(characterFile);
+        console.log("Data saved.");
         //res.redirect(303, '/sheet.html'); //redirect
         return res.status(200);
     } catch (err) {

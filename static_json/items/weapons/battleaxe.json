@@ -1,0 +1,52 @@
+{
+    "type": "wp",
+    "id": 14,
+    "local_id": 0,
+    "name": "Battleaxe",
+    "description": "A martial melee weapon.",
+    "equipped": false,
+    "features_on_obtain": null,
+    "features_on_lose": null,
+    "features_on_equip": [
+        {
+            "id": "attack-battleaxe-onehand",
+            "name": "Melee Attack (Battleaxe, One-Handed)",
+            "description": null,
+            "trigger": "onEquip"
+        },
+        {
+            "id": "attack-battleaxe-twohand",
+            "name": "Melee Attack (Battleaxe, Two-Handed)",
+            "description": null,
+            "trigger": "onEquip"
+        }
+    ],
+    "features_on_unequip": [
+        {
+            "id": "loss-attack-battleaxe",
+            "name": null,
+            "description": null,
+            "trigger": "onUnequip"
+        }
+    ],
+    "dice": {
+        "oneHand": {
+            "num": 1,
+            "sides": 8
+        },
+        "twoHand": {
+            "num": 1,
+            "sides": 10
+        }
+    },
+    "range": [5,null,null],
+    "primary_stat": ["Strength"],
+    "martial": true,
+    "improvised": false,
+    "attack_bonus": 0,
+    "damage_bonus": 0,
+    "prof": true,
+    "attuned": false,
+    "features_on_attune": null,
+    "features_on_detune": null
+}

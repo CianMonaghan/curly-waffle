@@ -1,0 +1,57 @@
+{
+    "type": "wp",
+    "id": 18,
+    "local_id": 0,
+    "name": "Greatsword",
+    "description": "A martial melee weapon.",
+    "equipped": false,
+    "features_on_obtain": [
+        {
+            "id": "heavy-weapon",
+            "name": null,
+            "description": null,
+            "trigger": "onAdd"
+        }
+    ],
+    "features_on_lose": [
+        {
+            "id": "loss-heavy-weapon",
+            "name": null,
+            "description": null,
+            "trigger": "onLose"
+        }
+    ],
+    "features_on_equip": [
+        {
+            "id": "attack-greatsword",
+            "name": "Melee Attack (Greatsword)",
+            "description": null,
+            "trigger": "onEquip"
+        }
+    ],
+    "features_on_unequip": [
+        {
+            "id": "loss-attack-greatsword",
+            "name": null,
+            "description": null,
+            "trigger": "onUnequip"
+        }
+    ],
+    "dice": {
+        "oneHand": null,
+        "twoHand": {
+            "num": 2,
+            "sides": 6
+        }
+    },
+    "range":[5,null,null],
+    "primary_stat": ["Strength"],
+    "martial": true,
+    "improvised": false,
+    "attack_bonus": 0,
+    "damage_bonus": 0,
+    "prof": true,
+    "attuned": false,
+    "features_on_attune": null,
+    "features_on_detune": null
+}

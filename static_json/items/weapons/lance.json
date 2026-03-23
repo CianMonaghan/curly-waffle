@@ -1,0 +1,52 @@
+{
+    "type": "wp",
+    "id": 20,
+    "local_id": 0,
+    "name": "Lance",
+    "description": "A martial melee weapon. \n Special: You have disadvantage when you use a lance to attack a target within 5 feet of you. Also, a lance requires two hands to wield when you aren't mounted.",
+    "equipped": false,
+    "features_on_obtain": null,
+    "features_on_lose": null,
+    "features_on_equip": [
+        {
+            "id": "attack-lance-nonmount",
+            "name": "Melee Attack (Lance, Unmounted)",
+            "description": null,
+            "trigger": "onEquip"
+        },
+        {
+            "id": "attack-lance-mount",
+            "name": "Melee Attack (Lance, Mounted)",
+            "description": null,
+            "trigger": "onEquip"
+        }
+    ],
+    "features_on_unequip": [
+        {
+            "id": "loss-attack-lance",
+            "name": null,
+            "description": null,
+            "trigger": "onUnequip"
+        }
+    ],
+    "dice": {
+        "oneHand": {
+            "num": 1,
+            "sides": 12
+        },
+        "twoHand": {
+            "num": 1,
+            "sides": 12
+        }
+    },
+    "range":[10,null,null],
+    "primary_stat": ["Strength"],
+    "martial": true,
+    "improvised": false,
+    "attack_bonus": 0,
+    "damage_bonus": 0,
+    "prof": true,
+    "attuned": false,
+    "features_on_attune": null,
+    "features_on_detune": null
+}

@@ -1,0 +1,41 @@
+[
+    {
+        "name":"simple_weapons",
+        "options": [
+            {
+                "name":"melee_weapons",
+                "options": ["Club", "Dagger", "Greatclub", "Handaxe", "Javelin", "Light Hammer", "Mace", "Quarterstaff", "Sickle", "Spear"]
+            },
+            {
+                "name":"ranged_weapons",
+                "options": ["Light Crossbow", "Dart", "Shortbow", "Sling"]
+            }
+        ]
+    },
+    {
+        "name":"martial_weapons",
+        "options": [
+            {
+                "name":"melee_weapons",
+                "options": ["Battleaxe", "Flail", "Glaive", "Greataxe", "Greatsword", "Halberd", "Lance", "Longsword", "Maul", "Morningstar", "Pike", "Rapier", "Scimitar", "Shortsword", "Trident", "War Pick", "Warhammer", "Whip"]
+            },
+            {
+                "name":"ranged_weapons",
+                "options": ["Blowgun", "Hand Crossbow", "Heavy Crossbow", "Longbow", "Net"]
+            }
+        ]
+    },
+    {
+        "name":"exotic_weapons",
+        "options":[
+            {
+                "name": "melee_weapons",
+                "options": ["Bladed Tonfa", "Hgu'shaarat", "Tapal", "Tekko-kagi"]
+            },
+            {
+                "name": "ranged_weapons",
+                "options": []
+            }
+        ]
+    }
+]
