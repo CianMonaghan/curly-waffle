@@ -1,23 +1,23 @@
 {
     "type": "wp",
-    "id": 11,
+    "id": 39,
     "local_id": 0,
-    "name": "Dart",
-    "description": "A simple ranged weapon.",
+    "name": "Tekko-kagi",
+    "description": "An exotic melee weapon. \n The tekko-kagi is an exotic weapon that serves as a bladed extension of the hand. Depending on what culture or people are wielding them, the tekko-kagi is referred to by many names, such as the bear claw or the tiger's claw. The most common users of the tekko-kagi are sects of monks and druids who worship the natural world, wishing to emulate the spirits they revere through their weaponry.",
     "equipped": false,
     "features_on_obtain": null,
     "features_on_lose": null,
     "features_on_equip": [
         {
-            "id": "attack-dart",
-            "name": "Ranged Attack (Dart)",
+            "id": "attack-tekkokagi",
+            "name": "Melee Attack (Tekko-kagi)",
             "description": null,
             "trigger": "onEquip"
         }
     ],
     "features_on_unequip": [
         {
-            "id": "loss-attack-dart",
+            "id": "loss-attack-tekkokagi",
             "name": null,
             "description": null,
             "trigger": "onUnequip"
@@ -26,11 +26,11 @@
     "dice": {
         "oneHand": {
             "num": 1,
-            "sides": 4
+            "sides": 8
         },
         "twoHand": null
     },
-    "range": [null, 20, 60],
+    "range": [5,null,null],
     "primary_stat": ["Strength", "Dexterity"],
     "martial": false,
     "improvised": false,

@@ -1,0 +1,52 @@
+{
+    "type": "wp",
+    "id": 37,
+    "local_id": 0,
+    "name": "Hgu'shaarat",
+    "description": "An exotic melee weapon. \n The hgu'shaarat is an exotic weapon wielded almost exclusively by goblinoids in Kindarvon. It is typically longer than a longsword but shorter than a greatsword. In a show of goblin ingenuity, this weapon has holes drilled into its blade so as to reduce its weight, giving rise to a fighting style, called hgu'shaki, where its lighter weight results in deadly strikes such as ones dealt by heavier weapons. The hgu'shaarat is mostly wielded by goblin chieftains or other skilled goblin fighters, although hobgoblins and bugbears do sometimes use this weapon even though most consider it to be beneath them.",
+    "equipped": false,
+    "features_on_obtain": null,
+    "features_on_lose": null,
+    "features_on_equip": [
+        {
+            "id": "attack-hgushaarat-onehand",
+            "name": "Melee Attack (Hgu'shaarat, One-Handed)",
+            "description": null,
+            "trigger": "onEquip"
+        },
+        {
+            "id": "attack-hgushaarat-twohand",
+            "name": "Melee Attack (Hgu'shaarat, Two-Handed)",
+            "description": null,
+            "trigger": "onEquip"
+        }
+    ],
+    "features_on_unequip": [
+        {
+            "id": "loss-attack-hgushaarat",
+            "name": null,
+            "description": null,
+            "trigger": "onUnequip"
+        }
+    ],
+    "dice": {
+        "oneHand": {
+            "num": 1,
+            "sides": 8
+        },
+        "twoHand": {
+            "num": 2,
+            "sides": 6
+        }
+    },
+    "range": [5,null,null],
+    "primary_stat": ["Strength", "Dexterity"],
+    "martial": false,
+    "improvised": false,
+    "attack_bonus": 0,
+    "damage_bonus": 0,
+    "prof": true,
+    "attuned": false,
+    "features_on_attune": null,
+    "features_on_detune": null
+}

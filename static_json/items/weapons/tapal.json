@@ -1,0 +1,52 @@
+{
+    "type": "wp",
+    "id": 38,
+    "local_id": 0,
+    "name": "Tapal",
+    "description": "An exotic melee weapon. \n The tapal is an exotic weapon wielded almost exclusively by tritons in the seas of Kindarvon. It is a combination of a dagger, longsword, and spear crafted for underwater combat. The tapal has its origins from the God Wars, when the tritons were created to protect the dying sea elves. Many tritons consider it abhorrent for non-tritons to use the weapon unless you have been explicitly given permission by a triton and will try to retrieve the weapon from you, often violently. \n Special: Tritons have proficiency with tapals. Tapals gain the finesse property when used underwater and don't impose disadvantage on your attack rolls in underwater combat.",
+    "equipped": false,
+    "features_on_obtain": null,
+    "features_on_lose": null,
+    "features_on_equip": [
+        {
+            "id": "attack-tapal-onehand",
+            "name": "Melee Attack (Tapal, One-Handed)",
+            "description": null,
+            "trigger": "onEquip"
+        },
+        {
+            "id": "attack-tapal-twohand",
+            "name": "Melee Attack (Tapal, Two-Handed)",
+            "description": null,
+            "trigger": "onEquip"
+        }
+    ],
+    "features_on_unequip": [
+        {
+            "id": "loss-attack-tapal",
+            "name": null,
+            "description": null,
+            "trigger": "onUnequip"
+        }
+    ],
+    "dice": {
+        "oneHand": {
+            "num": 1,
+            "sides": 4
+        },
+        "twoHand": {
+            "num": 2,
+            "sides": 4
+        }
+    },
+    "range": [5,null,null],
+    "primary_stat": ["Strength", "Dexterity"],
+    "martial": false,
+    "improvised": false,
+    "attack_bonus": 0,
+    "damage_bonus": 0,
+    "prof": true,
+    "attuned": false,
+    "features_on_attune": null,
+    "features_on_detune": null
+}

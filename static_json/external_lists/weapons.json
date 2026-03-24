@@ -4,11 +4,29 @@
         "options": [
             {
                 "name":"melee_weapons",
-                "options": ["Club", "Dagger", "Greatclub", "Handaxe", "Javelin", "Light Hammer", "Mace", "Quarterstaff", "Sickle", "Spear"]
+                "options": [
+                    {
+                        "name": "one_handed",
+                        "options": ["Club", "Dagger", "Handaxe", "Javelin", "Light Hammer", "Mace", "Quarterstaff", "Sickle", "Spear"]
+                    },
+                    {
+                        "name": "two_handed",
+                        "options": ["Greatclub", "Quarterstaff", "Spear"]
+                    }
+                ]
             },
             {
                 "name":"ranged_weapons",
-                "options": ["Light Crossbow", "Dart", "Shortbow", "Sling"]
+                "options": [
+                    {
+                        "name": "one_handed",
+                        "options": ["Dart", "Sling"]
+                    },
+                    {
+                        "name": "two_handed",
+                        "options": ["Light Crossbow", "Shortbow"]
+                    }
+                ]
             }
         ]
     },
@@ -17,11 +35,29 @@
         "options": [
             {
                 "name":"melee_weapons",
-                "options": ["Battleaxe", "Flail", "Glaive", "Greataxe", "Greatsword", "Halberd", "Lance", "Longsword", "Maul", "Morningstar", "Pike", "Rapier", "Scimitar", "Shortsword", "Trident", "War Pick", "Warhammer", "Whip"]
+                "options": [
+                    {
+                        "name": "one_handed",
+                        "options": ["Battleaxe", "Flail", "Lance", "Longsword", "Morningstar", "Rapier", "Scimitar", "Shortsword", "Trident", "War Pick", "Warhammer", "Whip"]
+                    },
+                    {
+                        "name": "two_handed",
+                        "options": ["Battleaxe", "Glaive", "Greataxe", "Greatsword", "Halberd", "Lance", "Longsword", "Maul", "Pike", "Trident", "Warhammer"]
+                    }
+                ]
             },
             {
                 "name":"ranged_weapons",
-                "options": ["Blowgun", "Hand Crossbow", "Heavy Crossbow", "Longbow", "Net"]
+                "options": [
+                    {
+                        "name": "one_handed",
+                        "options": ["Blowgun", "Hand Crossbow", "Net"]
+                    },
+                    {
+                        "name": "two_handed",
+                        "options": ["Heavy Crossbow", "Longbow"]
+                    }
+                ]
             }
         ]
     },
@@ -30,11 +66,29 @@
         "options":[
             {
                 "name": "melee_weapons",
-                "options": ["Bladed Tonfa", "Hgu'shaarat", "Tapal", "Tekko-kagi"]
+                "options": [
+                    {
+                        "name": "one_handed",
+                        "options": ["Bladed Tonfa", "Hgu'shaarat", "Tapal", "Tekko-kagi"]
+                    },
+                    {
+                        "name": "two_handed",
+                        "options": ["Hgu'shaarat", "Tapal"]
+                    }
+                ]
             },
             {
                 "name": "ranged_weapons",
-                "options": []
+                "options": [
+                    {
+                        "name": "one_handed",
+                        "options": []
+                    },
+                    {
+                        "name": "two_handed",
+                        "options": []
+                    }
+                ]
             }
         ]
     }

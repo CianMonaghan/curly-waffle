@@ -1,23 +1,23 @@
 {
     "type": "wp",
-    "id": 11,
+    "id": 32,
     "local_id": 0,
-    "name": "Dart",
-    "description": "A simple ranged weapon.",
+    "name": "Hand Crossbow",
+    "description": "A martial ranged weapon.",
     "equipped": false,
     "features_on_obtain": null,
     "features_on_lose": null,
     "features_on_equip": [
         {
-            "id": "attack-dart",
-            "name": "Ranged Attack (Dart)",
+            "id": "attack-hacrossbow",
+            "name": "Ranged Attack (Hand Crossbow)",
             "description": null,
             "trigger": "onEquip"
         }
     ],
     "features_on_unequip": [
         {
-            "id": "loss-attack-dart",
+            "id": "loss-attack-hacrossbow",
             "name": null,
             "description": null,
             "trigger": "onUnequip"
@@ -26,13 +26,13 @@
     "dice": {
         "oneHand": {
             "num": 1,
-            "sides": 4
+            "sides": 6
         },
         "twoHand": null
     },
-    "range": [null, 20, 60],
-    "primary_stat": ["Strength", "Dexterity"],
-    "martial": false,
+    "range": [null, 30, 120],
+    "primary_stat": ["Dexterity"],
+    "martial": true,
     "improvised": false,
     "attack_bonus": 0,
     "damage_bonus": 0,

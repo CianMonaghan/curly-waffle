@@ -1,0 +1,52 @@
+{
+    "type": "wp",
+    "id": 36,
+    "local_id": 0,
+    "name": "Bladed Tonfa",
+    "description": "An exotic melee weapon. \n The bladed tonfa is an exotic weapon, often wielded in pairs. They were originally wielded by orders of monks who train to subdue their opponents with the blades. However, their enemies were able to take the weapons from the monks and use them for their own assassins. The bladed tonfa is designed to easily switch between a small sharp point and the long blade on the rear end of the weapon. \n Special: If you attack with a bladed tonfa as part of the Attack action on your turn, you can use a bonus action immediately after to make a melee attack with it. This attack deals 1 + your ability modifier piercing damage on a hit, instead of 1d8 slashing.",
+    "equipped": false,
+    "features_on_obtain": null,
+    "features_on_lose": null,
+    "features_on_equip": [
+        {
+            "id": "attack-bladedtonfa",
+            "name": "Melee Attack (Bladed Tonfa)",
+            "description": null,
+            "trigger": "onEquip"
+        },
+        {
+            "id": "attack-bladedtonfa-special",
+            "name": "Melee Attack (Bladed Tonfa, Special)",
+            "description": null,
+            "trigger": "onEquip"
+        }
+    ],
+    "features_on_unequip": [
+        {
+            "id": "loss-attack-bladedtonfa",
+            "name": null,
+            "description": null,
+            "trigger": "onUnequip"
+        }
+    ],
+    "dice": {
+        "oneHand": {
+            "num": 1,
+            "sides": 8
+        },
+        "twoHand": {
+            "num": 1,
+            "sides": 1
+        }
+    },
+    "range":[5,null,null],
+    "primary_stat": ["Strength", "Dexterity"],
+    "martial": false,
+    "improvised": false,
+    "attack_bonus": 0,
+    "damage_bonus": 0,
+    "prof": true,
+    "attuned": false,
+    "features_on_attune": null,
+    "features_on_detune": null
+}

@@ -106,11 +106,11 @@ const itemSchema = new mongoose.Schema({
     features_on_unequip: [featureSchema],
     dice : {
         oneHand: {
-            num: {type: Number, min: 1, required: true},
+            num: {type: Number, min: 0, required: true},
             sides: {type: Number, min: 1, required: true}
         },
         twoHand: {
-            num: {type: Number, min: 1, required: true},
+            num: {type: Number, min: 0, required: true},
             sides: {type: Number, min: 1, required: true}
         }
     },

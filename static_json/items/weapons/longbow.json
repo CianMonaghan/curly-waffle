@@ -1,0 +1,57 @@
+{
+    "type": "wp",
+    "id": 34,
+    "local_id": 0,
+    "name": "Longbow",
+    "description": "A martial ranged weapon.",
+    "equipped": false,
+    "features_on_obtain": [
+        {
+            "id": "heavy-weapon",
+            "name": null,
+            "description": null,
+            "trigger": "onAdd"
+        }
+    ],
+    "features_on_lose": [
+        {
+            "id": "loss-heavy-weapon",
+            "name": null,
+            "description": null,
+            "trigger": "onLose"
+        }
+    ],
+    "features_on_equip": [
+        {
+            "id": "attack-longbow",
+            "name": "Ranged Attack (Longbow)",
+            "description": null,
+            "trigger": "onEquip"
+        }
+    ],
+    "features_on_unequip": [
+        {
+            "id": "loss-attack-longbow",
+            "name": null,
+            "description": null,
+            "trigger": "onUnequip"
+        }
+    ],
+    "dice": {
+        "oneHand": null,
+        "twoHand": {
+            "num": 1,
+            "sides": 8
+        }
+    },
+    "range": [null, 150, 600],
+    "primary_stat": ["Dexterity"],
+    "martial": true,
+    "improvised": false,
+    "attack_bonus": 0,
+    "damage_bonus": 0,
+    "prof": true,
+    "attuned": false,
+    "features_on_attune": null,
+    "features_on_detune": null
+}

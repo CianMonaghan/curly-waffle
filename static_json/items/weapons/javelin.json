@@ -2,28 +2,28 @@
     "type": "wp",
     "id": 4,
     "local_id": 0,
-    "name": "Dagger",
+    "name": "Javelin",
     "description": "A simple melee or ranged weapon.",
     "equipped": false,
     "features_on_obtain": null,
     "features_on_lose": null,
     "features_on_equip": [
         {
-            "id": "attack-dagger-melee",
-            "name": "Melee Attack (Dagger)",
+            "id": "attack-javelin-melee",
+            "name": "Melee Attack (Javelin)",
             "description": null,
             "trigger": "onEquip"
         },
         {
-            "id": "attack-dagger-range",
-            "name": "Ranged Attack (Dagger)",
+            "id": "attack-javelin-range",
+            "name": "Ranged Attack (Javelin)",
             "description": null,
             "trigger": "onEquip"
         }
     ],
     "features_on_unequip": [
         {
-            "id": "loss-attack-dagger",
+            "id": "loss-attack-javelin",
             "name": null,
             "description": null,
             "trigger": "onUnequip"
