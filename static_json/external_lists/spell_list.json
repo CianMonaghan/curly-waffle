@@ -1,0 +1,19 @@
+{
+    "name": "spell_list",
+
+    "spells": {
+        "Cantrips": {
+            "Acid Splash": {
+                "type": "conjuration",
+                "classes": ["artificer", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:acid-splash"
+            }
+        },
+        "1st Level":{
+
+        },
+        "2nd Level":{
+
+        }
+    }
+}

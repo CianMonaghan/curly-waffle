@@ -652,7 +652,7 @@ function renderFeaturesOnly(box, uid) {
     const subByLevel = {};
     if (subData) {
         Object.entries(subData.features).forEach(([lvl, f]) => {
-            subByLevel[parseInt(lvl)] = [f];
+            subByLevel[parseInt(lvl)] = Array.isArray(f) ? f : [f];
         });
     }
 
