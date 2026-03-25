@@ -82,11 +82,11 @@
                 "options": [
                     {
                         "name": "one_handed",
-                        "options": []
+                        "options": ["Throwing Dagger"]
                     },
                     {
                         "name": "two_handed",
-                        "options": []
+                        "options": ["Dhybkor"]
                     }
                 ]
             }

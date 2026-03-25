@@ -1,0 +1,43 @@
+{
+    "type": "wp",
+    "id": 41,
+    "local_id": 0,
+    "name": "Throwing Dagger",
+    "description": "An exotic ranged weapon. \n The throwing dagger is an exotic weapon similar to a dagger designed to be thrown for a much greater distance than a normal dagger at the cost of the sturdiness needed to be wielded in close combat. The throwing dagger is a favorite amongst assassins and other covert operatives due to the distance that can be covered by the weapon.",
+    "equipped": false,
+    "features_on_obtain": null,
+    "features_on_lose": null,
+    "features_on_equip": [
+        {
+            "id": "attack-throwdagger",
+            "name": "Ranged Attack (Dagger)",
+            "description": null,
+            "trigger": "onEquip"
+        }
+    ],
+    "features_on_unequip": [
+        {
+            "id": "loss-attack-throwdagger",
+            "name": null,
+            "description": null,
+            "trigger": "onUnequip"
+        }
+    ],
+    "dice": {
+        "oneHand": {
+            "num": 1,
+            "sides": 4
+        },
+        "twoHand": null
+    },
+    "range": [null,60,180],
+    "primary_stat": ["Strength", "Dexterity"],
+    "martial": false,
+    "improvised": false,
+    "attack_bonus": 0,
+    "damage_bonus": 0,
+    "prof": true,
+    "attuned": null,
+    "features_on_attune": null,
+    "features_on_detune": null
+}
