@@ -10,7 +10,16 @@
             {
                 "feature_name": "Training in War and Song",
                 "feature_type": "passive",
-                "description": "You gain proficiency with light armor, and you gain proficiency with one type of one-handed melee weapon of your choice. You also gain proficiency in the Performance skill if you don’t already have it."
+                "subtype": ["prof_addition", "external_choice"],
+                "description": "You gain proficiency with light armor, and you gain proficiency with one type of one-handed melee weapon of your choice. You also gain proficiency in the Performance skill if you don’t already have it.",
+                "prof_to_add": [
+                    { "armor": "light" },
+                    { "skills": "Performance" }
+                ],
+
+                "external_list": "weapons",
+                "numChoices": "1",
+                "options": ["one_handed", "melee_weapons"]
             },
             {
                 "feature_name": "Bladesong",

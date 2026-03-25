@@ -202,9 +202,11 @@
             "14": [
                 { 
                     "feature_name": "Diamond Soul", 
-                    "feature_type": "modifier",
-                    "stat_to_mod": "all skills",
-                    "modification": "+ prof_bonus",
+                    "feature_type": "passive",
+                    "subtype": "prof_addition",
+                    "prof_to_add": [
+                        { "saving_throws": ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"]}
+                    ],
                     "description": "Your mastery of ki grants you proficiency in all saving throws. Additionally, whenever you make a saving throw and fail, you can spend 1 ki point to reroll it and take the second result." 
                 },
                 { 

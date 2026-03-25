@@ -14,7 +14,6 @@
       const list = document.getElementById('character-list');
 
       chars.forEach(char => {
-          // Build class/level string e.g. "Fighter 8 / Wizard 2"
           const classLine = char.classes
               ?.map(c => `${c.name} ${c.level}`)
               .join(' / ') ?? 'No Class';

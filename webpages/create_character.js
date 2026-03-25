@@ -130,6 +130,82 @@ function wireLanguageSelects(container, itemId) {
     });
 }
 
+/* Weapons */
+function collectWeaponsUnderKey(node, filterKey) {
+    const results = new Set();
+
+    function recurse(n) {
+        if (Array.isArray(n)) {
+            n.forEach(child => recurse(child));
+            return;
+        }
+        if (typeof n !== 'object' || n === null) return;
+
+        // If this node's name matches the filter, collect all leaves under it
+        if (n.name === filterKey) {
+            collectAllLeaves(n, results);
+            return;
+        }
+
+        // Otherwise keep searching deeper
+        if (Array.isArray(n.options)) {
+            n.options.forEach(child => {
+                if (typeof child === 'string') {
+                    // leaves are irrelevant at this level
+                } else {
+                    recurse(child);
+                }
+            });
+        }
+    }
+
+    recurse(node);
+    return results;
+}
+
+function collectAllLeaves(node, results = new Set()) {
+    if (typeof node === 'string') {
+        results.add(node);
+        return results;
+    }
+    if (Array.isArray(node)) {
+        node.forEach(child => collectAllLeaves(child, results));
+        return results;
+    }
+    if (typeof node === 'object' && node !== null) {
+        if (Array.isArray(node.options)) {
+            node.options.forEach(child => collectAllLeaves(child, results));
+        }
+    }
+    return results;
+}
+
+function resolveWeaponOptions(options) {
+    const weaponsData = EXTERNAL_LISTS['weapons'] ?? [];
+
+    // "any" is every weapon in the tree
+    if (options === 'any') {
+        const all = new Set();
+        collectAllLeaves(weaponsData, all);
+        return [...all].sort();
+    }
+
+    // fixed choice
+    if (typeof options === 'string') {
+        return null;
+    }
+
+    // Checks for intersecting sets
+    if (Array.isArray(options)) {
+        const sets = options.map(key => collectWeaponsUnderKey(weaponsData, key));
+        const [first, ...rest] = sets;
+        const intersection = [...first].filter(name => rest.every(s => s.has(name)));
+        return intersection.sort();
+    }
+
+    return [];
+}
+
 function buildToolProfHTML(toolProf, itemId) {
     if (!toolProf || toolProf.length === 0) return '<span>—</span>';
 
@@ -560,7 +636,6 @@ function buildFeature(level, feature, uid, featureContainer = null) {
             }
 
             case 'external_choice': {
-                const list       = EXTERNAL_LISTS[feature.external_list] || [];
                 const numChoices = feature.numChoices ?? 1;
                 const radioName  = `extchoice_lvl${level}_uid${uid}`;
 
@@ -572,6 +647,71 @@ function buildFeature(level, feature, uid, featureContainer = null) {
                 prompt.classList.add('external-choice-prompt');
                 prompt.textContent = `Choose ${numChoices}:`;
                 target.appendChild(prompt);
+
+                if (feature.external_list === 'weapons') {
+                    const rawOptions = feature.options;
+                    let weaponNames = [];
+
+                    if (rawOptions === 'any') {
+                        const all = new Set();
+                        collectAllLeaves(EXTERNAL_LISTS['weapons'] ?? [], all);
+                        weaponNames = [...all].sort();
+                    } else if (typeof rawOptions === 'string') {
+                        // Specific single weapon — fixed, no choice needed
+                        const fixed = document.createElement('div');
+                        fixed.classList.add('weapon-fixed');
+                        fixed.innerHTML = `<em>Weapon: ${rawOptions}</em>`;
+                        target.appendChild(fixed);
+                        break;
+                    } else if (Array.isArray(rawOptions)) {
+                        weaponNames = resolveWeaponOptions(rawOptions);
+                    }
+
+                    if (weaponNames.length === 0) {
+                        const empty = document.createElement('div');
+                        empty.style.fontStyle = 'italic';
+                        empty.style.color = '#555';
+                        empty.textContent = 'No weapons match the specified filters.';
+                        target.appendChild(empty);
+                        break;
+                    }
+
+                    for (let i = 0; i < numChoices; i++) {
+                        const sel = document.createElement('select');
+                        sel.classList.add('weapon-select');
+                        sel.dataset.uid   = uid;
+                        sel.dataset.index = i;
+
+                        const defaultOpt = document.createElement('option');
+                        defaultOpt.value = '';
+                        defaultOpt.textContent = '— choose a weapon —';
+                        sel.appendChild(defaultOpt);
+
+                        weaponNames.forEach(name => {
+                            const opt = document.createElement('option');
+                            opt.value = name;
+                            opt.textContent = name;
+                            sel.appendChild(opt);
+                        });
+
+                        // Prevent duplicate picks across selects within the same feature
+                        sel.addEventListener('change', () => {
+                            const siblings = target.querySelectorAll('.weapon-select');
+                            const chosen = new Set([...siblings].map(s => s.value).filter(v => v));
+                            siblings.forEach(other => {
+                                [...other.options].forEach(opt => {
+                                    if (!opt.value) return;
+                                    opt.disabled = chosen.has(opt.value) && other.value !== opt.value;
+                                });
+                            });
+                        });
+
+                        target.appendChild(sel);
+                    }
+                    break;
+                }
+
+                const list = EXTERNAL_LISTS[feature.external_list] || [];
 
                 const optionsWrapper = document.createElement('div');
                 optionsWrapper.classList.add('external-choice-list');
@@ -632,6 +772,13 @@ function buildFeature(level, feature, uid, featureContainer = null) {
                     spellDiv.textContent = `Spells added: ${lines.join(', ')}`;
                     target.appendChild(spellDiv);
                 }
+                break;
+            }
+
+            case 'prof_addition': {
+                const desc = document.createElement('div');
+                desc.textContent = feature.description ?? '';
+                target.appendChild(desc);
                 break;
             }
         }

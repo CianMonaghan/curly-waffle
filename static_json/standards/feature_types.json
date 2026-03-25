@@ -74,5 +74,13 @@
         "spells_to_add": [
             { "spell_level": "spell_name" }
         ]
+    },
+
+    "prof_addition": {
+        "comment": "This subtype is for adding a proficiency to the character. prof_type is the name of a file if we have it.",
+        "subtype": "prof_addition",
+        "prof_to_add" : [
+            { "prof_type": "prof"}
+        ]
     }
 }

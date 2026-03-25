@@ -1,95 +1,98 @@
-[
-    {
-        "name":"simple_weapons",
-        "options": [
-            {
-                "name":"melee_weapons",
-                "options": [
-                    {
-                        "name": "one_handed",
-                        "options": ["Club", "Dagger", "Handaxe", "Javelin", "Light Hammer", "Mace", "Quarterstaff", "Sickle", "Spear"]
-                    },
-                    {
-                        "name": "two_handed",
-                        "options": ["Greatclub", "Quarterstaff", "Spear"]
-                    }
-                ]
-            },
-            {
-                "name":"ranged_weapons",
-                "options": [
-                    {
-                        "name": "one_handed",
-                        "options": ["Dart", "Sling"]
-                    },
-                    {
-                        "name": "two_handed",
-                        "options": ["Light Crossbow", "Shortbow"]
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "name":"martial_weapons",
-        "options": [
-            {
-                "name":"melee_weapons",
-                "options": [
-                    {
-                        "name": "one_handed",
-                        "options": ["Battleaxe", "Flail", "Lance", "Longsword", "Morningstar", "Rapier", "Scimitar", "Shortsword", "Trident", "War Pick", "Warhammer", "Whip"]
-                    },
-                    {
-                        "name": "two_handed",
-                        "options": ["Battleaxe", "Glaive", "Greataxe", "Greatsword", "Halberd", "Lance", "Longsword", "Maul", "Pike", "Trident", "Warhammer"]
-                    }
-                ]
-            },
-            {
-                "name":"ranged_weapons",
-                "options": [
-                    {
-                        "name": "one_handed",
-                        "options": ["Blowgun", "Hand Crossbow", "Net"]
-                    },
-                    {
-                        "name": "two_handed",
-                        "options": ["Heavy Crossbow", "Longbow"]
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "name":"exotic_weapons",
-        "options":[
-            {
-                "name": "melee_weapons",
-                "options": [
-                    {
-                        "name": "one_handed",
-                        "options": ["Bladed Tonfa", "Hgu'shaarat", "Tapal", "Tekko-kagi"]
-                    },
-                    {
-                        "name": "two_handed",
-                        "options": ["Hgu'shaarat", "Tapal"]
-                    }
-                ]
-            },
-            {
-                "name": "ranged_weapons",
-                "options": [
-                    {
-                        "name": "one_handed",
-                        "options": ["Throwing Dagger"]
-                    },
-                    {
-                        "name": "two_handed",
-                        "options": ["Dhybkor"]
-                    }
-                ]
-            }
-        ]
-    }
-]
+{
+    "name": "weapons",
+    "options": [
+        {
+            "name":"simple_weapons",
+            "options": [
+                {
+                    "name":"melee_weapons",
+                    "options": [
+                        {
+                            "name": "one_handed",
+                            "options": ["Club", "Dagger", "Handaxe", "Javelin", "Light Hammer", "Mace", "Quarterstaff", "Sickle", "Spear"]
+                        },
+                        {
+                            "name": "two_handed",
+                            "options": ["Greatclub", "Quarterstaff", "Spear"]
+                        }
+                    ]
+                },
+                {
+                    "name":"ranged_weapons",
+                    "options": [
+                        {
+                            "name": "one_handed",
+                            "options": ["Dart", "Sling"]
+                        },
+                        {
+                            "name": "two_handed",
+                            "options": ["Light Crossbow", "Shortbow"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name":"martial_weapons",
+            "options": [
+                {
+                    "name":"melee_weapons",
+                    "options": [
+                        {
+                            "name": "one_handed",
+                            "options": ["Battleaxe", "Flail", "Lance", "Longsword", "Morningstar", "Rapier", "Scimitar", "Shortsword", "Trident", "War Pick", "Warhammer", "Whip"]
+                        },
+                        {
+                            "name": "two_handed",
+                            "options": ["Battleaxe", "Glaive", "Greataxe", "Greatsword", "Halberd", "Lance", "Longsword", "Maul", "Pike", "Trident", "Warhammer"]
+                        }
+                    ]
+                },
+                {
+                    "name":"ranged_weapons",
+                    "options": [
+                        {
+                            "name": "one_handed",
+                            "options": ["Blowgun", "Hand Crossbow", "Net"]
+                        },
+                        {
+                            "name": "two_handed",
+                            "options": ["Heavy Crossbow", "Longbow"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name":"exotic_weapons",
+            "options":[
+                {
+                    "name": "melee_weapons",
+                    "options": [
+                        {
+                            "name": "one_handed",
+                            "options": ["Bladed Tonfa", "Hgu'shaarat", "Tapal", "Tekko-kagi"]
+                        },
+                        {
+                            "name": "two_handed",
+                            "options": ["Hgu'shaarat", "Tapal"]
+                        }
+                    ]
+                },
+                {
+                    "name": "ranged_weapons",
+                    "options": [
+                        {
+                            "name": "one_handed",
+                            "options": ["Throwing Dagger"]
+                        },
+                        {
+                            "name": "two_handed",
+                            "options": ["Dhybkor"]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

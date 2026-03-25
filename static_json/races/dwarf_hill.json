@@ -49,6 +49,8 @@
         {
             "id": "dwarf-lang",
             "name": "Languages",
+            "type": "lang_prof",
+            "languages": ["Common, Dwarvish"],
             "description": "You can speak, read, and write Common and Dwarvish.",
             "trigger": "onAdd"
         },

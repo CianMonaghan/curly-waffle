@@ -9,16 +9,13 @@
         "3": [
             {
                 "feature_name": "Implements of Mercy",
-                "feature_type": "modifier",
-                "subtype": "external_choice",
+                "feature_type": "passive",
+                "subtype": "prof_addition",
                 "description": "You gain proficiency in the Insight and Medicine skills, and you gain proficiency with the herbalism kit. You also gain a special mask, which you often wear when using the features of this subclass. You determine its appearance.",
-
-                "stat_to_mod": ["Insight", "Medicine"],
-                "modification": "+ prof_bonus",
-
-                "external_list": "tools",
-                "options": "Herbalism Kit"
-
+                "prof_to_add": [
+                    { "skills": ["Insight", "Medicine"] },
+                    { "tools": ["Herbalism Kit"]}
+                ]
             },
             {
                 "feature_name": "Hands of Healing",
@@ -39,7 +36,7 @@
         "11": {
             "feature_name": "Flurry of Healing and Harm",
             "feature_type": "passive",
-            "description": "you can now mete out a flurry of comfort and hurt. When you use Flurry of Blows, you can now replace each of the unarmed strikes with a use of your Hands of Healing, without spending ki points for the healing. In addition, when you make an unarmed strike with Flurry of Blows, you can use Hand of Harm with that strike without spending the ki point for Hands of Harm. You can still use Hands of Harm only once per turn."
+            "description": "You can now mete out a flurry of comfort and hurt. When you use Flurry of Blows, you can now replace each of the unarmed strikes with a use of your Hands of Healing, without spending ki points for the healing. In addition, when you make an unarmed strike with Flurry of Blows, you can use Hand of Harm with that strike without spending the ki point for Hands of Harm. You can still use Hands of Harm only once per turn."
         },
         "17": {
             "feature_name": "Hand of Ultimate Mercy",
