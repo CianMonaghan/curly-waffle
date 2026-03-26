@@ -15,7 +15,7 @@
 
     "equipment": [
         { "options": ["Chain mail", ["Leather Armor", "Longbow", "20 Arrows"]] },
-        { "options": [["Martial Weapon", "Shield"], "2 Martial Weapons"] },
+        { "options": [[{ "text": "Martial Weapon", "choice": "martial_weapons" }, "Shield"], [{ "text": "Martial Weapon", "choice": "martial_weapons" }, { "text": "Martial Weapon", "choice": "martial_weapons" }]] },
         { "options": [["Light Crossbow", "20 Bolts"], "2 Handaxes"] },
         { "options": ["Dungeoneer's pack", "Explorer's pack"] }
     ],

@@ -81,7 +81,13 @@
             "18": { 
                 "feature_name": "Spell Mastery", 
                 "feature_type": "passive", 
-                "description": "Choose a 1st-level wizard spell and a 2nd-level wizard spell that are in your spellbook. You can cast those spells at their lowest level without expending a spell slot when you have them prepared. If you want to cast either spell at a higher level, you must expend a spell slot as normal. By spending 8 hours in study, you can exchange one or both of the spells you chose for different spells of the same levels."
+                "description": "Choose a 1st-level wizard spell and a 2nd-level wizard spell that are in your spellbook. You can cast those spells at their lowest level without expending a spell slot when you have them prepared. If you want to cast either spell at a higher level, you must expend a spell slot as normal. By spending 8 hours in study, you can exchange one or both of the spells you chose for different spells of the same levels.",
+                "external_list": "spell_list",
+                "numChoices": ["1", "1"],
+                "options": [
+                    ["1st Level", "wizard"],
+                    ["2nd Level", "wizard"]
+                ]
             },
             "19": { 
                 "feature_name": "Arcane Tradition Feature", 
@@ -90,7 +96,11 @@
             "20": { 
                 "feature_name": "Signature Spells", 
                 "feature_type": "passive", 
-                "description": "Choose two 3rd-level wizard spells in your spellbook as your signature spells. You always have these spells prepared, they don't count against the number of spells you have prepared, and you can cast each of them once at 3rd level without expending a spell slot. When you do so, you can't do so again until you finish a short or long rest. If you want to cast either spell at a higher level, you must expend a spell slot as normal."
+                "subtype": "external_choice",
+                "description": "Choose two 3rd-level wizard spells in your spellbook as your signature spells. You always have these spells prepared, they don't count against the number of spells you have prepared, and you can cast each of them once at 3rd level without expending a spell slot. When you do so, you can't do so again until you finish a short or long rest. If you want to cast either spell at a higher level, you must expend a spell slot as normal.",
+                "external_list": "spell_list",
+                "numChoices": "2",
+                "options": ["3rd Level", "wizard"]
             }
         }
 }

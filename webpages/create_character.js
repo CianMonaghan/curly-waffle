@@ -243,6 +243,115 @@ function wireToolSelects(container, itemId) {
     });
 }
 
+function resolveEquipmentOptionLabel(optionStr) {
+    const weaponCategoryKeys = {
+        'simple weapon':             ['simple_weapons'],
+        'simple weapons':            ['simple_weapons'],
+        'martial weapon':            ['martial_weapons'],
+        'martial weapons':           ['martial_weapons'],
+        'simple or martial weapon':  ['simple_weapons', 'martial_weapons'],
+        'simple or martial weapons': ['simple_weapons', 'martial_weapons'],
+    };
+    return weaponCategoryKeys[optionStr.trim().toLowerCase()] ?? null;
+}
+
+function buildEquipmentOptionHTML(part, uid, rowIndex, slotIndex) {
+    // Handle equipment gotten from classes
+    if (typeof part === 'object' && part !== null && part.choice) {
+        const weaponsData = EXTERNAL_LISTS['weapons'] ?? [];
+        const allWeapons = new Set();
+        collectWeaponsUnderKey(weaponsData, part.choice).forEach(w => allWeapons.add(w));
+
+        const sorted = [...allWeapons].sort();
+        if (sorted.length === 0) return `<span>${part.text}</span>`;
+
+        const optionsHTML = ['— choose —', ...sorted]
+            .map(w => `<option value="${w}">${w}</option>`)
+            .join('');
+
+        return `<span>${part.text}: <select id="equip_weapon_${uid}_${rowIndex}_${slotIndex}" class="equipment-weapon-select">${optionsHTML}</select></span>`;
+    }
+
+    // Category keywords
+    if (typeof part === 'string') {
+        const categories = resolveEquipmentOptionLabel(part);
+        if (!categories) return `<span>${part}</span>`;
+
+        const weaponsData = EXTERNAL_LISTS['weapons'] ?? [];
+        const allWeapons = new Set();
+        categories.forEach(cat => collectWeaponsUnderKey(weaponsData, cat).forEach(w => allWeapons.add(w)));
+
+        const sorted = [...allWeapons].sort();
+        if (sorted.length === 0) return `<span>${part}</span>`;
+
+        const optionsHTML = ['— choose —', ...sorted]
+            .map(w => `<option value="${w}">${w}</option>`)
+            .join('');
+
+        return `<span>${part}: <select id="equip_weapon_${uid}_${rowIndex}_${slotIndex}" class="equipment-weapon-select">${optionsHTML}</select></span>`;
+    }
+
+    return `<span>${part}</span>`;
+}
+
+function renderEquipment(box, uid, savedEquipment = {}) {
+    const selectedClass = box.querySelector('.class-select').value;
+    const data = CLASS_DATA[selectedClass];
+    const container = box.querySelector('.equipment-container');
+    container.innerHTML = '';
+
+    if (!data.equipment) return;
+
+    data.equipment.forEach((row, i) => {
+        const block = document.createElement('div');
+        block.classList.add('feature-block');
+        const radioName = `equip_${uid}_${i}`;
+
+        if (row.options.length === 1) {
+            const option = row.options[0];
+            const div = document.createElement('div');
+            div.classList.add('equipment-option-line');
+            if (Array.isArray(option)) {
+                div.innerHTML = `<span class="equip-content">${
+                    option.map((part, si) =>
+                        buildEquipmentOptionHTML(part, uid, i, si)
+                    ).join('<span class="equip-sep">,&nbsp;</span>')
+                }</span>`;
+            } else {
+                div.innerHTML = `<span class="equip-content">${buildEquipmentOptionHTML(option, uid, i, 0)}</span>`;
+            }
+            block.appendChild(div);
+        } else {
+            row.options.forEach((opt, j) => {
+                const label = document.createElement('label');
+                label.classList.add('equipment-option-line');
+                const wasSelected = savedEquipment[radioName] === String(j);
+                const letter = String.fromCharCode(97 + j);
+
+                let contentHTML;
+                if (Array.isArray(opt)) {
+                    contentHTML = opt.map((part, si) =>
+                        buildEquipmentOptionHTML(part, uid, i, `${j}_${si}`)
+                    ).join('<span class="equip-sep">,&nbsp;</span>');
+                } else {
+                    contentHTML = buildEquipmentOptionHTML(opt, uid, i, `${j}_0`);
+                }
+
+                label.innerHTML = `
+                    <span class="equip-radio-letter">
+                        <input type="radio" name="${radioName}" value="${j}" ${wasSelected ? 'checked' : ''}>
+                        ${letter})
+                    </span>
+                    <span class="equip-content">${contentHTML}</span>
+                `;
+                block.appendChild(label);
+            });
+        }
+
+        container.appendChild(block);
+    });
+}
+
 function openPopup(field) {
     currentPopupField = field;
     pendingSelection  = null;
@@ -601,7 +710,9 @@ function buildFeature(level, feature, uid, featureContainer = null) {
     }
 
     // Feature Subtypes 
-    const subtypes = Array.isArray(feature.subtype) ? feature.subtype : [];
+    const subtypes = Array.isArray(feature.subtype) ? feature.subtype 
+               : feature.subtype ? [feature.subtype] 
+               : [];
 
     subtypes.forEach(subtype => {
         switch (subtype) {
@@ -776,6 +887,7 @@ function buildFeature(level, feature, uid, featureContainer = null) {
             }
 
             case 'prof_addition': {
+
                 const desc = document.createElement('div');
                 desc.textContent = feature.description ?? '';
                 target.appendChild(desc);
@@ -886,37 +998,6 @@ function renderFeaturesOnly(box, uid) {
         const max = parseInt(wrapper.dataset.numChoices || '1');
         if (max > 1) enforceExternalChoiceLimit(wrapper, radioName, max);
         syncExternalChoicesAcrossBoxes(wrapper.dataset.listName);
-    });
-}
-
-function renderEquipment(box, uid, savedEquipment = {}) {
-    const selectedClass = box.querySelector('.class-select').value;
-    const data = CLASS_DATA[selectedClass];
-    const container = box.querySelector('.equipment-container');
-    container.innerHTML = '';
-
-    if (!data.equipment) return;
-
-    data.equipment.forEach((row, i) => {
-        const block = document.createElement('div');
-        block.classList.add('feature-block');
-        const radioName = `equip_${uid}_${i}`;
-
-        if (row.options.length === 1) {
-            const label = document.createElement('div');
-            label.textContent = row.options[0];
-            block.appendChild(label);
-        } else {
-            row.options.forEach((opt, j) => {
-                const label = document.createElement('label');
-                const wasSelected = savedEquipment[radioName] === String(j);
-                label.innerHTML = `<input type="radio" name="${radioName}" value="${j}" ${wasSelected ? 'checked' : ''}> 
-                                   ${String.fromCharCode(97 + j)}) ${opt}`;
-                block.appendChild(label);
-            });
-        }
-
-        container.appendChild(block);
     });
 }
 

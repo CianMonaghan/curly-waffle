@@ -307,7 +307,9 @@ button:hover { background: #eee; }
 
 .class-left {
     min-width: 200px;
+    max-width: 220px;
     flex-shrink: 0;
+    overflow: hidden;
 }
 
 .class-right {
@@ -341,12 +343,59 @@ button:hover { background: #eee; }
     gap: 6px;
     white-space: normal;
     word-break: break-word;
-    max-width: 220px;
+    max-width: 100%;
 }
 
 .equipment-container input[type="radio"] {
     margin-top: 3px;
     flex-shrink: 0;
+}
+
+.equipment-option-line {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px 4px;
+    margin: 2px 0;
+    max-width: 100%;
+    width: 100%; 
+    overflow: hidden;
+}
+
+.equipment-option-line span {
+    display: inline;
+    white-space: nowrap;
+}
+
+.equip-sep {
+    display: inline;
+}
+
+.equipment-weapon-select {
+    display: block;
+    width: 100%;
+    max-width: 180px;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.equip-radio-letter {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    margin-right: 4px;
+    flex-shrink: 0;
+}
+
+.equip-content {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px 4px;
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
 }
 
 /* Class Features */

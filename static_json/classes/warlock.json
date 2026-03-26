@@ -14,11 +14,11 @@
     "skill_prof": ["Arcana", "Deception", "History", "Intimidation", "Investigation", "Nature", "Religion"],
 
     "equipment": [
-        { "options": [["Light Crossbow", "20 Bolts"], "Simple Weapon"] },
+        { "options": [["Light Crossbow", "20 Bolts"], { "text": "Simple Weapon", "choice": "simple_weapons" }] },
         { "options": ["Component Pouch", "Arcane Focus"] },
         { "options": ["Scholar's Pack", "Dungeoneer's Pack"] },
         { "options": ["Leather Armor"] },
-        { "options": ["Any Simple Weapon"] },
+        { "options": [{ "text": "Simple Weapon", "choice": "simple_weapons" }] },
         { "options": ["2 Daggers"] }
     ],
 
@@ -44,8 +44,10 @@
             "3": { 
                 "feature_name": "Pact Boon", 
                 "feature_type": "passive",
-                "subtype": "choice", 
-                "options": ["Pact of the Blade", "Pact of the Chain", "Pact of the Tome", "Pact of the Talisman"] 
+                "subtype": "external_choice", 
+                "external_list": "pact_boons",
+                "numChoices": "1",
+                "options": "all" 
             },
             "4": { 
                 "feature_name": "Ability Score Improvement", 
@@ -90,9 +92,13 @@
             "11": { 
                 "feature_name": "Mystic Arcanum (6th level)", 
                 "feature_type": "passive",
-                "subtype": "resource",
-                "uses": "1", 
-                "description": "You gain a 6th-level spell from the warlock spell list as a mystic arcanum, you may cast this spell once per long rest without expending a spell slot." 
+                "subtype": ["resource", "external_choice"], 
+                "description": "You gain a 6th-level spell from the warlock spell list as a mystic arcanum, you may cast this spell once per long rest without expending a spell slot.",
+                "uses": "1",
+
+                "external_list": "spell_list",
+                "numChoices": "1",
+                "options": ["6th Level", "warlock"]
             },
             "12": [
                 { 
@@ -111,9 +117,13 @@
             "13": { 
                 "feature_name": "Mystic Arcanum (7th level)", 
                 "feature_type": "passive",
-                "subtype": "resource", 
-                "uses": "1", 
-                "description": "You gain a 7th-level spell from the warlock spell list as a mystic arcanum, you may cast this spell once per long rest without expending a spell slot." 
+                "subtype": ["resource", "external_choice"], 
+                "description": "You gain a 7th-level spell from the warlock spell list as a mystic arcanum, you may cast this spell once per long rest without expending a spell slot.",
+                "uses": "1",
+
+                "external_list": "spell_list",
+                "numChoices": "1",
+                "options": ["7th Level", "warlock"]
             },
             "14": { 
                 "feature_name": "Otherworldly Patron Feature", 
@@ -123,9 +133,13 @@
                 { 
                     "feature_name": "Mystic Arcanum (8th level)", 
                     "feature_type": "passive",
-                    "subtype": "resource", 
-                    "uses": "1", 
-                    "description": "You gain a 8th-level spell from the warlock spell list as a mystic arcanum, you may cast this spell once per long rest without expending a spell slot." 
+                    "subtype": ["resource", "external_choice"], 
+                    "description": "You gain a 8th-level spell from the warlock spell list as a mystic arcanum, you may cast this spell once per long rest without expending a spell slot.",
+                    "uses": "1",
+
+                    "external_list": "spell_list",
+                    "numChoices": "1",
+                    "options": ["8th Level", "warlock"]
                 },
                 { 
                     "feature_name": "Eldritch Invocations (Additional)", 
@@ -143,9 +157,13 @@
             "17": { 
                 "feature_name": "Mystic Arcanum (9th level)", 
                 "feature_type": "passive",
-                "subtype": "resource",
-                "uses": "1", 
-                "description": "You gain a 9th-level spell from the warlock spell list as a mystic arcanum, you may cast this spell once per long rest without expending a spell slot." 
+                "subtype": ["resource", "external_choice"], 
+                "description": "You gain a 9th-level spell from the warlock spell list as a mystic arcanum, you may cast this spell once per long rest without expending a spell slot.",
+                "uses": "1",
+
+                "external_list": "spell_list",
+                "numChoices": "1",
+                "options": ["9th Level", "warlock"]
             },
             "18": { 
                 "feature_name": "Eldritch Invocations (Additional)", 
