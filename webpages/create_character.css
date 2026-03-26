@@ -33,6 +33,11 @@ body {
     min-width: 160px;
 }
 
+.proficiency-granted {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
 /* Buttons */
 button {
     cursor: pointer;

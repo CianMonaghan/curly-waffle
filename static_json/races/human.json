@@ -1,0 +1,33 @@
+{
+    "type": "race",
+    "id": 2,
+    "name": "Human",
+    "description": "In the reckonings of most worlds, humans are the youngest of the common races, late to arrive on the world scene and short-lived in comparison to dwarves, elves, and dragons. Perhaps it is because of their shorter lives that they strive to achieve as much as they can in the years they are given. Or maybe they feel they have something to prove to the elder races, and that's why they build their mighty empires on the foundation of conquest and trade. Whatever drives them, humans are the innovators, the achievers, and the pioneers of the worlds.",
+    "features": [
+        {
+            "feature_name": "Ability Score Increase (ALL +1)",
+            "description": "Your ability scores each increase by 1.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "feature_name": "Speed",
+            "description": "Your base walking speed is 30 feet.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "feature_name": "Languages",
+            "description": "You can speak, read, and write Common and one extra language of your choice. Humans typically learn the languages of other peoples they deal with, including obscure dialects. They are fond of sprinkling their speech with words borrowed from other tongues: Orc curses, Elvish musical expressions, Dwarvish military phrases, and so on.",
+            "feature_type": "passive",
+            "subtype": ["prof_addition", "external_choice"],
+            "prof_to_add": [
+                { "languages": "Common" }
+            ],
+            "external_list": "languages",
+            "numChoices": "1",
+            "options": "any",
+            "trigger": "onAdd"
+        }
+    ]
+}
