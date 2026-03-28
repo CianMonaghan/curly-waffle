@@ -5,36 +5,3177 @@
         "Cantrips": {
             "Acid Splash": {
                 "type": "conjuration",
+                "ritual": "false",
                 "classes": ["artificer", "sorcerer", "wizard"],
                 "link": "https://dnd5e.wikidot.com/spell:acid-splash"
+            },
+            "Blade Ward": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:blade-ward"
+            },
+            "Booming Blade": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:booming-blade"
+            },
+            "Chill Touch": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:chill-touch"
+            },
+            "Control Flames": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:control-flames"
+            },
+            "Create Bonfire": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["artificer", "druid", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:create-bonfire"
+            },
+            "Dancing Lights": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:dancing-lights"
+            },
+            "Druidcraft": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid"],
+                "link": "https://dnd5e.wikidot.com/spell:druidcraft"
+            },
+            "Eldritch Blast": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["warlock"],
+                "link": "https://dnd5e.wikidot.com/spell:eldritch-blast"
+            },
+            "Fire Bolt": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:fire-bolt"
+            },
+            "Friends": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:friends"
+            },
+            "Frostbite": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["artificer", "druid","sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:frostbite"
+            },
+            "Green-Flame Blade": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "warlock","wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:green-flame-blade"
+            },
+            "Guidance": {
+                "type": "divination",
+                "ritual": "false",
+                "classes": ["artificer", "cleric", "druid"],
+                "link": "https://dnd5e.wikidot.com/spell:guidance"
+            },
+            "Gust": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:gust"
+            },
+            "Infestation": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:infestation"
+            },
+            "Light": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "cleric", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:light"
+            },
+            "Lightning Lure": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:lightning-lure"
+            },
+            "Mage Hand": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:mage-hand"
+            },
+            "Magic Stone": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "druid", "sorcerer"],
+                "link": "https://dnd5e.wikidot.com/spell:magic-stone"
+            },
+            "Mending": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "cleric", "druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:mending"
+            },
+            "Message": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:message"
+            },
+            "Mind Sliver": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:mind-sliver"
+            },
+            "Minor Illusion": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:minor-illusion"
+            },
+            "Mold Earth": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:mold-earth"
+            },
+            "Poison Spray": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["artificer", "druid", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:poison-spray"
+            },
+            "Prestidigitation": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:prestidigitation"
+            },
+            "Primal Savagery": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid"],
+                "link": "https://dnd5e.wikidot.com/spell:primal-savagery"
+            },
+            "Produce Flame": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid"],
+                "link": "https://dnd5e.wikidot.com/spell:produce-flame"
+            },
+            "Ray of Frost": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:ray-of-frost"
+            },
+            "Resistance": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["artificer", "cleric", "druid"],
+                "link": "https://dnd5e.wikidot.com/spell:resistance"
+            },
+            "Sacred Flame": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:sacred-flame"
+            },
+            "Sapping Sting": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:sapping-sting"
+            },
+            "Shape Water": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:shape-water"
+            },
+            "Shillelagh": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid"],
+                "link": "https://dnd5e.wikidot.com/spell:shillelagh"
+            },
+            "Shocking Grasp": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:shocking-grasp"
+            },
+            "Spare the Dying": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["artificer", "cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:spare-the-dying"
+            },
+            "Sword Burst": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:sword-burst"
+            },
+            "Thaumatergy": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:thaumaturgy"
+            },
+            "Thorn Whip": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "druid"],
+                "link": "https://dnd5e.wikidot.com/spell:thorn-whip"
+            },
+            "Thunderclap": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "druid", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:thunderclap"
+            },
+            "Toll the Dead": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["cleric", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:toll-the-dead"
+            },
+            "True Strike": {
+                "type": "divination",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:true-strike"
+            },
+            "Vicious Mockery": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard"],
+                "link": "https://dnd5e.wikidot.com/spell:vicious-mockery"
+            },
+            "Word of Radiance": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:word-of-radiance"
             }
         },
+
+
         "1st Level":{
-
+            "Absorb Elements": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["artificer", "druid", "ranger", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:absorb-elements"
+            },
+            "Alarm": {
+                "type": "abjuration",
+                "ritual": "true",
+                "classes": ["artificer", "ranger", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:alarm"
+            },
+            "Animal Friendship": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:animal-friendship"
+            },
+            "Armor of Agathys": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["warlock"],
+                "link": "https://dnd5e.wikidot.com/spell:armor-of-agathys"
+            },
+            "Arms of Hadar": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["warlock"],
+                "link": "https://dnd5e.wikidot.com/spell:arms-of-hadar"
+            },
+            "Bane": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:bane"
+            },
+            "Beast Bond": {
+                "type": "divination",
+                "ritual": "false",
+                "classes": ["druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:beast-bond"
+            },
+            "Bless": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["cleric", "paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:bless"
+            },
+            "Burning Hands": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:burning-hands"
+            },
+            "Catapult": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:catapult"
+            },
+            "Cause Fear": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:cause-fear"
+            },
+            "Ceremony": {
+                "type": "abjuration",
+                "ritual": "true",
+                "classes": ["cleric", "paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:ceremony"
+            },
+            "Chaos Bolt": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["sorcerer"],
+                "link": "https://dnd5e.wikidot.com/spell:chaos-bolt"
+            },
+            "Charm Person": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "druid", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:charm-person"
+            },
+            "Chromatic Orb": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:chromatic-orb"
+            },
+            "Color Spray": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:color-spray"
+            },
+            "Command": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:command"
+            },
+            "Compelled Duel": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:compelled-duel"
+            },
+            "Comprehand Languages": {
+                "type": "divination",
+                "ritual": "true",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:comprehend-languages"
+            },
+            "Create or Destroy Water": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["cleric", "druid"],
+                "link": "https://dnd5e.wikidot.com/spell:create-or-destroy-water"
+            },
+            "Cure Wounds": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "cleric", "druid", "paladin", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:cure-wounds"
+            },
+            "Detect Evil and Good": {
+                "type": "divination",
+                "ritual": "false",
+                "classes": ["cleric", "paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:detect-evil-and-good"
+            },
+            "Detect Magic": {
+                "type": "divination",
+                "ritual": "true",
+                "classes": ["artificer", "bard", "cleric", "druid", "paladin", "ranger", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:detect-magic"
+            },
+            "Detect Posion and Disease": {
+                "type": "divination",
+                "ritual": "true",
+                "classes": ["cleric", "druid", "paladin", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:detect-poison-and-disease"
+            },
+            "Disguise Self": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:disguise-self"
+            },
+            "Dissonant Whispers": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard"],
+                "link": "https://dnd5e.wikidot.com/spell:dissonant-whispers"
+            },
+            "Distort Value": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:distort-value"
+            },
+            "Divine Favor": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:divine-favor"
+            },
+            "Earth Tremor": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["bard", "druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:earth-tremor"
+            },
+            "Ensnaring Strike": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:ensnaring-strike"
+            },
+            "Entangle": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:entangle"
+            },
+            "Expeditious Retreat": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:expeditious-retreat"
+            },
+            "Faerie Fire": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:faerie-fire"
+            },
+            "False Life": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:false-life"
+            },
+            "Feather Fall": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:feather-fall"
+            },
+            "Find Familiar": {
+                "type": "conjuration",
+                "ritual": "true",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:find-familiar"
+            },
+            "Fog Cloud": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid", "ranger", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:fog-cloud"
+            },
+            "Frost Fingers": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:frost-fingers"
+            },
+            "Gift of Alacrity": {
+                "type": "divination",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:gift-of-alacrity"
+            },
+            "Goodberry": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:goodberry"
+            },
+            "Grease": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:grease"
+            },
+            "Guiding Bolt": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:guiding-bolt"
+            },
+            "Hail of Thorns": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:hail-of-thorns"
+            },
+            "Healing Word": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "druid"],
+                "link": "https://dnd5e.wikidot.com/spell:healing-word"
+            },
+            "Hellish Rebuke": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["warlock"],
+                "link": "https://dnd5e.wikidot.com/spell:hellish-rebuke"
+            },
+            "Heroism": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:heroism"
+            },
+            "Hex": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["warlock"],
+                "link": "https://dnd5e.wikidot.com/spell:hex"
+            },
+            "Hunter's Mark": {
+                "type": "divination",
+                "ritual": "false",
+                "classes": ["ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:hunters-mark"
+            },
+            "Ice Knife": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:ice-knife"
+            },
+            "Identify": {
+                "type": "divination",
+                "ritual": "true",
+                "classes": ["artificer", "bard", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:identify"
+            },
+            "Illusory Script": {
+                "type": "illusion",
+                "ritual": "true",
+                "classes": ["bard", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:illusory-script"
+            },
+            "Inflict Wounds": {
+                "type": "necromancy",
+                "classes": ["cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:inflict-wounds"
+            },
+            "Jim's Magic Missile": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:jims-magic-missile"
+            },
+            "Jump": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "druid", "ranger", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:jump"
+            },
+            "Longstrider": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "druid", "ranger", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:longstrider"
+            },
+            "Mage Armor": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:mage-armor"
+            },
+            "Magic Missile": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:magic-missile"
+            },
+            "Magnify Gravity": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:magnify-gravity"
+            },
+            "Protection from Evil and Good": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["cleric", "druid", "paladin", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:protection-from-evil-and-good"
+            },
+            "Purify Food and Drink": {
+                "type": "transmutation",
+                "ritual": "true",
+                "classes": ["artificer", "cleric", "druid", "paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:purify-food-and-drink"
+            },
+            "Ray of Sickness": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:ray-of-sickness"
+            },
+            "Sanctuary": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["artificer", "cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:sanctuary"
+            },
+            "Searing Smite": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["paladin", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:searing-smite"
+            },
+           "Shield": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:shield"
+            },
+           "Shield of Faith": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["cleric", "paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:shield-of-faith"
+            },
+           "Silent Image": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:silent-image"
+            },
+           "Silvery Barbs": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:silvery-barbs"
+            },
+           "Sleep": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:sleep"
+            },
+           "Snare": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["artificer", "druid", "ranger", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:snare"
+            },
+           "Speak with Animals": {
+                "type": "divination",
+                "ritual": "true",
+                "classes": ["bard", "druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:speak-with-animals"
+            },
+           "Tasha's Caustic Brew": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:tashas-caustic-brew"
+            },
+           "Tasha's Hideous Laughter": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:tashas-hideous-laughter"
+            },
+           "Tenser's Floating Disk": {
+                "type": "conjuration",
+                "ritual": "true",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:tensers-floating-disk"
+            },
+           "Thunderous Smite": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:thunderous-smite"
+            },
+           "Thunderwave": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["bard", "druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:thunderwave"
+            },
+           "Unseen Servant": {
+                "type": "conjuration",
+                "ritual": "true",
+                "classes": ["bard", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:unseen-servant"
+            },
+           "Witch Bolt": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:witch-bolt"
+            },
+           "Wrathful Smite": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:wrathful-smite"
+            },
+           "Zephyr Strike": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:zephyr-strike"
+           }
         },
+
+        
         "2nd Level":{
-
+            "Aganazzar's Scorcher": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:aganazzars-scorcher"
+            },
+            "Aid": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "cleric", "paladin", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:aid"
+            },
+            "Air Bubble": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["artificer", "druid", "ranger", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:air-bubble"
+            },
+            "Alter Self": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:alter-self"
+            },
+            "Animal Messenger": {
+                "type": "enchantment",
+                "ritual": "truee",
+                "classes": ["bard", "druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:animal-messenger"
+            },
+            "Arcane Lock": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["artificer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:arcane-lock"
+            },
+            "Augury": {
+                "type": "divination",
+                "ritual": "truee",
+                "classes": ["cleric", "druid", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:augury"
+            },
+            "Barkskin": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:barkskin"
+            },
+            "Beast Sense": {
+                "type": "divination",
+                "ritual": "true",
+                "classes": ["druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:beast-sense"
+            },
+            "Blindness/Deafness": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:blindness-deafness"
+            },
+            "Blur": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:blur"
+            },
+            "Borrowed Knowledge": {
+                "type": "divination",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:borrowed-knowledge"
+            },
+            "Branding Smite": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:branding-smite"
+            },
+            "Calm Emotions": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:calm-emotions"
+            },
+            "Cloud of Daggers": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:cloud-of-daggers"
+            },
+            "Continual Flame": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["artificer", "cleric", "druid", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:continual-flame"
+            },
+            "Cordon of Arrows": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:cordon-of-arrows"
+            },
+            "Crown of Madness": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:crown-of-madness"
+            },
+            "Darkness": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:darkness"
+            },
+            "Darkvision": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "druid", "ranger", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:darkvision"
+            },
+            "Detect Thoughts": {
+                "type": "divination",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:detect-thoughts"
+            },
+            "Dragon's Breath": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:dragons-breath"
+            },
+            "Dust Devil": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:dust-devil"
+            },
+            "Earthbind": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:earthbind"
+            },
+            "Enhance Ability": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "cleric", "druid", "ranger", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:enhance-ability"
+            },
+            "Enlarge/Reduce": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:enlarge-reduce"
+            },
+            "Enthrall": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "warlock"],
+                "link": "https://dnd5e.wikidot.com/spell:enthrall"
+            },
+            "Find Steed": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:find-steed"
+            },
+            "Find Traps": {
+                "type": "divination",
+                "ritual": "false",
+                "classes": ["cleric", "druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:find-traps"
+            },
+            "Flame Blade": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer"],
+                "link": "https://dnd5e.wikidot.com/spell:flame-blade"
+            },
+            "Flaming Sphere": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:flaming-sphere"
+            },
+            "Flock of Familiars": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:flock-of-familiars"
+            },
+            "Fortune's Favor": {
+                "type": "divination",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:fortunes-favor"
+            },
+            "Gentle Repose": {
+                "type": "necromancy",
+                "ritual": "true",
+                "classes": ["cleric", "paladin", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:gentle-repose"
+            },
+            "Gift of Gab": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:gift-of-gab"
+            },
+            "Gust of Wind": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["druid", "ranger", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:gust-of-wind"
+            },
+            "Healing Spirit": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:healing-spirit"
+            },
+            "Heat Metal": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "druid"],
+                "link": "https://dnd5e.wikidot.com/spell:heat-metal"
+            },
+            "Hold Person": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "druid", "sorcerer","warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:hold-person"
+            },
+            "Immovable Object": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:immovable-object"
+            },
+            "Invisibility": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:invisibility"
+            },
+            "Jim's Glowing Coin": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:jims-glowing-coin"
+            },
+            "Kinetic Jaunt": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:kinetic-jaunt"
+            },
+            "Knock": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:knock"
+            },
+            "Lesser Restoration": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "cleric", "druid", "paladin", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:lesser-restoration"
+            },
+            "Levitate": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:levitate"
+            },
+            "Locate Animals or Plants": {
+                "type": "divination",
+                "ritual": "true",
+                "classes": ["bard", "druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:locate-animals-or-plants"
+            },
+            "Locate Object": {
+                "type": "divination",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "druid", "paladin", "ranger", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:locate-object"
+            },
+            "Magic Mouth": {
+                "type": "illusion",
+                "ritual": "true",
+                "classes": ["artificer", "bard", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:magic-mouth"
+            },
+            "Magic Weapon": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "paladin", "ranger", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:magic-weapon"
+            },
+            "Maximillian's Earthen Grasp": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:maximillians-earthen-grasp"
+            },
+            "Melf's Acid Arrow": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:melfs-acid-arrow"
+            },
+            "Mind Spike": {
+                "type": "divination",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:mind-spike"
+            },
+            "Mirror Image": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:mirror-image"
+            },
+            "Misty Step": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:misty-step"
+            },
+            "Moonbeam": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["druid"],
+                "link": "https://dnd5e.wikidot.com/spell:moonbeam"
+            },
+            "Nathair's Mischief": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:nathairs-mischief"
+            },
+            "Nystul's Magic Aura": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:nystuls-magic-aura"
+            },
+            "Pass Without Trace": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:pass-without-trace"
+            },
+            "Phantasmal Force": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:phantasmal-force"
+            },
+            "Prayer of Healing": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["cleric", "paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:prayer-of-healing"
+            },
+            "Protection from Poison": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["artificer", "cleric", "druid", "paladin", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:protection-from-poison"
+            },
+            "Pyrotechnics": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:pyrotechnics"
+            },
+            "Ray of Enfeeblement": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:ray-of-enfeeblement"
+            },
+            "Rime's Binding Ice": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:rimes-binding-ice"
+            },
+            "Rope Trick": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:rope-trick"
+            },
+            "Scorching Ray": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:scorching-ray"
+            },
+            "See Invisibility": {
+                "type": "divination",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:see-invisibility"
+            },
+            "Shadow Blade": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:shadow-blade"
+            },
+            "Shatter": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:shatter"
+            },
+            "Silence": {
+                "type": "illusion",
+                "ritual": "true",
+                "classes": ["bard", "cleric", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:silence"
+            },
+            "Skywrite": {
+                "type": "transmutation",
+                "ritual": "true",
+                "classes": ["artificer", "bard", "druid", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:skywrite"
+            },
+            "Snilloc's Snowball Swarm": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:snillocs-snowball-swarm"
+            },
+            "Spider Climb": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:spider-climb"
+            },
+            "Spike Growth": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:spike-growth"
+            },
+            "Spiritual Weapon": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:spiritual-weapon"
+            },
+            "Spray Of Cards": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:spray-of-cards"
+            },
+            "Suggestion": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:suggestion"
+            },
+            "Summon Beast": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:summon-beast"
+            },
+            "Tasha's Mind Whip": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:tashas-mind-whip"
+            },
+            "Vortex Warp": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:vortex-warp"
+            },
+            "Warding Bond": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["cleric", "paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:warding-bond"
+            },
+            "Warding Wind": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["bard", "druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:warding-wind"
+            },
+            "Warp Sense": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:warp-sense"
+            },
+            "Web": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:web"
+            },
+            "Wither and Bloom": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:wither-and-bloom"
+            },
+            "Wristpocket": {
+                "type": "conjuration",
+                "ritual": "true",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:wristpocket"
+            },
+            "Zone of Truth": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:zone-of-truth"
+            }
         },
+
+
         "3rd Level":{
-
+            "Animate Dead": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["cleric", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:animate-dead"
+            },
+            "Antagonize": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:antagonize"
+            },
+            "Ashardalon's Stride": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "ranger", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:ashardalons-stride"
+            },
+            "Aura of Vitality": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["cleric", "druid", "paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:aura-of-vitality"
+            },
+            "Beacon of Hope": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:beacon-of-hope"
+            },
+            "Bestow Curse": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:bestow-curse"
+            },
+            "Blinding Smite": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:blinding-smite"
+            },
+            "Blink": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:blink"
+            },
+            "Call Lightning": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid"],
+                "link": "https://dnd5e.wikidot.com/spell:call-lightning"
+            },
+            "Catnap": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:catnap"
+            },
+            "Clairvoyance": {
+                "type": "divination",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:clairvoyance"
+            },
+            "Conjure Animals": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:conjure-animals"
+            },
+            "Conjure Barrage": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:conjure-barrage"
+            },
+            "Counterspell": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:counterspell"
+            },
+            "Create Food and Water": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["artificer", "cleric", "paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:create-food-and-water"
+            },
+            "Crusader's Mantle": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:crusaders-mantle"
+            },
+            "Daylight": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["cleric", "druid", "paladin", "ranger", "sorcerer"],
+                "link": "https://dnd5e.wikidot.com/spell:daylight"
+            },
+            "Dispel Magic": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "cleric", "druid", "paladin", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:dispel-magic"
+            },
+            "Elemental Weapon": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "druid", "paladin", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:elemental-weapon"
+            },
+            "Enemies Abound": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:enemies-abound"
+            },
+            "Erupting Earth": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:erupting-earth"
+            },
+            "Fast Friends": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:fast-friends"
+            },
+            "Fear": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:fear"
+            },
+            "Feign Death": {
+                "type": "necromancy",
+                "ritual": "truee",
+                "classes": ["bard", "cleric", "druid", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:feign-death"
+            },
+            "Fireball": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:fireball"
+            },
+            "FLame Arrows": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "druid", "ranger", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:flame-arrows"
+            },
+            "Fly": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:fly"
+            },
+            "Galder's Tower": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:galders-tower"
+            },
+            "Gaseous Form": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:gaseous-form"
+            },
+            "Glyph of Warding": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "cleric", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:glyph-of-warding"
+            },
+            "Haste": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:haste"
+            },
+            "Hunger of Hadar": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["warlock"],
+                "link": "https://dnd5e.wikidot.com/spell:hunger-of-hadar"
+            },
+            "Hypnotic Pattern": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:hypnotic-pattern"
+            },
+            "Incite Greed": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["cleric", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:incite-greed"
+            },
+            "Intellect Fortress": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:intellect-fortress"
+            },
+            "Leomund's Tiny Hut": {
+                "type": "evocation",
+                "ritual": "true",
+                "classes": ["bard", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:leomunds-tiny-hut"
+            },
+            "Life Transference": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["cleric", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:life-transference"
+            },
+            "Lightning Arroa": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:lightning-arrow"
+            },
+            "Lightning Bolt": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:lightning-bolt"
+            },
+            "Magic Circle": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["cleric", "paladin", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:magic-circle"
+            },
+            "Major Image": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:major-image"
+            },
+            "Mass Healing Word": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["bard", "cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:mass-healing-word"
+            },
+            "Meld Into Stone": {
+                "type": "transmutation",
+                "ritual": "true",
+                "classes": ["cleric", "druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:meld-into-stone"
+            },
+            "Melf's Minute Meteors": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:melfs-minute-meteors"
+            },
+            "Motivational Speech": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:motivational-speech"
+            },
+            "Nondetection": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["bard", "ranger", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:nondetection"
+            },
+            "Phantom Steed": {
+                "type": "illusion",
+                "ritual": "true",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:phantom-steed"
+            },
+            "Plant Growth": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["bard", "druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:plant-growth"
+            },
+            "Protection from Energy": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["artificer", "cleric", "druid", "ranger", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:protection-from-energy"
+            },
+            "Pulse Wave": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:pulse-wave"
+            },
+            "Remove Curse": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["cleric", "paladin", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:remove-curse"
+            },
+            "Revivify": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["artificer", "cleric", "druid", "paladin", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:revivify"
+            },
+            "Sending": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:sending"
+            },
+            "Sleet Storm": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:sleet-storm"
+            },
+            "Slow": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:slow"
+            },
+            "Speak with Dead": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:speak-with-dead"
+            },
+            "Speak with Plants": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["bard", "druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:speak-with-plants"
+            },
+            "Spirit Guardians": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:spirit-guardians"
+            },
+            "Spirit Shroud": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["cleric", "paladin", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:spirit-shroud"
+            },
+            "Stinking Cloud": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:stinking-cloud"
+            },
+            "Summon Fey": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid", "ranger", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:summon-fey"
+            },
+            "Summon Lesser Demons": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:summon-lesser-demons"
+            },
+            "Summon Shdowspawn": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:summon-shadowspawn"
+            },
+            "Summon Undead": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:summon-undead"
+            },
+            "Thunder Step": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:thunder-step"
+            },
+            "Tidal Wave": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:tidal-wave"
+            },
+            "Tiny Servant": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:tiny-servant"
+            },
+            "Tongues": {
+                "type": "divination",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:tongues"
+            },
+            "Vampiric Touch": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:vampiric-touch"
+            },
+            "Wall of Sand": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:wall-of-sand"
+            },
+            "Wall of Water": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:wall-of-water"
+            },
+            "Water Breathing": {
+                "type": "transmutation",
+                "ritual": "true",
+                "classes": ["artificer", "druid", "ranger", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:water-breathing"
+            },
+            "Water Walk": {
+                "type": "transmutation",
+                "ritual": "true",
+                "classes": ["artificer", "cleric", "druid", "ranger", "sorcerer"],
+                "link": "https://dnd5e.wikidot.com/spell:water-walk"
+            },
+            "Wind Wall": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:wind-wall"
+            }
         },
+
+
         "4th Level":{
-
+            "Arcane Eye": {
+                "type": "divination",
+                "ritual": "false",
+                "classes": ["artificer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:arcane-eye"
+            },
+            "Aura of Life": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["cleric", "paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:aura-of-life"
+            },
+            "Aura of Purity": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["cleric", "paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:aura-of-purity"
+            },
+            "Banishment": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["cleric", "paladin", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:banishment"
+            },
+            "Blight": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:blight"
+            },
+            "Charm Monster": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "druid", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:charm-monster"
+            },
+            "Compulsion": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard"],
+                "link": "https://dnd5e.wikidot.com/spell:compulsion"
+            },
+            "Confusion": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:confusion"
+            },
+            "Conjure Minor Elementals": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:conjure-minor-elementals"
+            },
+            "Conjure Woodland Beings": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:conjure-woodland-beings"
+            },
+            "Control Water": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["cleric", "druid", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:control-water"
+            },
+            "Death Ward": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["cleric", "paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:death-ward"
+            },
+            "Dimension Door": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:dimension-door"
+            },
+            "Divination": {
+                "type": "divination",
+                "ritual": "true",
+                "classes": ["cleric", "druid", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:divination"
+            },
+            "Dominate Beast": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["druid", "ranger", "sorcerer"],
+                "link": "https://dnd5e.wikidot.com/spell:dominate-beast"
+            },
+            "Elemental Bane": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "druid", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:elemental-bane"
+            },
+            "Evard's Black Tentacles": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:evards-black-tentacles"
+            },
+            "Fabricate": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:fabricate"
+            },
+            "Find Greater Steed": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:find-greater-steed"
+            },
+            "Fire Shield": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:fire-shield"
+            },
+            "Freedom of Movement": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "cleric", "druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:freedom-of-movement"
+            },
+            "Galder's Speedy Courier": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:galders-speedy-courier"
+            },
+            "Gate Seal": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:gate-seal"
+            },
+            "Giant Insect": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid"],
+                "link": "https://dnd5e.wikidot.com/spell:giant-insect"
+            },
+            "Grasping Vine": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:grasping-vine"
+            },
+            "Gravity Sinkhole": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:gravity-sinkhole"
+            },
+            "Greater Invisibility": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:greater-invisibility"
+            },
+            "Guardian of Faith": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:guardian-of-faith"
+            },
+            "Guardian of Nature": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:guardian-of-nature"
+            },
+            "Hallucinatory Terrain": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["bard", "druid", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:hallucinatory-terrain"
+            },
+            "Ice Storm": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:ice-storm"
+            },
+            "Leomund's Secret Chest": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["artificer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:leomunds-secret-chest"
+            },
+            "Locate Creature": {
+                "type": "divination",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "druid", "paladin", "ranger", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:locate-creature"
+            },
+            "Mordenkainen's Faithful Hound": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["artificer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:mordenkainens-faithful-hound"
+            },
+            "Mordenkainen's Private Sanctum": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["artificer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:mordenkainens-private-sanctum"
+            },
+            "Otiluke's Resilient Sphere": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["artificer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:otilukes-resilient-sphere"
+            },
+            "Phantasmal Killer": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["bard", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:phantasmal-killer"
+            },
+            "Polymorph": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["bard", "druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:polymorph"
+            },
+            "Raulothim's Psychic Lance": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:raulothims-psychic-lance"
+            },
+            "Shadow Of Moil": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["warlock"],
+                "link": "https://dnd5e.wikidot.com/spell:shadow-of-moil"
+            },
+            "Sickeneing Radiance": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:sickening-radiance"
+            },
+            "Spirit of Death": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:spirit-of-death"
+            },
+            "Staggering Smite": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:staggering-smite"
+            },
+            "Stone Shape": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "cleric", "druid", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:stone-shape"
+            },
+            "Stoneskin": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["artificer", "druid", "ranger", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:stoneskin"
+            },
+            "Storm Sphere": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:storm-sphere"
+            },
+            "Summon Aberration": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:summon-aberration"
+            },
+            "Summon Construct": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["artificer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:summon-construct"
+            },
+            "Summon Elemental": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid", "ranger", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:summon-elemental"
+            },
+            "Summon Greater Demon": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:summon-greater-demon"
+            },
+            "Vitriolic Sphere": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:vitriolic-sphere"
+            },
+            "Wall of Fire": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:wall-of-fire"
+            },
+            "Watery Sphere": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:watery-sphere"
+            }
         },
+
+
         "5th Level":{
-
+            "Animate Objects": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:animate-objects"
+            },
+            "Antilife Shell": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["druid"],
+                "link": "https://dnd5e.wikidot.com/spell:antilife-shell"
+            },
+            "Awaken": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["bard", "druid"],
+                "link": "https://dnd5e.wikidot.com/spell:awaken"
+            },
+            "Banishing Smite": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:banishing-smite"
+            },
+            "Bigby's Hand": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:bigbys-hand"
+            },
+            "Circle of Power": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:circle-of-power"
+            },
+            "Cloudkill": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:cloudkill"
+            },
+            "Commune": {
+                "type": "divination",
+                "ritual": "true",
+                "classes": ["cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:commune"
+            },
+            "Commune with Nature": {
+                "type": "divination",
+                "ritual": "true",
+                "classes": ["druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:commune-with-nature"
+            },
+            "Cone of Cold": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:cone-of-cold"
+            },
+            "Conjure Elemental": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:conjure-elemental"
+            },
+            "Conjure Volley": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:conjure-volley"
+            },
+            "Contact Other Plane": {
+                "type": "divination",
+                "ritual": "true",
+                "classes": ["warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:contact-other-plane"
+            },
+            "Contagion": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["cleric", "druid"],
+                "link": "https://dnd5e.wikidot.com/spell:contagion"
+            },
+            "Control Winds": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:control-winds"
+            },
+            "Create Spelljamming Helm": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:create-spelljamming-helm"
+            },
+            "Creation": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["artificer", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:creation"
+            },
+            "Danse Macabre": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:danse-macabre"
+            },
+            "Dawn": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["cleric", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:dawn"
+            },
+            "Destructive Wave": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:destructive-wave"
+            },
+            "Dispel Evil and Good": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["cleric", "paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:dispel-evil-and-good"
+            },
+            "Dominate Person": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:dominate-person"
+            },
+            "Dream": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["bard", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:dream"
+            },
+            "Enervation": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:enervation"
+            },
+            "Far Step": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:far-step"
+            },
+            "Flame Strike": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:flame-strike"
+            },
+            "Geas": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "druid", "paladin", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:geas"
+            },
+            "Greater Restoration": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "cleric", "druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:greater-restoration"
+            },
+            "Hallow": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:hallow"
+            },
+            "Hold Monster": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:hold-monster"
+            },
+            "Holy Weapon": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["cleric", "paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:holy-weapon"
+            },
+            "Immolation": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:immolation"
+            },
+            "Infernal Calling": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:infernal-calling"
+            },
+            "Insect Plague": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["cleric", "druid", "sorcerer"],
+                "link": "https://dnd5e.wikidot.com/spell:insect-plague"
+            },
+            "Legend Lore": {
+                "type": "divination",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:legend-lore"
+            },
+            "Maelstrom": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["druid"],
+                "link": "https://dnd5e.wikidot.com/spell:maelstrom"
+            },
+            "Mass Cure Wounds": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "druid"],
+                "link": "https://dnd5e.wikidot.com/spell:mass-cure-wounds"
+            },
+            "Mislead": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["bard", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:mislead"
+            },
+            "Modify Memory": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:modify-memory"
+            },
+            "Negative Energy Flood": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:negative-energy-flood"
+            },
+            "Passwall": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:passwall"
+            },
+            "Planar Binding": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "druid", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:planar-binding"
+            },
+            "Raise Dead": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:raise-dead"
+            },
+            "Rary's Telepathic Bond": {
+                "type": "divination",
+                "ritual": "true",
+                "classes": ["bard", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:rarys-telepathic-bond"
+            },
+            "Reincarnate": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid"],
+                "link": "https://dnd5e.wikidot.com/spell:reincarnate"
+            },
+            "Scrying": {
+                "type": "divination",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "druid", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:scrying"
+            },
+            "Seeming": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:seeming"
+            },
+            "Skill Empowerment": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:skill-empowerment"
+            },
+            "Steel Wind Strike": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["ranger", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:steel-wind-strike"
+            },
+            "Summon Celestial": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["cleric", "paladin"],
+                "link": "https://dnd5e.wikidot.com/spell:summon-celestial"
+            },
+            "Summon Draconic Spirit": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:summon-draconic-spirit"
+            },
+            "Swift Quiver": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:swift-quiver"
+            },
+            "Synaptic Static": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:synaptic-static"
+            },
+            "Telekinesis": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:telekinesis"
+            },
+            "Teleportation Circle": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:teleportation-circle"
+            },
+            "Temporal Shunt": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:temporal-shunt"
+            },
+            "Transmute Rock": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["artificer", "druid", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:transmute-rock"
+            },
+            "Tree Stride": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:tree-stride"
+            },
+            "Wall of Force": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:wall-of-force"
+            },
+            "Wall of Light": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:wall-of-light"
+            },
+            "Wall of Stone": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["artificer", "druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:wall-of-stone"
+            },
+            "Wrath Of Nature": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["druid", "ranger"],
+                "link": "https://dnd5e.wikidot.com/spell:wrath-of-nature"
+            }
         },
+
+
         "6th Level":{
-
+            "Arcane Gate": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:arcane-gate"
+            },
+            "Blade Barrier": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:blade-barrier"
+            },
+            "Bones of the Earth": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid"],
+                "link": "https://dnd5e.wikidot.com/spell:bones-of-the-earth"
+            },
+            "Chain Lightning": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": [],
+                "link": "https://dnd5e.wikidot.com/spell:chain-lightning"
+            },
+            "Circle of Death": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:circle-of-death"
+            },
+            "Conjure Fey": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid", "warlock"],
+                "link": "https://dnd5e.wikidot.com/spell:conjure-fey"
+            },
+            "Contingency": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:contingency"
+            },
+            "Create Homunculus": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:create-homunculus"
+            },
+            "Create Undead": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["cleric", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:create-undead"
+            },
+            "Disintegrate": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:disintegrate"
+            },
+            "Drawmij's Instant Summons": {
+                "type": "conjuration",
+                "ritual": "true",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:drawmijs-instant-summons"
+            },
+            "Druid Grove": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["druid"],
+                "link": "https://dnd5e.wikidot.com/spell:druid-grove"
+            },
+            "Eyebite": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:eyebite"
+            },
+            "Find the Path": {
+                "type": "divination",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "druid"],
+                "link": "https://dnd5e.wikidot.com/spell:find-the-path"
+            },
+            "Fizban's Platinum Shield": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:fizbans-platinum-shield"
+            },
+            "Flesh to Stone": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:flesh-to-stone"
+            },
+            "Forbiddance": {
+                "type": "abjuration",
+                "ritual": "true",
+                "classes": ["cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:forbiddance"
+            },
+            "Globe of Invulnerability": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:globe-of-invulnerability"
+            },
+            "Gravity Fissure": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:gravity-fissure"
+            },
+            "Guards and Wards": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["bard", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:guards-and-wards"
+            },
+            "Harm": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:harm"
+            },
+            "Heal": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["cleric", "druid"],
+                "link": "https://dnd5e.wikidot.com/spell:heal"
+            },
+            "Heroes' Feast": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "druid"],
+                "link": "https://dnd5e.wikidot.com/spell:heroes-feast"
+            },
+            "Investiture of Flame": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:investiture-of-flame"
+            },
+            "Investiture of Ice": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:investiture-of-ice"
+            },
+            "Investiture of Stone": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:investiture-of-stone"
+            },
+            "Inveestiture of Wind": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:investiture-of-wind"
+            },
+            "Magic Jar": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:magic-jar"
+            },
+            "Mass Suggestion": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:mass-suggestion"
+            },
+            "Mental Prison": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:mental-prison"
+            },
+            "Move Earth": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:move-earth"
+            },
+            "Otiluke's Freezing Sphere": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:otilukes-freezing-sphere"
+            },
+            "Otto's Irresistible Dance": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:ottos-irresistible-dance"
+            },
+            "Planar Ally": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:planar-ally"
+            },
+            "Primordial Ward": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["druid"],
+                "link": "https://dnd5e.wikidot.com/spell:primordial-ward"
+            },
+            "Programmed Illusion": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["bard", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:programmed-illusion"
+            },
+            "Scatter": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:scatter"
+            },
+            "Soul Cage": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:soul-cage"
+            },
+            "Summon Fiend": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:summon-fiend"
+            },
+            "Sunbeam": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["cleric", "druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:sunbeam"
+            },
+            "Tasha's Otherworldly Guise": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:tashas-otherworldly-guise"
+            },
+            "Tenser's Transformation": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:tensers-transformation"
+            },
+            "Transport via Plants": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid"],
+                "link": "https://dnd5e.wikidot.com/spell:transport-via-plants"
+            },
+            "True Seeing": {
+                "type": "divination",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:true-seeing"
+            },
+            "Wall of Ice": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:wall-of-ice"
+            },
+            "Wall of Thorns": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid"],
+                "link": "https://dnd5e.wikidot.com/spell:wall-of-thorns"
+            },
+            "Wind Walk": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid"],
+                "link": "https://dnd5e.wikidot.com/spell:wind-walk"
+            },
+            "Word of Recall": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:word-of-recall"
+            }
         },
+
+
         "7th Level":{
-
+            "Conjure Celestial": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:conjure-celestial"
+            },
+            "Create Magen": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:create-magen"
+            },
+            "Crown of Stars": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:crown-of-stars"
+            },
+            "Delayed Blast Fireball": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:delayed-blast-fireball"
+            },
+            "Divine Word": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:divine-word"
+            },
+            "Demonic Transformation": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:draconic-transformation"
+            },
+            "Dream of the Blue Veil": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:dream-of-the-blue-veil"
+            },
+            "Etherealness": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:etherealness"
+            },
+            "Finger of Death": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:finger-of-death"
+            },
+            "Fire Storm": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["cleric", "druid", "sorcerer"],
+                "link": "https://dnd5e.wikidot.com/spell:fire-storm"
+            },
+            "Forcecage": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["bard", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:forcecage"
+            },
+            "Mirage Arcane": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["bard", "druid", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:mirage-arcane"
+            },
+            "Mordenkainen's Magnificent Mansion": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["bard", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:mordenkainens-magnificent-mansion"
+            },
+            "Mordenkainen's Sword": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["bard", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:mordenkainens-sword"
+            },
+            "Plane Shift": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["cleric", "druid", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:plane-shift"
+            },
+            "Power Word: Pain": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:power-word-pain"
+            },
+            "Prismatic Spray": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:prismatic-spray"
+            },
+            "Project Image": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["bard", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:project-image"
+            },
+            "Regenerate": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "druid"],
+                "link": "https://dnd5e.wikidot.com/spell:regenerate"
+            },
+            "Resurrection": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["bard", "cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:resurrection"
+            },
+            "Reverse Gravity": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:reverse-gravity"
+            },
+            "Sequester": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:sequester"
+            },
+            "Simulacrum": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:simulacrum"
+            },
+            "Symbol": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["bard", "cleric", "druid", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:symbol"
+            },
+            "Teleport": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:teleport"
+            },
+            "Temple of the Gods": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:temple-of-the-gods"
+            },
+            "Tether Essence": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:tether-essence"
+            },
+            "Whirlwind": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["druid", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:whirlwind"
+            }
         },
-        "8tj Level":{
 
+
+        "8th Level":{
+            "Abi-Dalzim's Horrid Wilting": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:abi-dalzims-horrid-wilting"
+            },
+            "Animal Shapes": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid"],
+                "link": "https://dnd5e.wikidot.com/spell:animal-shapes"
+            },
+            "Antimagic Field": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["cleric", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:antimagic-field"
+            },
+            "Antipathy/Sympathy": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "druid", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:antipathy-sympathy"
+            },
+            "Clone": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:clone"
+            },
+            "Control Weather": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["cleric", "druid", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:control-weather"
+            },
+            "Dark Star": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:dark-star"
+            },
+            "Demiplane": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:demiplane"
+            },
+            "Dominate Monster": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:dominate-monster"
+            },
+            "Earthquake": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["cleric", "druid", "sorcerer"],
+                "link": "https://dnd5e.wikidot.com/spell:earthquake"
+            },
+            "Feeblemind": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "druid", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:feeblemind"
+            },
+            "Glibness": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["bard", "warlock"],
+                "link": "https://dnd5e.wikidot.com/spell:glibness"
+            },
+            "Holy Aura": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:holy-aura"
+            },
+            "Illusory Dragon": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:illusory-dragon"
+            },
+            "Incendiary Cloud": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:incendiary-cloud"
+            },
+            "Maddening Darkness": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:maddening-darkness"
+            },
+            "Maze": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:maze"
+            },
+            "Mighty Fortress": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:mighty-fortress"
+            },
+            "Mind Blank": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["bard", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:mind-blank"
+            },
+            "Power Word: Stun": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:power-word-stun"
+            },
+            "Reality Break": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:reality-break"
+            },
+            "Sunburst": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["cleric","druid", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:sunburst"
+            },
+            "Telepathy": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:telepathy"
+            },
+            "Tsunami": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid"],
+                "link": "https://dnd5e.wikidot.com/spell:tsunami"
+            }
         },
+
+
         "9th Level":{
-
+            "Astral Projection": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["cleric", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:astral-projection"
+            },
+            "Blade of Disaster": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:blade-of-disaster"
+            },
+            "Foresight": {
+                "type": "divination",
+                "ritual": "false",
+                "classes": ["bard", "druid", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:foresight"
+            },
+            "Gate": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["cleric", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:gate"
+            },
+            "Imprisonment": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:imprisonment"
+            },
+            "Invulnerability": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:invulnerability"
+            },
+            "Mass Heal": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:mass-heal"
+            },
+            "Mass Polymorph": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:mass-polymorph"
+            },
+            "Meteor Swarm": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:meteor-swarm"
+            },
+            "Power Word: Heal": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["bard", "cleric"],
+                "link": "https://dnd5e.wikidot.com/spell:power-word-heal"
+            },
+            "Power Word: Kill": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:power-word-kill"
+            },
+            "Prismatic Wall": {
+                "type": "abjuration",
+                "ritual": "false",
+                "classes": ["bard", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:prismatic-wall"
+            },
+            "Psychic Scream": {
+                "type": "enchantment",
+                "ritual": "false",
+                "classes": ["bard", "sorcerer", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:psychic-scream"
+            },
+            "Ravenous Void": {
+                "type": "evocation",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:ravenous-void"
+            },
+            "Shapechange": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["druid", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:shapechange"
+            },
+            "Storm of Vengenace": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["druid"],
+                "link": "https://dnd5e.wikidot.com/spell:storm-of-vengeance"
+            },
+            "Time Ravage": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:time-ravage"
+            },
+            "Time Stop": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:time-stop"
+            },
+            "True Polymorph": {
+                "type": "transmutation",
+                "ritual": "false",
+                "classes": ["bard", "warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:true-polymorph"
+            },
+            "True Resurrection": {
+                "type": "necromancy",
+                "ritual": "false",
+                "classes": ["cleric", "druid"],
+                "link": "https://dnd5e.wikidot.com/spell:true-resurrection"
+            },
+            "Weird": {
+                "type": "illusion",
+                "ritual": "false",
+                "classes": ["warlock", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:weird"
+            },
+            "Wish": {
+                "type": "conjuration",
+                "ritual": "false",
+                "classes": ["sorcerer", "wizard"],
+                "link": "https://dnd5e.wikidot.com/spell:wish"
+            }
         }
     }
 }
