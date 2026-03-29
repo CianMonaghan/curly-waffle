@@ -1,17 +1,13 @@
-// Spell List Buttons
+/* Spell List Buttons*/ 
+
 let SPELL_DATA = {};
+let CHARACTER_CLASSES = [];
 
 fetch('/static_json/external_lists/spell_list.json')
     .then(res => res.json())
     .then(data => {
         SPELL_DATA = data.spells;
     });
-
-CHARACTER_CLASSES = (char.classes ?? []).flatMap(c => {
-    const result = [c.name.toLowerCase()];
-    if (c.subclass?.name) result.push(c.subclass.name.toLowerCase());
-    return result;
-});
 
 function buildSpellModal() {
     const body = document.getElementById('spell-modal-body');
@@ -112,6 +108,8 @@ document.getElementById('spell-list-modal')
     });
 
 
+/* Miscellaneous Functions */
+
 //Send character back to character creation screen to make changes
 function editCharacter() {
     const params = new URLSearchParams(window.location.search);
@@ -119,7 +117,22 @@ function editCharacter() {
     if (id) window.location.href = `create_character.html?id=${id}`;
 }
 
-// Async Functions
+// Give default value to editable fields
+document.body.addEventListener('blur', (e) => {
+  const el = e.target;
+  if (el.isContentEditable && el.dataset.default && el.innerText.trim() === '') {
+    el.innerText = el.dataset.default;
+  }
+}, true);
+
+// Stop editable content from being to hit the spacebar
+document.body.addEventListener('keydown', (e) => {
+  if (e.target.isContentEditable && (e.key === ' ' || e.key === 'Enter')) {
+    e.preventDefault();
+  }
+});
+
+/* Async Functions */
 
 async function loadSheet() {
     const params = new URLSearchParams(window.location.search);
@@ -128,6 +141,12 @@ async function loadSheet() {
 
     const res = await fetch(`/api/characters/${id}`);
     const char = await res.json();
+
+    CHARACTER_CLASSES = (char.classes ?? []).flatMap(c => {
+        const result = [c.name.toLowerCase()];
+        if (c.subclass?.name) result.push(c.subclass.name.toLowerCase());
+        return result;
+    });
 
     // Basic info
     document.getElementById('char-name').textContent = char.name;

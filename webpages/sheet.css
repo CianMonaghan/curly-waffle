@@ -140,14 +140,19 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     margin: 5px;
+    align-items: stretch;
 }
 
 .spell-container {
     display: grid;
-    grid-template-rows: 1fr 1fr 4fr;
+    grid-template-rows: auto auto 1fr;
     margin: 5px;
     border: 1px solid black;
-    font-size: 11px;
+    font-size: 16px;
+}
+
+.spell-container > div:last-child {
+    min-height: 150px;
 }
 
 .slot-container {
@@ -155,14 +160,20 @@
     grid-template-columns: 1fr 2fr 2fr;
     text-align: center;
     border-bottom: 1px solid black;
+    align-items: center;
 }
 
-#slot {
-    border-right:1px solid black;
+.slot-container > div {
+    border-right: 1px solid black;
+    padding: 4px 3px;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-#slot:last-child {
-    border: 0px;
+.slot-container > div:last-child {
+    border-right: none;
 }
 
 .spell-entry:nth-child(odd) {
