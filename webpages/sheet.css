@@ -164,3 +164,7 @@
 #slot:last-child {
     border: 0px;
 }
+
+.spell-entry:nth-child(odd) {
+    background-color: #f5f5f5;
+}

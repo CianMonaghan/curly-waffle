@@ -780,7 +780,7 @@
             },
             "Animal Messenger": {
                 "type": "enchantment",
-                "ritual": "truee",
+                "ritual": "true",
                 "classes": ["bard", "druid", "ranger"],
                 "link": "https://dnd5e.wikidot.com/spell:animal-messenger"
             },
@@ -792,7 +792,7 @@
             },
             "Augury": {
                 "type": "divination",
-                "ritual": "truee",
+                "ritual": "true",
                 "classes": ["cleric", "druid", "wizard"],
                 "link": "https://dnd5e.wikidot.com/spell:augury"
             },
@@ -1426,7 +1426,7 @@
             },
             "Feign Death": {
                 "type": "necromancy",
-                "ritual": "truee",
+                "ritual": "true",
                 "classes": ["bard", "cleric", "druid", "wizard"],
                 "link": "https://dnd5e.wikidot.com/spell:feign-death"
             },
@@ -2453,7 +2453,7 @@
             "Chain Lightning": {
                 "type": "evocation",
                 "ritual": "false",
-                "classes": [],
+                "classes": ["sorcerer", "wizard"],
                 "link": "https://dnd5e.wikidot.com/spell:chain-lightning"
             },
             "Circle of Death": {

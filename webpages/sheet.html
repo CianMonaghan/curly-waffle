@@ -16,6 +16,13 @@
                     <button type="submit">  Return to Account Page  </button>
                 </form>
             </div>
+            <div class="button-container" style="display:flex; gap:8px;">
+                <form action="account.html"> 
+                    <button type="submit">Return to Account Page</button>
+                </form>
+                <button type="button" onclick="editCharacter()">✏️ Edit Character</button>
+            </div>
+            
             <div> <!--Character Sheet-->
                 <h1 id="char-name">  Character Name  </h1>
 
@@ -280,6 +287,31 @@
                 <div style="margin: 10px;">
                     <div class="box" style="text-align: center;">  Spell Attack Bonus  </div>
                     <div class="box" style="text-align: center;" id="spell-atk">  0  </div>
+                </div>
+            </div>
+
+            <!-- Spell List Button & Modal -->
+            <div style="margin: 10px 5px;">
+                <button id="open-spell-list-btn" onclick="openSpellListModal()">📖 Full Spell List</button>
+            </div>
+
+            <div id="spell-list-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+                background:rgba(0,0,0,0.5); z-index:1000; overflow-y:auto;">
+                <div style="background:white; margin:40px auto; padding:20px; max-width:800px;
+                    border:2px solid black; border-radius:4px; position:relative;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                        <h2 style="margin:0;">Full Spell List</h2>
+                        <button onclick="closeSpellListModal()"
+                            style="font-size:20px; cursor:pointer; border:1px solid black; padding:2px 8px;">✕</button>
+                    </div>
+
+                    <div style="margin-bottom:12px;">
+                        <input id="spell-search" type="text" placeholder="Search spells..."
+                            oninput="filterSpells()"
+                            style="width:100%; padding:6px; box-sizing:border-box; border:1px solid black; font-size:14px;">
+                    </div>
+
+                    <div id="spell-modal-body"></div>
                 </div>
             </div>
 

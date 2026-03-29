@@ -3,9 +3,9 @@ const SUBCLASS_DATA   = {};
 const BACKGROUND_DATA = {};
 const RACE_DATA       = {};
 const EXTERNAL_LISTS  = {};
-
+ 
 /* Data Loading  */
-
+ 
 async function loadCollection(apiPath, store, keyFn) {
     const res   = await fetch(apiPath);
     const files = await res.json();
@@ -16,7 +16,7 @@ async function loadCollection(apiPath, store, keyFn) {
         store[key]    = data;
     }));
 }
-
+ 
 async function loadAllSubclasses() {
     const res   = await fetch('/api/subclasses');
     const files = await res.json();
@@ -28,13 +28,20 @@ async function loadAllSubclasses() {
         SUBCLASS_DATA[classKey].push(data);
     }));
 }
-
+ 
 async function loadAllExternalLists() {
     const res   = await fetch('/api/external_lists');
     const files = await res.json();
     await Promise.all(files.map(async fileName => {
         const fileRes = await fetch(`/static_json/external_lists/${fileName}.json`);
         const data    = await fileRes.json();
+ 
+        // Spell lists have a `spells` property instead of `options`
+        if (data && data.spells) {
+            EXTERNAL_LISTS[data.name] = data;
+            return;
+        }
+ 
         if (Array.isArray(data)) {
             data.forEach(entry => { EXTERNAL_LISTS[entry.name] = entry.options; });
         } else {
@@ -42,39 +49,31 @@ async function loadAllExternalLists() {
         }
     }));
 }
-
-
+ 
+ 
 /* Race and Background Functions  */
-
+ 
 let currentPopupField = null;
-
+ 
 const overlay     = document.getElementById('popup-overlay');
 const popupTitle  = document.getElementById('popup-title');
 const popupList   = document.getElementById('popup-list');
 const popupDetail = document.getElementById('popup-detail');
 const popupClose  = document.getElementById('popup-close');
 const confirmBtn  = document.getElementById('popup-confirm');
-
+ 
 const grantedProficiencies = {
     race:       { fixed: new Set(), chosen: new Set() },
     background: { fixed: new Set(), chosen: new Set() }
 };
-
+ 
 let pendingSelection = null;
-
-/**
- * Unified select-wiring that also reads already-fixed (non-select) values
- * so those are excluded from the choosable options — preventing duplicates.
- *
- * @param {Element} container
- * @param {string}  itemId
- * @param {'lang'|'tool'} type
- */
+ 
 function wireSelects(container, itemId, type) {
     const selectClass = `${type}-select`;
     const fixedClass  = `${type}-fixed`;
     const selects = [...container.querySelectorAll(`.${selectClass}[data-item-id="${itemId}"]`)];
-
+ 
     function sync() {
         const fixedValues = new Set(
             [...container.querySelectorAll(`.${fixedClass}`)].map(el => el.textContent.trim())
@@ -83,38 +82,36 @@ function wireSelects(container, itemId, type) {
             ...fixedValues,
             ...selects.map(s => s.value).filter(v => v !== '— choose —')
         ]);
-
+ 
         selects.forEach(sel => {
             [...sel.options].forEach(opt => {
                 if (opt.value === '— choose —') return;
-                // Reset to false first, then selectively disable duplicates
-                // enforceGrantedProficiencies will add fixed-grant blocking on top afterward
                 opt.disabled = chosen.has(opt.value) && sel.value !== opt.value;
             });
         });
     }
-
+ 
     selects.forEach(sel => sel.addEventListener('change', sync));
     return sync;
 }
-
+ 
 function rebuildGrantedProficiencies() {
     grantedProficiencies.race.fixed.clear();
     grantedProficiencies.race.chosen.clear();
     grantedProficiencies.background.fixed.clear();
     grantedProficiencies.background.chosen.clear();
-
+ 
     const raceId   = document.getElementById('race').value;
     const raceData = Object.values(RACE_DATA).find(r => r.id == raceId);
     if (raceData) collectGrantedFromItem(raceData, 'race');
-
+ 
     const bgId   = document.getElementById('background').value;
     const bgData = Object.values(BACKGROUND_DATA).find(b => b.id == bgId);
     if (bgData) collectGrantedFromItem(bgData, 'background');
-
+ 
     const raceContent = document.querySelector('#race-info-panel .info-panel-content');
     const bgContent   = document.querySelector('#background-info-panel .info-panel-content');
-
+ 
     if (raceContent) {
         raceContent.querySelectorAll('input:checked').forEach(cb => {
             if (cb.value) grantedProficiencies.race.chosen.add(cb.value);
@@ -132,7 +129,7 @@ function rebuildGrantedProficiencies() {
         });
     }
 }
-
+ 
 function collectGrantedFromItem(item, source) {
     const target = grantedProficiencies[source].fixed;
     (item.features || []).forEach(f => {
@@ -144,18 +141,18 @@ function collectGrantedFromItem(item, source) {
         });
     });
 }
-
+ 
 function enforceGrantedProficiencies(container, ownSource) {
     const otherChosen = new Set();
     const allFixed    = new Set();
-
+ 
     Object.entries(grantedProficiencies).forEach(([source, { fixed, chosen }]) => {
         fixed.forEach(v => allFixed.add(v));
         if (source !== ownSource) chosen.forEach(v => otherChosen.add(v));
     });
-
+ 
     const blocked = new Set([...allFixed, ...otherChosen]);
-
+ 
     container.querySelectorAll('.external-choice-list input').forEach(cb => {
         if (blocked.has(cb.value)) {
             cb.checked  = false;
@@ -166,24 +163,35 @@ function enforceGrantedProficiencies(container, ownSource) {
             cb.closest('label')?.classList.remove('proficiency-granted');
         }
     });
-
+ 
     container.querySelectorAll('.lang-select, .tool-select').forEach(sel => {
         [...sel.options].forEach(opt => {
             if (opt.value === '— choose —') return;
-            if (blocked.has(opt.value)) opt.disabled = true; // ← additive only, never re-enables
+            if (blocked.has(opt.value)) opt.disabled = true;
         });
         if (blocked.has(sel.value)) sel.value = '— choose —';
     });
 }
-
+ 
+function filterSpellList(spellList, options) {
+    const [levelKey, classFilter] = options;
+    const spellsAtLevel = spellList.spells[levelKey];
+ 
+    if (!spellsAtLevel) return [];
+ 
+    return Object.entries(spellsAtLevel)
+        .filter(([name, spell]) => spell.classes.includes(classFilter))
+        .map(([name, spell]) => ({ name, ...spell }));
+}
+ 
 function buildLangProfHTML(langProf, itemId) {
     if (!langProf || langProf.length === 0) return '<span>—</span>';
-
+ 
     return langProf.map((entry, i) => {
         if (entry.type === 'fixed') {
             return `<span class="lang-fixed">${entry.value}</span>`;
         }
-
+ 
         const langData = EXTERNAL_LISTS['languages'] ?? [];
         const standard = EXTERNAL_LISTS['standard_languages']
             ?? langData.find(g => g.name === 'standard_languages')?.options ?? [];
@@ -192,38 +200,38 @@ function buildLangProfHTML(langProf, itemId) {
         const options  = entry.type === 'standard' ? standard
                        : entry.type === 'exotic'   ? exotic
                        : [...standard, ...exotic];
-
+ 
         const optionHTML = ['— choose —', ...options]
             .map(l => `<option value="${l}">${l}</option>`)
             .join('');
-
+ 
         return `<select id="lang_${itemId}_${i}" class="lang-select" data-item-id="${itemId}" data-index="${i}">
                     ${optionHTML}
                 </select>`;
     }).join(' ');
 }
-
+ 
 function buildToolProfHTML(toolProf, itemId) {
     if (!toolProf || toolProf.length === 0) return '<span>—</span>';
-
+ 
     return toolProf.map((entry, i) => {
         if (entry.type === 'fixed') {
             return `<span class="tool-fixed">${entry.value}</span>`;
         }
-
+ 
         const options    = EXTERNAL_LISTS[entry.type] ?? [];
         const optionHTML = ['— choose —', ...options]
             .map(t => `<option value="${t}">${t}</option>`)
             .join('');
-
+ 
         return `<select id="tool_${itemId}_${i}" class="tool-select" data-item-id="${itemId}" data-index="${i}">
                     ${optionHTML}
                 </select>`;
     }).join(' ');
 }
-
-/*  Weapons */
-
+ 
+/* Weapons */
+ 
 function collectWeaponsUnderKey(node, filterKey) {
     const results = new Set();
     function recurse(n) {
@@ -237,7 +245,7 @@ function collectWeaponsUnderKey(node, filterKey) {
     recurse(node);
     return results;
 }
-
+ 
 function collectAllLeaves(node, results = new Set()) {
     if (typeof node === 'string')            { results.add(node); return results; }
     if (Array.isArray(node))                 { node.forEach(c => collectAllLeaves(c, results)); return results; }
@@ -246,7 +254,7 @@ function collectAllLeaves(node, results = new Set()) {
     }
     return results;
 }
-
+ 
 function resolveWeaponOptions(options) {
     const weaponsData = EXTERNAL_LISTS['weapons'] ?? [];
     if (options === 'any') {
@@ -262,7 +270,7 @@ function resolveWeaponOptions(options) {
     }
     return [];
 }
-
+ 
 function resolveEquipmentOptionLabel(optionStr) {
     const map = {
         'simple weapon':             ['simple_weapons'],
@@ -274,7 +282,7 @@ function resolveEquipmentOptionLabel(optionStr) {
     };
     return map[optionStr.trim().toLowerCase()] ?? null;
 }
-
+ 
 function buildEquipmentOptionHTML(part, uid, rowIndex, slotIndex) {
     if (typeof part === 'object' && part !== null && part.choice) {
         const allWeapons = collectWeaponsUnderKey(EXTERNAL_LISTS['weapons'] ?? [], part.choice);
@@ -283,7 +291,7 @@ function buildEquipmentOptionHTML(part, uid, rowIndex, slotIndex) {
         const optionsHTML = ['— choose —', ...sorted].map(w => `<option value="${w}">${w}</option>`).join('');
         return `<span>${part.text}: <select id="equip_weapon_${uid}_${rowIndex}_${slotIndex}" class="equipment-weapon-select">${optionsHTML}</select></span>`;
     }
-
+ 
     if (typeof part === 'string') {
         const categories = resolveEquipmentOptionLabel(part);
         if (!categories) return `<span>${part}</span>`;
@@ -295,22 +303,22 @@ function buildEquipmentOptionHTML(part, uid, rowIndex, slotIndex) {
         const optionsHTML = ['— choose —', ...sorted].map(w => `<option value="${w}">${w}</option>`).join('');
         return `<span>${part}: <select id="equip_weapon_${uid}_${rowIndex}_${slotIndex}" class="equipment-weapon-select">${optionsHTML}</select></span>`;
     }
-
+ 
     return `<span>${part}</span>`;
 }
-
+ 
 function renderEquipment(box, uid, savedEquipment = {}) {
     const selectedClass = box.querySelector('.class-select').value;
     const data          = CLASS_DATA[selectedClass];
     const container     = box.querySelector('.equipment-container');
     container.innerHTML = '';
     if (!data.equipment) return;
-
+ 
     data.equipment.forEach((row, i) => {
         const block     = document.createElement('div');
         const radioName = `equip_${uid}_${i}`;
         block.classList.add('feature-block');
-
+ 
         if (row.options.length === 1) {
             const option = row.options[0];
             const div    = document.createElement('div');
@@ -343,17 +351,17 @@ function renderEquipment(box, uid, savedEquipment = {}) {
         container.appendChild(block);
     });
 }
-
+ 
 /* Popup */
-
+ 
 function openPopup(field) {
     currentPopupField = field;
     pendingSelection  = null;
     confirmBtn.disabled = true;
-
+ 
     const dataset  = field === 'race' ? Object.values(RACE_DATA) : Object.values(BACKGROUND_DATA);
     popupTitle.textContent = field === 'race' ? 'Choose a Race' : 'Choose a Background';
-
+ 
     popupList.innerHTML = '';
     dataset.forEach(item => {
         const btn      = document.createElement('button');
@@ -361,14 +369,14 @@ function openPopup(field) {
         btn.type       = 'button';
         btn.classList.add('popup-list-item');
         btn.textContent = item.name;
-
+ 
         if (hiddenVal === item.id) {
             btn.classList.add('active');
             showDetail(item);
             pendingSelection    = item;
             confirmBtn.disabled = false;
         }
-
+ 
         btn.addEventListener('click', () => {
             popupList.querySelectorAll('.popup-list-item').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
@@ -376,49 +384,47 @@ function openPopup(field) {
             pendingSelection    = item;
             confirmBtn.disabled = false;
         });
-
+ 
         popupList.appendChild(btn);
     });
-
+ 
     if (!pendingSelection) popupDetail.innerHTML = '<p class="popup-placeholder">Select an option to see details.</p>';
     overlay.classList.remove('hidden');
 }
-
+ 
 function showDetail(item) {
     popupDetail.replaceChildren(buildInfoElement(item));
     if (item.lang_prof) wireSelects(popupDetail, item.id, 'lang')();
     if (item.tool_prof) wireSelects(popupDetail, item.id, 'tool')();
     enforceGrantedProficiencies(popupDetail);
-    // Choices are finalised in the sidebar after confirming, so disable all here
     popupDetail.querySelectorAll('input, select').forEach(el => el.disabled = true);
 }
-
+ 
 function confirmSelection() {
     if (!pendingSelection || !currentPopupField) return;
-
+ 
     document.getElementById(currentPopupField).value = pendingSelection.id;
     const btn = document.getElementById(`${currentPopupField}-btn`);
     btn.textContent = `${pendingSelection.name} ▾`;
     btn.classList.add('has-value');
-
+ 
     if (currentPopupField === 'background') {
         backgroundSkills.clear();
         (pendingSelection.skill_prof || [])
             .filter(s => s.prof)
             .forEach(s => backgroundSkills.add(s.skill));
-
+ 
         document.querySelectorAll('.character-class-box').forEach(box => {
             renderClassBox(box, box.dataset.uid);
         });
-
-        // Persist language/tool selections from the popup
+ 
         pendingSelection._chosenLanguages = [
             ...popupDetail.querySelectorAll('.lang-select')
         ].map(sel => sel.value);
         (pendingSelection.lang_prof || [])
             .filter(e => e.type === 'fixed')
             .forEach(e => pendingSelection._chosenLanguages.push(e.value));
-
+ 
         pendingSelection._chosenTools = [
             ...popupDetail.querySelectorAll('.tool-select')
         ].map(sel => sel.value);
@@ -426,10 +432,10 @@ function confirmSelection() {
             .filter(e => e.type === 'fixed')
             .forEach(e => pendingSelection._chosenTools.push(e.value));
     }
-
+ 
     renderSidebarPanel(currentPopupField, pendingSelection);
     overlay.classList.add('hidden');
-
+ 
     rebuildGrantedProficiencies();
     const raceContent = document.querySelector('#race-info-panel .info-panel-content');
     const bgContent   = document.querySelector('#background-info-panel .info-panel-content');
@@ -437,21 +443,21 @@ function confirmSelection() {
     if (bgContent)   enforceGrantedProficiencies(bgContent, 'background');
     enforceGrantedProficiencies(document.body);
 }
-
+ 
 function buildInfoElement(item) {
     const isBackground = 'skill_prof' in item;
     const root = document.createElement('div');
-
+ 
     const title = document.createElement('h2');
     title.className   = 'popup-detail-title';
     title.textContent = item.name;
     root.appendChild(title);
-
+ 
     const desc = document.createElement('p');
     desc.className   = 'popup-detail-desc';
     desc.innerHTML   = item.description.replace(/\n/g, '<br><br>');
     root.appendChild(desc);
-
+ 
     if (isBackground) {
         const skills = item.skill_prof
             ? item.skill_prof.filter(s => s.prof).map(s => s.skill).join(', ')
@@ -465,27 +471,26 @@ function buildInfoElement(item) {
         `;
         root.appendChild(meta);
     }
-
+ 
     const featLabel       = document.createElement('div');
     featLabel.className   = 'popup-features-label';
     featLabel.textContent = 'Features';
     root.appendChild(featLabel);
-
+ 
     const featList      = document.createElement('div');
     featList.className  = 'popup-features-list';
     item.features.forEach(f => featList.appendChild(buildFeature(0, f, item.id, featList)));
     root.appendChild(featList);
-
+ 
     return root;
 }
-
+ 
 function renderSidebarPanel(field, item) {
     const panelId = field === 'race' ? 'race-info-panel' : 'background-info-panel';
     const panel   = document.getElementById(panelId);
     const content = panel.querySelector('.info-panel-content');
     content.replaceChildren(buildInfoElement(item));
-
-    // 1. Restore saved values first
+ 
     if (item._chosenLanguages) {
         content.querySelectorAll('.lang-select').forEach((sel, i) => {
             const val = item._chosenLanguages[i];
@@ -504,18 +509,16 @@ function renderSidebarPanel(field, item) {
             }
         });
     }
-
-    // 2. Wire selects and run initial sync
+ 
     const syncLang = item.lang_prof ? wireSelects(content, item.id, 'lang') : null;
     const syncTool = item.tool_prof ? wireSelects(content, item.id, 'tool') : null;
     if (syncLang) syncLang();
     if (syncTool) syncTool();
-
-    // 3. enforceGrantedProficiencies LAST — must come after sync so it wins
+ 
     enforceGrantedProficiencies(content, field);
-
+ 
     panel.classList.remove('hidden');
-
+ 
     content.querySelectorAll('input, select').forEach(el => {
         el.addEventListener('change', () => {
             const wrapper = el.closest('.external-choice-list');
@@ -528,10 +531,9 @@ function renderSidebarPanel(field, item) {
                 });
                 syncExternalChoicesAcrossBoxes(wrapper.dataset.listName);
             }
-
+ 
             setTimeout(() => {
                 rebuildGrantedProficiencies();
-                // sync first, enforce last — same rule applies in the change handler
                 if (syncLang) syncLang();
                 if (syncTool) syncTool();
                 const raceContent = document.querySelector('#race-info-panel .info-panel-content');
@@ -542,27 +544,27 @@ function renderSidebarPanel(field, item) {
         });
     });
 }
-
+ 
 function closePopup() {
     overlay.classList.add('hidden');
     currentPopupField = null;
     pendingSelection  = null;
 }
-
+ 
 document.getElementById('race-btn').addEventListener('click',       () => openPopup('race'));
 document.getElementById('background-btn').addEventListener('click', () => openPopup('background'));
 popupClose.addEventListener('click',  closePopup);
 confirmBtn.addEventListener('click',  confirmSelection);
 overlay.addEventListener('click',     e => { if (e.target === overlay) closePopup(); });
 document.addEventListener('keydown',  e => { if (e.key === 'Escape') closePopup(); });
-
+ 
 /* Class Functions */
-
+ 
 let classCount       = 0;
 let boxUid           = 0;
 let backgroundSkills = new Set();
 let primaryClassUid  = null;
-
+ 
 function populateClassSelects() {
     document.querySelectorAll('.class-select').forEach(select => {
         const current    = select.value;
@@ -572,25 +574,25 @@ function populateClassSelects() {
         if (CLASS_DATA[current]) select.value = current;
     });
 }
-
+ 
 function enforceSkillLimit(skillList, max) {
     const checked = skillList.querySelectorAll('.skill-cb:checked:not(:disabled)');
     skillList.querySelectorAll('.skill-cb:not(:disabled)').forEach(cb => {
         cb.disabled = !cb.checked && checked.length >= max;
     });
 }
-
+ 
 function enforceExternalChoiceLimit(wrapper, radioName, max) {
     const checked = wrapper.querySelectorAll(`input[name="${radioName}"]:checked`);
     wrapper.querySelectorAll(`input[name="${radioName}"]:not(:checked)`).forEach(cb => {
         cb.disabled = checked.length >= max;
     });
 }
-
+ 
 function syncExternalChoicesAcrossBoxes(listName) {
     if (!listName) return;
     const allWrappers = document.querySelectorAll(`.external-choice-list[data-list-name="${listName}"]`);
-
+ 
     allWrappers.forEach(currentWrapper => {
         const radioName      = currentWrapper.dataset.radioName;
         const max            = parseInt(currentWrapper.dataset.numChoices || '1');
@@ -600,24 +602,130 @@ function syncExternalChoicesAcrossBoxes(listName) {
             if (other === currentWrapper) return;
             other.querySelectorAll('input:checked').forEach(cb => checkedElsewhere.add(cb.value));
         });
-
+ 
         currentWrapper.querySelectorAll('input:not(:checked)').forEach(cb => {
             cb.disabled = checkedElsewhere.has(cb.value) || checkedHere >= max;
         });
     });
 }
-
+ 
+/* Spell Selector */
+ 
+function buildSpellSelectorElement(feature, uid, level) {
+    const numChoices = parseInt(feature.numChoices ?? 1);
+    const radioName  = `extchoice_lvl${level}_uid${uid}`;
+    const inputType  = numChoices === 1 ? 'radio' : 'checkbox';
+ 
+    const spellListData = EXTERNAL_LISTS[feature.external_list];
+    if (!spellListData || !spellListData.spells) return null;
+ 
+    const spells = filterSpellList(spellListData, feature.options);
+    if (!spells.length) {
+        const empty = document.createElement('div');
+        empty.style.cssText = 'font-style:italic;color:#555';
+        empty.textContent   = 'No spells match the specified filters.';
+        return empty;
+    }
+ 
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('spell-selector');
+    wrapper.dataset.radioName  = radioName;
+    wrapper.dataset.numChoices = numChoices;
+    wrapper.dataset.listName   = feature.external_list;
+ 
+    const controls = document.createElement('div');
+    controls.classList.add('spell-selector-controls');
+ 
+    const search = document.createElement('input');
+    search.type        = 'text';
+    search.placeholder = 'Search spells…';
+    search.classList.add('spell-search');
+ 
+    const countLabel = document.createElement('span');
+    countLabel.classList.add('spell-selector-count');
+    countLabel.textContent = `0 / ${numChoices} selected`;
+ 
+    controls.append(search, countLabel);
+    wrapper.appendChild(controls);
+ 
+    const list = document.createElement('ul');
+    list.classList.add('spell-list-items');
+ 
+    spells.forEach(spell => {
+        const li = document.createElement('li');
+        li.classList.add('spell-list-item');
+        li.dataset.spellName = spell.name.toLowerCase();
+ 
+        const label = document.createElement('label');
+        label.classList.add('spell-list-label');
+ 
+        const input = document.createElement('input');
+        input.type  = inputType;
+        input.name  = radioName;
+        input.value = spell.name;
+ 
+        const nameSpan = document.createElement('span');
+        nameSpan.classList.add('spell-item-name');
+        nameSpan.textContent = spell.name;
+ 
+        label.append(input, nameSpan);
+ 
+        if (spell.ritual === 'true') {
+            const ritualBadge = document.createElement('span');
+            ritualBadge.classList.add('spell-ritual-badge');
+            ritualBadge.textContent = 'ritual';
+            label.appendChild(ritualBadge);
+        }
+ 
+        if (spell.link) {
+            const link = document.createElement('a');
+            link.href   = spell.link;
+            link.target = '_blank';
+            link.classList.add('spell-link');
+            link.textContent = '↗';
+            label.appendChild(link);
+        }
+ 
+        li.appendChild(label);
+        list.appendChild(li);
+    });
+ 
+    wrapper.appendChild(list);
+ 
+    function applyFilters() {
+        const q = search.value.toLowerCase();
+        list.querySelectorAll('.spell-list-item').forEach(li => {
+            li.style.display = (!q || li.dataset.spellName.includes(q)) ? '' : 'none';
+        });
+    }
+ 
+    function updateCount() {
+        const checked = wrapper.querySelectorAll(`input[name="${radioName}"]:checked`).length;
+        countLabel.textContent = `${checked} / ${numChoices} selected`;
+        countLabel.classList.toggle('spell-selector-count--done', checked >= numChoices);
+        if (numChoices > 1) enforceExternalChoiceLimit(wrapper, radioName, numChoices);
+        syncExternalChoicesAcrossBoxes(feature.external_list);
+    }
+ 
+    search.addEventListener('input', applyFilters);
+    list.querySelectorAll('input').forEach(inp => inp.addEventListener('change', updateCount));
+ 
+    return wrapper;
+}
+ 
+/* Feature Builder */
+ 
 function buildFeature(level, feature, uid, featureContainer = null) {
     const block     = document.createElement('div');
     const isOptional = feature.optional === true || feature.optional === 'true';
     block.classList.add('feature-block');
     block.dataset.featureName = feature.feature_name;
-
+ 
     const title       = document.createElement('div');
     title.classList.add('feature-title');
     title.textContent = feature.feature_name;
     block.appendChild(title);
-
+ 
     if (isOptional) {
         const toggle   = document.createElement('label');
         const checkbox = document.createElement('input');
@@ -627,21 +735,21 @@ function buildFeature(level, feature, uid, featureContainer = null) {
         toggle.appendChild(checkbox);
         toggle.append(' Include this optional feature?');
         block.appendChild(toggle);
-
+ 
         const content = document.createElement('div');
         content.classList.add('optional-content');
         content.style.display = 'none';
         block.appendChild(content);
-
+ 
         checkbox.addEventListener('change', () => {
             content.style.display = checkbox.checked ? 'block' : 'none';
         });
-
+ 
         block._contentTarget = content;
     }
-
+ 
     const target = block._contentTarget ?? block;
-
+ 
     if (feature.feature_type === 'passive' || feature.feature_type === 'modifier') {
         const desc = document.createElement('div');
         desc.textContent = feature.description ?? '';
@@ -656,7 +764,7 @@ function buildFeature(level, feature, uid, featureContainer = null) {
         row.classList.add('asi-row');
         row.innerHTML = `<span> +1</span><select>${attrs}</select><select>${attrs}</select>`;
         target.appendChild(row);
-
+ 
     } else if (feature.feature_type === 'subclass') {
         if (feature.subclassFeatures?.length) {
             feature.subclassFeatures.forEach(sf => {
@@ -674,28 +782,28 @@ function buildFeature(level, feature, uid, featureContainer = null) {
             note.textContent   = 'Feature determined by your subclass choice.';
             target.appendChild(note);
         }
-
+ 
     } else if (feature.feature_type === 'upgrade') {
         if (featureContainer) {
             const prior = [...featureContainer.querySelectorAll('.feature-block')]
                 .find(b => b.dataset.featureName === feature.feature_to_upgrade);
-
+ 
             if (prior) {
                 const oldTitle = prior.querySelector('.feature-title');
                 if (oldTitle) oldTitle.innerHTML += ' <span class="upgrade-badge">↑ Upgraded</span>';
-
+ 
                 const newMax = feature.additional_choices
                     ? parseInt(prior.dataset.numChoices || '1') + feature.additional_choices
                     : feature.new_value ? parseInt(feature.new_value) : null;
-
+ 
                 if (newMax !== null) {
                     const listName  = prior.dataset.externalList;
                     const radioName = prior.dataset.radioName;
                     prior.dataset.numChoices = newMax;
-
+ 
                     const prompt = prior.querySelector('.external-choice-prompt');
                     if (prompt) prompt.textContent = `Choose ${newMax}:`;
-
+ 
                     const wrapper = prior.querySelector('.external-choice-list');
                     if (wrapper) {
                         wrapper.dataset.numChoices = newMax;
@@ -711,8 +819,17 @@ function buildFeature(level, feature, uid, featureContainer = null) {
                             });
                         });
                     }
+ 
+                    // Also update spell selector count if present
+                    const spellSelector = prior.querySelector('.spell-selector');
+                    if (spellSelector) {
+                        spellSelector.dataset.numChoices = newMax;
+                        const countLabel = spellSelector.querySelector('.spell-selector-count');
+                        const checked = spellSelector.querySelectorAll('input:checked').length;
+                        if (countLabel) countLabel.textContent = `${checked} / ${newMax} selected`;
+                    }
                 }
-
+ 
                 const upgradeNote = document.createElement('div');
                 upgradeNote.classList.add('upgrade-note');
                 upgradeNote.textContent = feature.description
@@ -721,16 +838,16 @@ function buildFeature(level, feature, uid, featureContainer = null) {
                 prior.appendChild(upgradeNote);
             }
         }
-
+ 
         const ref = document.createElement('div');
         ref.style.cssText = 'font-style:italic;color:#555';
         ref.textContent   = `Upgrades "${feature.feature_to_upgrade}" — see above.`;
         target.appendChild(ref);
     }
-
+ 
     const subtypes = Array.isArray(feature.subtype) ? feature.subtype
                    : feature.subtype ? [feature.subtype] : [];
-
+ 
     subtypes.forEach(subtype => {
         switch (subtype) {
             case 'resource': {
@@ -742,14 +859,14 @@ function buildFeature(level, feature, uid, featureContainer = null) {
                 }
                 break;
             }
-
+ 
             case 'choice': {
                 const numChoices = feature.numChoices ?? 1;
                 const radioName  = `feat_lvl${level}_uid${uid}_choice`;
                 const prompt     = document.createElement('div');
                 prompt.textContent = numChoices > 1 ? `Choose ${numChoices}:` : 'Choose one:';
                 target.appendChild(prompt);
-
+ 
                 const options = document.createElement('div');
                 options.classList.add('feature-options');
                 (feature.options ?? []).forEach(opt => {
@@ -760,22 +877,22 @@ function buildFeature(level, feature, uid, featureContainer = null) {
                 target.appendChild(options);
                 break;
             }
-
+ 
             case 'external_choice': {
                 const numChoices = feature.numChoices ?? 1;
                 const radioName  = `extchoice_lvl${level}_uid${uid}`;
                 block.dataset.externalList = feature.external_list;
                 block.dataset.radioName    = radioName;
                 block.dataset.numChoices   = numChoices;
-
+ 
                 const prompt = document.createElement('div');
                 prompt.classList.add('external-choice-prompt');
                 prompt.textContent = `Choose ${numChoices}:`;
                 target.appendChild(prompt);
-
+ 
                 if (feature.external_list === 'weapons') {
                     const rawOptions = feature.options;
-
+ 
                     if (typeof rawOptions === 'string' && rawOptions !== 'any') {
                         const fixed = document.createElement('div');
                         fixed.classList.add('weapon-fixed');
@@ -783,11 +900,11 @@ function buildFeature(level, feature, uid, featureContainer = null) {
                         target.appendChild(fixed);
                         break;
                     }
-
+ 
                     let weaponNames = rawOptions === 'any'
                         ? (() => { const all = new Set(); collectAllLeaves(EXTERNAL_LISTS['weapons'] ?? [], all); return [...all].sort(); })()
                         : resolveWeaponOptions(rawOptions) ?? [];
-
+ 
                     if (!weaponNames.length) {
                         const empty = document.createElement('div');
                         empty.style.cssText = 'font-style:italic;color:#555';
@@ -795,7 +912,7 @@ function buildFeature(level, feature, uid, featureContainer = null) {
                         target.appendChild(empty);
                         break;
                     }
-
+ 
                     for (let i = 0; i < numChoices; i++) {
                         const sel = document.createElement('select');
                         sel.classList.add('weapon-select');
@@ -803,7 +920,7 @@ function buildFeature(level, feature, uid, featureContainer = null) {
                         sel.dataset.index = i;
                         sel.innerHTML = `<option value="">— choose a weapon —</option>` +
                             weaponNames.map(n => `<option value="${n}">${n}</option>`).join('');
-
+ 
                         sel.addEventListener('change', () => {
                             const siblings = target.querySelectorAll('.weapon-select');
                             const chosen   = new Set([...siblings].map(s => s.value).filter(v => v));
@@ -818,23 +935,31 @@ function buildFeature(level, feature, uid, featureContainer = null) {
                     }
                     break;
                 }
-
+ 
+                if (EXTERNAL_LISTS[feature.external_list]?.spells) {
+                    const spellSelector = buildSpellSelectorElement(feature, uid, level);
+                    if (spellSelector) {
+                        target.appendChild(spellSelector);
+                        break;
+                    }
+                }
+ 
                 const rawList = Array.isArray(feature.options)
                     ? feature.options.map(o => typeof o === 'string' ? { name: o } : o)
                     : (EXTERNAL_LISTS[feature.external_list] || []);
-
+ 
                 const list = rawList.flatMap(o =>
                     Array.isArray(o.options)
                         ? o.options.map(inner => typeof inner === 'string' ? { name: inner } : inner)
                         : [o]
                 );
-
+ 
                 const optionsWrapper = document.createElement('div');
                 optionsWrapper.classList.add('external-choice-list');
                 optionsWrapper.dataset.listName   = feature.external_list;
                 optionsWrapper.dataset.radioName  = radioName;
                 optionsWrapper.dataset.numChoices = numChoices;
-
+ 
                 const inputType = numChoices === 1 ? 'radio' : 'checkbox';
                 list.forEach(option => {
                     const label = document.createElement('label');
@@ -849,18 +974,18 @@ function buildFeature(level, feature, uid, featureContainer = null) {
                     }
                     optionsWrapper.appendChild(label);
                 });
-
+ 
                 optionsWrapper.querySelectorAll(`input[name="${radioName}"]`).forEach(cb => {
                     cb.addEventListener('change', () => {
                         if (numChoices > 1) enforceExternalChoiceLimit(optionsWrapper, radioName, numChoices);
                         syncExternalChoicesAcrossBoxes(feature.external_list);
                     });
                 });
-
+ 
                 target.appendChild(optionsWrapper);
                 break;
             }
-
+ 
             case 'save_dc': {
                 if (feature.save_dc != null) {
                     const dc = document.createElement('div');
@@ -870,7 +995,7 @@ function buildFeature(level, feature, uid, featureContainer = null) {
                 }
                 break;
             }
-
+ 
             case 'spell_list_addition': {
                 if (feature.spells_to_add) {
                     const spellDiv = document.createElement('div');
@@ -882,32 +1007,31 @@ function buildFeature(level, feature, uid, featureContainer = null) {
                 }
                 break;
             }
-
+ 
             case 'prof_addition':
                 break;
         }
     });
-
+ 
     return block;
 }
-
+ 
 function renderFeaturesOnly(box, uid) {
     const selectedClass = box.querySelector('.class-select').value;
     const selectedLevel = Math.min(Math.max(parseInt(box.querySelector('.level-input').value) || 1, 1), 20);
     const data          = CLASS_DATA[selectedClass];
     const selectedSub   = box.querySelector('.subclass-select').value;
     const subData       = (SUBCLASS_DATA[selectedClass] || []).find(s => s.name === selectedSub) || null;
-
+ 
     const subByLevel = {};
     if (subData) {
         Object.entries(subData.features).forEach(([lvl, f]) => {
             subByLevel[parseInt(lvl)] = Array.isArray(f) ? f : [f];
         });
     }
-
+ 
     const featureContainer = box.querySelector('.feature-container');
-
-    // Save current input state
+ 
     const savedState = {};
     featureContainer.querySelectorAll('input, select').forEach(el => {
         let key;
@@ -921,10 +1045,10 @@ function renderFeaturesOnly(box, uid) {
             savedState[key] = el.value;
         }
     });
-
+ 
     featureContainer.innerHTML = '';
     let anyFeature = false;
-
+ 
     for (let lvl = 1; lvl <= selectedLevel; lvl++) {
         const levelGroup  = document.createElement('div');
         const levelHeader = document.createElement('div');
@@ -932,7 +1056,7 @@ function renderFeaturesOnly(box, uid) {
         levelHeader.classList.add('level-header');
         levelHeader.textContent = `Level ${lvl}`;
         levelGroup.appendChild(levelHeader);
-
+ 
         if (data.features[lvl]) {
             const feats = Array.isArray(data.features[lvl]) ? data.features[lvl] : [data.features[lvl]];
             feats.forEach(feat => {
@@ -952,15 +1076,14 @@ function renderFeaturesOnly(box, uid) {
         }
         featureContainer.appendChild(levelGroup);
     }
-
+ 
     if (!anyFeature) {
         const msg = document.createElement('div');
         msg.classList.add('no-features-msg');
         msg.textContent = 'No features at this level.';
         featureContainer.appendChild(msg);
     }
-
-    // Restore input state
+ 
     featureContainer.querySelectorAll('input, select').forEach(el => {
         let key;
         if (el.type === 'radio' || el.type === 'checkbox') {
@@ -973,7 +1096,7 @@ function renderFeaturesOnly(box, uid) {
             if (key in savedState) el.value = savedState[key];
         }
     });
-
+ 
     featureContainer.querySelectorAll('.optional-cb').forEach(cb => {
         const content = cb.closest('.feature-block')?.querySelector('.optional-content');
         if (content) content.style.display = cb.checked ? 'block' : 'none';
@@ -985,38 +1108,38 @@ function renderFeaturesOnly(box, uid) {
         syncExternalChoicesAcrossBoxes(wrapper.dataset.listName);
     });
 }
-
+ 
 function renderClassBox(box, uid) {
     const selectedClass  = box.querySelector('.class-select').value;
     const selectedLevel  = Math.min(Math.max(parseInt(box.querySelector('.level-input').value) || 1, 1), 20);
     const data           = CLASS_DATA[selectedClass];
     const subclassSelect = box.querySelector('.subclass-select');
     const prevSub        = subclassSelect.value;
-
+ 
     const available = SUBCLASS_DATA[selectedClass] || [];
     subclassSelect.innerHTML = available
         .sort((a, b) => a.name.localeCompare(b.name))
         .map(s => `<option value="${s.name}">${s.name}</option>`)
         .join('');
     if (available.find(s => s.name === prevSub)) subclassSelect.value = prevSub;
-
+ 
     const savedSkills = new Set();
     box.querySelectorAll('.skill-cb:checked:not([disabled])').forEach(cb => {
         savedSkills.add(cb.closest('label').textContent.trim());
     });
-
+ 
     const savedEquipment = {};
     box.querySelectorAll('.equipment-container input[type="radio"]:checked').forEach(radio => {
         savedEquipment[radio.name] = radio.value;
     });
-
+ 
     renderEquipment(box, uid, savedEquipment);
-
+ 
     const skillList  = box.querySelector('.skill-list');
     const skillLabel = box.querySelector('.skill-count-label');
     skillLabel.textContent = `Skills (pick ${data.numSkills}):`;
     skillList.innerHTML    = '';
-
+ 
     data.skill_prof.forEach(skill => {
         const fromBackground = backgroundSkills.has(skill);
         const label          = document.createElement('label');
@@ -1027,17 +1150,107 @@ function renderClassBox(box, uid) {
         }
         skillList.appendChild(label);
     });
-
+ 
     skillList.querySelectorAll('.skill-cb').forEach(cb => {
         cb.addEventListener('change', () => enforceSkillLimit(skillList, data.numSkills));
     });
     enforceSkillLimit(skillList, data.numSkills);
-
+ 
     renderFeaturesOnly(box, uid);
+}
+ 
+//Receive already made character from character sheet
+async function populateFromCharacter(char) {
+    // Name
+    document.getElementById('character-name').value = char.name ?? '';
+
+    // Race
+    if (char.race) {
+        const raceObj = Object.values(RACE_DATA).find(r => r.id === char.race.id);
+        if (raceObj) {
+            document.getElementById('race').value = raceObj.id;
+            const btn = document.getElementById('race-btn');
+            btn.textContent = `${raceObj.name} ▾`;
+            btn.classList.add('has-value');
+            renderSidebarPanel('race', raceObj);
+        }
+    }
+
+    // Background
+    if (char.background) {
+        const bgObj = Object.values(BACKGROUND_DATA).find(b => b.id === char.background.id);
+        if (bgObj) {
+            document.getElementById('background').value = bgObj.id;
+            const btn = document.getElementById('background-btn');
+            btn.textContent = `${bgObj.name} ▾`;
+            btn.classList.add('has-value');
+            backgroundSkills.clear();
+            (bgObj.skill_prof || []).filter(s => s.prof).forEach(s => backgroundSkills.add(s.skill));
+            renderSidebarPanel('background', bgObj);
+        }
+    }
+
+    // Classes
+    for (const cls of (char.classes ?? [])) {
+        document.getElementById('addClassBtn').click();
+        const boxes = document.querySelectorAll('.character-class-box');
+        const box = boxes[boxes.length - 1];
+
+        // Class
+        const classSelect = box.querySelector('.class-select');
+        if (CLASS_DATA[cls.name]) {
+            classSelect.value = cls.name;
+            classSelect.dispatchEvent(new Event('change'));
+        }
+
+        // Level
+        const levelInput = box.querySelector('.level-input');
+        levelInput.value = cls.level ?? 1;
+        levelInput.dispatchEvent(new Event('change'));
+
+        // Subclass
+        if (cls.subclass?.name) {
+            const subSelect = box.querySelector('.subclass-select');
+            if ([...subSelect.options].find(o => o.value === cls.subclass.name)) {
+                subSelect.value = cls.subclass.name;
+                subSelect.dispatchEvent(new Event('change'));
+            }
+        }
+
+        // Primary class checkbox
+        if (cls.decisions?.primaryClass) {
+            const cb = box.querySelector('.primary-class-cb');
+            cb.checked = true;
+            cb.dispatchEvent(new Event('change'));
+        }
+
+        // Skills
+        const classSkills = new Set(cls.skills ?? []);
+        box.querySelectorAll('.skill-cb:not(:disabled)').forEach(cb => {
+            cb.checked = classSkills.has(cb.parentElement.textContent.trim());
+        });
+
+        // Feature choices and equipment radios
+        const features = cls.decisions?.features ?? {};
+        Object.entries(features).forEach(([name, value]) => {
+            const input = box.querySelector(`input[name="${name}"][value="${value}"]`);
+            if (input) input.checked = true;
+        });
+
+        // ASI rows
+        const asiData = cls.decisions?.asi ?? [];
+        box.querySelectorAll('.asi-row').forEach((row, i) => {
+            if (!asiData[i]) return;
+            const selects = row.querySelectorAll('select');
+            (asiData[i].picks ?? []).forEach((pick, j) => {
+                if (selects[j]) selects[j].value = pick;
+            });
+        });
+    }
 }
 
 /* Init */
-
+ 
 async function init() {
     await Promise.all([
         loadCollection('/api/classes',     CLASS_DATA,      d => d.name),
@@ -1046,28 +1259,28 @@ async function init() {
         loadAllSubclasses(),
         loadAllExternalLists(),
     ]).catch(err => console.error('Init failed:', err));
-
+ 
     document.getElementById('addClassBtn').addEventListener('click', () => {
         classCount++;
         boxUid++;
         const uid      = boxUid;
         const template = document.getElementById('classTemplate');
         const clone    = template.content.cloneNode(true);
-
+ 
         clone.querySelector('.class-title').textContent = `Class ${classCount}`;
         clone.querySelector('.remove-btn').addEventListener('click', function () {
             this.closest('.character-class-box').remove();
         });
-
+ 
         const classSelect    = clone.querySelector('.class-select');
         classSelect.innerHTML = Object.keys(CLASS_DATA).sort()
             .map(name => `<option value="${name}">${name}</option>`)
             .join('');
-
+ 
         document.getElementById('classContainer').appendChild(clone);
         const box = document.getElementById('classContainer').lastElementChild;
         box.dataset.uid = uid;
-
+ 
         const primaryCb = box.querySelector('.primary-class-cb');
         primaryCb.addEventListener('change', () => {
             if (primaryCb.checked) {
@@ -1079,7 +1292,7 @@ async function init() {
                 primaryClassUid = null;
             }
         });
-
+ 
         box.querySelector('.class-select').addEventListener('change',   () => renderClassBox(box, uid));
         box.querySelector('.level-input').addEventListener('change',    () => {
             const input = box.querySelector('.level-input');
@@ -1087,11 +1300,18 @@ async function init() {
             renderClassBox(box, uid);
         });
         box.querySelector('.subclass-select').addEventListener('change', () => renderFeaturesOnly(box, uid));
-
+ 
         renderClassBox(box, uid);
     });
-}
 
+    const editId = new URLSearchParams(window.location.search).get('id');
+    if (editId) {
+        const res = await fetch(`/api/characters/${editId}`);
+        const char = await res.json();
+        await populateFromCharacter(char);
+    }
+}
+ 
 init();
 
 
