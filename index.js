@@ -14,7 +14,7 @@ app.use(express.json());
 
 const {MongoClient} = require("mongodb");
 const mongoose = require("mongoose");
-const mongoURL = "mongodb://localhost:27017";
+const mongoURL = "mongodb://ciancmonaghan_db_user:TOxkUCEJjQua0RXe@ac-0zx0xa0-shard-00-00.ywjbdxr.mongodb.net:27017,ac-0zx0xa0-shard-00-01.ywjbdxr.mongodb.net:27017,ac-0zx0xa0-shard-00-02.ywjbdxr.mongodb.net:27017/?ssl=true&replicaSet=atlas-2anpto-shard-0&authSource=admin&appName=blite-server";
 mongoose.connect(mongoURL)
   .then(() => {
     console.log('MongoDB connected successfully!');
