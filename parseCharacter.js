@@ -23,7 +23,7 @@ const {
     loadBackgroundTemplate,
 } = require('./templateLoader');
 
-const { applyClass, applyRace, applyBackground } = require('./applyAttachments');
+const { applyClass, applyRace, applyBackground, applyBaseStats } = require('./applyAttachments');
 const { computeAllDerived }                       = require('./computeDerived');
 
 const STAT_NAMES = [
@@ -45,7 +45,10 @@ function createBlankCharacter(name, alignment = 'Neutral') {
         prof_bonus: 2,
         saves:    STAT_NAMES.map(s => ({ stat: s, save: 0 })),
         armor_class: 10,
-        languages:  ['Common'],
+        languages:           ['Common'],
+        skill_proficiencies: [],
+        tool_proficiencies:  [],
+        item_proficiencies:  [],
         race:       null,
         background: null,
         classes:    [],
@@ -103,11 +106,15 @@ function parseCharacter(formData) {
         formData.alignment ?? 'Neutral',
     );
 
+    // ── Base stats ────────────────────────────────────────────────────────
+    // Must run before race so racial ASIs add on top of player-chosen values.
+    applyBaseStats(character, formData.stats ?? {});
+
     // ── Race ──────────────────────────────────────────────────────────────
     if (formData.race?.name) {
         try {
             const raceTemplate = loadRaceTemplate(formData.race.name);
-            applyRace(character, raceTemplate);
+            applyRace(character, raceTemplate, formData.race.decisions ?? {});
         } catch (e) {
             console.warn(`[parseCharacter] Race skipped — ${e.message}`);
         }
@@ -117,7 +124,7 @@ function parseCharacter(formData) {
     if (formData.background?.name) {
         try {
             const bgTemplate = loadBackgroundTemplate(formData.background.name);
-            applyBackground(character, bgTemplate);
+            applyBackground(character, bgTemplate, formData.background.decisions ?? {});
         } catch (e) {
             console.warn(`[parseCharacter] Background skipped — ${e.message}`);
         }

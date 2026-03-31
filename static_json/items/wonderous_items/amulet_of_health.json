@@ -22,18 +22,20 @@
         {
             "id": "con-score-set-19",
             "name": null,
+            "handler": "statSet",
+            "data": { "stat": "Constitution", "value": 19 },
             "description": null,
             "trigger": "onAttune"
-
         }
     ],
     "features_on_detune": [
         {
             "id": "loss-con-score-set-19",
             "name": null,
+            "handler": null,
+            "data": null,
             "description": null,
             "trigger": "onDetune"
-
         }
     ]
 }

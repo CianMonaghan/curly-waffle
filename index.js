@@ -28,10 +28,12 @@ const bliteDB = client.db("bliteDB");
 const characters = bliteDB.collection("characters");
 
 const featureSchema = new mongoose.Schema({
-    id: { type: String, unique: true },
-    name: String,
+    id:          { type: String, unique: true },
+    name:        String,
     description: String,
-    trigger: String
+    trigger:     String,
+    handler:     { type: String, default: null },                        // dispatch key → featureDispatch
+    data:        { type: mongoose.Schema.Types.Mixed, default: null }    // handler parameters
 }, {_id: false});
 
 const appliedModSchema = new mongoose.Schema({
@@ -153,6 +155,9 @@ const characterSchema = new mongoose.Schema({//accountID?
         stat:  {type: String, unique: true, required: true},
         save: {type: Number, required: true}
     }], required: true},
+    skill_proficiencies: [{ skill: String, expertise: { type: Boolean, default: false } }],
+    tool_proficiencies:  [String],
+    item_proficiencies:  [String],
     armor_class: {type: Number, min: 1, required: true},
     languages: [String],
     race: raceSchema,
@@ -236,12 +241,19 @@ app.get('/api/external_lists', (req, res) => {
 app.post('/api/characters', async (req, res) => {
     try {
         const characterFile = parseCharacter(req.body);
-        //console.log(characterFile);
-        //console.log(character.create(characterFile));
-        await characters.insertOne(characterFile);
-        console.log("Data saved.");
-        //res.redirect(303, '/sheet.html'); //redirect
-        return res.status(200);
+
+        // Save locally until MongoDB access is available
+        const saveName = (characterFile.name || 'unnamed').replace(/\s+/g, '_');
+        const saveDir  = path.join(__dirname, 'parsed_characters');
+        if (!fs.existsSync(saveDir)) fs.mkdirSync(saveDir);
+        const savePath = path.join(saveDir, `${saveName}.json`);
+        fs.writeFileSync(savePath, JSON.stringify(characterFile, null, 2));
+        console.log(`Character saved locally: ${savePath}`);
+
+        // TODO: swap back to MongoDB when access is granted
+        // await characters.insertOne(characterFile);
+
+        return res.status(200).json({ success: true, savedTo: savePath });
     } catch (err) {
         console.error('[POST /api/characters]', err);
         return res.status(500).json({ error: err.message });

@@ -138,9 +138,21 @@ function loadBackgroundTemplate(name) {
     return template;
 }
 
+function loadItemTemplate(name) {
+    const norm = normalize(name);
+    return tryLoad([
+        path.join(STATIC_ROOT, 'items', 'weapons',        `${norm}.json`),
+        path.join(STATIC_ROOT, 'items', 'mundane',         `${norm}.json`),
+        path.join(STATIC_ROOT, 'items', 'wonderous_items', `${norm}.json`),
+        path.join(SERVER_ROOT, 'items',                    `${norm}.json`),
+    ]);
+    // null return is intentional — many items (armor, packs, ammo) don't have JSONs yet
+}
+
 module.exports = {
     loadClassTemplate,
     loadSubclassTemplate,
     loadRaceTemplate,
     loadBackgroundTemplate,
+    loadItemTemplate,
 };

@@ -25,6 +25,10 @@
         {
             "id": "attack-longbow",
             "name": "Ranged Attack (Longbow)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "ranged"
+            },
             "description": null,
             "trigger": "onEquip"
         }
@@ -33,6 +37,8 @@
         {
             "id": "loss-attack-longbow",
             "name": null,
+            "handler": null,
+            "data": null,
             "description": null,
             "trigger": "onUnequip"
         }
@@ -44,8 +50,14 @@
             "sides": 8
         }
     },
-    "range": [null, 150, 600],
-    "primary_stat": ["Dexterity"],
+    "range": [
+        null,
+        150,
+        600
+    ],
+    "primary_stat": [
+        "Dexterity"
+    ],
     "martial": true,
     "improvised": false,
     "attack_bonus": 0,

@@ -11,6 +11,10 @@
         {
             "id": "attack-lcrossbow",
             "name": "Ranged Attack (Light Crossbow)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "ranged"
+            },
             "description": null,
             "trigger": "onEquip"
         }
@@ -19,6 +23,8 @@
         {
             "id": "loss-attack-lcrossbow",
             "name": null,
+            "handler": null,
+            "data": null,
             "description": null,
             "trigger": "onUnequip"
         }
@@ -30,8 +36,14 @@
             "sides": 8
         }
     },
-    "range": [null, 80, 320],
-    "primary_stat": ["Dexterity"],
+    "range": [
+        null,
+        80,
+        320
+    ],
+    "primary_stat": [
+        "Dexterity"
+    ],
     "martial": false,
     "improvised": false,
     "attack_bonus": 0,

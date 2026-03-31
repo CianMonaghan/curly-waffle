@@ -11,12 +11,20 @@
         {
             "id": "attack-bladedtonfa",
             "name": "Melee Attack (Bladed Tonfa)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "melee"
+            },
             "description": null,
             "trigger": "onEquip"
         },
         {
             "id": "attack-bladedtonfa-special",
             "name": "Melee Attack (Bladed Tonfa, Special)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "melee"
+            },
             "description": null,
             "trigger": "onEquip"
         }
@@ -25,6 +33,8 @@
         {
             "id": "loss-attack-bladedtonfa",
             "name": null,
+            "handler": null,
+            "data": null,
             "description": null,
             "trigger": "onUnequip"
         }
@@ -39,8 +49,15 @@
             "sides": 1
         }
     },
-    "range":[5,null,null],
-    "primary_stat": ["Strength", "Dexterity"],
+    "range": [
+        5,
+        null,
+        null
+    ],
+    "primary_stat": [
+        "Strength",
+        "Dexterity"
+    ],
     "martial": false,
     "improvised": false,
     "attack_bonus": 0,

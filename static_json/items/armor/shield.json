@@ -1,0 +1,34 @@
+{
+    "id": 22,
+    "local_id": 0,
+    "name": "Shield",
+    "type": "armor",
+    "description": "Shield. +2 AC. Cannot be used with a two-handed weapon.",
+    "equipped": false,
+    "features_on_obtain": null,
+    "features_on_lose": null,
+    "features_on_equip": [
+        {
+            "id": "calc-ac-shield",
+            "name": "calcAC",
+            "handler": "calcAC",
+            "data": { "base_ac": 2, "dex_cap": null, "is_shield": true },
+            "description": null,
+            "trigger": "onEquip"
+        }
+    ],
+    "features_on_unequip": [
+        {
+            "id": "calc-ac-shield",
+            "name": "remove_feature",
+            "handler": null,
+            "data": null,
+            "description": null,
+            "trigger": "onUnequip"
+        }
+    ],
+    "prof": true,
+    "attuned": null,
+    "features_on_attune": null,
+    "features_on_detune": null
+}

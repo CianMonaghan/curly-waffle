@@ -1,0 +1,50 @@
+{
+   
+    "type": "class",
+    "id": 3,
+    "name": "Wizard",
+    "level": 0,
+    "class_hp": 6,
+
+    "armor": null,
+    "weapons": ["Daggers", "Darts", "Slings", "Quarterstaffs", "Light Crossbows"],
+    "tools": null,
+    "saving_throws": ["Intelligence", "Wisdom"],
+    "numSkills": 2,
+    "skill_prof": ["Arcana", "History", "Insight", "Investigation", "Medicine", "Religion"],
+
+    "equipment": [
+        { "options": ["Quarterstaff", "Dagger"] },
+        { "options": ["Component Pouch", "Arcane Focus"] },
+        { "options": ["Scholar's Pack", "Explorer's Pack"] },
+        { "options": ["Spellbook"] }
+    ],
+
+    "caster": true,
+    "casterLevel": 0,
+    "casterStat": "Intelligence",
+    "spell_list": [],
+
+    "features": {
+            "1": { "feature_name": "Arcane Recovery", "feature_type": "resource", "uses": "1", "description": "Once per day during a short rest, you can recover expended spell slots with a combined level equal to half your wizard level (rounded up)." },
+            "2": { "feature_name": "Arcane Tradition", "feature_type": "subclass" },
+            "3": { "feature_name": "Cantrip Formulas (Optimals)", "feature_type": "passive", "description": "You have scribed a set of arcane formulas in your spellbook that you can use to formulate a cantrip in your mind. Whenever you finish a long rest and consult those formulas in your spellbook, you can replace one wizard cantrip you know with another cantrip from the wizard spell list."},
+            "4": { "feature_name": "Ability Score Improvement", "feature_type": "asi" },
+            "5": {},
+            "6": { "feature_name": "Arcane Tradition Feature", "feature_type": "subclass" },
+            "7": {},
+            "8": { "feature_name": "Ability Score Improvement", "feature_type": "asi" },
+            "9": {},
+            "10": { "feature_name": "Arcane Tradition Feature", "feature_type": "subclass" },
+            "11": {},
+            "12": { "feature_name": "Arcane Tradition Feature", "feature_type": "subclass" },
+            "13": {},
+            "14": { "feature_name": "Arcane Tradition Feature", "feature_type": "subclass" },
+            "15": {},
+            "16": { "feature_name": "Arcane Tradition Feature", "feature_type": "subclass" },
+            "17": {},
+            "18": { "feature_name": "Spell Mastery", "feature_type": "Choose a 1st-level wizard spell and a 2nd-level wizard spell that are in your spellbook. You can cast those spells at their lowest level without expending a spell slot when you have them prepared. If you want to cast either spell at a higher level, you must expend a spell slot as normal. By spending 8 hours in study, you can exchange one or both of the spells you chose for different spells of the same levels."},
+            "19": { "feature_name": "Arcane Tradition Feature", "feature_type": "subclass" },
+            "20": { "feature_name": "Signature Spells", "feature_type": "passive", "description": "Choose two 3rd-level wizard spells in your spellbook as your signature spells. You always have these spells prepared, they don't count against the number of spells you have prepared, and you can cast each of them once at 3rd level without expending a spell slot. When you do so, you can't do so again until you finish a short or long rest. If you want to cast either spell at a higher level, you must expend a spell slot as normal."}
+        }
+}

@@ -25,6 +25,10 @@
         {
             "id": "attack-hecrossbow",
             "name": "Ranged Attack (Heavy Crossbow)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "ranged"
+            },
             "description": null,
             "trigger": "onEquip"
         }
@@ -33,6 +37,8 @@
         {
             "id": "loss-attack-hecrossbow",
             "name": null,
+            "handler": null,
+            "data": null,
             "description": null,
             "trigger": "onUnequip"
         }
@@ -44,8 +50,14 @@
             "sides": 10
         }
     },
-    "range": [null, 100, 400],
-    "primary_stat": ["Dexterity"],
+    "range": [
+        null,
+        100,
+        400
+    ],
+    "primary_stat": [
+        "Dexterity"
+    ],
     "martial": true,
     "improvised": false,
     "attack_bonus": 0,

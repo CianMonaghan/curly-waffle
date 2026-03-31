@@ -43,10 +43,20 @@ function computeAllDerived(character, primaryClassName) {
     const pb    = profBonus(level || 1);
 
     // ── Scalar derivations ─────────────────────────────────────────────────
-    character.prof_bonus  = pb;
-    character.initiative  = dexMod;
-    // Base unarmored AC; equipped armor items should override this when applied.
-    character.armor_class = 10 + dexMod;
+    character.prof_bonus = pb;
+    character.initiative = dexMod;
+
+    // Armor class: only recompute unarmored base when no body armor is equipped.
+    // Armor items set armor_class via equipItem → featureDispatch (calcAC handler)
+    // and that value must not be overwritten here.
+    // Detection is data-driven: body armor has a calcAC feature where is_shield != true.
+    const equippedBodyArmor = (character.inventory?.items ?? []).find(i =>
+        i.equipped === true &&
+        (i.features_on_equip ?? []).some(f => f.handler === 'calcAC' && !f.data?.is_shield)
+    );
+    if (!equippedBodyArmor) {
+        character.armor_class = 10 + dexMod;
+    }
 
     // ── HP ─────────────────────────────────────────────────────────────────
     // Primary class:    level 1 = max hit die + CON mod

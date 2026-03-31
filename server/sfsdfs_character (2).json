@@ -1,0 +1,32 @@
+{
+  "name": "sfsdfs",
+  "race": null,
+  "background": null,
+  "classes": [
+    {
+      "id": "class-0",
+      "name": "Fighter",
+      "level": 1,
+      "skills": [
+        "Athletics",
+        "Acrobatics"
+      ],
+      "decisions": {
+        "primaryClass": true,
+        "features": {
+          "equip_1_0": "b) Leather Armor,Longbow,20 Arrows",
+          "equip_1_1": "b) 2 Martial Weapons",
+          "equip_1_2": "a) Light Crossbow,20 Bolts",
+          "equip_1_3": "b) Explorer's pack",
+          "feat_lvl1_uid1": "Archery"
+        },
+        "asi": []
+      },
+      "subclass": {
+        "id": "Battle Master",
+        "name": "Battle Master",
+        "decisions": {}
+      }
+    }
+  ]
+}

@@ -11,12 +11,20 @@
         {
             "id": "attack-lance-nonmount",
             "name": "Melee Attack (Lance, Unmounted)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "melee"
+            },
             "description": null,
             "trigger": "onEquip"
         },
         {
             "id": "attack-lance-mount",
             "name": "Melee Attack (Lance, Mounted)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "melee"
+            },
             "description": null,
             "trigger": "onEquip"
         }
@@ -25,6 +33,8 @@
         {
             "id": "loss-attack-lance",
             "name": null,
+            "handler": null,
+            "data": null,
             "description": null,
             "trigger": "onUnequip"
         }
@@ -39,8 +49,14 @@
             "sides": 12
         }
     },
-    "range":[10,null,null],
-    "primary_stat": ["Strength"],
+    "range": [
+        10,
+        null,
+        null
+    ],
+    "primary_stat": [
+        "Strength"
+    ],
     "martial": true,
     "improvised": false,
     "attack_bonus": 0,

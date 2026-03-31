@@ -11,18 +11,22 @@
         {
             "id": "attack-club",
             "name": "Melee Attack (Club)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "melee"
+            },
             "description": null,
             "trigger": "onEquip"
-
         }
     ],
     "features_on_unequip": [
         {
             "id": "loss-attack-club",
             "name": null,
+            "handler": null,
+            "data": null,
             "description": null,
             "trigger": "onUnequip"
-
         }
     ],
     "dice": {
@@ -32,8 +36,14 @@
         },
         "twoHand": null
     },
-    "range": [5,null,null],
-    "primary_stat": ["Strength"],
+    "range": [
+        5,
+        null,
+        null
+    ],
+    "primary_stat": [
+        "Strength"
+    ],
     "martial": false,
     "improvised": false,
     "attack_bonus": 0,

@@ -1,0 +1,1151 @@
+
+0. Preface
+Definitions used in this document:
+·       stats = string enum { STR, DEX, CON, WIS, INT, CHA }
+·       Character is the canonical owner of all mutable state.
+·       Attachments (race/background/class/subclass/features/items) never mutate Character state directly.
+·       All changes must occur through Character modification methods, and must be reversible.
+·       ComputeAllDerived(character) is executed after every apply/reverse operation, using only the stages described in the original specification.
+ 
+1. Object Schemas
+1.1 Character Schema
+Stored fields (original) plus required internal bookkeeping for reversibility and the requested equipped-weapon registry.
+·       Identity / Meta:
+·       • Name: string
+·       • Alignment: string
+·        
+·       Core Stats:
+·       • BaseStats: Map<stat → int>
+·       • Stats: Map<stat → int> (derived; stored optional)
+·       • sMods: Map<stat → int>
+·        
+·       Combat / Derived:
+·       • CurHp: int
+·       • tempHp: int
+·       • Speed: int
+·       • Init: int
+·       • Initiative: int
+·       • Size: enum { tiny, small, medium, large, huge, gargantuan }
+·       • ProficiencyBonus: int
+·       • Saves: Map<stat → int>
+·       • ArmorClass: int
+·       • DeathSaves: UI object (recommended: keep out of server model)
+·        
+·       Languages:
+·       • Languages: string[]
+·        
+·       Attachments:
+·       • Race: RaceObject | null
+·       • Background: BackgroundObject | null
+·       • Classes: ClassObject[]
+·       • Subclasses: SubclassObject[]
+·       • Features: FeatureObject[]
+·        
+·       Inventory:
+·       • Currency: Map<string → number> (excluded from feature system by requirement)
+·       • Items: ItemObject[]
+·       • Weapons: WeaponObject[]
+·       • WondrousItems: WondrousItemObject[]
+·       • Attuned: Map<itemId → boolean>
+·        
+·       Internal bookkeeping (required for reversibility):
+·       • ActiveFeatureRefs: Map<featureInstanceId → AppliedFeatureRecord>
+·       • AppliedModLog: AppliedModification[] (optional; debugging/audit)
+
+·       • EquippedWeapons: EquippedWeaponEntry[]
+1.2 Equipped Weapon Registry Schema
+·       EquippedWeaponEntry:
+·       • WeaponId: string
+·       • Name: string
+·       • Damage: string (e.g., '1d8 slashing')
+·       • ItemRefId: string (Id of the WeaponObject in Inventory.Weapons)
+1.3 Feature Schema
+·       FeatureObject:
+·       • Id: string
+·       • Name: string
+·       • Description: string
+·       • Trigger: enum { onAdd, onRemove, onObtain, onLose, onEquip, onUnequip, onAttune, onDetune }
+·       • buildModifications(context) → Modification[]   (extra features. Not for now)
+1.4 Modification Schema
+·       Modification:
+·       • Type: enum { numberDelta, numberSet, statDelta, statSet, listAdd, listRemove, mapSet, mapDelete, weaponRegister, weaponUnregister }
+·       • Path?: string (used by number/list/map types)
+·       • Payload: any (type-specific)
+·       AppliedModification:
+·       • modification: Modification
+·       • reversalData?: any (captured during apply for set/map operations)
+·       AppliedFeatureRecord:
+·       • featureInstanceId: string (unique instance key)
+·       • sourceId: string (itemId/classId/raceId/etc.)
+·       • featureId: string
+·       • trigger: string
+·       • applied: AppliedModification[]
+1.5 Race Schema
+·       RaceObject:
+·       • Id: string
+·       • Name: string
+·       • Description?: string
+·       • Features: FeatureObject[]
+1.6 Background Schema
+·       BackgroundObject:
+·       • Id: string
+·       • Name: string
+·       • Description?: string
+·       • Features: FeatureObject[]
+1.7 Class Schema
+·       ClassObject:
+·       • Id: string
+·       • ClassName: string
+·       • Caster?: boolean
+·       • casterStat?: stats
+·       • Level: int
+·       • CasterLevel: number
+·       • HpDerivedFromClass: int
+·       • Features: FeatureObject[]
+·       • OtherFeatures: FeatureObject[]   // why? Myself why?
+·       • SkillProficiency: Map<string(skill) → boolean>
+·       • SavingThrows: stats[]
+·       • SpellList: SpellObject[]
+1.8 Subclass Schema
+·       SubclassObject:
+·       • Id: string
+·       • SubclassName: string
+·       • Features: FeatureObject[]
+1.9 Item Schema
+·       ItemObject:
+·       • Id: string
+·       • Name: string
+·       • Type: string
+·       • Weight?: number
+·       • Description: string
+·       • Equipped?: boolean
+·       • FeaturesOnObtain?: FeatureObject[]
+·       • FeaturesOnLose?: FeatureObject[]
+·       • FeaturesOnEquip?: FeatureObject[]
+·       • FeaturesOnUnequip?: FeatureObject[]
+1.10 Wondrous Item Schema
+·       WondrousItemObject extends ItemObject:
+·       • Attuned: boolean
+·       • FeaturesOnAttune?: FeatureObject[]
+·       • FeaturesOnDetune?: FeatureObject[]
+1.11 Weapon Schema
+·       WeaponObject extends ItemObject:
+·       • Dice: { oneHand?: {num:int, sides:int}, twoHand?: {num:int, sides:int} }
+·       • Range: { short?: int, long?: int } (melee if absent)
+·       • PrimaryStats: stats[]
+·       • Martial: boolean
+·       • Improvised: boolean
+·       • AttackBonus: int
+·       • attackMod: int (derived)
+·       • DamageBonus: int
+·       • damageMod: int (derived)
+·       • Proficient: boolean
+·       • DamageLabel?: string (optional convenience label, e.g., '1d8 slashing')
+ 
+2. Feature Mechanics (Technical)
+This section explains how features stored on attachments affect the Character using modification methods, while remaining reversible.
+·       Attachments store FeatureObjects. FeatureObjects are declarative; they do not mutate state.
+·       When an event occurs (e.g., equip item), Character iterates the relevant features and calls applyFeature(trigger, sourceId, feature).
+·       applyFeature(...) calls feature.buildModifications(context) to get a list of Modifications.
+·       Character applies each Modification via applyModification(mod), which dispatches into canonical modification methods (alterStat, addToList, setMapValue, etc.).
+·       Character stores an AppliedFeatureRecord containing AppliedModifications (including reversalData when necessary).
+·       When the event is undone (unequip/detune/remove attachment), Character reverses exactly the previously-applied feature instances using reverseFeature(featureInstanceId).
+·       After every apply/reverse operation Character runs ComputeAllDerived(this) using only the original pipeline stages.
+2.1 Example: Feature → Modification → Character Mutation
+Example feature: Ability Score Increase (+2 STR) applied when added.
+// FeatureObject
+const ASI_STR_PLUS_2 = {
+  Id: 'feat-asi-str-2',
+  Name: 'Ability Score Increase (STR +2)',
+  Description: 'Increase STR by 2.',
+  Trigger: 'onAdd',
+  buildModifications(ctx) {
+	return [{ Type: 'statDelta', Payload: { stat: 'STR', delta: 2 } }];
+  }
+};
+ 
+// On class/race/feature attach:
+character.applyFeature('onAdd', sourceId, ASI_STR_PLUS_2);
+2.2 Example: Hard-Set Override (requires captured reversal value)
+Example: item sets STR to 19 while attuned; reversal restores previous value captured during apply.
+const OGRE_POWER = {
+  Id: 'feat-ogre-power',
+  Name: 'Gauntlets of Ogre Power',
+  Description: 'Your STR score becomes 19 while attuned.',
+  Trigger: 'onAttune',
+  buildModifications(ctx) {
+	return [{ Type: 'statSet', Payload: { stat: 'STR', value: 19 } }];
+  }
+};
+ 
+3. Full Method Reference
+Each method is listed with: signature, description, implementation details (JS pseudocode), and returns/end result.
+ 
+3.1 Character — Feature Application & Modification Dispatch
+Method: applyFeature(trigger: string, sourceId: string, feature: FeatureObject, context?: object): string
+Description:
+Builds and applies the feature’s modifications exactly once. Generates a unique featureInstanceId so identical features can coexist across multiple sources. Stores an AppliedFeatureRecord for precise reversal.
+Implementation details (JavaScript pseudocode):
+applyFeature(trigger, sourceId, feature, context = {}) {
+  const featureInstanceId = `${sourceId}:${feature.Id}:${trigger}:${this._randomId()}`;
+  const mods = feature.buildModifications({ character: this, sourceId, trigger, ...context }) || [];
+  const applied = [];
+ 
+  for (const mod of mods) {
+	applied.push(this.applyModification(mod));
+  }
+ 
+  this.ActiveFeatureRefs.set(featureInstanceId, {
+	featureInstanceId,
+	sourceId,
+	featureId: feature.Id,
+	trigger,
+	applied,
+  });
+ 
+  this.recomputeAllDerived();
+  return featureInstanceId;
+}
+Returns / End result:
+Returns featureInstanceId. Character is mutated by the feature once; derived fields are recomputed.
+ 
+Method: reverseFeature(featureInstanceId: string): void
+Description:
+Reverses a previously applied feature instance by undoing its applied modifications in reverse order. Deletes its record and recomputes derived values.
+Implementation details (JavaScript pseudocode):
+reverseFeature(featureInstanceId) {
+  const rec = this.ActiveFeatureRefs.get(featureInstanceId);
+  if (!rec) return;
+ 
+  for (let i = rec.applied.length - 1; i >= 0; i--) {
+    this.reverseAppliedModification(rec.applied[i]);
+  }
+ 
+  this.ActiveFeatureRefs.delete(featureInstanceId);
+  this.recomputeAllDerived();
+}
+Returns / End result:
+Returns void. Restores state affected by that feature instance.
+ 
+Method: applyModification(mod: Modification): AppliedModification
+Description:
+Applies one Modification by dispatching into canonical mutation methods. Captures reversalData for operations that need it (set/map).
+Implementation details (JavaScript pseudocode):
+applyModification(mod) {
+  switch (mod.Type) {
+	case 'numberDelta':
+  	this.alterNumberField(mod.Path, mod.Payload.delta);
+  	return { modification: mod };
+ 
+	case 'numberSet': {
+  	const prev = this.getNumberField(mod.Path);
+  	this.setNumberField(mod.Path, mod.Payload.value);
+  	return { modification: mod, reversalData: { prev } };
+	}
+ 
+	case 'statDelta':
+  	this.alterStat(mod.Payload.stat, mod.Payload.delta);
+  	return { modification: mod };
+ 
+	case 'statSet': {
+  	const prev = this.BaseStats[mod.Payload.stat];
+  	this.setStat(mod.Payload.stat, mod.Payload.value);
+  	return { modification: mod, reversalData: { prev } };
+	}
+ 
+	case 'listAdd':
+  	this.addToList(mod.Path, mod.Payload.value);
+  	return { modification: mod };
+ 
+	case 'listRemove':
+  	this.removeFromList(mod.Path, mod.Payload.value);
+  	return { modification: mod };
+ 
+	case 'mapSet': {
+  	const hadKey = this.mapHasKey(mod.Path, mod.Payload.key);
+  	const prev = hadKey ? this.getMapValue(mod.Path, mod.Payload.key) : undefined;
+  	this.setMapValue(mod.Path, mod.Payload.key, mod.Payload.value);
+  	return { modification: mod, reversalData: { hadKey, prev } };
+	}
+ 
+	case 'mapDelete': {
+  	const hadKey = this.mapHasKey(mod.Path, mod.Payload.key);
+  	const prev = hadKey ? this.getMapValue(mod.Path, mod.Payload.key) : undefined;
+  	this.deleteMapKey(mod.Path, mod.Payload.key);
+  	return { modification: mod, reversalData: { hadKey, prev } };
+	}
+ 
+	case 'weaponRegister':
+      this.registerEquippedWeapon(mod.Payload.weaponId);
+  	return { modification: mod };
+ 
+	case 'weaponUnregister':
+      this.unregisterEquippedWeapon(mod.Payload.weaponId);
+  	return { modification: mod };
+ 
+	default:
+  	throw new Error(`Unknown modification type: ${mod.Type}`);
+  }
+}
+Returns / End result:
+Returns an AppliedModification containing the original modification and any captured reversalData.
+ 
+Method: reverseAppliedModification(applied: AppliedModification): void
+Description:
+Reverses one AppliedModification. Uses captured reversalData for set/map operations; uses inverse operations for delta operations.
+Implementation details (JavaScript pseudocode):
+reverseAppliedModification(applied) {
+  const mod = applied.modification;
+  switch (mod.Type) {
+	case 'numberDelta':
+  	this.alterNumberField(mod.Path, -mod.Payload.delta);
+  	return;
+	case 'numberSet':
+  	this.setNumberField(mod.Path, applied.reversalData.prev);
+  	return;
+	case 'statDelta':
+  	this.alterStat(mod.Payload.stat, -mod.Payload.delta);
+  	return;
+	case 'statSet':
+  	this.setStat(mod.Payload.stat, applied.reversalData.prev);
+  	return;
+	case 'listAdd':
+  	this.removeFromList(mod.Path, mod.Payload.value);
+  	return;
+	case 'listRemove':
+  	this.addToList(mod.Path, mod.Payload.value);
+  	return;
+	case 'mapSet':
+  	if (applied.reversalData.hadKey) this.setMapValue(mod.Path, mod.Payload.key, applied.reversalData.prev);
+  	else this.deleteMapKey(mod.Path, mod.Payload.key);
+  	return;
+	case 'mapDelete':
+  	if (applied.reversalData.hadKey) this.setMapValue(mod.Path, mod.Payload.key, applied.reversalData.prev);
+  	return;
+	case 'weaponRegister':
+      this.unregisterEquippedWeapon(mod.Payload.weaponId);
+  	return;
+	case 'weaponUnregister':
+      this.registerEquippedWeapon(mod.Payload.weaponId);
+  	return;
+	default:
+  	throw new Error(`Unknown modification type: ${mod.Type}`);
+  }
+}
+Returns / End result:
+Returns void. The modification’s effect is undone.
+ 
+Method: _randomId(): string
+Description:
+Generates a unique id segment to avoid collisions between feature instances. Any stable implementation is acceptable.
+Implementation details (JavaScript pseudocode):
+_randomId() {
+  return Math.random().toString(16).slice(2) + Date.now().toString(16);
+}
+Returns / End result:
+Returns a string.
+ 
+3.2 Character — Canonical State Mutation Methods
+Method: isValidStat(stat: string): boolean
+Description:
+Validates that stat is a recognized stats key.
+Implementation details (JavaScript pseudocode):
+isValidStat(stat) {
+  return ['STR','DEX','CON','WIS','INT','CHA'].includes(stat);
+}
+Returns / End result:
+Returns true if stat is valid; otherwise false.
+ 
+Method: alterStat(stat: stats, delta: int): void
+Description:
+Adds delta to BaseStats[stat]. Canonical method for permanent stat changes (ASI, racial bonus, etc.).
+Implementation details (JavaScript pseudocode):
+alterStat(stat, delta) {
+  if (!this.isValidStat(stat)) throw new Error('invalid stat');
+  if (!Number.isInteger(delta)) throw new Error('delta must be int');
+  const cur = this.BaseStats[stat] ?? 0;
+  this.BaseStats[stat] = cur + delta;
+}
+Returns / End result:
+Returns void. BaseStats updated.
+ 
+Method: setStat(stat: stats, value: int): void
+Description:
+Sets BaseStats[stat] to value. Used for overrides that must restore prior value on reversal (captured by applyModification).
+Implementation details (JavaScript pseudocode):
+setStat(stat, value) {
+  if (!this.isValidStat(stat)) throw new Error('invalid stat');
+  if (!Number.isInteger(value)) throw new Error('value must be int');
+  this.BaseStats[stat] = value;
+}
+Returns / End result:
+Returns void.
+ 
+Method: clampStat(stat: stats, lowCap: int, upCap: int): void
+Description:
+Clamps BaseStats[stat] to the inclusive range [lowCap, upCap].
+Implementation details (JavaScript pseudocode):
+clampStat(stat, lowCap, upCap) {
+  if (!this.isValidStat(stat)) throw new Error('invalid stat');
+  const v = this.BaseStats[stat];
+  this.BaseStats[stat] = Math.max(lowCap, Math.min(upCap, v));
+}
+Returns / End result:
+Returns void.
+ 
+Method: alterCurHp(delta: int): void
+Description:
+Adds delta to CurHp. Clamps to minimum 0.
+Implementation details (JavaScript pseudocode):
+alterCurHp(delta) {
+  if (!Number.isInteger(delta)) throw new Error('delta must be int');
+  this.CurHp = Math.max(0, this.CurHp + delta);
+}
+Returns / End result:
+Returns void.
+ 
+Method: setCurHp(value: int): void
+Description:
+Sets CurHp. Clamps to minimum 0.
+Implementation details (JavaScript pseudocode):
+setCurHp(value) {
+  if (!Number.isInteger(value)) throw new Error('value must be int');
+  this.CurHp = Math.max(0, value);
+}
+Returns / End result:
+Returns void.
+ 
+Method: alterTempHp(delta: int): void
+Description:
+Adds delta to tempHp. Clamps to minimum 0.
+Implementation details (JavaScript pseudocode):
+alterTempHp(delta) {
+  if (!Number.isInteger(delta)) throw new Error('delta must be int');
+  this.tempHp = Math.max(0, this.tempHp + delta);
+}
+Returns / End result:
+Returns void.
+ 
+Method: setTempHp(value: int): void
+Description:
+Sets tempHp. Clamps to minimum 0.
+Implementation details (JavaScript pseudocode):
+setTempHp(value) {
+  if (!Number.isInteger(value)) throw new Error('value must be int');
+  this.tempHp = Math.max(0, value);
+}
+Returns / End result:
+Returns void.
+ 
+Method: alterSpeed(delta: int): void
+Description:
+Adds delta to Speed. Clamps to minimum 0.
+Implementation details (JavaScript pseudocode):
+alterSpeed(delta) {
+  if (!Number.isInteger(delta)) throw new Error('delta must be int');
+  this.Speed = Math.max(0, this.Speed + delta);
+}
+Returns / End result:
+Returns void.
+ 
+Method: setSpeed(value: int): void
+Description:
+Sets Speed. Clamps to minimum 0.
+Implementation details (JavaScript pseudocode):
+setSpeed(value) {
+  if (!Number.isInteger(value)) throw new Error('value must be int');
+  this.Speed = Math.max(0, value);
+}
+Returns / End result:
+Returns void.
+ 
+Method: alterInit(delta: int): void
+Description:
+Adds delta to base Init (separate from DEX mod).
+Implementation details (JavaScript pseudocode):
+alterInit(delta) {
+  if (!Number.isInteger(delta)) throw new Error('delta must be int');
+  this.Init = this.Init + delta;
+}
+Returns / End result:
+Returns void.
+ 
+Method: setInit(value: int): void
+Description:
+Sets base Init.
+Implementation details (JavaScript pseudocode):
+setInit(value) {
+  if (!Number.isInteger(value)) throw new Error('value must be int');
+  this.Init = value;
+}
+Returns / End result:
+Returns void.
+ 
+Method: setAlignment(alignment: string): void
+Description:
+Sets the Alignment string.
+Implementation details (JavaScript pseudocode):
+setAlignment(alignment) {
+  if (typeof alignment !== 'string') throw new Error('alignment must be string');
+  this.Alignment = alignment;
+}
+Returns / End result:
+Returns void.
+ 
+Method: addLanguage(lang: string): void
+Description:
+Adds a language to Languages if not present. Prevents duplicates.
+Implementation details (JavaScript pseudocode):
+addLanguage(lang) {
+  if (typeof lang !== 'string') throw new Error('lang must be string');
+  if (!Array.isArray(this.Languages)) this.Languages = [];
+  if (!this.Languages.includes(lang)) this.Languages.push(lang);
+}
+Returns / End result:
+Returns void.
+ 
+Method: removeLanguage(lang: string): void
+Description:
+Removes a language from Languages if present.
+Implementation details (JavaScript pseudocode):
+removeLanguage(lang) {
+  if (!Array.isArray(this.Languages)) return;
+  this.Languages = this.Languages.filter(x => x !== lang);
+}
+Returns / End result:
+Returns void.
+ 
+3.3 Character — Generic Path/List/Map Utilities
+Method: getPath(path: string): any
+Description:
+Resolves a dot-delimited path from the Character root. Used by generic modification types.
+Implementation details (JavaScript pseudocode):
+getPath(path) {
+  const parts = path.split('.');
+  let cur = this;
+  for (const p of parts) {
+	if (cur == null) return undefined;
+	cur = cur[p];
+  }
+  return cur;
+}
+Returns / End result:
+Returns the resolved value (or undefined if a segment is missing).
+ 
+Method: setPath(path: string, value: any): void
+Description:
+Sets a dot-delimited path from the Character root. Creates intermediate objects if missing.
+Implementation details (JavaScript pseudocode):
+setPath(path, value) {
+  const parts = path.split('.');
+  let cur = this;
+  for (let i = 0; i < parts.length - 1; i++) {
+	const p = parts[i];
+	if (cur[p] == null || typeof cur[p] !== 'object') cur[p] = {};
+	cur = cur[p];
+  }
+  cur[parts[parts.length - 1]] = value;
+}
+Returns / End result:
+Returns void.
+ 
+Method: alterNumberField(path: string, delta: number): void
+Description:
+Adds delta to a numeric field at path. Throws if target is not numeric.
+Implementation details (JavaScript pseudocode):
+alterNumberField(path, delta) {
+  const cur = this.getPath(path);
+  if (typeof cur !== 'number') throw new Error(`Path not number: ${path}`);
+  this.setPath(path, cur + delta);
+}
+Returns / End result:
+Returns void.
+ 
+Method: getNumberField(path: string): number
+Description:
+Reads a numeric field at path. Throws if target is not numeric.
+Implementation details (JavaScript pseudocode):
+getNumberField(path) {
+  const cur = this.getPath(path);
+  if (typeof cur !== 'number') throw new Error(`Path not number: ${path}`);
+  return cur;
+}
+Returns / End result:
+Returns the numeric value.
+ 
+Method: setNumberField(path: string, value: number): void
+Description:
+Sets a numeric field at path. Throws if target is not numeric.
+Implementation details (JavaScript pseudocode):
+setNumberField(path, value) {
+  if (typeof value !== 'number') throw new Error('value must be number');
+  const cur = this.getPath(path);
+  if (typeof cur !== 'number') throw new Error(`Path not number: ${path}`);
+  this.setPath(path, value);
+}
+Returns / End result:
+Returns void.
+ 
+Method: addToList(path: string, value: any): void
+Description:
+Adds value to an array at path if not already present.
+Implementation details (JavaScript pseudocode):
+addToList(path, value) {
+  const arr = this.getPath(path);
+  if (!Array.isArray(arr)) throw new Error(`Target not list: ${path}`);
+  if (!arr.includes(value)) arr.push(value);
+}
+Returns / End result:
+Returns void.
+ 
+Method: removeFromList(path: string, value: any): void
+Description:
+Removes all occurrences of value from an array at path.
+Implementation details (JavaScript pseudocode):
+removeFromList(path, value) {
+  const arr = this.getPath(path);
+  if (!Array.isArray(arr)) throw new Error(`Target not list: ${path}`);
+  this.setPath(path, arr.filter(x => x !== value));
+}
+Returns / End result:
+Returns void.
+ 
+Method: mapHasKey(path: string, key: string): boolean
+Description:
+Checks if an object-map at path has own property key.
+Implementation details (JavaScript pseudocode):
+mapHasKey(path, key) {
+  const m = this.getPath(path);
+  if (m == null || typeof m !== 'object') return false;
+  return Object.prototype.hasOwnProperty.call(m, key);
+}
+Returns / End result:
+Returns true if key exists as own property; otherwise false.
+ 
+Method: getMapValue(path: string, key: string): any
+Description:
+Gets m[key] from an object-map at path.
+Implementation details (JavaScript pseudocode):
+getMapValue(path, key) {
+  const m = this.getPath(path);
+  if (m == null || typeof m !== 'object') throw new Error(`Path not map: ${path}`);
+  return m[key];
+}
+Returns / End result:
+Returns the stored value.
+ 
+Method: setMapValue(path: string, key: string, value: any): void
+Description:
+Sets m[key] on an object-map at path.
+Implementation details (JavaScript pseudocode):
+setMapValue(path, key, value) {
+  const m = this.getPath(path);
+  if (m == null || typeof m !== 'object') throw new Error(`Path not map: ${path}`);
+  m[key] = value;
+}
+Returns / End result:
+Returns void.
+ 
+Method: deleteMapKey(path: string, key: string): void
+Description:
+Deletes a key from an object-map at path.
+Implementation details (JavaScript pseudocode):
+deleteMapKey(path, key) {
+  const m = this.getPath(path);
+  if (m == null || typeof m !== 'object') throw new Error(`Path not map: ${path}`);
+  delete m[key];
+}
+Returns / End result:
+Returns void.
+ 
+3.4 Character — Inventory and Equipment Methods
+Method: addItem(item: ItemObject): void
+Description:
+Adds an item to Inventory.Items and applies FeaturesOnObtain (triggered as onObtain).
+Implementation details (JavaScript pseudocode):
+addItem(item) {
+  this.Inventory.Items.push(item);
+  for (const f of (item.FeaturesOnObtain || [])) {
+	this.applyFeature('onObtain', item.Id, f);
+  }
+}
+Returns / End result:
+Returns void. Item stored; obtain features applied.
+ 
+Method: removeItem(itemId: string): void
+Description:
+Removes an item from Inventory.Items and reverses all feature instances applied from that sourceId (obtained/equipped/etc.).
+Implementation details (JavaScript pseudocode):
+removeItem(itemId) {
+  this.reverseAllFeaturesFromSource(itemId);
+  this.Inventory.Items = this.Inventory.Items.filter(i => i.Id !== itemId);
+}
+Returns / End result:
+Returns void. Item removed; all source-linked feature instances reversed.
+ 
+Method: equipItem(itemId: string): void
+Description:
+Marks an item equipped and applies FeaturesOnEquip (triggered as onEquip).
+Implementation details (JavaScript pseudocode):
+equipItem(itemId) {
+  const item = this.findAnyItemById(itemId);
+  if (!item) throw new Error('item not found');
+  if (item.Equipped) return;
+  item.Equipped = true;
+  for (const f of (item.FeaturesOnEquip || [])) {
+	this.applyFeature('onEquip', item.Id, f);
+  }
+}
+Returns / End result:
+Returns void. Item equipped; equip features applied.
+ 
+Method: unequipItem(itemId: string): void
+Description:
+Reverses prior onEquip feature instances for this item and marks it unequipped. Optionally applies FeaturesOnUnequip (triggered as onUnequip).
+Implementation details (JavaScript pseudocode):
+unequipItem(itemId) {
+  const item = this.findAnyItemById(itemId);
+  if (!item) throw new Error('item not found');
+  if (!item.Equipped) return;
+  this.reverseFeaturesBySourceAndTrigger(item.Id, 'onEquip');
+  item.Equipped = false;
+  for (const f of (item.FeaturesOnUnequip || [])) {
+	this.applyFeature('onUnequip', item.Id, f);
+  }
+}
+Returns / End result:
+Returns void. Equip effects reversed; item is unequipped.
+ 
+Method: addWeapon(weapon: WeaponObject): void
+Description:
+Adds a weapon to Inventory.Weapons and applies FeaturesOnObtain (if present).
+Implementation details (JavaScript pseudocode):
+addWeapon(weapon) {
+  this.Inventory.Weapons.push(weapon);
+  for (const f of (weapon.FeaturesOnObtain || [])) {
+	this.applyFeature('onObtain', weapon.Id, f);
+  }
+}
+Returns / End result:
+Returns void. Weapon stored; obtain features applied.
+ 
+Method: removeWeapon(weaponId: string): void
+Description:
+Removes a weapon from Inventory.Weapons and reverses all feature instances from that weapon sourceId. Also ensures it is removed from EquippedWeapons registry.
+Implementation details (JavaScript pseudocode):
+removeWeapon(weaponId) {
+  this.reverseAllFeaturesFromSource(weaponId);
+  this.unregisterEquippedWeapon(weaponId);
+  this.Inventory.Weapons = this.Inventory.Weapons.filter(w => w.Id !== weaponId);
+}
+Returns / End result:
+Returns void. Weapon removed; features reversed; registry cleaned.
+ 
+Method: equipWeapon(weaponId: string): void
+Description:
+Equips a weapon: sets Equipped=true, registers it in EquippedWeapons, applies FeaturesOnEquip.
+Implementation details (JavaScript pseudocode):
+equipWeapon(weaponId) {
+  const w = this.findWeaponById(weaponId);
+  if (!w) throw new Error('weapon not found');
+  if (w.Equipped) return;
+  w.Equipped = true;
+  this.registerEquippedWeapon(weaponId);
+  for (const f of (w.FeaturesOnEquip || [])) {
+	this.applyFeature('onEquip', w.Id, f);
+  }
+}
+Returns / End result:
+Returns void. Weapon equipped; registry updated; equip features applied.
+ 
+Method: unequipWeapon(weaponId: string): void
+Description:
+Unequips a weapon: reverses onEquip feature instances, unregisters it, marks Equipped=false, optionally applies FeaturesOnUnequip.
+Implementation details (JavaScript pseudocode):
+unequipWeapon(weaponId) {
+  const w = this.findWeaponById(weaponId);
+  if (!w) throw new Error('weapon not found');
+  if (!w.Equipped) return;
+  this.reverseFeaturesBySourceAndTrigger(w.Id, 'onEquip');
+  this.unregisterEquippedWeapon(weaponId);
+  w.Equipped = false;
+  for (const f of (w.FeaturesOnUnequip || [])) {
+	this.applyFeature('onUnequip', w.Id, f);
+  }
+}
+Returns / End result:
+Returns void. Weapon unequipped; equip effects reversed; registry updated.
+ 
+Method: registerEquippedWeapon(weaponId: string): void
+Description:
+Adds an EquippedWeaponEntry to EquippedWeapons if not already present, including weapon display name and damage.
+Implementation details (JavaScript pseudocode):
+registerEquippedWeapon(weaponId) {
+  const w = this.findWeaponById(weaponId);
+  if (!w) throw new Error('weapon not found');
+  if (!Array.isArray(this.EquippedWeapons)) this.EquippedWeapons = [];
+  if (this.EquippedWeapons.some(e => e.WeaponId === weaponId)) return;
+  const damage = w.DamageLabel || this.formatWeaponDamage(w);
+  this.EquippedWeapons.push({
+	WeaponId: w.Id,
+	Name: w.Name,
+	Damage: damage,
+	ItemRefId: w.Id,
+  });
+}
+Returns / End result:
+Returns void. EquippedWeapons contains a corresponding entry.
+ 
+Method: unregisterEquippedWeapon(weaponId: string): void
+Description:
+Removes the EquippedWeaponEntry for weaponId from EquippedWeapons.
+Implementation details (JavaScript pseudocode):
+unregisterEquippedWeapon(weaponId) {
+  if (!Array.isArray(this.EquippedWeapons)) return;
+  this.EquippedWeapons = this.EquippedWeapons.filter(e => e.WeaponId !== weaponId);
+}
+Returns / End result:
+Returns void. Registry entry removed if present.
+ 
+Method: formatWeaponDamage(w: WeaponObject): string
+Description:
+Formats dice into a damage string (e.g., '1d8'). Uses oneHand if present, else twoHand.
+Implementation details (JavaScript pseudocode):
+formatWeaponDamage(w) {
+  const d = (w.Dice && w.Dice.oneHand) ? w.Dice.oneHand : (w.Dice ? w.Dice.twoHand : null);
+  if (!d) return '—';
+  return `${d.num}d${d.sides}`;
+}
+Returns / End result:
+Returns a string damage representation (or '—' if dice missing).
+ 
+Method: addWondrousItem(item: WondrousItemObject): void
+Description:
+Adds a wondrous item to Inventory.WondrousItems and applies FeaturesOnObtain if present.
+Implementation details (JavaScript pseudocode):
+addWondrousItem(item) {
+  this.Inventory.WondrousItems.push(item);
+  for (const f of (item.FeaturesOnObtain || [])) {
+	this.applyFeature('onObtain', item.Id, f);
+  }
+}
+Returns / End result:
+Returns void. Wondrous item stored; obtain features applied.
+ 
+Method: removeWondrousItem(itemId: string): void
+Description:
+Removes a wondrous item and reverses all applied feature instances from that sourceId.
+Implementation details (JavaScript pseudocode):
+removeWondrousItem(itemId) {
+  this.reverseAllFeaturesFromSource(itemId);
+  this.Inventory.WondrousItems = this.Inventory.WondrousItems.filter(i => i.Id !== itemId);
+  if (this.Inventory.Attuned) delete this.Inventory.Attuned[itemId];
+}
+Returns / End result:
+Returns void. Item removed and all feature instances reversed.
+ 
+Method: attuneWondrousItem(itemId: string): void
+Description:
+Attunes a wondrous item: sets Attuned=true, sets Inventory.Attuned[itemId]=true, and applies FeaturesOnAttune (triggered as onAttune).
+Implementation details (JavaScript pseudocode):
+attuneWondrousItem(itemId) {
+  const item = this.findWondrousById(itemId);
+  if (!item) throw new Error('wondrous item not found');
+  if (item.Attuned) return;
+  item.Attuned = true;
+  if (!this.Inventory.Attuned) this.Inventory.Attuned = {};
+  this.Inventory.Attuned[item.Id] = true;
+  for (const f of (item.FeaturesOnAttune || [])) {
+	this.applyFeature('onAttune', item.Id, f);
+  }
+}
+Returns / End result:
+Returns void. Item attuned; attune features applied.
+ 
+Method: detuneWondrousItem(itemId: string): void
+Description:
+Detunes a wondrous item: reverses onAttune feature instances, sets Attuned=false, sets Attuned map false, and optionally applies FeaturesOnDetune (triggered as onDetune).
+Implementation details (JavaScript pseudocode):
+detuneWondrousItem(itemId) {
+  const item = this.findWondrousById(itemId);
+  if (!item) throw new Error('wondrous item not found');
+  if (!item.Attuned) return;
+  this.reverseFeaturesBySourceAndTrigger(item.Id, 'onAttune');
+  item.Attuned = false;
+  if (!this.Inventory.Attuned) this.Inventory.Attuned = {};
+  this.Inventory.Attuned[item.Id] = false;
+  for (const f of (item.FeaturesOnDetune || [])) {
+	this.applyFeature('onDetune', item.Id, f);
+  }
+}
+Returns / End result:
+Returns void. Attune effects reversed; item detuned.
+ 
+3.5 Character — Attachment Management
+Method: setRace(race: RaceObject | null): void
+Description:
+Assigns the Race attachment. Reverses prior race-origin feature instances, then applies new race features with Trigger=onAdd.
+Implementation details (JavaScript pseudocode):
+setRace(race) {
+  if (this.Race) this.reverseAllFeaturesFromSource(this.Race.Id);
+  this.Race = race;
+  if (!race) { this.recomputeAllDerived(); return; }
+  for (const f of (race.Features || [])) {
+	if (f.Trigger === 'onAdd') this.applyFeature('onAdd', race.Id, f);
+  }
+}
+Returns / End result:
+Returns void. Race updated; old race effects reversed; new effects applied.
+ 
+Method: setBackground(bg: BackgroundObject | null): void
+Description:
+Assigns the Background attachment. Reverses prior background-origin feature instances, then applies new background Trigger=onAdd features.
+Implementation details (JavaScript pseudocode):
+setBackground(bg) {
+  if (this.Background) this.reverseAllFeaturesFromSource(this.Background.Id);
+  this.Background = bg;
+  if (!bg) { this.recomputeAllDerived(); return; }
+  for (const f of (bg.Features || [])) {
+	if (f.Trigger === 'onAdd') this.applyFeature('onAdd', bg.Id, f);
+  }
+}
+Returns / End result:
+Returns void. Background updated; effects reversed/applied.
+ 
+Method: addClass(classObj: ClassObject): void
+Description:
+Adds a Class attachment and applies its features with Trigger=onAdd.
+Implementation details (JavaScript pseudocode):
+addClass(classObj) {
+  if (!Array.isArray(this.Classes)) this.Classes = [];
+  this.Classes.push(classObj);
+  for (const f of (classObj.Features || [])) {
+	if (f.Trigger === 'onAdd') this.applyFeature('onAdd', classObj.Id, f);
+  }
+}
+Returns / End result:
+Returns void. Class attached; features applied.
+ 
+Method: removeClass(classId: string): void
+Description:
+Removes a Class attachment and reverses all feature instances originating from that class sourceId.
+Implementation details (JavaScript pseudocode):
+removeClass(classId) {
+  this.reverseAllFeaturesFromSource(classId);
+  this.Classes = (this.Classes || []).filter(c => c.Id !== classId);
+}
+Returns / End result:
+Returns void. Class detached; effects reversed.
+ 
+Method: addSubclass(subclass: SubclassObject): void
+Description:
+Adds a Subclass attachment and applies its features with Trigger=onAdd.
+Implementation details (JavaScript pseudocode):
+addSubclass(subclass) {
+  if (!Array.isArray(this.Subclasses)) this.Subclasses = [];
+  this.Subclasses.push(subclass);
+  for (const f of (subclass.Features || [])) {
+	if (f.Trigger === 'onAdd') this.applyFeature('onAdd', subclass.Id, f);
+  }
+}
+Returns / End result:
+Returns void. Subclass attached; effects applied.
+ 
+Method: removeSubclass(subclassId: string): void
+Description:
+Removes a Subclass attachment and reverses all feature instances originating from that subclass sourceId.
+Implementation details (JavaScript pseudocode):
+removeSubclass(subclassId) {
+  this.reverseAllFeaturesFromSource(subclassId);
+  this.Subclasses = (this.Subclasses || []).filter(s => s.Id !== subclassId);
+}
+Returns / End result:
+Returns void. Subclass detached; effects reversed.
+ 
+Method: addStandaloneFeature(feature: FeatureObject): string
+Description:
+Adds a FeatureObject directly to Character.Features and applies it as Trigger=onAdd. Used for feats, manual features, etc.
+Implementation details (JavaScript pseudocode):
+addStandaloneFeature(feature) {
+  if (!Array.isArray(this.Features)) this.Features = [];
+  this.Features.push(feature);
+  return this.applyFeature('onAdd', 'character', feature);
+}
+Returns / End result:
+Returns featureInstanceId for the applied feature instance.
+ 
+Method: removeStandaloneFeature(featureId: string): void
+Description:
+Removes a FeatureObject from Character.Features and reverses all applied feature instances matching featureId with sourceId='character'.
+Implementation details (JavaScript pseudocode):
+removeStandaloneFeature(featureId) {
+  // reverse all matching applied instances
+  const ids = [];
+  for (const [id, rec] of this.ActiveFeatureRefs.entries()) {
+	if (rec.sourceId === 'character' && rec.featureId === featureId) ids.push(id);
+  }
+  for (const id of ids) this.reverseFeature(id);
+  // remove from attachment list
+  this.Features = (this.Features || []).filter(f => f.Id !== featureId);
+}
+Returns / End result:
+Returns void. Feature removed; associated applied instances reversed.
+ 
+3.6 Character — Feature Reversal Helpers
+Method: reverseAllFeaturesFromSource(sourceId: string): void
+Description:
+Reverses every applied feature instance whose record.sourceId matches. Used when removing an attachment or losing an item.
+Implementation details (JavaScript pseudocode):
+reverseAllFeaturesFromSource(sourceId) {
+  const ids = [];
+  for (const [id, rec] of this.ActiveFeatureRefs.entries()) {
+	if (rec.sourceId === sourceId) ids.push(id);
+  }
+  for (const id of ids) this.reverseFeature(id);
+}
+Returns / End result:
+Returns void. All effects from that source are undone.
+ 
+Method: reverseFeaturesBySourceAndTrigger(sourceId: string, trigger: string): void
+Description:
+Reverses only those applied feature instances matching both sourceId and trigger. Used for equip/attune toggles.
+Implementation details (JavaScript pseudocode):
+reverseFeaturesBySourceAndTrigger(sourceId, trigger) {
+  const ids = [];
+  for (const [id, rec] of this.ActiveFeatureRefs.entries()) {
+	if (rec.sourceId === sourceId && rec.trigger === trigger) ids.push(id);
+  }
+  for (const id of ids) this.reverseFeature(id);
+}
+Returns / End result:
+Returns void. Matching effects undone.
+ 
+3.7 Character — Lookup / Finder Methods
+Method: findAnyItemById(itemId: string): (ItemObject | WeaponObject | WondrousItemObject | null)
+Description:
+Searches Inventory.Items, Inventory.Weapons, and Inventory.WondrousItems for an object with matching Id.
+Implementation details (JavaScript pseudocode):
+findAnyItemById(itemId) {
+  const inv = this.Inventory || {};
+  return (inv.Items || []).find(i => i.Id === itemId)
+  	|| (inv.Weapons || []).find(w => w.Id === itemId)
+  	|| (inv.WondrousItems || []).find(x => x.Id === itemId)
+  	|| null;
+}
+Returns / End result:
+Returns the found object or null.
+ 
+Method: findWeaponById(weaponId: string): (WeaponObject | null)
+Description:
+Finds a weapon in Inventory.Weapons by Id.
+Implementation details (JavaScript pseudocode):
+findWeaponById(weaponId) {
+  return (this.Inventory?.Weapons || []).find(w => w.Id === weaponId) || null;
+}
+Returns / End result:
+Returns WeaponObject or null.
+ 
+Method: findWondrousById(itemId: string): (WondrousItemObject | null)
+Description:
+Finds a wondrous item in Inventory.WondrousItems by Id.
+Implementation details (JavaScript pseudocode):
+findWondrousById(itemId) {
+  return (this.Inventory?.WondrousItems || []).find(w => w.Id === itemId) || null;
+}
+Returns / End result:
+Returns WondrousItemObject or null.
+ 
+3.8 Character — Derived Recompute Hook (Original Specification)
+Method: recomputeAllDerived(): void
+Description:
+Runs the original ComputeAllDerived(character) pipeline after any state mutation. No additional compute stages are introduced beyond the original specification.
+Implementation details (JavaScript pseudocode):
+recomputeAllDerived() {
+  ComputeAllDerived(this);
+}
+Returns / End result:
+Returns void. Derived fields are updated based on BaseStats and current inventory weapon data.
+ 
+3.9 Compute Functions (Original Specification Only)
+Method: computeStatMods(statsMap: object): object
+Description:
+Computes stat modifiers for STR/DEX/CON/WIS/INT/CHA using floor((stat - 10) / 2).
+Implementation details (JavaScript pseudocode):
+function computeStatMods(statsMap) {
+  const modMap = {};
+  for (const stat of ['STR','DEX','CON','WIS','INT','CHA']) {
+	const v = statsMap[stat] ?? 0;
+	modMap[stat] = Math.floor((v - 10) / 2);
+  }
+  return modMap;
+}
+Returns / End result:
+Returns Map<stat → int>.
+ 
+Method: computeAttackMods(modMap: object, weaponArray: WeaponObject[], profBonus: int): WeaponObject[]
+Description:
+For each weapon, chooses the best attack modifier across its PrimaryStats. Adds proficiency bonus if weapon.Proficient, and adds weapon.AttackBonus. Stores result into weapon.attackMod.
+Implementation details (JavaScript pseudocode):
+function computeAttackMods(modMap, weaponArray, profBonus) {
+  for (const weapon of weaponArray) {
+	let wMod = 0;
+	for (const primaryStat of (weapon.PrimaryStats || [])) {
+  	let candidate = modMap[primaryStat] ?? 0;
+  	if (weapon.Proficient) candidate += profBonus;
+  	candidate += (weapon.AttackBonus ?? 0);
+  	wMod = Math.max(wMod, candidate);
+	}
+	weapon.attackMod = wMod;
+  }
+  return weaponArray;
+}
+Returns / End result:
+Returns weaponArray with updated weapon.attackMod values.
+ 
+Method: computeSaves(sMods: object, primaryClassSavingThrows: stats[], profBonus: int): object
+Description:
+Computes saves: base save equals sMods[stat]. If stat is in primaryClassSavingThrows, adds ProficiencyBonus. Stores results in a save map.
+Implementation details (JavaScript pseudocode):
+function computeSaves(sMods, primaryClassSavingThrows, profBonus) {
+  const saves = {};
+  for (const stat of ['STR','DEX','CON','WIS','INT','CHA']) {
+	let v = sMods[stat] ?? 0;
+	if (primaryClassSavingThrows?.includes(stat)) v += profBonus;
+	saves[stat] = v;
+  }
+  return saves;
+}
+Returns / End result:
+Returns Map<stat → int>.
+ 
+Method: ComputeAllDerived(character: Character): void
+Description:
+Runs the original compute pipeline steps as specified. Implementation includes computeStatMods, computeSaves, computeAttackMods. Other steps are placeholders for your existing logic (skills, AC, initiative, HP, etc.).
+Implementation details (JavaScript pseudocode):
+function ComputeAllDerived(character) {
+  // 1) Start from BaseStats → working Stats map
+  character.Stats = { ...character.BaseStats };
+ 
+  // 2) Apply stat-affecting effects (in this system, features mutate BaseStats once)
+ 
+  // 3) computeStatMods(stats) → sMods
+  character.sMods = computeStatMods(character.Stats);
+ 
+  // 4) Compute ProficiencyBonus (rule not defined in original doc; implement separately)
+  // character.ProficiencyBonus = ...
+ 
+  // 5) computeSaves(stats, primaryClassSavingThrows, other save bonuses)
+  const primarySavingThrows = character.Classes?.[0]?.SavingThrows || [];
+  character.Saves = computeSaves(character.sMods, primarySavingThrows, character.ProficiencyBonus);
+ 
+  // 6) computeAttackMods(sMods, weaponArray, proficiencyBonus)
+  computeAttackMods(character.sMods, character.Inventory?.Weapons || [], character.ProficiencyBonus);
+ 
+  // 7) ComputeSkills(character) (if implemented elsewhere)
+  // ComputeSkills(character);
+ 
+  // 8) ComputeArmorClass / Initiative / Speed / HP, etc. (if implemented elsewhere)
+  // character.Initiative = character.Init + character.sMods.DEX + ...
+}
+Returns / End result:
+Returns void. Updates derived fields.

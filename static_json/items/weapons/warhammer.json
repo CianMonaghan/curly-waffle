@@ -11,12 +11,20 @@
         {
             "id": "attack-warhammer-onehand",
             "name": "Melee Attack (Warhammer, One-Handed)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "melee"
+            },
             "description": null,
             "trigger": "onEquip"
         },
         {
             "id": "attack-warhammer-twohand",
             "name": "Melee Attack (Warhammer, Two-Handed)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "melee"
+            },
             "description": null,
             "trigger": "onEquip"
         }
@@ -25,6 +33,8 @@
         {
             "id": "loss-attack-warhammer",
             "name": null,
+            "handler": null,
+            "data": null,
             "description": null,
             "trigger": "onUnequip"
         }
@@ -39,8 +49,14 @@
             "sides": 10
         }
     },
-    "range": [5,null,null],
-    "primary_stat": ["Strength"],
+    "range": [
+        5,
+        null,
+        null
+    ],
+    "primary_stat": [
+        "Strength"
+    ],
     "martial": true,
     "improvised": false,
     "attack_bonus": 0,

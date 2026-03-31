@@ -1,0 +1,34 @@
+{
+    "id": 10,
+    "local_id": 0,
+    "name": "Padded Armor",
+    "type": "armor",
+    "description": "Light armor. AC 11 + Dex modifier. Disadvantage on Stealth checks.",
+    "equipped": false,
+    "features_on_obtain": null,
+    "features_on_lose": null,
+    "features_on_equip": [
+        {
+            "id": "calc-ac-padded",
+            "name": "calcAC",
+            "handler": "calcAC",
+            "data": { "base_ac": 11, "dex_cap": null },
+            "description": null,
+            "trigger": "onEquip"
+        }
+    ],
+    "features_on_unequip": [
+        {
+            "id": "calc-ac-padded",
+            "name": "remove_feature",
+            "handler": null,
+            "data": null,
+            "description": null,
+            "trigger": "onUnequip"
+        }
+    ],
+    "prof": true,
+    "attuned": null,
+    "features_on_attune": null,
+    "features_on_detune": null
+}

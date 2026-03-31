@@ -11,18 +11,30 @@
         {
             "id": "attack-spear-melee-onehand",
             "name": "Melee Attack (Spear, One-Handed)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "melee"
+            },
             "description": null,
             "trigger": "onEquip"
         },
         {
             "id": "attack-spear-melee-twohand",
             "name": "Melee Attack (Spear, Two-Handed)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "melee"
+            },
             "description": null,
             "trigger": "onEquip"
         },
         {
             "id": "attack-spear-range",
             "name": "Ranged Attack (Spear)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "ranged"
+            },
             "description": null,
             "trigger": "onEquip"
         }
@@ -31,6 +43,8 @@
         {
             "id": "loss-attack-spear",
             "name": null,
+            "handler": null,
+            "data": null,
             "description": null,
             "trigger": "onUnequip"
         }
@@ -45,8 +59,14 @@
             "sides": 8
         }
     },
-    "range": [5,20,60],
-    "primary_stat": ["Strength"],
+    "range": [
+        5,
+        20,
+        60
+    ],
+    "primary_stat": [
+        "Strength"
+    ],
     "martial": false,
     "improvised": false,
     "attack_bonus": 0,

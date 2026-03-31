@@ -25,6 +25,10 @@
         {
             "id": "attack-dhybkor",
             "name": "Ranged Attack (Longbow)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "ranged"
+            },
             "description": null,
             "trigger": "onEquip"
         }
@@ -33,6 +37,8 @@
         {
             "id": "loss-attack-dhybkor",
             "name": null,
+            "handler": null,
+            "data": null,
             "description": null,
             "trigger": "onUnequip"
         }
@@ -44,8 +50,14 @@
             "sides": 6
         }
     },
-    "range": [null, 60, 240],
-    "primary_stat": ["Strength"],
+    "range": [
+        null,
+        60,
+        240
+    ],
+    "primary_stat": [
+        "Strength"
+    ],
     "martial": false,
     "improvised": false,
     "attack_bonus": 0,

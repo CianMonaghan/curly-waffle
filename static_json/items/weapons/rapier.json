@@ -11,6 +11,10 @@
         {
             "id": "attack-rapier",
             "name": "Melee Attack (Rapier)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "melee"
+            },
             "description": null,
             "trigger": "onEquip"
         }
@@ -19,6 +23,8 @@
         {
             "id": "loss-attack-rapier",
             "name": null,
+            "handler": null,
+            "data": null,
             "description": null,
             "trigger": "onUnequip"
         }
@@ -30,8 +36,15 @@
         },
         "twoHand": null
     },
-    "range": [5,null,null],
-    "primary_stat": ["Strength", "Dexterity"],
+    "range": [
+        5,
+        null,
+        null
+    ],
+    "primary_stat": [
+        "Strength",
+        "Dexterity"
+    ],
     "martial": true,
     "improvised": false,
     "attack_bonus": 0,

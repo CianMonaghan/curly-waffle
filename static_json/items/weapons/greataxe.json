@@ -25,6 +25,10 @@
         {
             "id": "attack-greataxe",
             "name": "Melee Attack (Greataxe)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "melee"
+            },
             "description": null,
             "trigger": "onEquip"
         }
@@ -33,6 +37,8 @@
         {
             "id": "loss-attack-greataxe",
             "name": null,
+            "handler": null,
+            "data": null,
             "description": null,
             "trigger": "onUnequip"
         }
@@ -44,8 +50,14 @@
             "sides": 12
         }
     },
-    "range":[5,null,null],
-    "primary_stat": ["Strength"],
+    "range": [
+        5,
+        null,
+        null
+    ],
+    "primary_stat": [
+        "Strength"
+    ],
     "martial": true,
     "improvised": false,
     "attack_bonus": 0,

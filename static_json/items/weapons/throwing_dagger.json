@@ -11,6 +11,10 @@
         {
             "id": "attack-throwdagger",
             "name": "Ranged Attack (Dagger)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "ranged"
+            },
             "description": null,
             "trigger": "onEquip"
         }
@@ -19,6 +23,8 @@
         {
             "id": "loss-attack-throwdagger",
             "name": null,
+            "handler": null,
+            "data": null,
             "description": null,
             "trigger": "onUnequip"
         }
@@ -30,8 +36,15 @@
         },
         "twoHand": null
     },
-    "range": [null,60,180],
-    "primary_stat": ["Strength", "Dexterity"],
+    "range": [
+        null,
+        60,
+        180
+    ],
+    "primary_stat": [
+        "Strength",
+        "Dexterity"
+    ],
     "martial": false,
     "improvised": false,
     "attack_bonus": 0,

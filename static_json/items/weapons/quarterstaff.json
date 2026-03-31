@@ -11,12 +11,20 @@
         {
             "id": "attack-quarterstaff-onehand",
             "name": "Melee Attack (Quarterstaff, One-Handed)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "melee"
+            },
             "description": null,
             "trigger": "onEquip"
         },
         {
             "id": "attack-quarterstaff-twohand",
             "name": "Melee Attack (Quarterstaff, Two-Handed)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "melee"
+            },
             "description": null,
             "trigger": "onEquip"
         }
@@ -25,6 +33,8 @@
         {
             "id": "loss-attack-quarterstaff",
             "name": null,
+            "handler": null,
+            "data": null,
             "description": null,
             "trigger": "onUnequip"
         }
@@ -39,8 +49,14 @@
             "sides": 8
         }
     },
-    "range": [5,null,null],
-    "primary_stat": ["Strength"],
+    "range": [
+        5,
+        null,
+        null
+    ],
+    "primary_stat": [
+        "Strength"
+    ],
     "martial": false,
     "improvised": false,
     "attack_bonus": 0,

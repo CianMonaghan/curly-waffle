@@ -11,6 +11,10 @@
         {
             "id": "attack-net",
             "name": "Ranged Attack (Net)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "ranged"
+            },
             "description": null,
             "trigger": "onEquip"
         }
@@ -19,6 +23,8 @@
         {
             "id": "loss-attack-net",
             "name": null,
+            "handler": null,
+            "data": null,
             "description": null,
             "trigger": "onUnequip"
         }
@@ -30,8 +36,14 @@
         },
         "twoHand": null
     },
-    "range": [null, 5, 15],
-    "primary_stat": ["Dexterity"],
+    "range": [
+        null,
+        5,
+        15
+    ],
+    "primary_stat": [
+        "Dexterity"
+    ],
     "martial": false,
     "improvised": false,
     "attack_bonus": 0,

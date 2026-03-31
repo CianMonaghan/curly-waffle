@@ -11,12 +11,20 @@
         {
             "id": "attack-tapal-onehand",
             "name": "Melee Attack (Tapal, One-Handed)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "melee"
+            },
             "description": null,
             "trigger": "onEquip"
         },
         {
             "id": "attack-tapal-twohand",
             "name": "Melee Attack (Tapal, Two-Handed)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "melee"
+            },
             "description": null,
             "trigger": "onEquip"
         }
@@ -25,6 +33,8 @@
         {
             "id": "loss-attack-tapal",
             "name": null,
+            "handler": null,
+            "data": null,
             "description": null,
             "trigger": "onUnequip"
         }
@@ -39,8 +49,15 @@
             "sides": 4
         }
     },
-    "range": [5,null,null],
-    "primary_stat": ["Strength", "Dexterity"],
+    "range": [
+        5,
+        null,
+        null
+    ],
+    "primary_stat": [
+        "Strength",
+        "Dexterity"
+    ],
     "martial": false,
     "improvised": false,
     "attack_bonus": 0,

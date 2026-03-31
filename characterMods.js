@@ -84,6 +84,21 @@ function applyMapDelete(character, mod) {
     return { op: 'mapDelete', path: mod.path, key: mod.key, reversalData: { prev } };
 }
 
+function applyListRemove(character, mod) {
+    const arr = getAtPath(character, mod.path);
+    if (!Array.isArray(arr)) throw new Error(`Path "${mod.path}" is not an array`);
+    const idx = arr.findIndex(el =>
+        (typeof el === 'object' && el !== null)
+            ? el[mod.matchKey] === mod.matchValue
+            : el === mod.matchValue
+    );
+    if (idx === -1) throw new Error(
+        `listRemove: no element with ${mod.matchKey}="${mod.matchValue}" at path "${mod.path}"`
+    );
+    const removed = arr.splice(idx, 1)[0];
+    return { op: 'listRemove', path: mod.path, matchKey: mod.matchKey, matchValue: mod.matchValue, reversalData: { idx, removed } };
+}
+
 // ─── Individual reverse functions ─────────────────────────────────────────────
 
 function reverseStatAdd(character, applied) {
@@ -119,6 +134,11 @@ function reverseMapDelete(character, applied) {
     map[applied.key] = applied.reversalData.prev;
 }
 
+function reverseListRemove(character, applied) {
+    const arr = getAtPath(character, applied.path);
+    arr.splice(applied.reversalData.idx, 0, applied.reversalData.removed);
+}
+
 // ─── Public API ───────────────────────────────────────────────────────────────
 
 /**
@@ -131,8 +151,9 @@ function applyMod(character, mod) {
         case 'statSet':   return applyStatSet(character, mod);
         case 'scalarSet': return applyScalarSet(character, mod);
         case 'listAdd':   return applyListAdd(character, mod);
-        case 'mapSet':    return applyMapSet(character, mod);
-        case 'mapDelete': return applyMapDelete(character, mod);
+        case 'mapSet':     return applyMapSet(character, mod);
+        case 'mapDelete':  return applyMapDelete(character, mod);
+        case 'listRemove': return applyListRemove(character, mod);
         default: throw new Error(`Unknown mod op: "${mod.op}"`);
     }
 }
@@ -147,8 +168,9 @@ function reverseMod(character, applied) {
         case 'statSet':   return reverseStatSet(character, applied);
         case 'scalarSet': return reverseScalarSet(character, applied);
         case 'listAdd':   return reverseListAdd(character, applied);
-        case 'mapSet':    return reverseMapSet(character, applied);
-        case 'mapDelete': return reverseMapDelete(character, applied);
+        case 'mapSet':     return reverseMapSet(character, applied);
+        case 'mapDelete':  return reverseMapDelete(character, applied);
+        case 'listRemove': return reverseListRemove(character, applied);
         default: throw new Error(`Unknown mod op for reversal: "${applied.op}"`);
     }
 }

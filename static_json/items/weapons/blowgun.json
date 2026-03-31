@@ -11,6 +11,10 @@
         {
             "id": "attack-blowgun",
             "name": "Ranged Attack (Blowgun)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "ranged"
+            },
             "description": null,
             "trigger": "onEquip"
         }
@@ -19,6 +23,8 @@
         {
             "id": "loss-attack-blowgun",
             "name": null,
+            "handler": null,
+            "data": null,
             "description": null,
             "trigger": "onUnequip"
         }
@@ -30,8 +36,14 @@
         },
         "twoHand": null
     },
-    "range": [null, 25, 100],
-    "primary_stat": ["Dexterity"],
+    "range": [
+        null,
+        25,
+        100
+    ],
+    "primary_stat": [
+        "Dexterity"
+    ],
     "martial": true,
     "improvised": false,
     "attack_bonus": 0,

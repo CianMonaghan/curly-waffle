@@ -25,6 +25,10 @@
         {
             "id": "attack-greatsword",
             "name": "Melee Attack (Greatsword)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "melee"
+            },
             "description": null,
             "trigger": "onEquip"
         }
@@ -33,6 +37,8 @@
         {
             "id": "loss-attack-greatsword",
             "name": null,
+            "handler": null,
+            "data": null,
             "description": null,
             "trigger": "onUnequip"
         }
@@ -44,8 +50,14 @@
             "sides": 6
         }
     },
-    "range":[5,null,null],
-    "primary_stat": ["Strength"],
+    "range": [
+        5,
+        null,
+        null
+    ],
+    "primary_stat": [
+        "Strength"
+    ],
     "martial": true,
     "improvised": false,
     "attack_bonus": 0,

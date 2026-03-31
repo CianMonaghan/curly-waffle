@@ -25,6 +25,10 @@
         {
             "id": "attack-pike",
             "name": "Melee Attack (Pike)",
+            "handler": "addAttack",
+            "data": {
+                "mode": "melee"
+            },
             "description": null,
             "trigger": "onEquip"
         }
@@ -33,6 +37,8 @@
         {
             "id": "loss-attack-pike",
             "name": null,
+            "handler": null,
+            "data": null,
             "description": null,
             "trigger": "onUnequip"
         }
@@ -44,8 +50,14 @@
             "sides": 10
         }
     },
-    "range": [10,null,null],
-    "primary_stat": ["Strength"],
+    "range": [
+        10,
+        null,
+        null
+    ],
+    "primary_stat": [
+        "Strength"
+    ],
     "martial": true,
     "improvised": false,
     "attack_bonus": 0,
