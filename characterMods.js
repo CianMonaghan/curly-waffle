@@ -2,21 +2,28 @@
 
 // ─── characterMods.js ─────────────────────────────────────────────────────────
 //
-// Every mutation to a Character object MUST go through applyMod().
-// applyMod() returns an applied record containing full reversalData so that
-// reverseMod() can undo it exactly — no information lost.
+// Modifier stack system. Every mechanical effect is tagged with a source_id.
+// Removing a source = filtering by source_id — no reversalData, no index tracking.
 //
-// Operations (mod.op):
+// Stat resolution:
+//   natural = clamp(base + sum(adds), 1, 20)
+//   score   = max(natural, max(set values))  — "set" type overrides if higher
 //
-//   statAdd    { stat, value }          Add to a stat score (e.g. race ASI +2)
-//   statSet    { stat, value }          Set a stat score to an exact value
-//   scalarSet  { path, value }          Set any scalar field by dot-path
-//   listAdd    { path, value }          Push a value onto an array at dot-path
-//   mapSet     { path, key, value }     Set a key in an object at dot-path
-//   mapDelete  { path, key }            Delete a key from an object at dot-path
+// AC resolution:
+//   base         = max(set modifier values)  if any exist
+//                  else 10 + dexMod          (unarmored)
+//   armor_class  = base + sum(add modifier values)
 //
-// All paths use dot-notation: 'inventory.items', 'hitpoints.current_hit_points', etc.
-// Stat names use the full English name: 'Strength', 'Dexterity', etc.
+// Exported API:
+//   addStatModifier(character, sourceId, stat, type, value)
+//   addACModifier(character, sourceId, type, value)
+//   removeSourceModifiers(character, sourceId)
+//   recomputeStats(character)
+//   recomputeAC(character)
+//   addToList(character, path, value, sourceId)
+//   removeFromList(character, path, sourceId)
+//   removeSource(character, sourceId)
+//   scalarSet(character, path, value)
 
 // ─── Path helpers ─────────────────────────────────────────────────────────────
 
@@ -25,171 +32,159 @@ function getAtPath(obj, pathStr) {
 }
 
 function setAtPath(obj, pathStr, val) {
-    const parts = pathStr.split('.');
-    const last  = parts.pop();
+    const parts  = pathStr.split('.');
+    const last   = parts.pop();
     const parent = parts.reduce((o, k) => o[k], obj);
     parent[last] = val;
 }
 
-// ─── Stat helpers (stats is an array of { stat, score }) ─────────────────────
+// ─── Stat resolution ──────────────────────────────────────────────────────────
 
-function getStatEntry(character, statName) {
-    const entry = character.stats.find(s => s.stat === statName);
-    if (!entry) throw new Error(`Stat not found on character: "${statName}"`);
-    return entry;
+const statMod = score => Math.floor((score - 10) / 2);
+
+function recomputeOneStat(entry) {
+    const adds    = entry.modifiers.filter(m => m.type === 'add').reduce((s, m) => s + m.value, 0);
+    const sets    = entry.modifiers.filter(m => m.type === 'set').map(m => m.value);
+    const natural = Math.min(20, Math.max(1, entry.base + adds));
+    entry.score   = sets.length ? Math.max(natural, Math.max(...sets)) : natural;
 }
 
-// ─── Individual apply functions ───────────────────────────────────────────────
-
-const PRIMARY_STATS = new Set(['Strength','Dexterity','Constitution','Intelligence','Wisdom','Charisma']);
-
-function applyStatAdd(character, mod) {
-    const entry = getStatEntry(character, mod.stat);
-    const prev  = entry.score;
-    const raw   = prev + mod.value;
-    entry.score = PRIMARY_STATS.has(mod.stat) ? Math.min(20, Math.max(1, raw)) : raw;
-    return { op: 'statAdd', stat: mod.stat, value: mod.value, reversalData: { prev } };
-}
-
-function applyStatSet(character, mod) {
-    const entry = getStatEntry(character, mod.stat);
-    const prev  = entry.score;
-    entry.score = mod.value;
-    return { op: 'statSet', stat: mod.stat, value: mod.value, reversalData: { prev } };
-}
-
-function applyScalarSet(character, mod) {
-    const prev = getAtPath(character, mod.path);
-    setAtPath(character, mod.path, mod.value);
-    return { op: 'scalarSet', path: mod.path, value: mod.value, reversalData: { prev } };
-}
-
-function applyListAdd(character, mod) {
-    const arr = getAtPath(character, mod.path);
-    if (!Array.isArray(arr)) throw new Error(`Path "${mod.path}" is not an array`);
-    const idx = arr.length;
-    arr.push(mod.value);
-    return { op: 'listAdd', path: mod.path, value: mod.value, reversalData: { idx } };
-}
-
-function applyMapSet(character, mod) {
-    const map    = getAtPath(character, mod.path);
-    const hadKey = Object.prototype.hasOwnProperty.call(map, mod.key);
-    const prev   = map[mod.key];
-    map[mod.key] = mod.value;
-    return { op: 'mapSet', path: mod.path, key: mod.key, value: mod.value, reversalData: { hadKey, prev } };
-}
-
-function applyMapDelete(character, mod) {
-    const map  = getAtPath(character, mod.path);
-    const prev = map[mod.key];
-    delete map[mod.key];
-    return { op: 'mapDelete', path: mod.path, key: mod.key, reversalData: { prev } };
-}
-
-function applyListRemove(character, mod) {
-    const arr = getAtPath(character, mod.path);
-    if (!Array.isArray(arr)) throw new Error(`Path "${mod.path}" is not an array`);
-    const idx = arr.findIndex(el =>
-        (typeof el === 'object' && el !== null)
-            ? el[mod.matchKey] === mod.matchValue
-            : el === mod.matchValue
-    );
-    if (idx === -1) throw new Error(
-        `listRemove: no element with ${mod.matchKey}="${mod.matchValue}" at path "${mod.path}"`
-    );
-    const removed = arr.splice(idx, 1)[0];
-    return { op: 'listRemove', path: mod.path, matchKey: mod.matchKey, matchValue: mod.matchValue, reversalData: { idx, removed } };
-}
-
-// ─── Individual reverse functions ─────────────────────────────────────────────
-
-function reverseStatAdd(character, applied) {
-    const entry = getStatEntry(character, applied.stat);
-    entry.score = applied.reversalData.prev;
-}
-
-function reverseStatSet(character, applied) {
-    const entry = getStatEntry(character, applied.stat);
-    entry.score = applied.reversalData.prev;
-}
-
-function reverseScalarSet(character, applied) {
-    setAtPath(character, applied.path, applied.reversalData.prev);
-}
-
-function reverseListAdd(character, applied) {
-    const arr = getAtPath(character, applied.path);
-    arr.splice(applied.reversalData.idx, 1);
-}
-
-function reverseMapSet(character, applied) {
-    const map = getAtPath(character, applied.path);
-    if (applied.reversalData.hadKey) {
-        map[applied.key] = applied.reversalData.prev;
-    } else {
-        delete map[applied.key];
+function recomputeStats(character) {
+    for (const entry of character.stats) {
+        recomputeOneStat(entry);
     }
 }
 
-function reverseMapDelete(character, applied) {
-    const map = getAtPath(character, applied.path);
-    map[applied.key] = applied.reversalData.prev;
+// ─── AC resolution ────────────────────────────────────────────────────────────
+
+function recomputeAC(character) {
+    const dexEntry = character.stats.find(s => s.stat === 'Dexterity');
+    const dex      = statMod(dexEntry?.score ?? 10);
+    const setMods  = character.ac_modifiers.filter(m => m.type === 'set');
+    const addTotal = character.ac_modifiers.filter(m => m.type === 'add').reduce((s, m) => s + m.value, 0);
+    const base     = setMods.length ? Math.max(...setMods.map(m => m.value)) : (10 + dex);
+    character.armor_class = base + addTotal;
 }
 
-function reverseListRemove(character, applied) {
-    const arr = getAtPath(character, applied.path);
-    arr.splice(applied.reversalData.idx, 0, applied.reversalData.removed);
-}
-
-// ─── Public API ───────────────────────────────────────────────────────────────
+// ─── Modifier stack ops ───────────────────────────────────────────────────────
 
 /**
- * Apply a single modification to character.
- * Returns an applied record with reversalData. Store this to enable reversal.
+ * Add a modifier to a stat's modifier stack, then recompute that stat's score.
+ * @param {string} type - "add" (stacks with others) | "set" (overrides if higher than natural)
  */
-function applyMod(character, mod) {
-    switch (mod.op) {
-        case 'statAdd':   return applyStatAdd(character, mod);
-        case 'statSet':   return applyStatSet(character, mod);
-        case 'scalarSet': return applyScalarSet(character, mod);
-        case 'listAdd':   return applyListAdd(character, mod);
-        case 'mapSet':     return applyMapSet(character, mod);
-        case 'mapDelete':  return applyMapDelete(character, mod);
-        case 'listRemove': return applyListRemove(character, mod);
-        default: throw new Error(`Unknown mod op: "${mod.op}"`);
-    }
+function addStatModifier(character, sourceId, stat, type, value) {
+    const entry = character.stats.find(s => s.stat === stat);
+    if (!entry) throw new Error(`addStatModifier: stat not found: "${stat}"`);
+    entry.modifiers.push({ source_id: sourceId, type, value });
+    recomputeOneStat(entry);
 }
 
 /**
- * Reverse a previously applied modification.
- * Pass the applied record returned by applyMod().
+ * Add a modifier to the AC modifier stack, then recompute armor_class.
+ * @param {string} type - "set" (body armor base) | "add" (shield, spell bonus)
  */
-function reverseMod(character, applied) {
-    switch (applied.op) {
-        case 'statAdd':   return reverseStatAdd(character, applied);
-        case 'statSet':   return reverseStatSet(character, applied);
-        case 'scalarSet': return reverseScalarSet(character, applied);
-        case 'listAdd':   return reverseListAdd(character, applied);
-        case 'mapSet':     return reverseMapSet(character, applied);
-        case 'mapDelete':  return reverseMapDelete(character, applied);
-        case 'listRemove': return reverseListRemove(character, applied);
-        default: throw new Error(`Unknown mod op for reversal: "${applied.op}"`);
-    }
+function addACModifier(character, sourceId, type, value) {
+    character.ac_modifiers.push({ source_id: sourceId, type, value });
+    recomputeAC(character);
 }
 
 /**
- * Reverse an entire active_feature entry (applied_feature_record) in reverse order.
- * Pass one element from character.active_features.
+ * Remove ALL stat and AC modifiers belonging to sourceId, then recompute.
+ * Returns true if anything was changed.
  */
-function reverseActiveFeature(character, activeFeatureEntry) {
-    for (const record of activeFeatureEntry.applied_feature_record) {
-        for (const appliedMod of [...record.applied_modifications].reverse()) {
-            for (const a of [...appliedMod.applied].reverse()) {
-                reverseMod(character, a);
-            }
+function removeSourceModifiers(character, sourceId) {
+    let changed = false;
+
+    for (const entry of character.stats) {
+        const before = entry.modifiers.length;
+        entry.modifiers = entry.modifiers.filter(m => m.source_id !== sourceId);
+        if (entry.modifiers.length !== before) {
+            recomputeOneStat(entry);
+            changed = true;
         }
     }
+
+    const acBefore = character.ac_modifiers.length;
+    character.ac_modifiers = character.ac_modifiers.filter(m => m.source_id !== sourceId);
+    if (character.ac_modifiers.length !== acBefore) {
+        recomputeAC(character);
+        changed = true;
+    }
+
+    return changed;
 }
 
-module.exports = { applyMod, reverseMod, reverseActiveFeature };
+// ─── Source-tagged array helpers ──────────────────────────────────────────────
+
+// Standard lists that carry source_id on each entry
+const LIST_PATHS = [
+    'features',
+    'skill_proficiencies',
+    'tool_proficiencies',
+    'item_proficiencies',
+];
+
+/**
+ * Push a value onto the array at dot-path, tagging it with source_id.
+ * Object values get { ...value, source_id: sourceId } merged in.
+ * Primitive values (strings) are pushed as-is (e.g. character.languages).
+ */
+function addToList(character, path, value, sourceId) {
+    const arr = getAtPath(character, path);
+    if (!Array.isArray(arr)) throw new Error(`addToList: "${path}" is not an array`);
+    const entry = (typeof value === 'object' && value !== null)
+        ? { ...value, source_id: sourceId }
+        : value;
+    arr.push(entry);
+}
+
+/**
+ * Remove all object entries tagged with sourceId from the array at dot-path.
+ * Primitive entries (languages) are not source-tracked and are left alone.
+ */
+function removeFromList(character, path, sourceId) {
+    const arr = getAtPath(character, path);
+    if (!Array.isArray(arr)) throw new Error(`removeFromList: "${path}" is not an array`);
+    const before   = arr.length;
+    const filtered = arr.filter(el =>
+        (typeof el === 'object' && el !== null) ? el.source_id !== sourceId : true
+    );
+    arr.length = 0;
+    arr.push(...filtered);
+    return arr.length !== before;
+}
+
+/**
+ * Remove ALL traces of sourceId from the character:
+ *   - All stat/AC modifiers
+ *   - All source-tagged entries in standard list paths and inventory.items
+ */
+function removeSource(character, sourceId) {
+    removeSourceModifiers(character, sourceId);
+    for (const path of LIST_PATHS) {
+        removeFromList(character, path, sourceId);
+    }
+    removeFromList(character, 'inventory.items', sourceId);
+}
+
+// ─── Scalar helper ────────────────────────────────────────────────────────────
+
+/**
+ * Set any scalar field by dot-path.
+ * Used for character.race, character.background, character.speed, etc.
+ */
+function scalarSet(character, path, value) {
+    setAtPath(character, path, value);
+}
+
+module.exports = {
+    addStatModifier,
+    addACModifier,
+    removeSourceModifiers,
+    recomputeStats,
+    recomputeAC,
+    addToList,
+    removeFromList,
+    removeSource,
+    scalarSet,
+};

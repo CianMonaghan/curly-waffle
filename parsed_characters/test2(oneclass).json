@@ -4,26 +4,82 @@
   "stats": [
     {
       "stat": "Strength",
+      "base": 16,
+      "modifiers": [
+        {
+          "source_id": "class-0",
+          "type": "add",
+          "value": 1
+        },
+        {
+          "source_id": "class-0",
+          "type": "add",
+          "value": 1
+        },
+        {
+          "source_id": "class-0",
+          "type": "add",
+          "value": 1
+        },
+        {
+          "source_id": "class-0",
+          "type": "add",
+          "value": 1
+        },
+        {
+          "source_id": "class-0",
+          "type": "add",
+          "value": 1
+        }
+      ],
       "score": 20
     },
     {
       "stat": "Dexterity",
+      "base": 10,
+      "modifiers": [],
       "score": 10
     },
     {
       "stat": "Constitution",
+      "base": 10,
+      "modifiers": [
+        {
+          "source_id": "race-1",
+          "type": "add",
+          "value": 2
+        }
+      ],
       "score": 12
     },
     {
       "stat": "Intelligence",
+      "base": 10,
+      "modifiers": [
+        {
+          "source_id": "class-0",
+          "type": "add",
+          "value": 1
+        }
+      ],
       "score": 11
     },
     {
       "stat": "Wisdom",
+      "base": 10,
+      "modifiers": [
+        {
+          "source_id": "race-1",
+          "type": "add",
+          "value": 1
+        }
+      ],
       "score": 11
     },
     {
       "stat": "Charisma",
+      "base": 10,
+      "modifiers": [],
       "score": 10
     }
   ],
@@ -61,6 +117,7 @@
       "save": 0
     }
   ],
+  "ac_modifiers": [],
   "armor_class": 10,
   "languages": [
     "Common",
@@ -71,29 +128,48 @@
   "skill_proficiencies": [
     {
       "skill": "Insight",
-      "expertise": false
+      "expertise": false,
+      "source_id": "background-0"
     },
     {
       "skill": "Religion",
-      "expertise": false
+      "expertise": false,
+      "source_id": "background-0"
     },
     {
       "skill": "Acrobatics",
-      "expertise": false
+      "expertise": false,
+      "source_id": "class-0"
     },
     {
       "skill": "History",
-      "expertise": false
+      "expertise": false,
+      "source_id": "class-0"
     }
   ],
   "tool_proficiencies": [
-    "Smith's Tools"
+    {
+      "tool": "Smith's Tools",
+      "source_id": "race-1"
+    }
   ],
   "item_proficiencies": [
-    "battleaxe",
-    "handaxe",
-    "light hammer",
-    "warhammer"
+    {
+      "item": "battleaxe",
+      "source_id": "race-1"
+    },
+    {
+      "item": "handaxe",
+      "source_id": "race-1"
+    },
+    {
+      "item": "light hammer",
+      "source_id": "race-1"
+    },
+    {
+      "item": "warhammer",
+      "source_id": "race-1"
+    }
   ],
   "race": {
     "id": "1",
@@ -127,7 +203,8 @@
         "Strength",
         "Constitution"
       ],
-      "spell_list": []
+      "spell_list": [],
+      "source_id": "class-0"
     }
   ],
   "subclasses": [
@@ -136,7 +213,8 @@
       "name": "Battle Master",
       "class": "Fighter",
       "description": "",
-      "features": []
+      "features": [],
+      "source_id": "class-0"
     }
   ],
   "features": [
@@ -144,193 +222,225 @@
       "id": "feat-asi-con-2",
       "name": "Ability Score Increase (CON +2)",
       "description": "Your Constitution score increases by 2.",
-      "trigger": "onAdd"
+      "trigger": "onAdd",
+      "source_id": "race-1"
     },
     {
       "id": "speed-25-dwarf",
       "name": "Speed",
       "description": "Your base walking speed is 25 feet. Your speed is not reduced by heavy armor.",
-      "trigger": "onAdd"
+      "trigger": "onAdd",
+      "source_id": "race-1"
     },
     {
       "id": "darkvision-60",
       "name": "Darkvision",
       "description": "Accustomed to life undergound, you have superior vision in dark and dim conditions. You can see in dim light within 60ft of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.",
-      "trigger": "onAdd"
+      "trigger": "onAdd",
+      "source_id": "race-1"
     },
     {
       "id": "dwarf-resilience",
       "name": "Dwarvish Resilience",
       "description": "You have advantage on saving throws against poison, and you have resistance to poison damage.",
-      "trigger": "onAdd"
+      "trigger": "onAdd",
+      "source_id": "race-1"
     },
     {
       "id": "race-1-weapon-prof",
       "name": "Weapon Proficiency",
       "description": "Proficient with: battleaxe, handaxe, light hammer, warhammer.",
-      "trigger": "passive"
+      "trigger": "passive",
+      "source_id": "race-1"
     },
     {
       "id": "dwarf-weapon-prof",
       "name": "Dwarvish Weapon Training",
       "description": "You have profiency with the battleaxe, handaxe, light hammer, and warhammer.",
-      "trigger": "onAdd"
+      "trigger": "onAdd",
+      "source_id": "race-1"
     },
     {
       "id": "race-1-dwarf-tool-prof-smith_s_tools",
       "name": "Tool Proficiency: Smith's Tools",
       "description": "Proficient with Smith's Tools.",
-      "trigger": "passive"
+      "trigger": "passive",
+      "source_id": "race-1"
     },
     {
       "id": "dwarf-tool-prof",
       "name": "Tool Proficiency",
       "description": "You gain proficiency with the artisan's tools of your choice: smith's tools, brewer's supplies, or mason's tools.",
-      "trigger": "onAdd"
+      "trigger": "onAdd",
+      "source_id": "race-1"
     },
     {
       "id": "stonecunning",
       "name": "Stonecunning",
       "description": "Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus.",
-      "trigger": "onAdd"
+      "trigger": "onAdd",
+      "source_id": "race-1"
     },
     {
       "id": "dwarf-lang",
       "name": "Languages",
       "description": "You can speak, read, and write Common and Dwarvish.",
-      "trigger": "onAdd"
+      "trigger": "onAdd",
+      "source_id": "race-1"
     },
     {
       "id": "feat-asi-wis-1",
       "name": "Ability Score Increase (WIS +1)",
       "description": "Your Wisdom score increases by 1.",
-      "trigger": "onAdd"
+      "trigger": "onAdd",
+      "source_id": "race-1"
     },
     {
       "id": "dwarf-toughness",
       "name": "Dwarvish Toughness",
       "description": "Your hit point maximum increases by 1, and it increases by 1 every time you gain a level.",
-      "trigger": "onAdd"
+      "trigger": "onAdd",
+      "source_id": "race-1"
     },
     {
       "id": "background-0-skill-insight",
       "name": "Skill Proficiency: Insight",
       "description": "Proficiency in the Insight skill.",
-      "trigger": "passive"
+      "trigger": "passive",
+      "source_id": "background-0"
     },
     {
       "id": "background-0-skill-religion",
       "name": "Skill Proficiency: Religion",
       "description": "Proficiency in the Religion skill.",
-      "trigger": "passive"
+      "trigger": "passive",
+      "source_id": "background-0"
     },
     {
       "id": "shelter-faithful",
       "name": "Shelter of the Faithful",
       "description": "As an acolyte, you command the respect of those who share your faith, and you can perform the religious ceremonies of your deity. You and your adventuring companions can expect to receive free healing and care at a temple, shrine, or other established presence of your faith, though you must provide any material components needed for spells. Those who share your religion will support you (but only you) at a modest lifestyle. \n You might also have ties to a specific temple dedicated to your chosen deity or pantheon, and you have a residence there. This could be the temple where you used to serve, if you remain on good terms with it, or a temple where you have found a new home. While near your temple, you can call upon the priests for assistance, provided the assistance you ask for is not hazardous and you remain in good standing with your temple.",
-      "trigger": "onAdd"
+      "trigger": "onAdd",
+      "source_id": "background-0"
     },
     {
       "id": "class-0-lvl1-fighting_style",
       "name": "Fighting Style",
       "description": "",
-      "trigger": "passive"
+      "trigger": "passive",
+      "source_id": "class-0"
     },
     {
       "id": "class-0-lvl1-second_wind",
       "name": "Second Wind",
       "description": "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level. \n Once you use this feature, you must finish a short or long rest before you can use it again.",
-      "trigger": "passive"
+      "trigger": "passive",
+      "source_id": "class-0"
     },
     {
       "id": "class-0-lvl2-action_surge",
       "name": "Action Surge",
       "description": "On your turn, you can take one additional action. Once you use this feature, you must finish a short or long rest before you can use it again.",
-      "trigger": "passive"
+      "trigger": "passive",
+      "source_id": "class-0"
     },
     {
       "id": "class-0-sc-lvl3-combat_superiority-commanding_presence",
       "name": "Combat Superiority: Commanding Presence",
       "description": "You learn maneuvers that are fueled by special dice called superiority dice. You learn three maneuvers of your choice. Many maneuvers enhance an attack in some way. You can use only one maneuver per attack. You learn two additional maneuvers of your choice at 7th, 10th, and 15th level. Each time you learn new maneuvers. You have four superiority dice, which are d8s. A superiority die is expended when you use it. You regain all of your expended superiority dice when you finish a short or long rest. You gain another superiority die at 7th level and one more at 15th level. Some of your maneuvers require your target to make a saving throw to resist the maneuver's effects.",
-      "trigger": "passive"
+      "trigger": "passive",
+      "source_id": "class-0"
     },
     {
       "id": "class-0-sc-lvl3-combat_superiority-feinting_attack",
       "name": "Combat Superiority: Feinting Attack",
       "description": "You learn maneuvers that are fueled by special dice called superiority dice. You learn three maneuvers of your choice. Many maneuvers enhance an attack in some way. You can use only one maneuver per attack. You learn two additional maneuvers of your choice at 7th, 10th, and 15th level. Each time you learn new maneuvers. You have four superiority dice, which are d8s. A superiority die is expended when you use it. You regain all of your expended superiority dice when you finish a short or long rest. You gain another superiority die at 7th level and one more at 15th level. Some of your maneuvers require your target to make a saving throw to resist the maneuver's effects.",
-      "trigger": "passive"
+      "trigger": "passive",
+      "source_id": "class-0"
     },
     {
       "id": "class-0-sc-lvl3-combat_superiority-grappling_strike",
       "name": "Combat Superiority: Grappling Strike",
       "description": "You learn maneuvers that are fueled by special dice called superiority dice. You learn three maneuvers of your choice. Many maneuvers enhance an attack in some way. You can use only one maneuver per attack. You learn two additional maneuvers of your choice at 7th, 10th, and 15th level. Each time you learn new maneuvers. You have four superiority dice, which are d8s. A superiority die is expended when you use it. You regain all of your expended superiority dice when you finish a short or long rest. You gain another superiority die at 7th level and one more at 15th level. Some of your maneuvers require your target to make a saving throw to resist the maneuver's effects.",
-      "trigger": "passive"
+      "trigger": "passive",
+      "source_id": "class-0"
     },
     {
       "id": "class-0-sc-lvl3-combat_superiority-menacing_attack",
       "name": "Combat Superiority: Menacing Attack",
       "description": "You learn maneuvers that are fueled by special dice called superiority dice. You learn three maneuvers of your choice. Many maneuvers enhance an attack in some way. You can use only one maneuver per attack. You learn two additional maneuvers of your choice at 7th, 10th, and 15th level. Each time you learn new maneuvers. You have four superiority dice, which are d8s. A superiority die is expended when you use it. You regain all of your expended superiority dice when you finish a short or long rest. You gain another superiority die at 7th level and one more at 15th level. Some of your maneuvers require your target to make a saving throw to resist the maneuver's effects.",
-      "trigger": "passive"
+      "trigger": "passive",
+      "source_id": "class-0"
     },
     {
       "id": "class-0-sc-lvl3-combat_superiority-rally",
       "name": "Combat Superiority: Rally",
       "description": "You learn maneuvers that are fueled by special dice called superiority dice. You learn three maneuvers of your choice. Many maneuvers enhance an attack in some way. You can use only one maneuver per attack. You learn two additional maneuvers of your choice at 7th, 10th, and 15th level. Each time you learn new maneuvers. You have four superiority dice, which are d8s. A superiority die is expended when you use it. You regain all of your expended superiority dice when you finish a short or long rest. You gain another superiority die at 7th level and one more at 15th level. Some of your maneuvers require your target to make a saving throw to resist the maneuver's effects.",
-      "trigger": "passive"
+      "trigger": "passive",
+      "source_id": "class-0"
     },
     {
       "id": "class-0-sc-lvl3-student_of_war-commanding_presence",
       "name": "Student of War: Commanding Presence",
       "description": "",
-      "trigger": "passive"
+      "trigger": "passive",
+      "source_id": "class-0"
     },
     {
       "id": "class-0-sc-lvl3-student_of_war-feinting_attack",
       "name": "Student of War: Feinting Attack",
       "description": "",
-      "trigger": "passive"
+      "trigger": "passive",
+      "source_id": "class-0"
     },
     {
       "id": "class-0-sc-lvl3-student_of_war-grappling_strike",
       "name": "Student of War: Grappling Strike",
       "description": "",
-      "trigger": "passive"
+      "trigger": "passive",
+      "source_id": "class-0"
     },
     {
       "id": "class-0-sc-lvl3-student_of_war-menacing_attack",
       "name": "Student of War: Menacing Attack",
       "description": "",
-      "trigger": "passive"
+      "trigger": "passive",
+      "source_id": "class-0"
     },
     {
       "id": "class-0-sc-lvl3-student_of_war-rally",
       "name": "Student of War: Rally",
       "description": "",
-      "trigger": "passive"
+      "trigger": "passive",
+      "source_id": "class-0"
     },
     {
       "id": "class-0-lvl5-extra_attack",
       "name": "Extra Attack",
       "description": "You can attack twice when you take the Attack action on your turn.",
-      "trigger": "passive"
+      "trigger": "passive",
+      "source_id": "class-0"
     },
     {
       "id": "class-0-sc-lvl7-know_your_enemy",
       "name": "Know Your Enemy",
       "description": "If you spend at least 1 minute observing or interacting with another creature outside combat, you can learn certain information about its capabilities compared to your own. The DM tells you if the creature is your equal, superior, or inferior in regard to two of the following characteristics of your choice: Strength score, Dexterity score, Constitution score, Armor Class, Current hit points, Total class levels, if any, Fighter class levels, if any.",
-      "trigger": "passive"
+      "trigger": "passive",
+      "source_id": "class-0"
     },
     {
       "id": "class-0-sc-lvl7-combat_superiority_improvement",
       "name": "Combat Superiority Improvement",
       "description": "",
-      "trigger": "passive"
+      "trigger": "passive",
+      "source_id": "class-0"
     },
     {
       "id": "class-0-sc-lvl7-combat_superiority_improvement",
       "name": "Combat Superiority Improvement",
       "description": "",
-      "trigger": "passive"
+      "trigger": "passive",
+      "source_id": "class-0"
     }
   ],
   "inventory": {
@@ -469,7 +579,6 @@
         "name": "20 Arrows",
         "type": "item",
         "description": "",
-        "equipped": false,
         "features_on_obtain": null,
         "features_on_lose": null,
         "features_on_equip": null,
@@ -482,7 +591,6 @@
         "attack_bonus": null,
         "damage_bonus": null,
         "prof": null,
-        "attuned": null,
         "features_on_attune": null,
         "features_on_detune": null
       },
@@ -581,25 +689,57 @@
         "features_on_detune": null
       },
       {
+        "type": "wp",
         "id": "class-0-equip-g2-i0",
-        "local_id": null,
+        "local_id": 0,
         "name": "Light Crossbow",
-        "type": "item",
-        "description": "",
+        "description": "A simple ranged weapon",
         "equipped": false,
         "features_on_obtain": null,
         "features_on_lose": null,
-        "features_on_equip": null,
-        "features_on_unequip": null,
-        "dice": null,
-        "range": null,
-        "primary_stat": null,
-        "martial": null,
-        "improvised": null,
-        "attack_bonus": null,
-        "damage_bonus": null,
-        "prof": null,
-        "attuned": null,
+        "features_on_equip": [
+          {
+            "id": "attack-lcrossbow",
+            "name": "Ranged Attack (Light Crossbow)",
+            "handler": "addAttack",
+            "data": {
+              "mode": "ranged"
+            },
+            "description": null,
+            "trigger": "onEquip"
+          }
+        ],
+        "features_on_unequip": [
+          {
+            "id": "loss-attack-lcrossbow",
+            "name": null,
+            "handler": null,
+            "data": null,
+            "description": null,
+            "trigger": "onUnequip"
+          }
+        ],
+        "dice": {
+          "oneHand": null,
+          "twoHand": {
+            "num": 1,
+            "sides": 8
+          }
+        },
+        "range": [
+          null,
+          80,
+          320
+        ],
+        "primary_stat": [
+          "Dexterity"
+        ],
+        "martial": false,
+        "improvised": false,
+        "attack_bonus": 0,
+        "damage_bonus": 0,
+        "prof": true,
+        "attuned": false,
         "features_on_attune": null,
         "features_on_detune": null
       },
@@ -609,7 +749,6 @@
         "name": "20 Bolts",
         "type": "item",
         "description": "",
-        "equipped": false,
         "features_on_obtain": null,
         "features_on_lose": null,
         "features_on_equip": null,
@@ -622,7 +761,6 @@
         "attack_bonus": null,
         "damage_bonus": null,
         "prof": null,
-        "attuned": null,
         "features_on_attune": null,
         "features_on_detune": null
       },
@@ -632,7 +770,6 @@
         "name": "Dungeoneer's pack",
         "type": "item",
         "description": "",
-        "equipped": false,
         "features_on_obtain": null,
         "features_on_lose": null,
         "features_on_equip": null,
@@ -645,507 +782,16 @@
         "attack_bonus": null,
         "damage_bonus": null,
         "prof": null,
-        "attuned": null,
         "features_on_attune": null,
         "features_on_detune": null
       }
     ]
   },
-  "active_features": [
-    {
-      "feature": "base:stats",
-      "applied_feature_record": [
-        {
-          "applied_modifications": [
-            {
-              "feature_instance_id": "03312026-base-stats-9219",
-              "source_id": "base-stats",
-              "feature_id": "base-stats-apply",
-              "trigger": "on-apply",
-              "applied": [
-                {
-                  "modification": "statSet:Strength",
-                  "reversalData": {
-                    "prev": 10
-                  }
-                },
-                {
-                  "modification": "statSet:Dexterity",
-                  "reversalData": {
-                    "prev": 10
-                  }
-                },
-                {
-                  "modification": "statSet:Constitution",
-                  "reversalData": {
-                    "prev": 10
-                  }
-                },
-                {
-                  "modification": "statSet:Intelligence",
-                  "reversalData": {
-                    "prev": 10
-                  }
-                },
-                {
-                  "modification": "statSet:Wisdom",
-                  "reversalData": {
-                    "prev": 10
-                  }
-                },
-                {
-                  "modification": "statSet:Charisma",
-                  "reversalData": {
-                    "prev": 10
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "feature": "race:Hill Dwarf",
-      "applied_feature_record": [
-        {
-          "applied_modifications": [
-            {
-              "feature_instance_id": "03312026-race-1-9737",
-              "source_id": "race-1",
-              "feature_id": "race-apply-hill_dwarf",
-              "trigger": "on-apply",
-              "applied": [
-                {
-                  "modification": "statAdd:Constitution",
-                  "reversalData": {
-                    "prev": 10
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 0
-                  }
-                },
-                {
-                  "modification": "scalarSet:speed",
-                  "reversalData": {
-                    "prev": 30
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 1
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 2
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 3
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 4
-                  }
-                },
-                {
-                  "modification": "listAdd:item_proficiencies",
-                  "reversalData": {
-                    "idx": 0
-                  }
-                },
-                {
-                  "modification": "listAdd:item_proficiencies",
-                  "reversalData": {
-                    "idx": 1
-                  }
-                },
-                {
-                  "modification": "listAdd:item_proficiencies",
-                  "reversalData": {
-                    "idx": 2
-                  }
-                },
-                {
-                  "modification": "listAdd:item_proficiencies",
-                  "reversalData": {
-                    "idx": 3
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 5
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 6
-                  }
-                },
-                {
-                  "modification": "listAdd:tool_proficiencies",
-                  "reversalData": {
-                    "idx": 0
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 7
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 8
-                  }
-                },
-                {
-                  "modification": "listAdd:languages",
-                  "reversalData": {
-                    "idx": 1
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 9
-                  }
-                },
-                {
-                  "modification": "statAdd:Wisdom",
-                  "reversalData": {
-                    "prev": 10
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 10
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 11
-                  }
-                },
-                {
-                  "modification": "scalarSet:race",
-                  "reversalData": {
-                    "prev": null
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "feature": "background:Acolyte",
-      "applied_feature_record": [
-        {
-          "applied_modifications": [
-            {
-              "feature_instance_id": "03312026-background-0-2746",
-              "source_id": "background-0",
-              "feature_id": "background-apply-acolyte",
-              "trigger": "on-apply",
-              "applied": [
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 12
-                  }
-                },
-                {
-                  "modification": "listAdd:skill_proficiencies",
-                  "reversalData": {
-                    "idx": 0
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 13
-                  }
-                },
-                {
-                  "modification": "listAdd:skill_proficiencies",
-                  "reversalData": {
-                    "idx": 1
-                  }
-                },
-                {
-                  "modification": "listAdd:languages",
-                  "reversalData": {
-                    "idx": 2
-                  }
-                },
-                {
-                  "modification": "listAdd:languages",
-                  "reversalData": {
-                    "idx": 3
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 14
-                  }
-                },
-                {
-                  "modification": "scalarSet:background",
-                  "reversalData": {
-                    "prev": null
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "feature": "class:Fighter",
-      "applied_feature_record": [
-        {
-          "applied_modifications": [
-            {
-              "feature_instance_id": "03312026-class-0-9204",
-              "source_id": "class-0",
-              "feature_id": "class-apply-fighter",
-              "trigger": "on-apply",
-              "applied": [
-                {
-                  "modification": "listAdd:classes",
-                  "reversalData": {
-                    "idx": 0
-                  }
-                },
-                {
-                  "modification": "listAdd:skill_proficiencies",
-                  "reversalData": {
-                    "idx": 2
-                  }
-                },
-                {
-                  "modification": "listAdd:skill_proficiencies",
-                  "reversalData": {
-                    "idx": 3
-                  }
-                },
-                {
-                  "modification": "listAdd:subclasses",
-                  "reversalData": {
-                    "idx": 0
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 15
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 16
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 17
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 18
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 19
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 20
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 21
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 22
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 23
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 24
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 25
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 26
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 27
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 28
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 29
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 30
-                  }
-                },
-                {
-                  "modification": "listAdd:features",
-                  "reversalData": {
-                    "idx": 31
-                  }
-                },
-                {
-                  "modification": "statAdd:Strength",
-                  "reversalData": {
-                    "prev": 16
-                  }
-                },
-                {
-                  "modification": "statAdd:Intelligence",
-                  "reversalData": {
-                    "prev": 10
-                  }
-                },
-                {
-                  "modification": "statAdd:Strength",
-                  "reversalData": {
-                    "prev": 17
-                  }
-                },
-                {
-                  "modification": "statAdd:Strength",
-                  "reversalData": {
-                    "prev": 18
-                  }
-                },
-                {
-                  "modification": "statAdd:Strength",
-                  "reversalData": {
-                    "prev": 19
-                  }
-                },
-                {
-                  "modification": "statAdd:Strength",
-                  "reversalData": {
-                    "prev": 20
-                  }
-                },
-                {
-                  "modification": "listAdd:inventory.items",
-                  "reversalData": {
-                    "idx": 0
-                  }
-                },
-                {
-                  "modification": "listAdd:inventory.items",
-                  "reversalData": {
-                    "idx": 1
-                  }
-                },
-                {
-                  "modification": "listAdd:inventory.items",
-                  "reversalData": {
-                    "idx": 2
-                  }
-                },
-                {
-                  "modification": "listAdd:inventory.items",
-                  "reversalData": {
-                    "idx": 3
-                  }
-                },
-                {
-                  "modification": "listAdd:inventory.items",
-                  "reversalData": {
-                    "idx": 4
-                  }
-                },
-                {
-                  "modification": "listAdd:inventory.items",
-                  "reversalData": {
-                    "idx": 5
-                  }
-                },
-                {
-                  "modification": "listAdd:inventory.items",
-                  "reversalData": {
-                    "idx": 6
-                  }
-                },
-                {
-                  "modification": "listAdd:inventory.items",
-                  "reversalData": {
-                    "idx": 7
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ],
+  "equipped_armor": {
+    "body": null,
+    "shield": null
+  },
+  "attuned_items": [],
+  "attuned_cap": 3,
   "equipped_weapons": []
 }

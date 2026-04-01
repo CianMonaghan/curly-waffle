@@ -3,15 +3,10 @@
 // ─── computeDerived.js ────────────────────────────────────────────────────────
 //
 // computeAllDerived(character, primaryClassName) must be called after every
-// apply or reverse operation. It reads only from base/stored fields — never
-// from previously computed derived values — and writes back to the character.
-//
-// Derived fields computed here:
-//   prof_bonus              — from total character level
-//   initiative              — DEX modifier
-//   armor_class             — 10 + DEX mod (unarmored base; items override later)
-//   hitpoints.current_hit_points — from class hit dice + CON mod
-//   saves                   — stat mod + prof bonus per save proficiency
+// apply or reverse operation. Delegates stat/AC recomputation to characterMods,
+// then handles prof_bonus, initiative, HP, and saves.
+
+const { recomputeStats, recomputeAC } = require('./characterMods');
 
 const STAT_NAMES = [
     'Strength', 'Dexterity', 'Constitution',
@@ -28,35 +23,26 @@ const profBonus  = level  => PROF_BY_LEVEL[Math.max(0, level - 1)] ?? 2;
 /**
  * Recomputes all derived character fields.
  *
- * @param {object} character       - The character object (mutated in place).
+ * @param {object} character        - The character object (mutated in place).
  * @param {string} primaryClassName - Name of the primary class (used for HP).
- *                                   Falls back to the first class if not matched.
+ *                                    Falls back to the first class if not matched.
  */
 function computeAllDerived(character, primaryClassName) {
-    // Build a quick stat lookup map
+    // Recompute stat scores from modifier stacks, then AC from ac_modifiers
+    recomputeStats(character);
+    recomputeAC(character);
+
+    // Build a quick stat lookup map from the now-current scores
     const statMap = Object.fromEntries(character.stats.map(s => [s.stat, s.score]));
 
     const dexMod = statMod(statMap.Dexterity    ?? 10);
-    const conMod = statMod(statMap.Constitution  ?? 10);
+    const conMod = statMod(statMap.Constitution ?? 10);
 
     const level = totalLevel(character.classes);
     const pb    = profBonus(level || 1);
 
-    // ── Scalar derivations ─────────────────────────────────────────────────
     character.prof_bonus = pb;
     character.initiative = dexMod;
-
-    // Armor class: only recompute unarmored base when no body armor is equipped.
-    // Armor items set armor_class via equipItem → featureDispatch (calcAC handler)
-    // and that value must not be overwritten here.
-    // Detection is data-driven: body armor has a calcAC feature where is_shield != true.
-    const equippedBodyArmor = (character.inventory?.items ?? []).find(i =>
-        i.equipped === true &&
-        (i.features_on_equip ?? []).some(f => f.handler === 'calcAC' && !f.data?.is_shield)
-    );
-    if (!equippedBodyArmor) {
-        character.armor_class = 10 + dexMod;
-    }
 
     // ── HP ─────────────────────────────────────────────────────────────────
     // Primary class:    level 1 = max hit die + CON mod
@@ -68,25 +54,20 @@ function computeAllDerived(character, primaryClassName) {
 
     let maxHp = 0;
     for (const cls of character.classes) {
-        const hd         = cls.class_hp || 0;
-        const avgPerLvl  = Math.max(1, Math.floor(hd / 2) + 1 + conMod);
+        const hd        = cls.class_hp || 0;
+        const avgPerLvl = Math.max(1, Math.floor(hd / 2) + 1 + conMod);
 
         if (cls === primaryClass) {
-            // Level 1 is always max hit die for the primary class
             const firstLvl = Math.max(1, hd + conMod);
             const restLvls = Math.max(0, cls.level - 1) * avgPerLvl;
             maxHp += firstLvl + restLvls;
         } else {
-            // Non-primary classes always use average
             maxHp += cls.level * avgPerLvl;
         }
     }
     character.hitpoints.current_hit_points = Math.max(1, maxHp);
 
     // ── Saving throws ──────────────────────────────────────────────────────
-    // Collect all save proficiencies granted by all classes.
-    // (In 5e multiclassing the primary class is the only one that grants saves,
-    //  but that restriction is enforced in applyClass — here we just read what's stored.)
     const saveProfSet = new Set(character.classes.flatMap(c => c.saving_throws ?? []));
 
     character.saves = STAT_NAMES.map(s => ({

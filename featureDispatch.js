@@ -2,114 +2,129 @@
 
 // ─── featureDispatch.js ───────────────────────────────────────────────────────
 //
-// Translates a feature object into an array of applyMod-compatible mod objects.
+// Executes a feature's mechanical effect directly on the character using the
+// modifier stack system.
 //
-// ALL values come from feature.data or the item object — nothing is hardcoded.
-// This means custom homebrew items work automatically: just set handler and data
-// on their features and the parser handles them with no code changes.
+// The `source` parameter is any object with at minimum { id: string }.
+// It can be an item, a class entry, a race template, a background, etc.
+// The source.id is used as the source_id for all modifier stack entries,
+// which means removeSourceModifiers(character, source.id) undoes everything
+// this feature added — regardless of what type of thing the source is.
 //
 // Usage:
-//   const mods = dispatchFeature(feature, item, character);
-//   for (const mod of mods) appliedMods.push(applyMod(character, mod));
+//   dispatchFeature(feature, source, character)
+//   dispatchFeature(feature, source, character, slot)   // slot only used by addAttack
 //
 // Handlers (feature.handler values):
 //
-//   calcAC     — set armor_class from feature.data.{ base_ac, dex_cap, is_shield }
-//   addAttack  — add entry to equipped_weapons from item fields + feature.data.mode
-//   statSet    — set a stat score from feature.data.{ stat, value }
-//   statAdd    — add to a stat score from feature.data.{ stat, value }
+//   calcAC     — adds an AC modifier from feature.data.{ base_ac, dex_cap, is_shield }
+//   addAttack  — pushes an entry to equipped_weapons from feature.data + source fields
+//   statSet    — addStatModifier "set" from feature.data.{ stat, value }
+//   statAdd    — addStatModifier "add" from feature.data.{ stat, value }
 //
-// Adding a new handler for a homebrew item type:
-//   1. Write a function handleYourThing(feature, item, character) returning mod[]
+// Adding a new handler:
+//   1. Write handleYourThing(feature, source, character, slot)
 //   2. Add a case to the switch in dispatchFeature()
-//   3. Set handler: "yourThing" and data: { ... } on the item's feature JSON
+//   3. Set handler: "yourThing" and data: { ... } on the feature JSON — anywhere
+
+const { addStatModifier, addACModifier } = require('./characterMods');
 
 // ─── calcAC ───────────────────────────────────────────────────────────────────
 //
 // feature.data fields:
-//   base_ac   {number}       — the flat base AC of the armor (required)
-//   dex_cap   {number|null}  — max dex bonus: null = unlimited, 0 = no dex, N = max +N
-//   is_shield {boolean}      — true if this is a shield (additive to current AC)
+//   base_ac   {number}       — flat base AC value (required)
+//   dex_cap   {number|null}  — max dex bonus: null = unlimited, 0 = none, N = max +N
+//   is_shield {boolean}      — true = additive "add" modifier; false = "set" modifier
+//
+// Works on: armor items, shield items, class features (e.g. Unarmored Defense),
+//           spells (e.g. Mage Armor), racial features, etc.
 
-function handleCalcAC(feature, character) {
+function handleCalcAC(feature, source, character) {
     const data = feature.data ?? {};
     const { base_ac, dex_cap, is_shield } = data;
 
     if (base_ac == null) {
         console.warn(`[featureDispatch] calcAC feature "${feature.id}" missing base_ac in data`);
-        return [];
+        return;
     }
-
-    const dexEntry = character.stats.find(s => s.stat === 'Dexterity');
-    const dexMod   = Math.floor(((dexEntry?.score ?? 10) - 10) / 2);
 
     if (is_shield) {
-        // Shield is additive: read current AC and add base_ac to it
-        return [{ op: 'scalarSet', path: 'armor_class', value: character.armor_class + base_ac }];
-    }
-
-    let ac;
-    if (dex_cap === null || dex_cap === undefined) {
-        ac = base_ac + dexMod;                        // light: full dex bonus
-    } else if (dex_cap === 0) {
-        ac = base_ac;                                 // heavy: no dex
+        // Shield / additive bonus — stacks on top of base AC
+        addACModifier(character, source.id, 'add', base_ac);
     } else {
-        ac = base_ac + Math.min(dexMod, dex_cap);    // medium: capped dex
-    }
+        // Body armor / Unarmored Defense — sets the AC base (highest "set" wins)
+        const dexEntry = character.stats.find(s => s.stat === 'Dexterity');
+        const dexMod   = Math.floor(((dexEntry?.score ?? 10) - 10) / 2);
 
-    return [{ op: 'scalarSet', path: 'armor_class', value: ac }];
+        let ac;
+        if (dex_cap === null || dex_cap === undefined) {
+            ac = base_ac + dexMod;                     // light / unarmored: full dex
+        } else if (dex_cap === 0) {
+            ac = base_ac;                              // heavy: no dex
+        } else {
+            ac = base_ac + Math.min(dexMod, dex_cap); // medium: capped dex
+        }
+
+        addACModifier(character, source.id, 'set', ac);
+    }
 }
 
 // ─── addAttack ────────────────────────────────────────────────────────────────
 //
 // feature.data fields:
-//   mode  {"melee"|"ranged"}  — determines which dice/range values to use
+//   mode    {"melee"|"ranged"}        — how the attack works (required)
+//   dice    {num, sides}              — damage die (overrides source.dice if present)
+//   damage  {string}                 — damage string fallback e.g. "1d6" (if no dice)
+//   name    {string}                 — display name override
 //
-// All other values come from the item object itself (dice, primary_stat, etc.)
+// Fallback order for dice: feature.data.dice → source.dice (item) → 1d4
+//
+// Works on: weapon items, class features (e.g. Unarmed Strike, Natural Weapons),
+//           racial features (e.g. Claws, Bite), etc.
 
-function handleAddAttack(feature, item, character) {
+function handleAddAttack(feature, source, character, slot) {
     const mode = feature.data?.mode ?? 'melee';
+    slot = slot ?? 'main_hand';
 
-    // Compute best stat modifier from primary_stat list
-    const statMap = Object.fromEntries(character.stats.map(s => [s.stat, s.score]));
-    const primaryStats = Array.isArray(item.primary_stat) && item.primary_stat.length
-        ? item.primary_stat
-        : ['Strength'];
-    const bestMod = Math.max(
-        ...primaryStats.map(s => Math.floor(((statMap[s] ?? 10) - 10) / 2))
-    );
+    // Dice resolution: feature.data.dice → source.dice → fallback
+    let damageDie;
+    if (feature.data?.dice) {
+        const d = feature.data.dice;
+        damageDie = `${d.num}d${d.sides}`;
+    } else {
+        const dieSource = (mode === 'ranged' && source.dice?.twoHand)
+            ? source.dice.twoHand
+            : source.dice?.oneHand;
+        damageDie = dieSource
+            ? `${dieSource.num}d${dieSource.sides}`
+            : (feature.data?.damage ?? '1d4');
+    }
 
-    // Pick the correct damage die (ranged weapons may use twoHand die for their damage)
-    const dieSource = (mode === 'ranged' && item.dice?.twoHand)
-        ? item.dice.twoHand
-        : item.dice?.oneHand;
-    const damageDie = dieSource
-        ? `${dieSource.num}d${dieSource.sides}`
-        : '1d4';
-
-    const weaponEntry = {
-        id:           feature.id,
-        name:         feature.name ?? item.name,
-        damage:       damageDie,
-        reference_id: { local_id: item.local_id ?? 0 },
-    };
-
-    return [{ op: 'listAdd', path: 'equipped_weapons', value: weaponEntry }];
+    character.equipped_weapons.push({
+        slot,
+        item_id:    source.id,
+        feature_id: feature.id,
+        name:       feature.data?.name ?? feature.name ?? source.name,
+        damage:     damageDie,
+        mode,
+    });
 }
 
 // ─── statSet ──────────────────────────────────────────────────────────────────
 //
 // feature.data fields:
 //   stat   {string}  — full stat name e.g. "Constitution"
-//   value  {number}  — value to set the stat to
+//   value  {number}  — value to force the stat to (overrides base if higher)
+//
+// Works on: magic items (Amulet of Health), class features, racial features, etc.
 
-function handleStatSet(feature) {
+function handleStatSet(feature, source, character) {
     const { stat, value } = feature.data ?? {};
     if (!stat || value == null) {
         console.warn(`[featureDispatch] statSet feature "${feature.id}" missing stat/value in data`);
-        return [];
+        return;
     }
-    return [{ op: 'statSet', stat, value }];
+    addStatModifier(character, source.id, stat, 'set', value);
 }
 
 // ─── statAdd ──────────────────────────────────────────────────────────────────
@@ -117,37 +132,40 @@ function handleStatSet(feature) {
 // feature.data fields:
 //   stat   {string}  — full stat name e.g. "Strength"
 //   value  {number}  — amount to add (can be negative)
+//
+// Works on: racial ASIs, class ASIs, magic items, etc.
 
-function handleStatAdd(feature) {
+function handleStatAdd(feature, source, character) {
     const { stat, value } = feature.data ?? {};
     if (!stat || value == null) {
         console.warn(`[featureDispatch] statAdd feature "${feature.id}" missing stat/value in data`);
-        return [];
+        return;
     }
-    return [{ op: 'statAdd', stat, value }];
+    addStatModifier(character, source.id, stat, 'add', value);
 }
 
 // ─── Main dispatch ────────────────────────────────────────────────────────────
 
 /**
- * Translate a feature object into an array of mod descriptors for applyMod().
+ * Execute a feature's mechanical effect on the character.
  *
- * @param {object} feature   - Full feature object: { id, name, handler, data, trigger }
- * @param {object} item      - The item this feature belongs to (read-only)
- * @param {object} character - Current character state (read-only within this function)
- * @returns {Array<object>}  - Zero or more mod objects ready for applyMod()
+ * @param {object} feature   - Feature object: { id, name, handler, data, trigger }
+ * @param {object} source    - The thing this feature belongs to: { id, name?, dice?, ... }
+ *                             Can be an item, class, race, background, or any source object.
+ *                             source.id is used as the source_id for all modifier entries.
+ * @param {object} character - Character to mutate
+ * @param {string} [slot]    - Weapon slot ("main_hand"|"off_hand"|"two_hand"); addAttack only
  */
-function dispatchFeature(feature, item, character) {
-    if (!feature?.handler) return [];   // null handler = informational feature, no mechanical effect
+function dispatchFeature(feature, source, character, slot) {
+    if (!feature?.handler) return;   // null handler = informational feature, no effect
 
     switch (feature.handler) {
-        case 'calcAC':    return handleCalcAC(feature, character);
-        case 'addAttack': return handleAddAttack(feature, item, character);
-        case 'statSet':   return handleStatSet(feature);
-        case 'statAdd':   return handleStatAdd(feature);
+        case 'calcAC':    return handleCalcAC(feature, source, character);
+        case 'addAttack': return handleAddAttack(feature, source, character, slot);
+        case 'statSet':   return handleStatSet(feature, source, character);
+        case 'statAdd':   return handleStatAdd(feature, source, character);
         default:
             console.warn(`[featureDispatch] Unknown handler: "${feature.handler}" on feature "${feature.id}"`);
-            return [];
     }
 }
 

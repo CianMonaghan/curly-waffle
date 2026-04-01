@@ -37,14 +37,15 @@ function createBlankCharacter(name, alignment = 'Neutral') {
     return {
         name,
         alignment,
-        stats:    STAT_NAMES.map(s => ({ stat: s, score: 10 })),
+        stats:    STAT_NAMES.map(s => ({ stat: s, base: 10, modifiers: [], score: 10 })),
         hitpoints: { current_hit_points: 0, temp_hp: 0 },
         speed:    30,
         initiative: 0,
         size:     'medium',
         prof_bonus: 2,
         saves:    STAT_NAMES.map(s => ({ stat: s, save: 0 })),
-        armor_class: 10,
+        ac_modifiers:    [],
+        armor_class:     10,
         languages:           ['Common'],
         skill_proficiencies: [],
         tool_proficiencies:  [],
@@ -64,7 +65,9 @@ function createBlankCharacter(name, alignment = 'Neutral') {
             ],
             items: [],
         },
-        active_features:  [],
+        equipped_armor:   { body: null, shield: null },
+        attuned_items:    [],
+        attuned_cap:      3,
         equipped_weapons: [],
     };
 }

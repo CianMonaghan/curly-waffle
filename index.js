@@ -33,18 +33,8 @@ const featureSchema = new mongoose.Schema({
     description: String,
     trigger:     String,
     handler:     { type: String, default: null },                        // dispatch key → featureDispatch
-    data:        { type: mongoose.Schema.Types.Mixed, default: null }    // handler parameters
-}, {_id: false});
-
-const appliedModSchema = new mongoose.Schema({
-    feature_instance_id: {type: String, unique: true},
-    source_id: String,
-    feature_id: String,
-    trigger: String,
-    applied: [{
-        modification: String,
-        reversalData: {}
-    }]
+    data:        { type: mongoose.Schema.Types.Mixed, default: null },   // handler parameters
+    source_id:   String                                                  // which race/class/bg/item added this
 }, {_id: false});
 
 const backgroundSchema = new mongoose.Schema({
@@ -101,7 +91,6 @@ const itemSchema = new mongoose.Schema({
     local_id: {type: Number, min: 0, required: true},
     name: String,
     description: String,
-    equipped: Boolean,
     features_on_obtain: [featureSchema],
     features_on_loss: [featureSchema],
     features_on_equip: [featureSchema],
@@ -123,7 +112,6 @@ const itemSchema = new mongoose.Schema({
     attack_bonus: Number,
     damage_bonus: Number,
     prof: Boolean,
-    attuned: Boolean,
     features_on_attune: [featureSchema],
     features_on_detune: [featureSchema]
 }, {_id: false});
@@ -140,8 +128,14 @@ const characterSchema = new mongoose.Schema({//accountID?
     name: {type: String, required: true},
     alignment: String,
     stats: {type: [{
-        stat: {type: String, unique: true, required: true},
-        score: {type: Number, min: 0, max: 30, required: true}
+        stat:      { type: String, required: true },
+        base:      { type: Number, required: true },
+        modifiers: [{
+            source_id: String,
+            type:      { type: String, enum: ['add', 'set'] },
+            value:     Number
+        }],
+        score:     { type: Number, required: true }   // computed from base + modifiers
     }], required: true },
     hitpoints: {type: [{
         current_hit_points: {type: Number, min: 0, required: true},
@@ -155,9 +149,14 @@ const characterSchema = new mongoose.Schema({//accountID?
         stat:  {type: String, unique: true, required: true},
         save: {type: Number, required: true}
     }], required: true},
-    skill_proficiencies: [{ skill: String, expertise: { type: Boolean, default: false } }],
-    tool_proficiencies:  [String],
-    item_proficiencies:  [String],
+    skill_proficiencies: [{ skill: String, expertise: { type: Boolean, default: false }, source_id: String }],
+    tool_proficiencies:  [{ tool: String, source_id: String }],
+    item_proficiencies:  [{ item: String, source_id: String }],
+    ac_modifiers: [{
+        source_id: String,
+        type:      { type: String, enum: ['set', 'add'] },
+        value:     Number
+    }],
     armor_class: {type: Number, min: 1, required: true},
     languages: [String],
     race: raceSchema,
@@ -172,19 +171,22 @@ const characterSchema = new mongoose.Schema({//accountID?
         }],
         items: [itemSchema]
     }],
-    active_features: [{
-        feature: {type: String, unique: true, required: true},
-        applied_feature_record: [{
-            applied_modifications: [appliedModSchema]
-        }]
+    equipped_armor: {
+        body:   { type: String, default: null },
+        shield: { type: String, default: null }
+    },
+    attuned_items: [{
+        item_id: String,
+        name:    String
     }],
+    attuned_cap: { type: Number, default: 3 },
     equipped_weapons: [{
-        id: {type: String, unique: true, required: true},
-        name: String,
-        damage: String,
-        reference_id: {
-            local_id: {type: Number, min: 0, required: true}
-        }
+        slot:       String,   // "main_hand" | "off_hand" | "two_hand"
+        item_id:    String,
+        feature_id: String,
+        name:       String,
+        damage:     String,
+        mode:       String    // "melee" | "ranged"
     }]
 });
 
