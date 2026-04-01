@@ -7,27 +7,27 @@
       "base": 16,
       "modifiers": [
         {
-          "source_id": "class-0",
+          "source_id": "class-0-asi-r0-p0",
           "type": "add",
           "value": 1
         },
         {
-          "source_id": "class-0",
+          "source_id": "class-0-asi-r1-p0",
           "type": "add",
           "value": 1
         },
         {
-          "source_id": "class-0",
+          "source_id": "class-0-asi-r1-p1",
           "type": "add",
           "value": 1
         },
         {
-          "source_id": "class-0",
+          "source_id": "class-0-asi-r2-p0",
           "type": "add",
           "value": 1
         },
         {
-          "source_id": "class-0",
+          "source_id": "class-0-asi-r2-p1",
           "type": "add",
           "value": 1
         }
@@ -57,7 +57,7 @@
       "base": 10,
       "modifiers": [
         {
-          "source_id": "class-0",
+          "source_id": "class-0-asi-r0-p1",
           "type": "add",
           "value": 1
         }
@@ -81,14 +81,30 @@
       "base": 10,
       "modifiers": [],
       "score": 10
+    },
+    {
+      "stat": "Speed",
+      "base": 25,
+      "modifiers": [],
+      "score": 25
+    },
+    {
+      "stat": "Initiative",
+      "base": 0,
+      "modifiers": [],
+      "score": 0
+    },
+    {
+      "stat": "MaxHP",
+      "base": 15,
+      "modifiers": [],
+      "score": 15
     }
   ],
   "hitpoints": {
     "current_hit_points": 15,
     "temp_hp": 0
   },
-  "speed": 25,
-  "initiative": 0,
   "size": "medium",
   "prof_bonus": 3,
   "saves": [

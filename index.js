@@ -141,8 +141,6 @@ const characterSchema = new mongoose.Schema({//accountID?
         current_hit_points: {type: Number, min: 0, required: true},
         temp_hp: {type: Number, min:0, required: true}
     }], required: true},
-    speed: {type: Number, min: 0},
-    initiative: Number,
     size: String,
     prof_bonus: {type: Number, min: 2, max: 7},
     saves: {type: [{

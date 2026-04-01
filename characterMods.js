@@ -42,10 +42,18 @@ function setAtPath(obj, pathStr, val) {
 
 const statMod = score => Math.floor((score - 10) / 2);
 
+// Only these six stats are clamped to [1, 20]. Speed, Initiative, MaxHP are not.
+const PRIMARY_STATS = new Set([
+    'Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma',
+]);
+
 function recomputeOneStat(entry) {
     const adds    = entry.modifiers.filter(m => m.type === 'add').reduce((s, m) => s + m.value, 0);
     const sets    = entry.modifiers.filter(m => m.type === 'set').map(m => m.value);
-    const natural = Math.min(20, Math.max(1, entry.base + adds));
+    const raw     = entry.base + adds;
+    const natural = PRIMARY_STATS.has(entry.stat)
+        ? Math.min(20, Math.max(1, raw))   // primary stats: clamp [1, 20]
+        : Math.max(0, raw);                // Speed / Initiative / MaxHP: floor at 0 only
     entry.score   = sets.length ? Math.max(natural, Math.max(...sets)) : natural;
 }
 
@@ -156,11 +164,21 @@ function removeFromList(character, path, sourceId) {
 
 /**
  * Remove ALL traces of sourceId from the character:
- *   - All stat/AC modifiers
+ *   - All stat/AC modifiers with exact sourceId match
+ *   - All ASI sub-source modifiers (e.g. "class-0-asi-r0-p0" when sourceId = "class-0")
  *   - All source-tagged entries in standard list paths and inventory.items
  */
 function removeSource(character, sourceId) {
     removeSourceModifiers(character, sourceId);
+
+    // Strip ASI sub-sources tagged as `${sourceId}-asi-*`
+    const asiPrefix = sourceId + '-asi-';
+    for (const entry of character.stats) {
+        const before = entry.modifiers.length;
+        entry.modifiers = entry.modifiers.filter(m => !m.source_id.startsWith(asiPrefix));
+        if (entry.modifiers.length !== before) recomputeOneStat(entry);
+    }
+
     for (const path of LIST_PATHS) {
         removeFromList(character, path, sourceId);
     }
@@ -181,6 +199,7 @@ module.exports = {
     addStatModifier,
     addACModifier,
     removeSourceModifiers,
+    recomputeOneStat,
     recomputeStats,
     recomputeAC,
     addToList,

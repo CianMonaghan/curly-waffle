@@ -14,6 +14,7 @@ const {
     addToList,
     scalarSet,
     recomputeStats,
+    recomputeOneStat,
 } = require('./characterMods');
 
 const { dispatchFeature } = require('./featureDispatch');
@@ -140,7 +141,11 @@ function applyRace(character, template, decisions = {}) {
         // 2. Speed override: speed-25-dwarf, speed-30-elf, etc.
         const speedMatch = id.match(/^speed-(\d+)-/);
         if (speedMatch) {
-            character.speed = parseInt(speedMatch[1], 10);
+            const speedEntry = character.stats.find(s => s.stat === 'Speed');
+            if (speedEntry) {
+                speedEntry.base = parseInt(speedMatch[1], 10);
+                recomputeOneStat(speedEntry);
+            }
         }
 
         // 3. Fixed proficiencies from prof_to_add
@@ -478,11 +483,15 @@ function applyClass(character, classTemplate, subclassTemplate, classData, isPri
         }
     }
 
-    // 4. ASI application
-    for (const row of (classData.decisions?.asi ?? [])) {
-        for (const pick of (row.picks ?? [])) {
+    // 4. ASI application — each pick gets a unique source_id so individual picks
+    //    can be reversed without disturbing other class contributions.
+    for (const [rowIdx, row] of (classData.decisions?.asi ?? []).entries()) {
+        for (const [pickIdx, pick] of (row.picks ?? []).entries()) {
             const stat = PICK_TO_STAT[pick.toUpperCase()];
-            if (stat) addStatModifier(character, sourceId, stat, 'add', 1);
+            if (stat) {
+                const asiSourceId = `${sourceId}-asi-r${rowIdx}-p${pickIdx}`;
+                addStatModifier(character, asiSourceId, stat, 'add', 1);
+            }
         }
     }
 

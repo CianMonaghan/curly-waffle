@@ -31,16 +31,25 @@ const STAT_NAMES = [
     'Intelligence', 'Wisdom', 'Charisma',
 ];
 
+// All stats that use the modifier stack, including derived numeric stats
+const ALL_STATS = [
+    ...STAT_NAMES,
+    'Speed', 'Initiative', 'MaxHP',
+];
+
 // ─── Blank character factory ──────────────────────────────────────────────────
 
 function createBlankCharacter(name, alignment = 'Neutral') {
     return {
         name,
         alignment,
-        stats:    STAT_NAMES.map(s => ({ stat: s, base: 10, modifiers: [], score: 10 })),
+        stats: ALL_STATS.map(s => ({
+            stat:      s,
+            base:      s === 'Speed' ? 30 : 0,   // Speed defaults 30; Initiative/MaxHP set by computeAllDerived
+            modifiers: [],
+            score:     s === 'Speed' ? 30 : 0,
+        })),
         hitpoints: { current_hit_points: 0, temp_hp: 0 },
-        speed:    30,
-        initiative: 0,
         size:     'medium',
         prof_bonus: 2,
         saves:    STAT_NAMES.map(s => ({ stat: s, save: 0 })),
@@ -170,6 +179,11 @@ function parseCharacter(formData) {
     // ── Derived stats ─────────────────────────────────────────────────────
     // Must run last — reads from the final state of base fields set above.
     computeAllDerived(character, primaryClass?.name);
+
+    // Initialize current HP to max HP at character creation.
+    // During play, current_hit_points changes independently of MaxHP.
+    const maxHpEntry = character.stats.find(s => s.stat === 'MaxHP');
+    character.hitpoints.current_hit_points = maxHpEntry?.score ?? 1;
 
     return character;
 }
