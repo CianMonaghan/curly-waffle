@@ -41,10 +41,13 @@ function getStatEntry(character, statName) {
 
 // ─── Individual apply functions ───────────────────────────────────────────────
 
+const PRIMARY_STATS = new Set(['Strength','Dexterity','Constitution','Intelligence','Wisdom','Charisma']);
+
 function applyStatAdd(character, mod) {
     const entry = getStatEntry(character, mod.stat);
     const prev  = entry.score;
-    entry.score = prev + mod.value;
+    const raw   = prev + mod.value;
+    entry.score = PRIMARY_STATS.has(mod.stat) ? Math.min(20, Math.max(1, raw)) : raw;
     return { op: 'statAdd', stat: mod.stat, value: mod.value, reversalData: { prev } };
 }
 

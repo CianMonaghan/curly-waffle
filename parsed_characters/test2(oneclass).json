@@ -4,7 +4,7 @@
   "stats": [
     {
       "stat": "Strength",
-      "score": 21
+      "score": 20
     },
     {
       "stat": "Dexterity",
@@ -359,8 +359,114 @@
     "items": [
       {
         "id": "class-0-equip-g0-i0",
+        "local_id": 0,
+        "name": "Leather Armor",
+        "type": "armor",
+        "description": "Light armor. AC 11 + Dex modifier.",
+        "equipped": false,
+        "features_on_obtain": null,
+        "features_on_lose": null,
+        "features_on_equip": [
+          {
+            "id": "calc-ac-leather",
+            "name": "calcAC",
+            "handler": "calcAC",
+            "data": {
+              "base_ac": 11,
+              "dex_cap": null
+            },
+            "description": null,
+            "trigger": "onEquip"
+          }
+        ],
+        "features_on_unequip": [
+          {
+            "id": "calc-ac-leather",
+            "name": "remove_feature",
+            "handler": null,
+            "data": null,
+            "description": null,
+            "trigger": "onUnequip"
+          }
+        ],
+        "prof": true,
+        "attuned": null,
+        "features_on_attune": null,
+        "features_on_detune": null
+      },
+      {
+        "type": "wp",
+        "id": "class-0-equip-g0-i1",
+        "local_id": 0,
+        "name": "Longbow",
+        "description": "A martial ranged weapon.",
+        "equipped": false,
+        "features_on_obtain": [
+          {
+            "id": "heavy-weapon",
+            "name": null,
+            "description": null,
+            "trigger": "onAdd"
+          }
+        ],
+        "features_on_lose": [
+          {
+            "id": "loss-heavy-weapon",
+            "name": null,
+            "description": null,
+            "trigger": "onLose"
+          }
+        ],
+        "features_on_equip": [
+          {
+            "id": "attack-longbow",
+            "name": "Ranged Attack (Longbow)",
+            "handler": "addAttack",
+            "data": {
+              "mode": "ranged"
+            },
+            "description": null,
+            "trigger": "onEquip"
+          }
+        ],
+        "features_on_unequip": [
+          {
+            "id": "loss-attack-longbow",
+            "name": null,
+            "handler": null,
+            "data": null,
+            "description": null,
+            "trigger": "onUnequip"
+          }
+        ],
+        "dice": {
+          "oneHand": null,
+          "twoHand": {
+            "num": 1,
+            "sides": 8
+          }
+        },
+        "range": [
+          null,
+          150,
+          600
+        ],
+        "primary_stat": [
+          "Dexterity"
+        ],
+        "martial": true,
+        "improvised": false,
+        "attack_bonus": 0,
+        "damage_bonus": 0,
+        "prof": true,
+        "attuned": false,
+        "features_on_attune": null,
+        "features_on_detune": null
+      },
+      {
+        "id": "class-0-equip-g0-i2",
         "local_id": null,
-        "name": "Chain mail",
+        "name": "20 Arrows",
         "type": "item",
         "description": "",
         "equipped": false,
@@ -438,23 +544,38 @@
       },
       {
         "id": "class-0-equip-g1-i1",
-        "local_id": null,
+        "local_id": 0,
         "name": "Shield",
-        "type": "item",
-        "description": "",
+        "type": "armor",
+        "description": "Shield. +2 AC. Cannot be used with a two-handed weapon.",
         "equipped": false,
         "features_on_obtain": null,
         "features_on_lose": null,
-        "features_on_equip": null,
-        "features_on_unequip": null,
-        "dice": null,
-        "range": null,
-        "primary_stat": null,
-        "martial": null,
-        "improvised": null,
-        "attack_bonus": null,
-        "damage_bonus": null,
-        "prof": null,
+        "features_on_equip": [
+          {
+            "id": "calc-ac-shield",
+            "name": "calcAC",
+            "handler": "calcAC",
+            "data": {
+              "base_ac": 2,
+              "dex_cap": null,
+              "is_shield": true
+            },
+            "description": null,
+            "trigger": "onEquip"
+          }
+        ],
+        "features_on_unequip": [
+          {
+            "id": "calc-ac-shield",
+            "name": "remove_feature",
+            "handler": null,
+            "data": null,
+            "description": null,
+            "trigger": "onUnequip"
+          }
+        ],
+        "prof": true,
         "attuned": null,
         "features_on_attune": null,
         "features_on_detune": null
@@ -537,7 +658,7 @@
         {
           "applied_modifications": [
             {
-              "feature_instance_id": "03312026-base-stats-5827",
+              "feature_instance_id": "03312026-base-stats-9219",
               "source_id": "base-stats",
               "feature_id": "base-stats-apply",
               "trigger": "on-apply",
@@ -590,7 +711,7 @@
         {
           "applied_modifications": [
             {
-              "feature_instance_id": "03312026-race-1-5111",
+              "feature_instance_id": "03312026-race-1-9737",
               "source_id": "race-1",
               "feature_id": "race-apply-hill_dwarf",
               "trigger": "on-apply",
@@ -739,7 +860,7 @@
         {
           "applied_modifications": [
             {
-              "feature_instance_id": "03312026-background-0-6107",
+              "feature_instance_id": "03312026-background-0-2746",
               "source_id": "background-0",
               "feature_id": "background-apply-acolyte",
               "trigger": "on-apply",
@@ -804,7 +925,7 @@
         {
           "applied_modifications": [
             {
-              "feature_instance_id": "03312026-class-0-2684",
+              "feature_instance_id": "03312026-class-0-9204",
               "source_id": "class-0",
               "feature_id": "class-apply-fighter",
               "trigger": "on-apply",
@@ -1005,6 +1126,18 @@
                   "modification": "listAdd:inventory.items",
                   "reversalData": {
                     "idx": 5
+                  }
+                },
+                {
+                  "modification": "listAdd:inventory.items",
+                  "reversalData": {
+                    "idx": 6
+                  }
+                },
+                {
+                  "modification": "listAdd:inventory.items",
+                  "reversalData": {
+                    "idx": 7
                   }
                 }
               ]

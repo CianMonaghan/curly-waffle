@@ -142,11 +142,12 @@ function loadItemTemplate(name) {
     const norm = normalize(name);
     return tryLoad([
         path.join(STATIC_ROOT, 'items', 'weapons',        `${norm}.json`),
+        path.join(STATIC_ROOT, 'items', 'armor',           `${norm}.json`),
         path.join(STATIC_ROOT, 'items', 'mundane',         `${norm}.json`),
         path.join(STATIC_ROOT, 'items', 'wonderous_items', `${norm}.json`),
         path.join(SERVER_ROOT, 'items',                    `${norm}.json`),
     ]);
-    // null return is intentional — many items (armor, packs, ammo) don't have JSONs yet
+    // null return is intentional — many items (packs, ammo, etc.) don't have JSONs yet
 }
 
 module.exports = {
