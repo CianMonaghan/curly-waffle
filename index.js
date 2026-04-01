@@ -242,18 +242,20 @@ app.post('/api/characters', async (req, res) => {
     try {
         const characterFile = parseCharacter(req.body);
 
-        // Save locally until MongoDB access is available
+        // Save to MongoDB
+        await characters.insertOne(characterFile);
+
+        // ── Local debug save ─────────────────────────────────────────────────
+        // Comment out the four lines below to stop writing to parsed_characters/
         const saveName = (characterFile.name || 'unnamed').replace(/\s+/g, '_');
         const saveDir  = path.join(__dirname, 'parsed_characters');
         if (!fs.existsSync(saveDir)) fs.mkdirSync(saveDir);
         const savePath = path.join(saveDir, `${saveName}.json`);
         fs.writeFileSync(savePath, JSON.stringify(characterFile, null, 2));
         console.log(`Character saved locally: ${savePath}`);
+        // ────────────────────────────────────────────────────────────────────
 
-        // TODO: swap back to MongoDB when access is granted
-        // await characters.insertOne(characterFile);
-
-        return res.status(200).json({ success: true, savedTo: savePath });
+        return res.status(200).json({ success: true });
     } catch (err) {
         console.error('[POST /api/characters]', err);
         return res.status(500).json({ error: err.message });
