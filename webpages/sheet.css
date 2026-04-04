@@ -82,6 +82,8 @@
     display: inline-block;
 }
 
+.bubble.fail { background-color: #c0392b; }
+
 
 /*Ability Scores*/
 .ability-container {
@@ -184,4 +186,40 @@
 
 .spell-entry:nth-child(odd) {
     background-color: #f5f5f5;
+}
+
+/* Proficiency bubbles */
+.bubble.filled {
+    background-color: #333;
+}
+.bubble.expertise {
+    background-color: #1a6b1a;
+}
+
+/* Inventory split */
+.inventory-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 610px;
+    border: 1px solid black;
+}
+
+.inventory-notes-box {
+    border: none;
+    border-right: 1px solid black !important;
+    height: 100%;
+    box-sizing: border-box;
+    overflow-y: auto;
+    font-size: 13px;
+    white-space: pre-wrap;
+    resize: none;
+}
+
+.inventory-items-box {
+    border: none !important;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }

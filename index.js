@@ -14,8 +14,8 @@ app.use(express.json());
 
 const {MongoClient} = require("mongodb");
 const mongoose = require("mongoose");
-const mongoURL = "mongodb://ciancmonaghan_db_user:TOxkUCEJjQua0RXe@ac-0zx0xa0-shard-00-00.ywjbdxr.mongodb.net:27017,ac-0zx0xa0-shard-00-01.ywjbdxr.mongodb.net:27017,ac-0zx0xa0-shard-00-02.ywjbdxr.mongodb.net:27017/?ssl=true&replicaSet=atlas-2anpto-shard-0&authSource=admin&appName=blite-server";
-mongoose.connect(mongoURL)
+const mongoURL = "mongodb://ciancmonaghan_db_user:LG3iJcWia85aYTBI@ac-0zx0xa0-shard-00-00.ywjbdxr.mongodb.net:27017,ac-0zx0xa0-shard-00-01.ywjbdxr.mongodb.net:27017,ac-0zx0xa0-shard-00-02.ywjbdxr.mongodb.net:27017/?ssl=true&replicaSet=atlas-2anpto-shard-0&authSource=admin&appName=blite-server";
+mongoose.connect(mongoURL, { dbName: 'bliteDB' })
   .then(() => {
     console.log('MongoDB connected successfully!');
   })
@@ -236,6 +236,77 @@ app.get('/api/external_lists', (req, res) => {
         .filter(f => f.endsWith('.json'))
         .map(f => f.replace('.json', ''));
     res.json(files);
+});
+
+app.get('/api/items', (req, res) => {
+    const baseDir = path.join(__dirname, 'static_json', 'items');
+    const items = [];
+    function scanDir(dir) {
+        for (const f of fs.readdirSync(dir)) {
+            const full = path.join(dir, f);
+            if (fs.statSync(full).isDirectory()) {
+                scanDir(full);
+            } else if (f.endsWith('.json') && !f.includes('template')) {
+                try { items.push(JSON.parse(fs.readFileSync(full, 'utf8'))); } catch {}
+            }
+        }
+    }
+    scanDir(baseDir);
+    res.json(items);
+});
+
+app.patch('/api/characters/:id/inventory/items', async (req, res) => {
+    try {
+        const { ObjectId } = require('mongodb');
+        await characters.updateOne(
+            { _id: new ObjectId(req.params.id) },
+            { $push: { 'inventory.items': req.body } }
+        );
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.patch('/api/characters/:id/equipped_weapons', async (req, res) => {
+    try {
+        const { ObjectId } = require('mongodb');
+        await characters.updateOne(
+            { _id: new ObjectId(req.params.id) },
+            { $push: { equipped_weapons: req.body } }
+        );
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.delete('/api/characters/:id/inventory/items', async (req, res) => {
+    try {
+        const { ObjectId } = require('mongodb');
+        const { id: itemId, name } = req.body;
+        await characters.updateOne(
+            { _id: new ObjectId(req.params.id) },
+            { $pull: { 'inventory.items': itemId ? { id: itemId } : { name } } }
+        );
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.delete('/api/characters/:id/equipped_weapons', async (req, res) => {
+    try {
+        const { ObjectId } = require('mongodb');
+        const { item_id, name } = req.body;
+        await characters.updateOne(
+            { _id: new ObjectId(req.params.id) },
+            { $pull: { equipped_weapons: { item_id, name } } }
+        );
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 app.post('/api/characters', async (req, res) => {
