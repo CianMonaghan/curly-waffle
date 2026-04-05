@@ -23,6 +23,7 @@
     ],
 
     "caster": true,
+    "casterType": "pact_magic",
     "casterLevel": 0,
     "casterStat": "Charisma",
     "spell_list": [],

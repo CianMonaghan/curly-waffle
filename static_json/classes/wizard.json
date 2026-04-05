@@ -21,6 +21,7 @@
     ],
 
     "caster": true,
+    "casterType": "full_caster",
     "casterLevel": 0,
     "casterStat": "Intelligence",
     "spell_list": [],

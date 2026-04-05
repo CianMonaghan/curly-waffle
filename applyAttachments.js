@@ -54,35 +54,53 @@ function resolveEquipChoice(group, choiceStr) {
     return group.options[idx] ?? group.options[0];
 }
 
+function parseQty(str) {
+    const m = /^(\d+)\s+(.+)$/.exec(str.trim());
+    return m ? { qty: parseInt(m[1], 10), base: m[2] } : { qty: 1, base: str.trim() };
+}
+
 function resolveEquipItems(choice, sourceId, groupIdx, chosenOptIdx, equipUid, featureDecisions) {
     const parts = Array.isArray(choice) ? choice : [choice];
     return parts.flatMap((part, partIdx) => {
-        let name;
+        let rawName;
 
         if (typeof part === 'object' && part !== null && part.choice) {
             const weaponKey = `equip_weapon_${equipUid}_${groupIdx}_${chosenOptIdx}_${partIdx}`;
-            name = featureDecisions[weaponKey] || part.text || 'Weapon';
+            const resolved = featureDecisions[weaponKey];
+            if (!resolved) return [];          // ← no choice made, skip slot
+            rawName = resolved;
         } else if (typeof part === 'string') {
             const weaponKey = `equip_weapon_${equipUid}_${groupIdx}_${chosenOptIdx}_${partIdx}`;
-            name = featureDecisions[weaponKey] || part;
+            rawName = featureDecisions[weaponKey] || part;
         } else {
-            name = String(part);
+            rawName = String(part);
         }
 
+        const { qty, base: name } = parseQty(rawName);
         const instanceId = `${sourceId}-equip-g${groupIdx}-i${partIdx}`;
-        const template   = loadItemTemplate(name);
+        // Try plural→singular fallback (e.g. "Handaxes" → "Handaxe")
+        const template = loadItemTemplate(name)
+            ?? (name.endsWith('s') ? loadItemTemplate(name.slice(0, -1)) : null);
 
         if (template) {
-            return [{ ...template, id: instanceId }];
+            if (template.type === 'wp' && qty > 1) {
+                // Multiple weapons → one inventory entry per weapon
+                return Array.from({ length: qty }, (_, i) => ({
+                    ...template,
+                    id: `${instanceId}-${i}`,
+                }));
+            }
+            return [{ ...template, id: instanceId, ...(qty > 1 ? { quantity: qty } : {}) }];
         }
 
-        // Fallback stub for items without a JSON file
+        // Fallback stub for items without a JSON file (ammo, packs, etc.)
         return [{
             id:                  instanceId,
             local_id:            null,
-            name:                String(name),
+            name,
             type:                'item',
             description:         '',
+            quantity:            qty > 1 ? qty : 1,
             features_on_obtain:  null,
             features_on_lose:    null,
             features_on_equip:   null,
@@ -100,6 +118,7 @@ function resolveEquipItems(choice, sourceId, groupIdx, chosenOptIdx, equipUid, f
         }];
     });
 }
+
 
 // ─── applyBaseStats ───────────────────────────────────────────────────────────
 
@@ -172,17 +191,27 @@ function applyRace(character, template, decisions = {}) {
             }
         }
 
-        // 4. External choice decisions (e.g. dwarf tool proficiency pick)
+        // 4. External choice decisions (e.g. dwarf tool proficiency pick, human language pick)
         if (subtypes.includes('external_choice') && decisions[feat.id] != null) {
             const chosen = [].concat(decisions[feat.id]);
             for (const item of chosen) {
-                addToList(character, 'features', {
-                    id:          `${sourceId}-${feat.id}-${slug(item)}`,
-                    name:        `${feat.feature_name}: ${item}`,
-                    description: `Proficient with ${item}.`,
-                    trigger:     'passive',
-                }, sourceId);
-                addToList(character, 'tool_proficiencies', { tool: item }, sourceId);
+                if (feat.external_list === 'languages') {
+                    if (!character.languages.includes(item)) character.languages.push(item);
+                    addToList(character, 'features', {
+                        id:          `${sourceId}-${feat.id}-${slug(item)}`,
+                        name:        `${feat.feature_name}: ${item}`,
+                        description: `Can speak, read, and write ${item}.`,
+                        trigger:     'passive',
+                    }, sourceId);
+                } else {
+                    addToList(character, 'features', {
+                        id:          `${sourceId}-${feat.id}-${slug(item)}`,
+                        name:        `${feat.feature_name}: ${item}`,
+                        description: `Proficient with ${item}.`,
+                        trigger:     'passive',
+                    }, sourceId);
+                    addToList(character, 'tool_proficiencies', { tool: item }, sourceId);
+                }
             }
         }
 
@@ -368,9 +397,10 @@ function applyClass(character, classTemplate, subclassTemplate, classData, isPri
         id:            sourceId,
         name:          classTemplate.name,
         caster:        classTemplate.caster,
-        casterStat:    classTemplate.casterStat    ?? null,
+        casterType:    classTemplate.casterType  ?? null,
+        casterStat:    classTemplate.casterStat  ?? null,
         level,
-        casterLevel:   classTemplate.casterLevel   ?? null,
+        casterLevel:   classTemplate.casterLevel ?? null,
         class_hp:      classTemplate.class_hp,
         features:      [],
         skill_prof:    (classData.skills ?? []).map(s => ({ skill: s, prof: true })),

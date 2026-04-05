@@ -1,18 +1,47 @@
 'use strict';
 
+const path   = require('path');
+const STATIC = path.join(__dirname, 'static_json', 'external_lists');
+
+const fullCasterData    = require(path.join(STATIC, 'full_caster.json'));
+const halfCasterData    = require(path.join(STATIC, 'half_caster.json'));
+const quarterCasterData = require(path.join(STATIC, 'quarter_caster.json'));
+const pactMagicData     = require(path.join(STATIC, 'pact_magic.json'));
+
+const CASTER_TABLES = {
+    full_caster:    fullCasterData.spell_slots,
+    half_caster:    halfCasterData.spell_slots,
+    quarter_caster: quarterCasterData.spell_slots,
+};
+
+const MULTICLASS_CONTRIB = {
+    full_caster:    lvl => lvl,
+    half_caster:    lvl => Math.floor(lvl / 2),
+    quarter_caster: lvl => Math.floor(lvl / 3),
+};
+
+const SLOT_LEVEL_KEYS = [
+    '1st level','2nd level','3rd level','4th level','5th level',
+    '6th level','7th level','8th level','9th level',
+];
+
+function slotsFromRow(row, existing = []) {
+    return SLOT_LEVEL_KEYS
+        .map((key, i) => ({
+            level:   i + 1,
+            max:     parseInt(row[key] ?? '0', 10),
+            current: existing.find(s => s.level === i + 1)?.current
+                     ?? parseInt(row[key] ?? '0', 10),
+        }))
+        .filter(s => s.max > 0);
+}
+
 // ─── computeDerived.js ────────────────────────────────────────────────────────
 //
 // computeAllDerived(character, primaryClassName) must be called after every
 // apply or reverse operation. Delegates stat/AC recomputation to characterMods,
-// then handles prof_bonus, Initiative stat base, MaxHP stat base, and saves.
-//
-// Initiative and MaxHP live in character.stats[] with modifier stacks:
-//   - Initiative.base  = DEX modifier (set here each call)
-//   - MaxHP.base       = hit dice + CON (set here each call)
-// Items/features add to their modifiers[] via addStatModifier as usual.
-//
-// current_hit_points is NOT written here — parseCharacter sets it at creation;
-// the client manages it during play.
+// then handles prof_bonus, Initiative stat base, MaxHP stat base, saves, and
+// spell slots.
 
 const { recomputeStats, recomputeAC, recomputeOneStat } = require('./characterMods');
 
@@ -27,13 +56,6 @@ const statMod    = score => Math.floor((score - 10) / 2);
 const totalLevel = classes => classes.reduce((sum, c) => sum + (c.level || 0), 0);
 const profBonus  = level  => PROF_BY_LEVEL[Math.max(0, level - 1)] ?? 2;
 
-/**
- * Recomputes all derived character fields.
- *
- * @param {object} character        - The character object (mutated in place).
- * @param {string} primaryClassName - Name of the primary class (used for HP).
- *                                    Falls back to the first class if not matched.
- */
 function computeAllDerived(character, primaryClassName) {
     // Pass 1: recompute all stat scores from their modifier stacks (includes Speed).
     recomputeStats(character);
@@ -48,18 +70,13 @@ function computeAllDerived(character, primaryClassName) {
     character.prof_bonus = pb;
 
     // ── Initiative ─────────────────────────────────────────────────────────
-    // Base = DEX modifier. Features like Alert or items add to modifiers[].
     const initEntry = character.stats.find(s => s.stat === 'Initiative');
     if (initEntry) {
         initEntry.base = dexMod;
-        recomputeOneStat(initEntry);   // score = dexMod + sum(modifiers)
+        recomputeOneStat(initEntry);
     }
 
     // ── MaxHP ───────────────────────────────────────────────────────────────
-    // Base = hit dice + CON. Tough feat / items add to modifiers[].
-    // Primary class:    level 1 = max hit die + CON mod
-    //                   levels 2+ = avg hit die (floor(hd/2)+1) + CON mod
-    // Secondary classes: all levels use average hit die + CON mod (5e multiclass rule)
     const primaryClass =
         character.classes.find(c => c.name.toLowerCase() === (primaryClassName ?? '').toLowerCase())
         ?? character.classes[0];
@@ -81,7 +98,7 @@ function computeAllDerived(character, primaryClassName) {
     const maxHpEntry = character.stats.find(s => s.stat === 'MaxHP');
     if (maxHpEntry) {
         maxHpEntry.base = Math.max(1, maxHpBase);
-        recomputeOneStat(maxHpEntry);  // score = base + sum(modifiers like Tough feat)
+        recomputeOneStat(maxHpEntry);
     }
 
     // ── Saving throws ──────────────────────────────────────────────────────
@@ -91,6 +108,38 @@ function computeAllDerived(character, primaryClassName) {
         stat: s,
         save: statMod(statMap[s] ?? 10) + (saveProfSet.has(s) ? pb : 0),
     }));
+
+    // ── Spell Slots ────────────────────────────────────────────────────────
+    const regularCasters = character.classes.filter(
+        c => c.caster && c.casterType && c.casterType !== 'pact_magic'
+    );
+    const pactCasters = character.classes.filter(c => c.casterType === 'pact_magic');
+
+    let regularSlots = [];
+    if (regularCasters.length === 1) {
+        const cls   = regularCasters[0];
+        const table = CASTER_TABLES[cls.casterType];
+        const row   = table?.[String(cls.level)];
+        if (row) regularSlots = slotsFromRow(row, character.spell_slots ?? []);
+    } else if (regularCasters.length > 1) {
+        const combined = regularCasters.reduce((sum, cls) => {
+            const contrib = MULTICLASS_CONTRIB[cls.casterType];
+            return sum + (contrib ? contrib(cls.level) : 0);
+        }, 0);
+        if (combined > 0) {
+            const row = fullCasterData.spell_slots[String(Math.min(combined, 20))];
+            if (row) regularSlots = slotsFromRow(row, character.spell_slots ?? []);
+        }
+    }
+    character.spell_slots = regularSlots.length ? regularSlots : null;
+
+    let pactSlots = [];
+    if (pactCasters.length) {
+        const cls = pactCasters[0];
+        const row = pactMagicData.spell_slots?.[String(cls.level)];
+        if (row) pactSlots = slotsFromRow(row, character.pact_slots ?? []);
+    }
+    character.pact_slots = pactSlots.length ? pactSlots : null;
 }
 
 module.exports = { computeAllDerived };

@@ -106,17 +106,16 @@ async function openItemSearchModal() {
     }
     document.getElementById('item-search').value = '';
     renderItemSearchResults(DB_ITEMS.filter(i => i.type !== 'wp'));
-    document.getElementById('item-search-modal').style.display = 'block';
+    document.getElementById('item-search-modal').style.display = 'flex';
+}
+
+function closeItemSearchModal() {
+    document.getElementById('item-search-modal').style.display = 'none';
 }
 
 function filterItemSearch() {
     const q = document.getElementById('item-search').value.toLowerCase();
     renderItemSearchResults(DB_ITEMS.filter(i => i.type !== 'wp' && (i.name ?? '').toLowerCase().includes(q)));
-}
-
-function filterItemSearch() {
-    const q = document.getElementById('item-search').value.toLowerCase();
-    renderItemSearchResults(DB_ITEMS.filter(item => (item.name ?? '').toLowerCase().includes(q)));
 }
 
 function renderItemSearchResults(items) {
@@ -162,7 +161,7 @@ async function addItemToCharacter(item, btn) {
         const res = await fetch(`/api/characters/${CURRENT_CHAR_ID}/inventory/items`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(item)
+            body: JSON.stringify({ ...item, _uid: `${Date.now()}_${Math.random().toString(36).slice(2,7)}` })
         });
         if (res.ok) {
             btn.textContent = 'Added!';
@@ -226,6 +225,50 @@ function renderInventoryItems(items) {
 
         div.appendChild(header);
 
+        if (item.quantity != null) {
+            const qtyRow = document.createElement('div');
+            qtyRow.style.cssText = 'display:flex; gap:4px; align-items:center; margin-top:3px;';
+
+            const qLabel = document.createElement('span');
+            qLabel.style.cssText = 'font-size:11px; color:#555;';
+            qLabel.textContent = 'Qty:';
+
+            let qty = item.quantity;
+
+            const minusBtn = document.createElement('button');
+            minusBtn.textContent = '−';
+            minusBtn.style.cssText = 'width:20px; height:20px; padding:0; font-size:12px; cursor:pointer; line-height:1;';
+
+            const qDisplay = document.createElement('span');
+            qDisplay.style.cssText = 'font-size:12px; min-width:20px; text-align:center;';
+            qDisplay.textContent = qty;
+
+            const plusBtn = document.createElement('button');
+            plusBtn.textContent = '+';
+            plusBtn.style.cssText = 'width:20px; height:20px; padding:0; font-size:12px; cursor:pointer; line-height:1;';
+
+            const saveQty = async (newQty) => {
+                if (newQty < 0) return;
+                qty = newQty;
+                qDisplay.textContent = qty;
+                if (!CURRENT_CHAR_ID) return;
+                await fetch(`/api/characters/${CURRENT_CHAR_ID}/inventory/items/quantity`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ _uid: item._uid, name: item.name, type: item.type, quantity: qty })
+                });
+            };
+
+            minusBtn.addEventListener('click', e => { e.stopPropagation(); saveQty(qty - 1); });
+            plusBtn.addEventListener('click', e => { e.stopPropagation(); saveQty(qty + 1); });
+
+            qtyRow.appendChild(qLabel);
+            qtyRow.appendChild(minusBtn);
+            qtyRow.appendChild(qDisplay);
+            qtyRow.appendChild(plusBtn);
+            div.appendChild(qtyRow);
+        }
+
         if (item.description) {
             const desc = document.createElement('div');
             desc.style.cssText = 'color:#555; font-size:12px; margin-top:2px;';
@@ -243,7 +286,7 @@ function renderInventoryItems(items) {
             const res = await fetch(`/api/characters/${CURRENT_CHAR_ID}/inventory/items`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: item.id, name: item.name })
+                body: JSON.stringify({ _uid: item._uid, name: item.name, type: item.type })
             });
             if (res.ok) {
                 const char = await (await fetch(`/api/characters/${CURRENT_CHAR_ID}`)).json();
@@ -261,23 +304,82 @@ function renderInventoryItems(items) {
 
 /* Weapon Modal */
 
-function renderWeapons(weapons) {
+function renderWeapons(weapons, char = null) {
     const el = document.getElementById('weapons-list');
     el.innerHTML = '';
     if (!weapons.length) {
         el.innerHTML = '<span style="font-size:13px; color:#888; padding:4px 3px; display:block;">— none equipped —</span>';
         return;
     }
-    weapons.forEach(w => {
-        const div = document.createElement('div');
-        div.style.cssText = 'border-bottom:1px solid #ddd; padding:4px 3px; font-size:13px; display:flex; align-items:baseline; gap:6px;';
 
-        const name = document.createElement('strong');
-        name.textContent = w.name ?? '?';
+    const fmtMod = v => (v >= 0 ? '+' : '') + v;
+    const getMod  = score => Math.floor((score - 10) / 2);
+    const getStat = name => char?.stats?.find(s => s.stat === name)?.score ?? 10;
+    const profBonus = char?.prof_bonus ?? 2;
+
+    weapons.forEach(w => {
+        const features = (w.features ?? []).filter(f => f.name);
+
+        // Compute total attack and damage bonuses
+        let atkTotal = null, dmgTotal = null;
+        if (w.primary_stat?.length) {
+            const stats = Array.isArray(w.primary_stat) ? w.primary_stat : [w.primary_stat];
+            const bestMod = Math.max(...stats.map(s => getMod(getStat(s))));
+            atkTotal = (w.attack_bonus ?? 0) + bestMod + profBonus;
+            dmgTotal = (w.damage_bonus ?? 0) + bestMod;
+        }
+
+        const div = document.createElement('div');
+        div.style.cssText = 'border-bottom:1px solid #ddd; padding:4px 3px; font-size:13px;';
+
+        const nameRow = document.createElement('div');
+        nameRow.style.cssText = 'display:flex; align-items:center; gap:6px;';
+
+        const nameEl = document.createElement('strong');
+        nameEl.textContent = w.name ?? '?';
 
         const detail = document.createElement('span');
-        detail.style.cssText = 'color:#555; flex:1;';
-        detail.textContent = [w.damage, w.mode].filter(Boolean).join(' · ');
+        detail.style.cssText = 'color:#555; flex:1; font-size:12px;';
+        const parts = [w.damage, w.mode];
+        if (atkTotal !== null) parts.push(`Atk ${fmtMod(atkTotal)}`);
+        if (dmgTotal !== null) parts.push(`Dmg ${fmtMod(dmgTotal)}`);
+        detail.textContent = parts.filter(Boolean).join(' · ');
+
+        nameRow.appendChild(nameEl);
+        nameRow.appendChild(detail);
+
+        let body = null;
+        if (features.length) {
+            const arrow = document.createElement('span');
+            arrow.textContent = '▶';
+            arrow.style.cssText = 'font-size:9px; color:#888; display:inline-block; transition:transform 0.15s;';
+            nameRow.appendChild(arrow);
+
+            body = document.createElement('div');
+            body.style.cssText = 'display:none; padding:2px 0 2px 8px;';
+            features.forEach(f => {
+                const fDiv = document.createElement('div');
+                fDiv.style.cssText = 'font-size:12px; padding:1px 0;';
+                const fName = document.createElement('strong');
+                fName.textContent = f.name;
+                fDiv.appendChild(fName);
+                if (f.description) {
+                    const fDesc = document.createElement('div');
+                    fDesc.style.cssText = 'color:#555; font-size:11px; white-space:pre-wrap; margin-top:1px;';
+                    fDesc.textContent = f.description;
+                    fDiv.appendChild(fDesc);
+                }
+                body.appendChild(fDiv);
+            });
+
+            nameRow.style.cursor = 'pointer';
+            nameRow.addEventListener('click', e => {
+                if (removeBtn.contains(e.target)) return;
+                const open = body.style.display !== 'none';
+                body.style.display = open ? 'none' : 'block';
+                arrow.style.transform = open ? '' : 'rotate(90deg)';
+            });
+        }
 
         const removeBtn = document.createElement('button');
         removeBtn.textContent = '×';
@@ -289,17 +391,17 @@ function renderWeapons(weapons) {
             const res = await fetch(`/api/characters/${CURRENT_CHAR_ID}/equipped_weapons`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ item_id: w.item_id, name: w.name })
+                body: JSON.stringify({ _uid: w._uid, item_id: w.item_id, name: w.name })
             });
             if (res.ok) {
-                const char = await (await fetch(`/api/characters/${CURRENT_CHAR_ID}`)).json();
-                renderWeapons(char.equipped_weapons ?? []);
+                const updated = await (await fetch(`/api/characters/${CURRENT_CHAR_ID}`)).json();
+                renderWeapons(updated.equipped_weapons ?? [], updated);
             } else { removeBtn.disabled = false; }
         };
+        nameRow.appendChild(removeBtn);
 
-        div.appendChild(name);
-        div.appendChild(detail);
-        div.appendChild(removeBtn);
+        div.appendChild(nameRow);
+        if (body) div.appendChild(body);
         el.appendChild(div);
     });
 }
@@ -311,7 +413,7 @@ async function openWeaponModal() {
     }
     document.getElementById('weapon-search').value = '';
     renderWeaponSearchResults(DB_ITEMS.filter(i => i.type === 'wp'));
-    document.getElementById('weapon-search-modal').style.display = 'block';
+    document.getElementById('weapon-search-modal').style.display = 'flex';
 }
 
 function closeWeaponModal() {
@@ -364,7 +466,19 @@ async function addWeaponToCharacter(item, btn) {
     else if (oh?.num > 0) damage = `${oh.num}d${oh.sides}`;
     else if (th)          damage = `${th.num}d${th.sides}`;
     const isRanged = (item.range ?? []).some((v, i) => i > 0 && v != null && v > 0);
-    const entry = { item_id: String(item.id ?? ''), name: item.name ?? '?', damage, mode: isRanged ? 'ranged' : 'melee' };
+    const entry = {
+        item_id: String(item.id ?? ''),
+        name: item.name ?? '?',
+        damage,
+        mode: isRanged ? 'ranged' : 'melee',
+        attack_bonus: item.attack_bonus ?? 0,
+        damage_bonus: item.damage_bonus ?? 0,
+        primary_stat: item.primary_stat ?? [],
+        _uid: `${Date.now()}_${Math.random().toString(36).slice(2,7)}`,
+        features: (item.features_on_equip ?? [])
+            .filter(f => f.name)
+            .map(f => ({ name: f.name, description: f.description ?? null }))
+    };
     try {
         const res = await fetch(`/api/characters/${CURRENT_CHAR_ID}/equipped_weapons`, {
             method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(entry)
@@ -372,7 +486,7 @@ async function addWeaponToCharacter(item, btn) {
         if (res.ok) {
             btn.textContent = 'Added!';
             const char = await (await fetch(`/api/characters/${CURRENT_CHAR_ID}`)).json();
-            renderWeapons(char.equipped_weapons ?? []);
+            renderWeapons(char.equipped_weapons ?? [], char);
         } else { btn.textContent = 'Error'; btn.disabled = false; }
     } catch { btn.textContent = 'Error'; btn.disabled = false; }
 }
@@ -626,8 +740,16 @@ async function loadSheet() {
                 groupIndex.set(key, featureGroups.length);
                 featureGroups.push({ name: base, description: f.description, id: f.id, choices: [choice] });
             }
-        } else {
-            featureGroups.push({ name: f.name, description: f.description, id: f.id, choices: [] });
+         } else {
+            const key = f.name?.toLowerCase() ?? '';
+            if (groupIndex.has(key)) {
+                // Merge: fill in description if the grouped entry is missing one
+                const existing = featureGroups[groupIndex.get(key)];
+                if (!existing.description && f.description) existing.description = f.description;
+            } else {
+                groupIndex.set(key, featureGroups.length);
+                featureGroups.push({ name: f.name, description: f.description, id: f.id, choices: [] });
+            }
         }
     }
 
@@ -743,19 +865,165 @@ async function loadSheet() {
         featuresList.appendChild(div);
     });
 
+    // Spell stats
+    const primaryCaster = char.classes?.find(c => c.caster && c.casterStat);
+    if (primaryCaster) {
+        const stat  = primaryCaster.casterStat;
+        const mod   = getMod(getStat(stat));
+        const abbr  = { Strength:'STR', Dexterity:'DEX', Constitution:'CON',
+                        Intelligence:'INT', Wisdom:'WIS', Charisma:'CHA' }[stat] ?? stat;
+        document.getElementById('spell-ability').textContent = abbr;
+        document.getElementById('spell-dc').textContent      = 8 + profBonus + mod;
+        document.getElementById('spell-atk').textContent     = fmtMod(profBonus + mod);
+    }
+
     // Weapons
-    renderWeapons(char.equipped_weapons ?? []);
+    const invObj = Array.isArray(char.inventory) ? char.inventory[0] : char.inventory;
+    const invWeapons = (invObj?.items ?? [])
+        .filter(i => i.type === 'wp')
+        .map(i => {
+            const oh = i.dice?.oneHand, th = i.dice?.twoHand;
+            let damage = '?';
+            if (oh && th && (oh.num !== th.num || oh.sides !== th.sides)) damage = `${oh.num}d${oh.sides} / ${th.num}d${th.sides}`;
+            else if (oh?.num > 0) damage = `${oh.num}d${oh.sides}`;
+            else if (th)          damage = `${th.num}d${th.sides}`;
+            const isRanged = (i.range ?? []).some((v, idx) => idx > 0 && v != null && v > 0);
+            return {
+                name: i.name ?? '?',
+                damage,
+                mode: isRanged ? 'ranged' : 'melee',
+                attack_bonus:  i.attack_bonus  ?? 0,
+                damage_bonus:  i.damage_bonus  ?? 0,
+                primary_stat:  i.primary_stat  ?? [],
+                features: (i.features_on_equip ?? [])
+                    .filter(f => f.name)
+                    .map(f => ({ name: f.name, description: f.description ?? null }))
+            };
+        });
+    renderWeapons([...(char.equipped_weapons ?? []), ...invWeapons], char);
+
+    // Spell stats + slots
+    if (primaryCaster) {
+        const stat = primaryCaster.casterStat;
+        const mod  = getMod(getStat(stat));
+        const abbr = { Strength:'STR', Dexterity:'DEX', Constitution:'CON',
+                       Intelligence:'INT', Wisdom:'WIS', Charisma:'CHA' }[stat] ?? stat;
+        document.getElementById('spell-ability').textContent = abbr;
+        document.getElementById('spell-dc').textContent      = 8 + profBonus + mod;
+        document.getElementById('spell-atk').textContent     = fmtMod(profBonus + mod);
+    }
+
+    for (let i = 1; i <= 9; i++) {
+        const amtEl  = document.getElementById(`slot-amt-${i}`);
+        const usedEl = document.getElementById(`slot-used-${i}`);
+        if (amtEl)  amtEl.textContent = '0';
+        if (usedEl) { usedEl.removeAttribute('contenteditable'); usedEl.innerHTML = ''; }
+    }
+
+    const slotMap = new Map();
+    for (const s of (char.spell_slots ?? [])) {
+        slotMap.set(s.level, { max: s.max, current: s.current, api: 'spell_slots' });
+    }
+    for (const s of (char.pact_slots ?? [])) {
+        if (slotMap.has(s.level)) {
+            const ex = slotMap.get(s.level);
+            slotMap.set(s.level, { max: ex.max + s.max, current: ex.current + s.current, api: 'both' });
+        } else {
+            slotMap.set(s.level, { max: s.max, current: s.current, api: 'pact_slots' });
+        }
+    }
+
+    for (const [level, slot] of slotMap) {
+        const amtEl  = document.getElementById(`slot-amt-${level}`);
+        const usedEl = document.getElementById(`slot-used-${level}`);
+        if (!amtEl || !usedEl) continue;
+
+        amtEl.textContent = String(slot.max);
+        usedEl.removeAttribute('contenteditable');
+        usedEl.innerHTML = '';
+        usedEl.style.cssText = 'display:flex; align-items:center; gap:3px; justify-content:center;';
+
+        const minus = document.createElement('button');
+        minus.textContent = '−';
+        minus.style.cssText = 'width:18px; height:18px; padding:0; font-size:12px; cursor:pointer; line-height:1;';
+
+        let cur = slot.current;
+        const counter = document.createElement('span');
+        counter.style.cssText = 'font-size:12px; min-width:24px; text-align:center;';
+        counter.textContent = String(cur);
+
+        const plus = document.createElement('button');
+        plus.textContent = '+';
+        plus.style.cssText = 'width:18px; height:18px; padding:0; font-size:12px; cursor:pointer; line-height:1;';
+
+        const save = async (val) => {
+            if (val < 0 || val > slot.max || !CURRENT_CHAR_ID) return;
+            cur = val;
+            counter.textContent = String(cur);
+            if (slot.api === 'both') return;
+            await fetch(`/api/characters/${CURRENT_CHAR_ID}/${slot.api}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ level, current: cur }),
+            });
+        };
+
+        minus.addEventListener('click', () => save(cur - 1));
+        plus.addEventListener('click',  () => save(cur + 1));
+
+        usedEl.appendChild(minus);
+        usedEl.appendChild(counter);
+        usedEl.appendChild(plus);
+    }
 
     // Proficiencies
     const profList = document.getElementById('prof-list');
-    const parts = [];
-    (char.skill_proficiencies ?? []).forEach(sp => parts.push(sp.skill + (sp.expertise ? ' (E)' : '')));
-    (char.tool_proficiencies  ?? []).forEach(tp => parts.push(tp.tool));
-    (char.item_proficiencies  ?? []).forEach(ip => parts.push(ip.item));
-    (char.languages ?? []).forEach(l => parts.push(`${l} (lang)`));
-    profList.innerHTML = parts.length
-        ? parts.map(p => `<span style="display:inline-block;font-size:12px;margin:2px;">${p}</span>`).join(', ')
-        : '<span style="font-size:13px;color:#888;">—</span>';
+    profList.innerHTML = '';
+
+    const classWeaponProfs = new Set();
+    const classArmorProfs  = new Set();
+    await Promise.all((char.classes ?? []).map(cls =>
+        fetch(`/static_json/classes/${cls.name.toLowerCase()}.json`)
+            .then(r => r.ok ? r.json() : null)
+            .then(t => {
+                if (!t) return;
+                (t.weapons ?? []).forEach(w => classWeaponProfs.add(w));
+                (t.armor   ?? []).forEach(a => classArmorProfs.add(a));
+            })
+            .catch(() => {})
+    ));
+
+    const profCategories = [
+        { label: 'Languages', items: char.languages ?? [] },
+        { label: 'Skills',    items: (char.skill_proficiencies ?? []).map(sp => sp.skill + (sp.expertise ? ' ✦' : '')) },
+        { label: 'Tools',     items: (char.tool_proficiencies  ?? []).map(tp => tp.tool) },
+        { label: 'Weapons',   items: [...classWeaponProfs] },
+        { label: 'Armor',     items: [...classArmorProfs] },
+        { label: 'Other',     items: (char.item_proficiencies  ?? []).map(ip => ip.item) },
+    ];
+
+    profCategories.forEach(cat => {
+        if (!cat.items.length) return;
+        const section = document.createElement('div');
+        section.style.cssText = 'margin-bottom:5px;';
+        const lbl = document.createElement('div');
+        lbl.style.cssText = 'font-size:10px; font-weight:bold; color:#777; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:2px;';
+        lbl.textContent = cat.label;
+        const wrap = document.createElement('div');
+        wrap.style.cssText = 'display:flex; flex-wrap:wrap; gap:3px;';
+        cat.items.forEach(item => {
+            const tag = document.createElement('span');
+            tag.style.cssText = 'font-size:11px; background:#f0f0f0; padding:1px 6px; border-radius:3px; border:1px solid #ddd;';
+            tag.textContent = item;
+            wrap.appendChild(tag);
+        });
+        section.appendChild(lbl);
+        section.appendChild(wrap);
+        profList.appendChild(section);
+    });
+    if (!profList.children.length) {
+        profList.innerHTML = '<span style="font-size:13px;color:#888;">—</span>';
+    }
 
     // Currency
     const inv = Array.isArray(char.inventory) ? char.inventory[0] : char.inventory;

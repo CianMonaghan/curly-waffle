@@ -21,6 +21,7 @@
     ],
 
     "caster": false,
+    "casterType": null,
     "casterLevel": null,
     "casterStat": null,
     "spell_list": null,

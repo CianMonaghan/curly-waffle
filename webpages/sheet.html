@@ -301,6 +301,18 @@
                 </div>
             </div>
 
+            <!-- Spell / Pact Slots -->
+            <div id="spell-slots-section" style="display:none; margin: 4px 5px 8px;">
+                <div style="font-size:11px; font-weight:bold; color:#555; text-transform:uppercase;
+                            letter-spacing:0.5px; margin-bottom:5px;">Spell Slots</div>
+                <div id="spell-slots-list" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
+            </div>
+            <div id="pact-slots-section" style="display:none; margin: 4px 5px 8px;">
+                <div style="font-size:11px; font-weight:bold; color:#555; text-transform:uppercase;
+                            letter-spacing:0.5px; margin-bottom:5px;">Pact Magic Slots</div>
+                <div id="pact-slots-list" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
+            </div>
+
             <!-- Spell list Modal-->
             <div id="spell-list-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
                 background:rgba(0,0,0,0.5); z-index:1000; overflow-y:auto;">
@@ -324,50 +336,47 @@
 
             <!-- Item Search Modal -->
             <div id="item-search-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-                background:rgba(0,0,0,0.5); z-index:1000; overflow-y:auto;">
-                <div style="background:white; margin:40px auto; padding:20px; max-width:700px;
-                    border:2px solid black; border-radius:4px; position:relative;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                background:rgba(0,0,0,0.5); z-index:1000; align-items:flex-start; justify-content:center;
+                padding-top:40px; box-sizing:border-box;">
+                <div style="background:white; padding:20px; width:100%; max-width:700px;
+                    max-height:calc(100vh - 80px); border:2px solid black; border-radius:4px;
+                    display:flex; flex-direction:column;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-shrink:0;">
                         <h2 style="margin:0;">Add Item from Database</h2>
                         <button onclick="closeItemSearchModal()"
                             style="font-size:20px; cursor:pointer; border:1px solid black; padding:2px 8px;">✕</button>
                     </div>
                     <input id="item-search" type="text" placeholder="Search items..."
                         oninput="filterItemSearch()"
-                        style="width:100%; padding:6px; box-sizing:border-box; border:1px solid black; font-size:14px; margin-bottom:10px;">
-                    <div id="item-search-results" style="max-height:450px; overflow-y:auto;"></div>
+                        style="width:100%; padding:6px; box-sizing:border-box; border:1px solid black; font-size:14px; margin-bottom:10px; flex-shrink:0;">
+                    <div id="item-search-results" style="overflow-y:auto; flex:1;"></div>
                 </div>
             </div>
 
             <!-- Weapon Search Modal -->
             <div id="weapon-search-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-                background:rgba(0,0,0,0.5); z-index:1000; overflow-y:auto;">
-                <div style="background:white; margin:40px auto; padding:20px; max-width:700px;
-                    border:2px solid black; border-radius:4px; position:relative;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                background:rgba(0,0,0,0.5); z-index:1000; align-items:flex-start; justify-content:center;
+                padding-top:40px; box-sizing:border-box;">
+                <div style="background:white; padding:20px; width:100%; max-width:700px;
+                    max-height:calc(100vh - 80px); border:2px solid black; border-radius:4px;
+                    display:flex; flex-direction:column;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-shrink:0;">
                         <h2 style="margin:0;">Add Weapon</h2>
                         <button onclick="closeWeaponModal()"
                             style="font-size:20px; cursor:pointer; border:1px solid black; padding:2px 8px;">✕</button>
                     </div>
                     <input id="weapon-search" type="text" placeholder="Search weapons..."
                         oninput="filterWeaponSearch()"
-                        style="width:100%; padding:6px; box-sizing:border-box; border:1px solid black; font-size:14px; margin-bottom:10px;">
-                    <div id="weapon-search-results" style="max-height:450px; overflow-y:auto;"></div>
+                        style="width:100%; padding:6px; box-sizing:border-box; border:1px solid black; font-size:14px; margin-bottom:10px; flex-shrink:0;">
+                    <div id="weapon-search-results" style="overflow-y:auto; flex:1;"></div>
                 </div>
             </div>
 
             <!-- Cantrip-Level 3-->
             <div class="outside-spell-container">
                 <div class="spell-container">
-                    <div class="slot-container" style="align-items: center;">
-                        <div class="slot">  Spell Level  </div>
-                        <div class="slot">  Slot Amount  </div>
-                        <div class="slot">  Slots Used  </div>
-                    </div>
-                    <div class="slot-container" style="align-items: center;">
-                        <div class="slot">  Cantrip  </div>
-                        <div id="slot-amt-0">  0  </div>
-                        <div contenteditable="true" id="slot-used-0">  0  </div>
+                    <div class="slot-container" style="grid-template-columns: 1fr;">
+                        <div class="slot" style="font-size: 16px;">  Cantrips  </div>
                     </div>
                     <div id="spell-list-0">  Put spells here  </div>
                 </div>

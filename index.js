@@ -255,6 +255,74 @@ app.get('/api/items', (req, res) => {
     res.json(items);
 });
 
+app.patch('/api/characters/:id/spell_slots', async (req, res) => {
+    try {
+        const { ObjectId } = require('mongodb');
+        const { level, current } = req.body;
+        const char = await characters.findOne({ _id: new ObjectId(req.params.id) });
+        if (!char) return res.status(404).json({ error: 'Not found' });
+
+        const idx = (char.spell_slots ?? []).findIndex(s => s.level === level);
+        if (idx === -1) return res.status(404).json({ error: 'Slot level not found' });
+
+        await characters.updateOne(
+            { _id: new ObjectId(req.params.id) },
+            { $set: { [`spell_slots.${idx}.current`]: current } }
+        );
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.patch('/api/characters/:id/pact_slots', async (req, res) => {
+    try {
+        const { ObjectId } = require('mongodb');
+        const { level, current } = req.body;
+        const char = await characters.findOne({ _id: new ObjectId(req.params.id) });
+        if (!char) return res.status(404).json({ error: 'Not found' });
+
+        const idx = (char.pact_slots ?? []).findIndex(s => s.level === level);
+        if (idx === -1) return res.status(404).json({ error: 'Slot level not found' });
+
+        await characters.updateOne(
+            { _id: new ObjectId(req.params.id) },
+            { $set: { [`pact_slots.${idx}.current`]: current } }
+        );
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.patch('/api/characters/:id/inventory/items/quantity', async (req, res) => {
+    try {
+        const { ObjectId } = require('mongodb');
+        const char = await characters.findOne({ _id: new ObjectId(req.params.id) });
+        if (!char) return res.status(404).json({ error: 'Not found' });
+
+        const invIsArray = Array.isArray(char.inventory);
+        const inv = invIsArray ? char.inventory[0] : char.inventory;
+        const items = inv?.items ?? [];
+        const { _uid, name, type, quantity } = req.body;
+
+        const idx = items.findIndex(i =>
+            (_uid && i._uid === _uid) ||
+            (!_uid && i.name === name && (type ? i.type === type : true))
+        );
+        if (idx === -1) return res.status(404).json({ error: 'Item not found' });
+
+        const basePath = invIsArray ? `inventory.0.items.${idx}.quantity` : `inventory.items.${idx}.quantity`;
+        await characters.updateOne(
+            { _id: new ObjectId(req.params.id) },
+            { $set: { [basePath]: quantity } }
+        );
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 app.patch('/api/characters/:id/inventory/items', async (req, res) => {
     try {
         const { ObjectId } = require('mongodb');
@@ -284,11 +352,23 @@ app.patch('/api/characters/:id/equipped_weapons', async (req, res) => {
 app.delete('/api/characters/:id/inventory/items', async (req, res) => {
     try {
         const { ObjectId } = require('mongodb');
-        const { id: itemId, name } = req.body;
-        await characters.updateOne(
-            { _id: new ObjectId(req.params.id) },
-            { $pull: { 'inventory.items': itemId ? { id: itemId } : { name } } }
+        const char = await characters.findOne({ _id: new ObjectId(req.params.id) });
+        if (!char) return res.status(404).json({ error: 'Not found' });
+
+        const invIsArray = Array.isArray(char.inventory);
+        const inv = invIsArray ? char.inventory[0] : char.inventory;
+        const items = inv?.items ?? [];
+        const { _uid, name, type } = req.body;
+
+        const idx = items.findIndex(i =>
+            (_uid && i._uid === _uid) ||
+            (!_uid && i.name === name && (type ? i.type === type : true))
         );
+        if (idx === -1) return res.json({ success: true });
+
+        const basePath = invIsArray ? 'inventory.0.items' : 'inventory.items';
+        await characters.updateOne({ _id: new ObjectId(req.params.id) }, { $unset: { [`${basePath}.${idx}`]: 1 } });
+        await characters.updateOne({ _id: new ObjectId(req.params.id) }, { $pull:  { [basePath]: null } });
         res.json({ success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -298,11 +378,21 @@ app.delete('/api/characters/:id/inventory/items', async (req, res) => {
 app.delete('/api/characters/:id/equipped_weapons', async (req, res) => {
     try {
         const { ObjectId } = require('mongodb');
-        const { item_id, name } = req.body;
-        await characters.updateOne(
-            { _id: new ObjectId(req.params.id) },
-            { $pull: { equipped_weapons: { item_id, name } } }
+        const char = await characters.findOne({ _id: new ObjectId(req.params.id) });
+        if (!char) return res.status(404).json({ error: 'Not found' });
+
+        const weapons = char.equipped_weapons ?? [];
+        const { _uid, item_id, name } = req.body;
+
+        const idx = weapons.findIndex(w =>
+            (_uid && w._uid === _uid) ||
+            (!_uid && item_id && w.item_id === item_id && w.name === name) ||
+            (!_uid && !item_id && w.name === name)
         );
+        if (idx === -1) return res.json({ success: true });
+
+        await characters.updateOne({ _id: new ObjectId(req.params.id) }, { $unset: { [`equipped_weapons.${idx}`]: 1 } });
+        await characters.updateOne({ _id: new ObjectId(req.params.id) }, { $pull:  { equipped_weapons: null } });
         res.json({ success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });
