@@ -4,6 +4,7 @@ const path = require('path');
 const { parseCharacter } = require('./parseCharacter');
 const app = express();
 const port = 3000;
+require('dotenv').config();
 
 app.use(express.json());
 
@@ -14,7 +15,7 @@ app.use(express.json());
 
 const {MongoClient} = require("mongodb");
 const mongoose = require("mongoose");
-const mongoURL = "mongodb://ciancmonaghan_db_user:LG3iJcWia85aYTBI@ac-0zx0xa0-shard-00-00.ywjbdxr.mongodb.net:27017,ac-0zx0xa0-shard-00-01.ywjbdxr.mongodb.net:27017,ac-0zx0xa0-shard-00-02.ywjbdxr.mongodb.net:27017/?ssl=true&replicaSet=atlas-2anpto-shard-0&authSource=admin&appName=blite-server";
+const mongoURL = process.env.BLITE_DB;
 mongoose.connect(mongoURL, { dbName: 'bliteDB' })
   .then(() => {
     console.log('MongoDB connected successfully!');

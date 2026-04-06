@@ -1,0 +1,498 @@
+{
+  "name": "Hahana",
+  "alignment": "Neutral",
+  "stats": [
+    {
+      "stat": "Strength",
+      "base": 10,
+      "modifiers": [],
+      "score": 10
+    },
+    {
+      "stat": "Dexterity",
+      "base": 10,
+      "modifiers": [],
+      "score": 10
+    },
+    {
+      "stat": "Constitution",
+      "base": 10,
+      "modifiers": [],
+      "score": 10
+    },
+    {
+      "stat": "Intelligence",
+      "base": 10,
+      "modifiers": [],
+      "score": 10
+    },
+    {
+      "stat": "Wisdom",
+      "base": 10,
+      "modifiers": [],
+      "score": 10
+    },
+    {
+      "stat": "Charisma",
+      "base": 10,
+      "modifiers": [],
+      "score": 10
+    },
+    {
+      "stat": "Speed",
+      "base": 30,
+      "modifiers": [],
+      "score": 30
+    },
+    {
+      "stat": "Initiative",
+      "base": 0,
+      "modifiers": [],
+      "score": 0
+    },
+    {
+      "stat": "MaxHP",
+      "base": 1,
+      "modifiers": [],
+      "score": 1
+    }
+  ],
+  "hitpoints": {
+    "current_hit_points": 1,
+    "temp_hp": 0
+  },
+  "size": "medium",
+  "prof_bonus": 2,
+  "saves": [
+    {
+      "stat": "Strength",
+      "save": 2
+    },
+    {
+      "stat": "Dexterity",
+      "save": 0
+    },
+    {
+      "stat": "Constitution",
+      "save": 2
+    },
+    {
+      "stat": "Intelligence",
+      "save": 0
+    },
+    {
+      "stat": "Wisdom",
+      "save": 0
+    },
+    {
+      "stat": "Charisma",
+      "save": 0
+    }
+  ],
+  "ac_modifiers": [],
+  "armor_class": 10,
+  "languages": [
+    "Common",
+    "Infernal",
+    "Sylvan"
+  ],
+  "skill_proficiencies": [
+    {
+      "skill": "Insight",
+      "expertise": false,
+      "source_id": "background-0"
+    },
+    {
+      "skill": "Religion",
+      "expertise": false,
+      "source_id": "background-0"
+    },
+    {
+      "skill": "Athletics",
+      "expertise": false,
+      "source_id": "class-0"
+    },
+    {
+      "skill": "Acrobatics",
+      "expertise": false,
+      "source_id": "class-0"
+    }
+  ],
+  "tool_proficiencies": [
+    {
+      "tool": "Dwarvish",
+      "source_id": "race-2"
+    }
+  ],
+  "item_proficiencies": [],
+  "race": {
+    "id": "2",
+    "name": "Human"
+  },
+  "background": {
+    "id": "0",
+    "name": "Acolyte"
+  },
+  "classes": [
+    {
+      "id": "class-0",
+      "name": "Fighter",
+      "caster": false,
+      "casterStat": null,
+      "level": 1,
+      "casterLevel": null,
+      "class_hp": 0,
+      "features": [],
+      "skill_prof": [
+        {
+          "skill": "Athletics",
+          "prof": true
+        },
+        {
+          "skill": "Acrobatics",
+          "prof": true
+        }
+      ],
+      "saving_throws": [
+        "Strength",
+        "Constitution"
+      ],
+      "spell_list": [],
+      "source_id": "class-0"
+    }
+  ],
+  "subclasses": [
+    {
+      "id": "Battle Master",
+      "name": "Battle Master",
+      "class": "Fighter",
+      "description": "",
+      "features": [],
+      "source_id": "class-0"
+    }
+  ],
+  "features": [
+    {
+      "name": "Ability Score Increase (ALL +1)",
+      "description": "Your ability scores each increase by 1.",
+      "trigger": "onAdd",
+      "source_id": "race-2"
+    },
+    {
+      "name": "Speed",
+      "description": "Your base walking speed is 30 feet.",
+      "trigger": "onAdd",
+      "source_id": "race-2"
+    },
+    {
+      "id": "race-2-undefined-dwarvish",
+      "name": "Languages: Dwarvish",
+      "description": "Proficient with Dwarvish.",
+      "trigger": "passive",
+      "source_id": "race-2"
+    },
+    {
+      "name": "Languages",
+      "description": "You can speak, read, and write Common and one extra language of your choice. Humans typically learn the languages of other peoples they deal with, including obscure dialects. They are fond of sprinkling their speech with words borrowed from other tongues: Orc curses, Elvish musical expressions, Dwarvish military phrases, and so on.",
+      "trigger": "onAdd",
+      "source_id": "race-2"
+    },
+    {
+      "id": "background-0-skill-insight",
+      "name": "Skill Proficiency: Insight",
+      "description": "Proficiency in the Insight skill.",
+      "trigger": "passive",
+      "source_id": "background-0"
+    },
+    {
+      "id": "background-0-skill-religion",
+      "name": "Skill Proficiency: Religion",
+      "description": "Proficiency in the Religion skill.",
+      "trigger": "passive",
+      "source_id": "background-0"
+    },
+    {
+      "id": "shelter-faithful",
+      "name": "Shelter of the Faithful",
+      "description": "As an acolyte, you command the respect of those who share your faith, and you can perform the religious ceremonies of your deity. You and your adventuring companions can expect to receive free healing and care at a temple, shrine, or other established presence of your faith, though you must provide any material components needed for spells. Those who share your religion will support you (but only you) at a modest lifestyle. \n You might also have ties to a specific temple dedicated to your chosen deity or pantheon, and you have a residence there. This could be the temple where you used to serve, if you remain on good terms with it, or a temple where you have found a new home. While near your temple, you can call upon the priests for assistance, provided the assistance you ask for is not hazardous and you remain in good standing with your temple.",
+      "trigger": "onAdd",
+      "source_id": "background-0"
+    },
+    {
+      "id": "class-0-lvl1-fighting_style",
+      "name": "Fighting Style",
+      "description": "",
+      "trigger": "passive",
+      "source_id": "class-0"
+    },
+    {
+      "id": "class-0-lvl1-second_wind",
+      "name": "Second Wind",
+      "description": "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level. \n Once you use this feature, you must finish a short or long rest before you can use it again.",
+      "trigger": "passive",
+      "source_id": "class-0"
+    }
+  ],
+  "inventory": {
+    "currency": [
+      {
+        "currencyName": "pp",
+        "amount": 0
+      },
+      {
+        "currencyName": "gp",
+        "amount": 0
+      },
+      {
+        "currencyName": "ep",
+        "amount": 0
+      },
+      {
+        "currencyName": "sp",
+        "amount": 0
+      },
+      {
+        "currencyName": "cp",
+        "amount": 0
+      }
+    ],
+    "items": [
+      {
+        "id": "class-0-equip-g0-i0",
+        "local_id": 0,
+        "name": "Chain Mail",
+        "type": "armor",
+        "description": "Heavy armor. AC 16. Requires Strength 13. Disadvantage on Stealth checks.",
+        "equipped": false,
+        "features_on_obtain": null,
+        "features_on_lose": null,
+        "features_on_equip": [
+          {
+            "id": "calc-ac-chain-mail",
+            "name": "calcAC",
+            "handler": "calcAC",
+            "data": {
+              "base_ac": 16,
+              "dex_cap": 0
+            },
+            "description": null,
+            "trigger": "onEquip"
+          }
+        ],
+        "features_on_unequip": [
+          {
+            "id": "calc-ac-chain-mail",
+            "name": "remove_feature",
+            "handler": null,
+            "data": null,
+            "description": null,
+            "trigger": "onUnequip"
+          }
+        ],
+        "prof": true,
+        "attuned": null,
+        "features_on_attune": null,
+        "features_on_detune": null
+      },
+      {
+        "type": "wp",
+        "id": "class-0-equip-g1-i0",
+        "local_id": 0,
+        "name": "Rapier",
+        "description": "A martial melee weapon.",
+        "equipped": false,
+        "features_on_obtain": null,
+        "features_on_lose": null,
+        "features_on_equip": [
+          {
+            "id": "attack-rapier",
+            "name": "Melee Attack (Rapier)",
+            "handler": "addAttack",
+            "data": {
+              "mode": "melee"
+            },
+            "description": null,
+            "trigger": "onEquip"
+          }
+        ],
+        "features_on_unequip": [
+          {
+            "id": "loss-attack-rapier",
+            "name": null,
+            "handler": null,
+            "data": null,
+            "description": null,
+            "trigger": "onUnequip"
+          }
+        ],
+        "dice": {
+          "oneHand": {
+            "num": 1,
+            "sides": 8
+          },
+          "twoHand": null
+        },
+        "range": [
+          5,
+          null,
+          null
+        ],
+        "primary_stat": [
+          "Strength",
+          "Dexterity"
+        ],
+        "martial": true,
+        "improvised": false,
+        "attack_bonus": 0,
+        "damage_bonus": 0,
+        "prof": true,
+        "attuned": false,
+        "features_on_attune": null,
+        "features_on_detune": null
+      },
+      {
+        "id": "class-0-equip-g1-i1",
+        "local_id": 0,
+        "name": "Shield",
+        "type": "armor",
+        "description": "Shield. +2 AC. Cannot be used with a two-handed weapon.",
+        "equipped": false,
+        "features_on_obtain": null,
+        "features_on_lose": null,
+        "features_on_equip": [
+          {
+            "id": "calc-ac-shield",
+            "name": "calcAC",
+            "handler": "calcAC",
+            "data": {
+              "base_ac": 2,
+              "dex_cap": null,
+              "is_shield": true
+            },
+            "description": null,
+            "trigger": "onEquip"
+          }
+        ],
+        "features_on_unequip": [
+          {
+            "id": "calc-ac-shield",
+            "name": "remove_feature",
+            "handler": null,
+            "data": null,
+            "description": null,
+            "trigger": "onUnequip"
+          }
+        ],
+        "prof": true,
+        "attuned": null,
+        "features_on_attune": null,
+        "features_on_detune": null
+      },
+      {
+        "type": "wp",
+        "id": "class-0-equip-g2-i0",
+        "local_id": 0,
+        "name": "Light Crossbow",
+        "description": "A simple ranged weapon",
+        "equipped": false,
+        "features_on_obtain": null,
+        "features_on_lose": null,
+        "features_on_equip": [
+          {
+            "id": "attack-lcrossbow",
+            "name": "Ranged Attack (Light Crossbow)",
+            "handler": "addAttack",
+            "data": {
+              "mode": "ranged"
+            },
+            "description": null,
+            "trigger": "onEquip"
+          }
+        ],
+        "features_on_unequip": [
+          {
+            "id": "loss-attack-lcrossbow",
+            "name": null,
+            "handler": null,
+            "data": null,
+            "description": null,
+            "trigger": "onUnequip"
+          }
+        ],
+        "dice": {
+          "oneHand": null,
+          "twoHand": {
+            "num": 1,
+            "sides": 8
+          }
+        },
+        "range": [
+          null,
+          80,
+          320
+        ],
+        "primary_stat": [
+          "Dexterity"
+        ],
+        "martial": false,
+        "improvised": false,
+        "attack_bonus": 0,
+        "damage_bonus": 0,
+        "prof": true,
+        "attuned": false,
+        "features_on_attune": null,
+        "features_on_detune": null
+      },
+      {
+        "id": "class-0-equip-g2-i1",
+        "local_id": null,
+        "name": "20 Bolts",
+        "type": "item",
+        "description": "",
+        "features_on_obtain": null,
+        "features_on_lose": null,
+        "features_on_equip": null,
+        "features_on_unequip": null,
+        "dice": null,
+        "range": null,
+        "primary_stat": null,
+        "martial": null,
+        "improvised": null,
+        "attack_bonus": null,
+        "damage_bonus": null,
+        "prof": null,
+        "features_on_attune": null,
+        "features_on_detune": null
+      },
+      {
+        "id": "class-0-equip-g3-i0",
+        "local_id": null,
+        "name": "Dungeoneer's pack",
+        "type": "item",
+        "description": "",
+        "features_on_obtain": null,
+        "features_on_lose": null,
+        "features_on_equip": null,
+        "features_on_unequip": null,
+        "dice": null,
+        "range": null,
+        "primary_stat": null,
+        "martial": null,
+        "improvised": null,
+        "attack_bonus": null,
+        "damage_bonus": null,
+        "prof": null,
+        "features_on_attune": null,
+        "features_on_detune": null
+      }
+    ]
+  },
+  "equipped_armor": {
+    "body": null,
+    "shield": null
+  },
+  "attuned_items": [],
+  "attuned_cap": 3,
+  "equipped_weapons": [],
+  "_id": "69cc800495191ee2e507ad5c"
+}
