@@ -4,8 +4,20 @@ let SPELL_DATA = {};
 let CHARACTER_CLASSES = [];
 let DB_ITEMS = [];
 let CURRENT_CHAR_ID = null;
+let GRANTED_SPELLS = [];  // from class/subclass features — not removable
+let CHOSEN_SPELLS  = [];  // user-added — removable
 
-fetch('/static_json/external_lists/spell_list.json')
+const LEVEL_KEYS = [
+    'Cantrips', '1st Level', '2nd Level', '3rd Level', '4th Level',
+    '5th Level', '6th Level', '7th Level', '8th Level', '9th Level'
+];
+const LEVEL_NAME_TO_NUM = {
+    'Cantrips': 0, '1st Level': 1, '2nd Level': 2, '3rd Level': 3,
+    '4th Level': 4, '5th Level': 5, '6th Level': 6, '7th Level': 7,
+    '8th Level': 8, '9th Level': 9
+};
+
+const spellDataReady = fetch('/static_json/external_lists/spell_list.json')
     .then(res => res.json())
     .then(data => { SPELL_DATA = data.spells; });
 
@@ -96,6 +108,204 @@ document.getElementById('spell-list-modal').addEventListener('click', function(e
     if (e.target === this) closeSpellListModal();
 });
 
+
+/* Spell List Rendering */
+
+function renderSpellLists() {
+    for (let i = 0; i <= 9; i++) {
+        const el = document.getElementById(`spell-list-${i}`);
+        if (el) el.innerHTML = '';
+    }
+    for (const { name, level } of GRANTED_SPELLS) renderSpellEntry(level, name, false);
+    for (const { name, level } of CHOSEN_SPELLS)  renderSpellEntry(level, name, true);
+}
+
+function renderSpellEntry(level, name, removable) {
+    const el = document.getElementById(`spell-list-${level}`);
+    if (!el) return;
+
+    const levelKey  = LEVEL_KEYS[level];
+    const spellData = levelKey ? SPELL_DATA[levelKey]?.[name] : null;
+
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex; align-items:center; justify-content:space-between; padding:2px 6px; border-bottom:1px solid #eee; font-size:13px;';
+
+    const left = document.createElement('span');
+    if (spellData?.link) {
+        const a = document.createElement('a');
+        a.href = spellData.link;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.textContent = name;
+        a.style.color = '#1a0dab';
+        left.appendChild(a);
+    } else {
+        left.textContent = name;
+    }
+    if (spellData?.ritual === 'true') {
+        const tag = document.createElement('span');
+        tag.textContent = ' (R)';
+        tag.style.cssText = 'color:#666; font-style:italic; font-size:11px;';
+        left.appendChild(tag);
+    }
+    row.appendChild(left);
+
+    const right = document.createElement('span');
+    right.style.cssText = 'flex-shrink:0; margin-left:6px;';
+    if (!removable) {
+        right.title = 'Granted by class or subclass';
+        right.textContent = '★';
+        right.style.cssText += '; color:#b8860b; font-size:12px;';
+    } else {
+        const btn = document.createElement('button');
+        btn.textContent = '×';
+        btn.title = 'Remove spell';
+        btn.style.cssText = 'color:#c00; border:none; background:none; cursor:pointer; font-size:15px; padding:0 2px; line-height:1;';
+        btn.onclick = () => removeChosenSpell(name, level);
+        right.appendChild(btn);
+    }
+    row.appendChild(right);
+    el.appendChild(row);
+}
+
+/* Choose Class Spell Modal */
+
+async function openChooseSpellModal() {
+    await spellDataReady;
+
+    const body = document.getElementById('choose-spell-modal-body');
+    body.innerHTML = '';
+
+    const grantedNames = new Set(GRANTED_SPELLS.map(s => s.name));
+    const chosenNames  = new Set(CHOSEN_SPELLS.map(s => s.name));
+
+    for (const [levelKey, spells] of Object.entries(SPELL_DATA)) {
+        const levelNum = LEVEL_NAME_TO_NUM[levelKey] ?? 0;
+
+        const classSpells = Object.entries(spells)
+            .filter(([, data]) => data.classes.some(c => CHARACTER_CLASSES.includes(c)))
+            .sort(([a], [b]) => a.localeCompare(b));
+
+        if (!classSpells.length) continue;
+
+        const section = document.createElement('div');
+        section.className = 'choose-spell-section';
+        section.style.marginBottom = '16px';
+
+        const heading = document.createElement('h3');
+        heading.textContent = levelKey;
+        heading.style.cssText = 'border-bottom:1px solid black; padding-bottom:4px; margin:0 0 6px 0;';
+        section.appendChild(heading);
+
+        const list = document.createElement('div');
+        list.style.cssText = 'column-count:3; column-gap:16px;';
+
+        let idx = 0;
+        for (const [name, data] of classSpells) {
+            const isGranted = grantedNames.has(name);
+            const isChosen  = chosenNames.has(name);
+
+            const entry = document.createElement('div');
+            entry.className = 'choose-spell-row';
+            entry.dataset.name = name.toLowerCase();
+            entry.style.cssText = 'font-size:13px; padding:2px 4px; break-inside:avoid; display:flex; align-items:center; gap:4px; overflow:hidden;';
+
+            const action = document.createElement('span');
+            action.style.cssText = 'flex-shrink:0;';
+            if (isGranted) {
+                action.textContent = '★';
+                action.title = 'Granted by class or subclass';
+                action.style.cssText += '; color:#b8860b; font-size:11px;';
+            } else if (isChosen) {
+                const btn = document.createElement('button');
+                btn.textContent = '−';
+                btn.title = 'Remove spell';
+                btn.style.cssText = 'font-size:11px; padding:0 4px; cursor:pointer; color:#c00;';
+                btn.onclick = async () => { await removeChosenSpell(name, levelNum); openChooseSpellModal(); };
+                action.appendChild(btn);
+            } else {
+                const btn = document.createElement('button');
+                btn.textContent = '+';
+                btn.title = 'Add spell';
+                btn.style.cssText = 'font-size:11px; padding:0 4px; cursor:pointer;';
+                btn.onclick = async () => { await addChosenSpell(name, levelNum); openChooseSpellModal(); };
+                action.appendChild(btn);
+            }
+            entry.appendChild(action);
+
+            const link = document.createElement('a');
+            link.href = data.link;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.textContent = name;
+            link.style.cssText = 'color:#1a0dab; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0;';
+            entry.appendChild(link);
+
+            if (data.ritual === 'true') {
+                const tag = document.createElement('span');
+                tag.textContent = '(R)';
+                tag.style.cssText = 'color:#666; font-style:italic; font-size:11px; flex-shrink:0;';
+                entry.appendChild(tag);
+            }
+
+            entry.style.background = idx++ % 2 ? '#f5f5f5' : '';
+            list.appendChild(entry);
+        }
+
+        section.appendChild(list);
+        body.appendChild(section);
+    }
+
+    document.getElementById('choose-spell-search').value = '';
+    filterChooseSpells();
+    document.getElementById('choose-spell-modal').style.display = 'flex';
+}
+
+function closeChooseSpellModal() {
+    document.getElementById('choose-spell-modal').style.display = 'none';
+}
+
+function filterChooseSpells() {
+    const q = document.getElementById('choose-spell-search').value.toLowerCase();
+    document.querySelectorAll('.choose-spell-row').forEach(row => {
+        row.style.display = row.dataset.name.includes(q) ? '' : 'none';
+    });
+    document.querySelectorAll('.choose-spell-section').forEach(section => {
+        const anyVisible = [...section.querySelectorAll('.choose-spell-row')].some(r => r.style.display !== 'none');
+        section.style.display = anyVisible ? '' : 'none';
+    });
+}
+
+document.getElementById('choose-spell-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeChooseSpellModal();
+});
+
+async function addChosenSpell(name, level) {
+    if (!CURRENT_CHAR_ID) return;
+    if (CHOSEN_SPELLS.some(s => s.name === name)) return;
+    const res = await fetch(`/api/characters/${CURRENT_CHAR_ID}/chosen_spells`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, level })
+    });
+    if (res.ok) {
+        CHOSEN_SPELLS.push({ name, level });
+        renderSpellLists();
+    }
+}
+
+async function removeChosenSpell(name, level) {
+    if (!CURRENT_CHAR_ID) return;
+    const res = await fetch(`/api/characters/${CURRENT_CHAR_ID}/chosen_spells`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, level })
+    });
+    if (res.ok) {
+        CHOSEN_SPELLS = CHOSEN_SPELLS.filter(s => !(s.name === name && s.level === level));
+        renderSpellLists();
+    }
+}
 
 /* Item Search Modal */
 
@@ -975,6 +1185,83 @@ async function loadSheet() {
         usedEl.appendChild(counter);
         usedEl.appendChild(plus);
     }
+
+    // Granted spells — from class/subclass spell_list_addition features
+    GRANTED_SPELLS = [];
+    const spellTemplateFetches = [];
+
+    for (const cls of (char.classes ?? [])) {
+        if (!cls.caster) continue;
+        spellTemplateFetches.push(
+            fetch(`/static_json/classes/${cls.name.toLowerCase()}.json`)
+                .then(r => r.ok ? r.json() : null)
+                .then(t => {
+                    if (!t) return;
+                    const clsLevel = cls.level ?? 1;
+                    for (let lvl = 1; lvl <= clsLevel; lvl++) {
+                        const raw = t.features?.[String(lvl)];
+                        if (!raw) continue;
+                        const feats = Array.isArray(raw) ? raw : [raw];
+                        for (const feat of feats) {
+                            const subs = Array.isArray(feat.subtype) ? feat.subtype : (feat.subtype ? [feat.subtype] : []);
+                            if (!subs.includes('spell_list_addition') || !feat.spells_to_add) continue;
+                            for (const entry of feat.spells_to_add) {
+                                for (const [levelKey, names] of Object.entries(entry)) {
+                                    const spellLevel = LEVEL_NAME_TO_NUM[levelKey] ?? 0;
+                                    for (const name of [].concat(names)) {
+                                        if (!GRANTED_SPELLS.some(s => s.name === name))
+                                            GRANTED_SPELLS.push({ name, level: spellLevel });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }).catch(() => {})
+        );
+    }
+
+    for (const sc of (char.subclasses ?? [])) {
+        const fname    = `${sc.class.toLowerCase()}_${sc.name.toLowerCase().replace(/\s+/g, '_')}`;
+        const clsLevel = char.classes?.find(c => c.name.toLowerCase() === sc.class.toLowerCase())?.level ?? 1;
+        spellTemplateFetches.push(
+            fetch(`/static_json/subclasses/${fname}.json`)
+                .then(r => r.ok ? r.json() : null)
+                .then(t => {
+                    if (!t) return;
+                    for (let lvl = 1; lvl <= clsLevel; lvl++) {
+                        const raw = t.features?.[String(lvl)];
+                        if (!raw) continue;
+                        const feats = Array.isArray(raw) ? raw : [raw];
+                        for (const feat of feats) {
+                            const subs = Array.isArray(feat.subtype) ? feat.subtype : (feat.subtype ? [feat.subtype] : []);
+                            if (!subs.includes('spell_list_addition') || !feat.spells_to_add) continue;
+                            for (const entry of feat.spells_to_add) {
+                                for (const [levelKey, names] of Object.entries(entry)) {
+                                    const spellLevel = LEVEL_NAME_TO_NUM[levelKey] ?? 0;
+                                    for (const name of [].concat(names)) {
+                                        if (!GRANTED_SPELLS.some(s => s.name === name))
+                                            GRANTED_SPELLS.push({ name, level: spellLevel });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }).catch(() => {})
+        );
+    }
+
+    await Promise.all(spellTemplateFetches);
+    await spellDataReady;
+
+    // Chosen spells saved by the user
+    CHOSEN_SPELLS = char.chosen_spells ?? [];
+
+    renderSpellLists();
+
+    // Show "Choose Class Spells" button only for caster characters
+    const chooseSpellBtn = document.getElementById('open-choose-spell-btn');
+    if (chooseSpellBtn) chooseSpellBtn.style.display = (char.classes ?? []).some(c => c.caster) ? '' : 'none';
+
 
     // Proficiencies
     const profList = document.getElementById('prof-list');

@@ -400,6 +400,34 @@ app.delete('/api/characters/:id/equipped_weapons', async (req, res) => {
     }
 });
 
+app.patch('/api/characters/:id/chosen_spells', async (req, res) => {
+    try {
+        const { ObjectId } = require('mongodb');
+        const { name, level } = req.body;
+        await characters.updateOne(
+            { _id: new ObjectId(req.params.id) },
+            { $push: { chosen_spells: { name, level } } }
+        );
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.delete('/api/characters/:id/chosen_spells', async (req, res) => {
+    try {
+        const { ObjectId } = require('mongodb');
+        const { name, level } = req.body;
+        await characters.updateOne(
+            { _id: new ObjectId(req.params.id) },
+            { $pull: { chosen_spells: { name, level } } }
+        );
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 app.post('/api/characters', async (req, res) => {
     try {
         const characterFile = parseCharacter(req.body);
