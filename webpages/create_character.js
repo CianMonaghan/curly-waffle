@@ -1161,24 +1161,50 @@ function renderClassBox(box, uid) {
  
 //Receive already made character from character sheet
 async function populateFromCharacter(char) {
+    console.log('form_data:', char.form_data);
+    const fd = char.form_data;
+
     // Name
-    document.getElementById('character-name').value = char.name ?? '';
+    document.getElementById('character-name').value = (fd?.name ?? char.name) ?? '';
+
+    // Ability scores
+    if (fd?.stats) {
+        for (const [k, v] of Object.entries(fd.stats)) {
+            const el = document.getElementById(`ability-${k}`);
+            if (el) el.value = v;
+        }
+    } else {
+        const STAT_MAP = { str:'Strength', dex:'Dexterity', con:'Constitution',
+                           int:'Intelligence', wis:'Wisdom', cha:'Charisma' };
+        for (const [k, fullName] of Object.entries(STAT_MAP)) {
+            const entry = char.stats?.find(s => s.stat === fullName);
+            const el = document.getElementById(`ability-${k}`);
+            if (el && entry) el.value = entry.base ?? 10;
+        }
+    }
 
     // Race
-    if (char.race) {
-        const raceObj = Object.values(RACE_DATA).find(r => r.id === char.race.id);
+    const raceSource = fd?.race ?? char.race;
+    if (raceSource) {
+        const raceObj = Object.values(RACE_DATA).find(r => r.id == raceSource.id);
         if (raceObj) {
             document.getElementById('race').value = raceObj.id;
             const btn = document.getElementById('race-btn');
             btn.textContent = `${raceObj.name} ▾`;
             btn.classList.add('has-value');
             renderSidebarPanel('race', raceObj);
+            if (fd?.race?.decisions) {
+                restorePanelDecisions('#race-info-panel .info-panel-content', fd.race.decisions, raceObj);
+            } else {
+                restorePanelFromFeatures('#race-info-panel .info-panel-content', char, raceObj, 'race');
+            }
         }
     }
 
     // Background
-    if (char.background) {
-        const bgObj = Object.values(BACKGROUND_DATA).find(b => b.id === char.background.id);
+    const bgSource = fd?.background ?? char.background;
+    if (bgSource) {
+        const bgObj = Object.values(BACKGROUND_DATA).find(b => b.id == bgSource.id);
         if (bgObj) {
             document.getElementById('background').value = bgObj.id;
             const btn = document.getElementById('background-btn');
@@ -1187,11 +1213,17 @@ async function populateFromCharacter(char) {
             backgroundSkills.clear();
             (bgObj.skill_prof || []).filter(s => s.prof).forEach(s => backgroundSkills.add(s.skill));
             renderSidebarPanel('background', bgObj);
+            if (fd?.background?.decisions) {
+                restorePanelDecisions('#background-info-panel .info-panel-content', fd.background.decisions, bgObj);
+            } else {
+                restorePanelFromFeatures('#background-info-panel .info-panel-content', char, bgObj, 'background');
+            }
         }
     }
 
     // Classes
-    for (const cls of (char.classes ?? [])) {
+    const classSource = fd?.classes ?? char.classes ?? [];
+    for (const cls of classSource) {
         document.getElementById('addClassBtn').click();
         const boxes = document.querySelectorAll('.character-class-box');
         const box = boxes[boxes.length - 1];
@@ -1208,45 +1240,274 @@ async function populateFromCharacter(char) {
         levelInput.value = cls.level ?? 1;
         levelInput.dispatchEvent(new Event('change'));
 
+        await new Promise(r => setTimeout(r, 0));
+
         // Subclass
-        if (cls.subclass?.name) {
+        const subclassName = cls.subclass?.name ?? char.subclasses?.find(sc => sc.source_id === cls.id)?.name;
+        if (subclassName) {
             const subSelect = box.querySelector('.subclass-select');
-            if ([...subSelect.options].find(o => o.value === cls.subclass.name)) {
-                subSelect.value = cls.subclass.name;
+            if ([...subSelect.options].find(o => o.value === subclassName)) {
+                subSelect.value = subclassName;
                 subSelect.dispatchEvent(new Event('change'));
+                await new Promise(r => setTimeout(r, 0));
             }
         }
 
-        // Primary class checkbox
-        if (cls.decisions?.primaryClass) {
+        // Primary class
+        const isPrimary = cls.decisions?.primaryClass ?? (char.classes?.indexOf(cls) === 0 && !fd);
+        if (isPrimary) {
             const cb = box.querySelector('.primary-class-cb');
             cb.checked = true;
             cb.dispatchEvent(new Event('change'));
         }
 
         // Skills
-        const classSkills = new Set(cls.skills ?? []);
+        const skillSet = new Set(cls.skills ?? cls.skill_prof?.map(sp => sp.skill) ?? []);
         box.querySelectorAll('.skill-cb:not(:disabled)').forEach(cb => {
-            cb.checked = classSkills.has(cb.parentElement.textContent.trim());
+            cb.checked = skillSet.has(cb.parentElement.textContent.trim());
         });
 
-        // Feature choices and equipment radios
+        // Feature choices
         const features = cls.decisions?.features ?? {};
-        Object.entries(features).forEach(([name, value]) => {
-            const input = box.querySelector(`input[name="${name}"][value="${value}"]`);
-            if (input) input.checked = true;
-        });
+        const newUid   = String(box.dataset.uid);
+        const oldUid   = cls._uid
+            ? String(cls._uid)
+            : (() => {
+                for (const key of Object.keys(features)) {
+                    let m = key.match(/uid(\d+)/);
+                    if (m) return m[1];
+                    m = key.match(/^equip_weapon_(\d+)_/) ?? key.match(/^equip_(\d+)_/);
+                    if (m) return m[1];
+                }
+                return null;
+            })();
+
+        for (const [rawKey, value] of Object.entries(features)) {
+            const name = oldUid && oldUid !== newUid
+                ? rawKey
+                    .replace(new RegExp(`equip_weapon_${oldUid}_`, 'g'), `equip_weapon_${newUid}_`)
+                    .replace(new RegExp(`uid${oldUid}`, 'g'),            `uid${newUid}`)
+                    .replace(new RegExp(`equip_${oldUid}_`, 'g'),        `equip_${newUid}_`)
+                : rawKey;
+
+            const values = [].concat(value);
+
+            // Radios — match by label text
+            box.querySelectorAll(`input[type="radio"][name="${name}"]`).forEach(r => {
+                const txt = (r.closest('label') ?? r.parentElement).textContent.trim().replace(/\s+/g, ' ');
+                if (txt === values[0]) r.checked = true;
+            });
+
+            // Checkboxes — match by value
+            values.forEach(v => {
+                const cb = box.querySelector(`input[type="checkbox"][name="${name}"][value="${v}"]`);
+                if (cb) cb.checked = true;
+            });
+
+            // Weapon selects — match by element id
+            const sel = box.querySelector(`select#${name}`);
+            if (sel && values[0] && values[0] !== '— choose —') sel.value = values[0];
+        }
+
+        // Fallback for old characters without form_data:
+        // derive choices from char.features entries like "Feature Name: Choice"
+        if (Object.keys(features).length === 0) {
+            const sourceId = cls.id ?? 'class-0';
+            const grouped  = {};
+
+            for (const f of (char.features ?? [])) {
+                if (f.source_id !== sourceId || !f.name?.includes(': ')) continue;
+                const colon  = f.name.indexOf(': ');
+                const base   = f.name.slice(0, colon).trim();
+                const chosen = f.name.slice(colon + 2).trim();
+                (grouped[base] ??= []).push(chosen);
+            }
+
+            box.querySelectorAll('.feature-container .feature-block').forEach(block => {
+                const baseName = block.dataset.featureName;
+                const choices  = grouped[baseName];
+                if (!choices?.length) return;
+
+                // Set all checkboxes/radios WITHOUT firing change events
+                choices.forEach(chosen => {
+                    // Checkbox (multi-select, e.g. Eldritch Invocations)
+                    const cb = block.querySelector(`input[type="checkbox"][value="${chosen}"]`);
+                    if (cb) { cb.checked = true; return; }
+
+                    // Radio (single choice, e.g. Fighting Style, Pact Boon)
+                    block.querySelectorAll('input[type="radio"]').forEach(r => {
+                        if (r.parentElement.textContent.trim().replace(/\s+/g, ' ') === chosen)
+                            r.checked = true;
+                    });
+                });
+
+                // Now enforce limits once, after all are set
+                const wrapper = block.querySelector('.external-choice-list');
+                if (wrapper) {
+                    const radioName = wrapper.dataset.radioName;
+                    const max       = parseInt(wrapper.dataset.numChoices || '1');
+                    enforceExternalChoiceLimit(wrapper, radioName, max);
+                    syncExternalChoicesAcrossBoxes(wrapper.dataset.listName);
+                }
+            });
+        }
 
         // ASI rows
         const asiData = cls.decisions?.asi ?? [];
+        const STAT_TO_ABBREV = {
+            Strength:'STR', Dexterity:'DEX', Constitution:'CON',
+            Intelligence:'INT', Wisdom:'WIS', Charisma:'CHA'
+        };
+
         box.querySelectorAll('.asi-row').forEach((row, i) => {
-            if (!asiData[i]) return;
-            const selects = row.querySelectorAll('select');
-            (asiData[i].picks ?? []).forEach((pick, j) => {
-                if (selects[j]) selects[j].value = pick;
+            let picks;
+            if (asiData[i]?.picks?.length) {
+                // form_data path — picks are already abbreviations
+                picks = asiData[i].picks;
+            } else {
+                // fallback — read from stat modifiers for this row
+                picks = [];
+                (char.stats ?? []).forEach(stat => {
+                    stat.modifiers?.forEach(mod => {
+                        if (mod.source_id === `${cls.id}-asi-r${i}-p${picks.length}`) {
+                            const abbrev = STAT_TO_ABBREV[stat.stat];
+                            if (abbrev) picks.push(abbrev);
+                        }
+                    });
+                });
+            }
+            row.querySelectorAll('select').forEach((sel, j) => {
+                if (picks[j]) sel.value = picks[j];
             });
         });
     }
+
+    // Edit mode UI
+    const editId = new URLSearchParams(window.location.search).get('id');
+    if (editId) {
+        document.getElementById('saveCharacterBtn').textContent = 'Save to Current Character';
+        document.getElementById('saveAsNewBtn').style.display   = '';
+
+        // Disable equipment inputs
+        const disableEquipment = () => {
+            document.querySelectorAll(
+                '.equipment-container input[type="radio"], .equipment-container select'
+            ).forEach(el => {
+                el.disabled = true;
+                const lbl = el.closest('label');
+                if (lbl) lbl.style.opacity = '0.5';
+            });
+        };
+        disableEquipment();
+
+        // Also disable when new class boxes are added
+        new MutationObserver(disableEquipment)
+            .observe(document.getElementById('classContainer'), { childList: true, subtree: true });
+    }
+}
+
+function restorePanelDecisions(panelSelector, decisions, dataObj) {
+    const content = document.querySelector(panelSelector);
+    if (!content || !decisions) return;
+
+    for (const [key, value] of Object.entries(decisions)) {
+        const values = [].concat(value);
+
+        // Key is a feature id — look up the feature to find its name, then find the DOM block
+        const feat = (dataObj?.features ?? []).find(f => f.id === key);
+        if (feat) {
+            const block = [...content.querySelectorAll('.feature-block')]
+                .find(b => b.dataset.featureName === feat.feature_name);
+            if (block) {
+                values.forEach(v => {
+                    const input = block.querySelector(`input[value="${v}"]`);
+                    if (input) input.checked = true;
+                });
+                continue;
+            }
+        }
+
+        // Key is a lang/tool select id (e.g. lang_3_0, tool_3_1)
+        const sel = content.querySelector(`select#${key}`);
+        if (sel && values[0] && values[0] !== '— choose —') {
+            sel.value = values[0];
+            continue;
+        }
+
+        // Fallback: try matching by name attribute (covers any other inputs)
+        values.forEach(v => {
+            const input = content.querySelector(`input[name="${key}"][value="${v}"]`);
+            if (input) input.checked = true;
+        });
+    }
+}
+
+function restorePanelFromFeatures(panelSelector, char, dataObj, sourceType) {
+    const content = document.querySelector(panelSelector);
+    if (!content || !dataObj) return;
+
+    const sourceId = `${sourceType}-${dataObj.id}`;
+
+    // 1. external_choice features: "Feature Name: Choice" entries in char.features
+    const grouped = {};
+    for (const f of (char.features ?? [])) {
+        if (f.source_id !== sourceId || !f.name?.includes(': ')) continue;
+        const colon  = f.name.indexOf(': ');
+        const base   = f.name.slice(0, colon).trim();
+        const chosen = f.name.slice(colon + 2).trim();
+        (grouped[base] ??= []).push(chosen);
+    }
+
+    content.querySelectorAll('.feature-block').forEach(block => {
+        const baseName = block.dataset.featureName;
+        const choices  = grouped[baseName];
+        if (!choices?.length) return;
+
+        choices.forEach(chosen => {
+            const cb = block.querySelector(`input[type="checkbox"][value="${chosen}"]`);
+            if (cb) { cb.checked = true; return; }
+            block.querySelectorAll('input[type="radio"]').forEach(r => {
+                if (r.parentElement.textContent.trim().replace(/\s+/g, ' ') === chosen)
+                    r.checked = true;
+            });
+        });
+
+        const wrapper = block.querySelector('.external-choice-list');
+        if (wrapper) {
+            enforceExternalChoiceLimit(wrapper, wrapper.dataset.radioName,
+                parseInt(wrapper.dataset.numChoices || '1'));
+        }
+    });
+
+    // 2. Lang selects — from lang_prof on the template (type !== 'fixed')
+    //    Chosen langs = char.languages minus fixed langs from this template
+    const fixedLangs = new Set(['Common']);
+    for (const f of (dataObj.features ?? [])) {
+        for (const entry of (f.prof_to_add ?? [])) {
+            for (const lang of (entry.lang_prof ?? [])) fixedLangs.add(lang);
+        }
+    }
+    (dataObj.lang_prof ?? [])
+        .filter(e => e.type === 'fixed' && e.value)
+        .forEach(e => fixedLangs.add(e.value));
+
+    const chosenLangs = (char.languages ?? []).filter(l => !fixedLangs.has(l));
+    content.querySelectorAll('select.lang-select').forEach((sel, i) => {
+        if (chosenLangs[i]) sel.value = chosenLangs[i];
+    });
+
+    // 3. Tool selects — from tool_prof on the template (type !== 'fixed')
+    //    Chosen tools = char.tool_proficiencies for this source, excluding fixed ones
+    const fixedTools = new Set(
+        (dataObj.tool_prof ?? []).filter(e => e.type === 'fixed' && e.value).map(e => e.value)
+    );
+    const chosenTools = (char.tool_proficiencies ?? [])
+        .filter(t => t.source_id === sourceId && !fixedTools.has(t.tool))
+        .map(t => t.tool);
+
+    content.querySelectorAll('select.tool-select').forEach((sel, i) => {
+        if (chosenTools[i]) sel.value = chosenTools[i];
+    });
 }
 
 /* Init */
@@ -1471,28 +1732,27 @@ function buildCharacterPayload() {
   const bgObj = getSelectedBackgroundObj();
 
   const classes = Array.from(document.querySelectorAll(".character-class-box")).map((box, idx) => {
-    const className = box.querySelector(".class-select")?.value || "";
+    const className    = box.querySelector(".class-select")?.value || "";
     const subclassName = box.querySelector(".subclass-select")?.value || "";
-    const level = Number(box.querySelector(".level-input")?.value || 1);
-
-    const skills = getClassPickedSkills(box);
+    const level        = Number(box.querySelector(".level-input")?.value || 1);
+    const skills       = getClassPickedSkills(box);
     const { features, asi } = getFeatureChoices(box);
-
     const primaryClass = !!box.querySelector(".primary-class-cb")?.checked;
 
     return {
-      id: `class-${idx}`,              // stable per-save
-      name: className,
+      id:    `class-${idx}`,
+      _uid:  box.dataset.uid,            // ← added: lets populate know the original uid
+      name:  className,
       level,
-      skills,                          // class-related skill picks
+      skills,
       decisions: {
         primaryClass,
-        features,                      // feature radio choices keyed by radio group name
-        asi                            // ASI rows if present
+        features,
+        asi
       },
       subclass: {
-        id: subclassName || "",        // you can map to a true id later if you have SUBCLASS_DATA ids
-        name: subclassName || "",
+        id:        subclassName || "",
+        name:      subclassName || "",
         decisions: {}
       }
     };
@@ -1501,66 +1761,60 @@ function buildCharacterPayload() {
   return {
     name,
     stats,
-    race: raceObj ? { id: raceObj.id, name: raceObj.name, decisions: collectPanelDecisions('#race-info-panel .info-panel-content', raceObj) } : null,
-    background: bgObj ? { id: bgObj.id, name: bgObj.name, decisions: collectPanelDecisions('#background-info-panel .info-panel-content', bgObj) } : null,
+    race:       raceObj ? { id: raceObj.id, name: raceObj.name, decisions: collectPanelDecisions('#race-info-panel .info-panel-content', raceObj) } : null,
+    background: bgObj   ? { id: bgObj.id,   name: bgObj.name,   decisions: collectPanelDecisions('#background-info-panel .info-panel-content', bgObj) }   : null,
     classes
   };
 }
 
 
 // Save character handler
-async function saveCharacter() {
-  const payload = buildCharacterPayload();
+async function saveCharacter(forceNew = false) {
+    const payload = buildCharacterPayload();
+    const editId  = new URLSearchParams(window.location.search).get('id');
+    const isEdit  = editId && !forceNew;
 
-  // basic validation
-  if (!payload.name) {
-    alert("Please enter a character name.");
-    return;
-  }
-
-  // ---------- send to server ----------
-  try {
-    const res = await fetch("/api/characters", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-
-    const data = await res.json().catch(() => ({}));
-
-    if (!res.ok) {
-      alert(data.error || "Failed to save character.");
-      return;
+    if (!payload.name) {
+        alert('Please enter a character name.');
+        return;
     }
 
-    console.log("Character saved to server:", data);
-  } catch (err) {
-    console.error(err);
-    alert("Network error while saving character.");
-    return;
-  }
+    try {
+        const res = await fetch(
+            isEdit ? `/api/characters/${editId}` : '/api/characters',
+            {
+                method:  isEdit ? 'PUT' : 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body:    JSON.stringify(payload)
+            }
+        );
 
-  // ---------- download JSON ----------
-  const jsonString = JSON.stringify(payload, null, 2);
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+            alert(data.error || 'Failed to save character.');
+            return;
+        }
 
-  const blob = new Blob([jsonString], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `${payload.name.replace(/\s+/g, "_")}_character.json`;
-
-  document.body.appendChild(a);
-  a.click();
-
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-
-  console.log("Character JSON:", payload);
-  alert("Character saved!");
+        if (isEdit) {
+            window.location.href = `sheet.html?id=${editId}`;
+        } else {
+            const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+            const url  = URL.createObjectURL(blob);
+            const a    = document.createElement('a');
+            a.href = url;
+            a.download = `${payload.name.replace(/\s+/g, '_')}_character.json`;
+            document.body.appendChild(a); a.click();
+            document.body.removeChild(a); URL.revokeObjectURL(url);
+            alert('Character saved!');
+        }
+    } catch (err) {
+        console.error(err);
+        alert('Network error while saving character.');
+    }
 }
 
 // attach the handler
-document.getElementById('saveCharacterBtn').addEventListener('click', saveCharacter);
+document.getElementById('saveCharacterBtn').addEventListener('click', () => saveCharacter(false));
+document.getElementById('saveAsNewBtn').addEventListener('click',     () => saveCharacter(true));
 
 

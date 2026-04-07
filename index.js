@@ -256,6 +256,59 @@ app.get('/api/items', (req, res) => {
     res.json(items);
 });
 
+app.patch('/api/characters/:id/hitpoints', async (req, res) => {
+    try {
+        const { ObjectId } = require('mongodb');
+        const { current_hit_points, temp_hp } = req.body;
+        const update = {};
+        if (current_hit_points !== undefined) update['hitpoints.current_hit_points'] = current_hit_points;
+        if (temp_hp             !== undefined) update['hitpoints.temp_hp']            = temp_hp;
+        await characters.updateOne({ _id: new ObjectId(req.params.id) }, { $set: update });
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.patch('/api/characters/:id/hit_dice', async (req, res) => {
+    try {
+        const { ObjectId } = require('mongodb');
+        await characters.updateOne(
+            { _id: new ObjectId(req.params.id) },
+            { $set: { hit_dice_current: req.body.current } }
+        );
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.patch('/api/characters/:id/inspiration', async (req, res) => {
+    try {
+        const { ObjectId } = require('mongodb');
+        await characters.updateOne(
+            { _id: new ObjectId(req.params.id) },
+            { $set: { inspiration: req.body.inspiration } }
+        );
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.patch('/api/characters/:id/notes', async (req, res) => {
+    try {
+        const { ObjectId } = require('mongodb');
+        await characters.updateOne(
+            { _id: new ObjectId(req.params.id) },
+            { $set: { notes: req.body.notes } }
+        );
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 app.patch('/api/characters/:id/spell_slots', async (req, res) => {
     try {
         const { ObjectId } = require('mongodb');
@@ -431,6 +484,7 @@ app.delete('/api/characters/:id/chosen_spells', async (req, res) => {
 app.post('/api/characters', async (req, res) => {
     try {
         const characterFile = parseCharacter(req.body);
+        characterFile.form_data = req.body;  // store original decisions
 
         // Save to MongoDB
         await characters.insertOne(characterFile);
@@ -467,6 +521,28 @@ app.get('/api/characters', async (req, res) => {
     try {
         const chars = await character.find({}, 'name race classes'); // lean projection
         res.json(chars);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.put('/api/characters/:id', async (req, res) => {
+    try {
+        const { ObjectId } = require('mongodb');
+        const existing = await characters.findOne({ _id: new ObjectId(req.params.id) });
+        if (!existing) return res.status(404).json({ error: 'Not found' });
+
+        const rebuilt = parseCharacter(req.body);
+        rebuilt.form_data = req.body;
+
+        // Preserve sheet-level fields that live outside character creation
+        for (const field of ['hitpoints', 'spell_slots', 'pact_slots', 'chosen_spells',
+                             'hit_dice_current', 'notes', 'inspiration']) {
+            if (existing[field] !== undefined) rebuilt[field] = existing[field];
+        }
+
+        await characters.replaceOne({ _id: new ObjectId(req.params.id) }, rebuilt);
+        res.json({ success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

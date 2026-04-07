@@ -850,6 +850,34 @@ async function loadSheet() {
     document.getElementById('hp-current').textContent = hpObj?.current_hit_points ?? 0;
     document.getElementById('hp-temp').textContent    = hpObj?.temp_hp ?? 0;
 
+    const hpCurrentEl = document.getElementById('hp-current');
+    const hpTempEl    = document.getElementById('hp-temp');
+    hpCurrentEl.textContent = hpObj?.current_hit_points ?? 0;
+    hpTempEl.textContent    = hpObj?.temp_hp ?? 0;
+
+    const saveHP = () => {
+        const current_hit_points = parseInt(hpCurrentEl.textContent.trim()) || 0;
+        const temp_hp            = parseInt(hpTempEl.textContent.trim())    || 0;
+        fetch(`/api/characters/${CURRENT_CHAR_ID}/hitpoints`, {
+            method:  'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ current_hit_points, temp_hp })
+        });
+    };
+    hpCurrentEl.addEventListener('blur', saveHP);
+    hpTempEl.addEventListener('blur', saveHP);
+
+    const inspirationEl = document.getElementById('inspiration-val');
+    inspirationEl.textContent = char.inspiration ?? 0;
+    inspirationEl.addEventListener('blur', () => {
+        const inspiration = parseInt(inspirationEl.textContent.trim()) || 0;
+        fetch(`/api/characters/${CURRENT_CHAR_ID}/inspiration`, {
+            method:  'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ inspiration })
+        });
+    });
+
     // AC / Speed / Initiative
     // Speed and Initiative are stored as stats (score = actual value, not raw ability score)
     document.getElementById('ac-val').textContent    = char.armor_class ?? 0;
@@ -862,12 +890,29 @@ async function loadSheet() {
         Bard:8,     Cleric:8,   Druid:8,   Paladin:10, Ranger:10,
         Rogue:8,    Sorcerer:6,
     };
-    if (cls0) document.getElementById('hit-dice-1').textContent =
-        `${cls0.level ?? 1}d${HIT_DICE[cls0.name] ?? 8}`;
-    if (cls1) document.getElementById('hit-dice-2').textContent =
-        `${cls1.level ?? 1}d${HIT_DICE[cls1.name] ?? 8}`;
 
-   // Features
+    if (cls0) {
+        const die      = HIT_DICE[cls0.name] ?? 8;
+        const maxLevel = (cls0.level ?? 1) + (cls1?.level ?? 0);
+        const current  = char.hit_dice_current ?? maxLevel;
+
+        const currentEl = document.getElementById('hit-dice-1');
+        const maxEl     = document.getElementById('hit-dice-2');
+
+        currentEl.textContent = current;
+        maxEl.textContent     = `${maxLevel}d${die}`;
+
+        currentEl.addEventListener('blur', () => {
+            const val = parseInt(currentEl.textContent.trim()) || 0;
+            fetch(`/api/characters/${CURRENT_CHAR_ID}/hit_dice`, {
+                method:  'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body:    JSON.stringify({ current: val })
+            });
+        });
+    }
+
+    // Features
     const featuresList = document.getElementById('features-list');
     featuresList.innerHTML = '';
 
@@ -1321,6 +1366,16 @@ async function loadSheet() {
 
     // Inventory items panel
     renderInventoryItems(inv?.items ?? []);
+
+    const notesEl = document.getElementById('inventory-notes');
+    notesEl.textContent = char.notes ?? '';
+    notesEl.addEventListener('blur', () => {
+        fetch(`/api/characters/${CURRENT_CHAR_ID}/notes`, {
+            method:  'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ notes: notesEl.innerText })
+        });
+    });
 }
 
 loadSheet();
