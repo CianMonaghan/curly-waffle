@@ -132,11 +132,6 @@ const featureUseSchema = new mongoose.Schema({
     remaining:  { type: Number, required: true }
 }, { _id: false });
 
-const featureUseSchema = new mongoose.Schema({
-    feature_id: { type: String, required: true },
-    remaining:  { type: Number, required: true }
-}, { _id: false });
-
 const characterSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     name: {type: String, required: true},
@@ -267,9 +262,6 @@ app.get('/api/auth/me', (req, res) => {
     res.json({ userId: req.session.userId });
 });
 
-/* Account Connection */
-const session = require('express-session');
-const { MongoStore } = require('connect-mongo');
 
 app.use(session({
     secret: process.env.SESSION_SECRET || 'blite-secret',
@@ -279,57 +271,6 @@ app.use(session({
     cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 } // 1 week
 }));
 
-const bcrypt = require('bcrypt');
-
-const userSchema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
-});
-
-const User = mongoose.model('User', userSchema);
-
-function requireAuth(req, res, next) {
-    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
-    next();
-}
-
-app.post('/api/auth/signup', async (req, res) => {
-    try {
-        const { username, password } = req.body;
-        if (!username || !password) return res.status(400).json({ error: 'Username and password required' });
-        const existing = await User.findOne({ username });
-        if (existing) return res.status(409).json({ error: 'Username already taken' });
-        const hash = await bcrypt.hash(password, 12);
-        const user = await User.create({ username, password: hash });
-        req.session.userId = user._id;
-        res.json({ success: true });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-app.post('/api/auth/login', async (req, res) => {
-    try {
-        const { username, password } = req.body;
-        const user = await User.findOne({ username });
-        if (!user) return res.status(401).json({ error: 'Invalid username or password' });
-        const match = await bcrypt.compare(password, user.password);
-        if (!match) return res.status(401).json({ error: 'Invalid username or password' });
-        req.session.userId = user._id;
-        res.json({ success: true });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-app.post('/api/auth/logout', (req, res) => {
-    req.session.destroy(() => res.json({ success: true }));
-});
-
-app.get('/api/auth/me', (req, res) => {
-    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
-    res.json({ userId: req.session.userId });
-});
 
 const character = mongoose.model("character", characterSchema);
 /**
