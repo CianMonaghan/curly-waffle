@@ -15,7 +15,7 @@ app.use(express.json());
 
 const {MongoClient} = require("mongodb");
 const mongoose = require("mongoose");
-const mongoURL = process.env.BLITE_DB;
+const mongoURL = "mongodb://localhost:27017/";
 mongoose.connect(mongoURL, { dbName: 'bliteDB' })
   .then(() => {
     console.log('MongoDB connected successfully!');
