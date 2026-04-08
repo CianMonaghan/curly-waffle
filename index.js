@@ -132,7 +132,13 @@ const featureUseSchema = new mongoose.Schema({
     remaining:  { type: Number, required: true }
 }, { _id: false });
 
-const characterSchema = new mongoose.Schema({//accountID?
+const featureUseSchema = new mongoose.Schema({
+    feature_id: { type: String, required: true },
+    remaining:  { type: Number, required: true }
+}, { _id: false });
+
+const characterSchema = new mongoose.Schema({
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     name: {type: String, required: true},
     alignment: String,
     stats: {type: [{
@@ -195,6 +201,134 @@ const characterSchema = new mongoose.Schema({//accountID?
         mode:       String    // "melee" | "ranged"
     }],
     feature_uses: { type: [featureUseSchema], default: [] }
+});
+
+/* Account Connection */
+const session = require('express-session');
+const { MongoStore } = require('connect-mongo');
+
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'blite-secret',
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: mongoURL, dbName: 'bliteDB' }),
+    cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 } // 1 week
+}));
+
+const bcrypt = require('bcrypt');
+
+const userSchema = new mongoose.Schema({
+    username: { type: String, required: true, unique: true },
+    password: { type: String, required: true }
+});
+
+const User = mongoose.model('User', userSchema);
+
+function requireAuth(req, res, next) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    next();
+}
+
+app.post('/api/auth/signup', async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        if (!username || !password) return res.status(400).json({ error: 'Username and password required' });
+        const existing = await User.findOne({ username });
+        if (existing) return res.status(409).json({ error: 'Username already taken' });
+        const hash = await bcrypt.hash(password, 12);
+        const user = await User.create({ username, password: hash });
+        req.session.userId = user._id;
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post('/api/auth/login', async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        const user = await User.findOne({ username });
+        if (!user) return res.status(401).json({ error: 'Invalid username or password' });
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) return res.status(401).json({ error: 'Invalid username or password' });
+        req.session.userId = user._id;
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post('/api/auth/logout', (req, res) => {
+    req.session.destroy(() => res.json({ success: true }));
+});
+
+app.get('/api/auth/me', (req, res) => {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    res.json({ userId: req.session.userId });
+});
+
+/* Account Connection */
+const session = require('express-session');
+const { MongoStore } = require('connect-mongo');
+
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'blite-secret',
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: mongoURL, dbName: 'bliteDB' }),
+    cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 } // 1 week
+}));
+
+const bcrypt = require('bcrypt');
+
+const userSchema = new mongoose.Schema({
+    username: { type: String, required: true, unique: true },
+    password: { type: String, required: true }
+});
+
+const User = mongoose.model('User', userSchema);
+
+function requireAuth(req, res, next) {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    next();
+}
+
+app.post('/api/auth/signup', async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        if (!username || !password) return res.status(400).json({ error: 'Username and password required' });
+        const existing = await User.findOne({ username });
+        if (existing) return res.status(409).json({ error: 'Username already taken' });
+        const hash = await bcrypt.hash(password, 12);
+        const user = await User.create({ username, password: hash });
+        req.session.userId = user._id;
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post('/api/auth/login', async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        const user = await User.findOne({ username });
+        if (!user) return res.status(401).json({ error: 'Invalid username or password' });
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) return res.status(401).json({ error: 'Invalid username or password' });
+        req.session.userId = user._id;
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post('/api/auth/logout', (req, res) => {
+    req.session.destroy(() => res.json({ success: true }));
+});
+
+app.get('/api/auth/me', (req, res) => {
+    if (!req.session.userId) return res.status(401).json({ error: 'Not logged in' });
+    res.json({ userId: req.session.userId });
 });
 
 const character = mongoose.model("character", characterSchema);
@@ -264,7 +398,9 @@ app.get('/api/items', (req, res) => {
     res.json(items);
 });
 
-app.patch('/api/characters/:id/hitpoints', async (req, res) => {
+
+/* Grab specific things from characters */
+app.patch('/api/characters/:id/hitpoints', requireAuth, async (req, res) => {
     try {
         const { ObjectId } = require('mongodb');
         const { current_hit_points, temp_hp } = req.body;
@@ -278,7 +414,7 @@ app.patch('/api/characters/:id/hitpoints', async (req, res) => {
     }
 });
 
-app.patch('/api/characters/:id/hit_dice', async (req, res) => {
+app.patch('/api/characters/:id/hit_dice', requireAuth, async (req, res) => {
     try {
         const { ObjectId } = require('mongodb');
         await characters.updateOne(
@@ -291,7 +427,7 @@ app.patch('/api/characters/:id/hit_dice', async (req, res) => {
     }
 });
 
-app.patch('/api/characters/:id/inspiration', async (req, res) => {
+app.patch('/api/characters/:id/inspiration', requireAuth, async (req, res) => {
     try {
         const { ObjectId } = require('mongodb');
         await characters.updateOne(
@@ -304,7 +440,7 @@ app.patch('/api/characters/:id/inspiration', async (req, res) => {
     }
 });
 
-app.patch('/api/characters/:id/notes', async (req, res) => {
+app.patch('/api/characters/:id/notes', requireAuth, async (req, res) => {
     try {
         const { ObjectId } = require('mongodb');
         await characters.updateOne(
@@ -317,7 +453,7 @@ app.patch('/api/characters/:id/notes', async (req, res) => {
     }
 });
 
-app.patch('/api/characters/:id/spell_slots', async (req, res) => {
+app.patch('/api/characters/:id/spell_slots', requireAuth, async (req, res) => {
     try {
         const { ObjectId } = require('mongodb');
         const { level, current } = req.body;
@@ -337,7 +473,7 @@ app.patch('/api/characters/:id/spell_slots', async (req, res) => {
     }
 });
 
-app.patch('/api/characters/:id/pact_slots', async (req, res) => {
+app.patch('/api/characters/:id/pact_slots', requireAuth, async (req, res) => {
     try {
         const { ObjectId } = require('mongodb');
         const { level, current } = req.body;
@@ -384,7 +520,34 @@ app.patch('/api/characters/:id/feature_uses', async (req, res) => {
     }
 });
 
-app.patch('/api/characters/:id/inventory/items/quantity', async (req, res) => {
+app.patch('/api/characters/:id/feature_uses', async (req, res) => {
+    try {
+        const { ObjectId } = require('mongodb');
+        const { feature_id, remaining } = req.body;
+        if (feature_id === undefined || remaining === undefined)
+            return res.status(400).json({ error: 'feature_id and remaining are required' });
+
+        const oid = new ObjectId(req.params.id);
+
+        const result = await characters.updateOne(
+            { _id: oid, 'feature_uses.feature_id': feature_id },
+            { $set: { 'feature_uses.$.remaining': remaining } }
+        );
+
+        if (result.matchedCount === 0) {
+            await characters.updateOne(
+                { _id: oid },
+                { $push: { feature_uses: { feature_id, remaining } } }
+            );
+        }
+
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.patch('/api/characters/:id/inventory/items/quantity', requireAuth, async (req, res) => {
     try {
         const { ObjectId } = require('mongodb');
         const char = await characters.findOne({ _id: new ObjectId(req.params.id) });
@@ -412,7 +575,7 @@ app.patch('/api/characters/:id/inventory/items/quantity', async (req, res) => {
     }
 });
 
-app.patch('/api/characters/:id/inventory/items', async (req, res) => {
+app.patch('/api/characters/:id/inventory/items', requireAuth, async (req, res) => {
     try {
         const { ObjectId } = require('mongodb');
         const oid  = new ObjectId(req.params.id);
@@ -519,7 +682,83 @@ app.patch('/api/characters/:id/inventory/items/equip', async (req, res) => {
     }
 });
 
-app.patch('/api/characters/:id/equipped_weapons', async (req, res) => {
+app.patch('/api/characters/:id/inventory/items/attune', async (req, res) => {
+    try {
+        const { ObjectId } = require('mongodb');
+        const { _uid, action } = req.body; // action: 'attune' | 'detune'
+        const oid  = new ObjectId(req.params.id);
+        const char = await characters.findOne({ _id: oid });
+        if (!char) return res.status(404).json({ error: 'Not found' });
+
+        if (Array.isArray(char.inventory)) char.inventory = char.inventory[0] ?? { currency: [], items: [] };
+        char.inventory.items ??= [];
+        char.attuned_items   ??= [];
+        char.attuned_cap     ??= 3;
+
+        const item = char.inventory.items.find(i => i._uid === _uid);
+        if (!item) return res.status(404).json({ error: 'Item not found in inventory' });
+
+        if (action === 'attune')      attuneItem(char, item.id);
+        else if (action === 'detune') detuneItem(char, item.id);
+        else return res.status(400).json({ error: 'action must be attune or detune' });
+
+        recomputeStats(char);
+        recomputeAC(char);
+        await characters.replaceOne({ _id: oid }, char);
+        res.json({ success: true });
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
+app.patch('/api/characters/:id/inventory/items/equip', async (req, res) => {
+    try {
+        const { ObjectId } = require('mongodb');
+        const { _uid, action, slot } = req.body; // action: 'equip' | 'unequip'
+        const oid  = new ObjectId(req.params.id);
+        const char = await characters.findOne({ _id: oid });
+        if (!char) return res.status(404).json({ error: 'Not found' });
+
+        if (Array.isArray(char.inventory)) char.inventory = char.inventory[0] ?? { currency: [], items: [] };
+        char.inventory.items  ??= [];
+        char.equipped_armor   ??= { body: null, shield: null };
+        char.equipped_weapons ??= [];
+        char.ac_modifiers     ??= [];
+
+        const item = char.inventory.items.find(i => i._uid === _uid);
+        if (!item) return res.status(404).json({ error: 'Item not found in inventory' });
+
+        if (action === 'equip') {
+            // Check strength requirement before equipping
+            if (item.str_requirement) {
+                const strScore = (char.stats ?? []).find(s => s.stat === 'Strength')?.score ?? 0;
+                if (strScore < item.str_requirement) {
+                    return res.status(400).json({
+                        error: `Requires Strength ${item.str_requirement} (you have ${strScore})`
+                    });
+                }
+            }
+            if (item.type === 'armor')    equipArmor(char, item.id);
+            else if (item.type === 'wp')  equipWeapon(char, item.id, slot ?? 'main_hand');
+            else return res.status(400).json({ error: 'Item is not equippable' });
+        } else if (action === 'unequip') {
+            if (item.type === 'armor')    unequipArmor(char, item.id);
+            else if (item.type === 'wp')  unequipWeapon(char, item.id);
+            else return res.status(400).json({ error: 'Item is not equippable' });
+        } else {
+            return res.status(400).json({ error: 'action must be equip or unequip' });
+        }
+
+        recomputeStats(char);
+        recomputeAC(char);
+        await characters.replaceOne({ _id: oid }, char);
+        res.json({ success: true });
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
+app.patch('/api/characters/:id/equipped_weapons', requireAuth, async (req, res) => {
     try {
         const { ObjectId } = require('mongodb');
         await characters.updateOne(
@@ -532,7 +771,7 @@ app.patch('/api/characters/:id/equipped_weapons', async (req, res) => {
     }
 });
 
-app.delete('/api/characters/:id/inventory/items', async (req, res) => {
+app.delete('/api/characters/:id/inventory/items', requireAuth, async (req, res) => {
     try {
         const { ObjectId } = require('mongodb');
         const char = await characters.findOne({ _id: new ObjectId(req.params.id) });
@@ -558,7 +797,7 @@ app.delete('/api/characters/:id/inventory/items', async (req, res) => {
     }
 });
 
-app.delete('/api/characters/:id/equipped_weapons', async (req, res) => {
+app.delete('/api/characters/:id/equipped_weapons', requireAuth, async (req, res) => {
     try {
         const { ObjectId } = require('mongodb');
         const char = await characters.findOne({ _id: new ObjectId(req.params.id) });
@@ -582,7 +821,7 @@ app.delete('/api/characters/:id/equipped_weapons', async (req, res) => {
     }
 });
 
-app.patch('/api/characters/:id/chosen_spells', async (req, res) => {
+app.patch('/api/characters/:id/chosen_spells', requireAuth, async (req, res) => {
     try {
         const { ObjectId } = require('mongodb');
         const { name, level } = req.body;
@@ -596,7 +835,7 @@ app.patch('/api/characters/:id/chosen_spells', async (req, res) => {
     }
 });
 
-app.delete('/api/characters/:id/chosen_spells', async (req, res) => {
+app.delete('/api/characters/:id/chosen_spells', requireAuth, async (req, res) => {
     try {
         const { ObjectId } = require('mongodb');
         const { name, level } = req.body;
@@ -610,10 +849,12 @@ app.delete('/api/characters/:id/chosen_spells', async (req, res) => {
     }
 });
 
-app.post('/api/characters', async (req, res) => {
+app.post('/api/characters', requireAuth, async (req, res) => {
     try {
         const characterFile = parseCharacter(req.body);
         characterFile.form_data = req.body;  // store original decisions
+        const { ObjectId } = require('mongodb');
+        characterFile.userId = new ObjectId(req.session.userId);
 
         // Save to MongoDB
         await characters.insertOne(characterFile);
@@ -636,7 +877,7 @@ app.post('/api/characters', async (req, res) => {
 });
 
 
-app.get('/api/characters/:id', async (req, res) => {
+app.get('/api/characters/:id', requireAuth, async (req, res) => {
     try {
         const char = await character.findById(req.params.id);
         if (!char) return res.status(404).json({ error: 'Not found' });
@@ -646,18 +887,19 @@ app.get('/api/characters/:id', async (req, res) => {
     }
 });
 
-app.get('/api/characters', async (req, res) => {
+app.get('/api/characters', requireAuth, async (req, res) => {
     try {
-        const chars = await character.find({}, 'name race classes'); // lean projection
+        const chars = await character.find({ userId: req.session.userId }, 'name race classes');
         res.json(chars);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
 
-app.put('/api/characters/:id', async (req, res) => {
+app.put('/api/characters/:id', requireAuth, async (req, res) => {
     try {
         const { ObjectId } = require('mongodb');
+        const chars = await character.find({ userId: new ObjectId(req.session.userId) }, 'name race classes');
         const existing = await characters.findOne({ _id: new ObjectId(req.params.id) });
         if (!existing) return res.status(404).json({ error: 'Not found' });
 

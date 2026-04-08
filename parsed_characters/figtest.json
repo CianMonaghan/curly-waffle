@@ -1,0 +1,817 @@
+{
+  "name": "figtest",
+  "alignment": "Neutral",
+  "stats": [
+    {
+      "stat": "Strength",
+      "base": 20,
+      "modifiers": [
+        {
+          "source_id": "race-0",
+          "type": "add",
+          "value": 2
+        }
+      ],
+      "score": 20
+    },
+    {
+      "stat": "Dexterity",
+      "base": 10,
+      "modifiers": [
+        {
+          "source_id": "class-0-asi-r1-p0",
+          "type": "add",
+          "value": 1
+        },
+        {
+          "source_id": "class-0-asi-r1-p1",
+          "type": "add",
+          "value": 1
+        }
+      ],
+      "score": 12
+    },
+    {
+      "stat": "Constitution",
+      "base": 10,
+      "modifiers": [
+        {
+          "source_id": "race-0",
+          "type": "add",
+          "value": 2
+        },
+        {
+          "source_id": "class-0-asi-r0-p1",
+          "type": "add",
+          "value": 1
+        }
+      ],
+      "score": 13
+    },
+    {
+      "stat": "Intelligence",
+      "base": 10,
+      "modifiers": [
+        {
+          "source_id": "class-0-asi-r0-p0",
+          "type": "add",
+          "value": 1
+        }
+      ],
+      "score": 11
+    },
+    {
+      "stat": "Wisdom",
+      "base": 10,
+      "modifiers": [],
+      "score": 10
+    },
+    {
+      "stat": "Charisma",
+      "base": 10,
+      "modifiers": [],
+      "score": 10
+    },
+    {
+      "stat": "Speed",
+      "base": 25,
+      "modifiers": [],
+      "score": 25
+    },
+    {
+      "stat": "Initiative",
+      "base": 1,
+      "modifiers": [],
+      "score": 1
+    },
+    {
+      "stat": "MaxHP",
+      "base": 13,
+      "modifiers": [],
+      "score": 13
+    }
+  ],
+  "hitpoints": {
+    "current_hit_points": 13,
+    "temp_hp": 0
+  },
+  "size": "medium",
+  "prof_bonus": 3,
+  "saves": [
+    {
+      "stat": "Strength",
+      "save": 8
+    },
+    {
+      "stat": "Dexterity",
+      "save": 1
+    },
+    {
+      "stat": "Constitution",
+      "save": 4
+    },
+    {
+      "stat": "Intelligence",
+      "save": 0
+    },
+    {
+      "stat": "Wisdom",
+      "save": 0
+    },
+    {
+      "stat": "Charisma",
+      "save": 0
+    }
+  ],
+  "ac_modifiers": [],
+  "armor_class": 11,
+  "languages": [
+    "Common",
+    "Gnomish"
+  ],
+  "skill_proficiencies": [
+    {
+      "skill": "Insight",
+      "expertise": false,
+      "source_id": "background-0"
+    },
+    {
+      "skill": "Religion",
+      "expertise": false,
+      "source_id": "background-0"
+    },
+    {
+      "skill": "Athletics",
+      "expertise": false,
+      "source_id": "class-0"
+    },
+    {
+      "skill": "Acrobatics",
+      "expertise": false,
+      "source_id": "class-0"
+    }
+  ],
+  "tool_proficiencies": [
+    {
+      "tool": "Smith's Tools",
+      "source_id": "race-0"
+    },
+    {
+      "tool": "Dragonchess Set",
+      "source_id": "background-0"
+    }
+  ],
+  "item_proficiencies": [
+    {
+      "item": "battleaxe",
+      "source_id": "race-0"
+    },
+    {
+      "item": "handaxe",
+      "source_id": "race-0"
+    },
+    {
+      "item": "light hammer",
+      "source_id": "race-0"
+    },
+    {
+      "item": "warhammer",
+      "source_id": "race-0"
+    }
+  ],
+  "race": {
+    "id": "0",
+    "name": "Mountain Dwarf"
+  },
+  "background": {
+    "id": "0",
+    "name": "Acolyte"
+  },
+  "classes": [
+    {
+      "id": "class-0",
+      "name": "Fighter",
+      "caster": false,
+      "casterType": null,
+      "casterStat": null,
+      "level": 7,
+      "casterLevel": null,
+      "class_hp": 0,
+      "features": [],
+      "skill_prof": [
+        {
+          "skill": "Athletics",
+          "prof": true
+        },
+        {
+          "skill": "Acrobatics",
+          "prof": true
+        }
+      ],
+      "saving_throws": [
+        "Strength",
+        "Constitution"
+      ],
+      "spell_list": [],
+      "source_id": "class-0"
+    }
+  ],
+  "subclasses": [
+    {
+      "id": "Battle Master",
+      "name": "Battle Master",
+      "class": "Fighter",
+      "description": "",
+      "features": [],
+      "source_id": "class-0"
+    }
+  ],
+  "features": [
+    {
+      "id": "feat-asi-con-2",
+      "name": "Ability Score Increase (CON +2)",
+      "description": "Your Constitution score increases by 2.",
+      "trigger": "onAdd",
+      "source_id": "race-0"
+    },
+    {
+      "id": "speed-25-dwarf",
+      "name": "Speed",
+      "description": "Your base walking speed is 25 feet. Your speed is not reduced by heavy armor.",
+      "trigger": "onAdd",
+      "source_id": "race-0"
+    },
+    {
+      "id": "darkvision-60",
+      "name": "Darkvision",
+      "description": "Accustomed to life undergound, you have superior vision in dark and dim conditions. You can see in dim light within 60ft of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.",
+      "trigger": "onAdd",
+      "source_id": "race-0"
+    },
+    {
+      "id": "dwarf-resilience",
+      "name": "Dwarvish Resilience",
+      "description": "You have advantage on saving throws against poison, and you have resistance to poison damage.",
+      "trigger": "onAdd",
+      "source_id": "race-0"
+    },
+    {
+      "id": "race-0-weapon-prof",
+      "name": "Weapon Proficiency",
+      "description": "Proficient with: battleaxe, handaxe, light hammer, warhammer.",
+      "trigger": "passive",
+      "source_id": "race-0"
+    },
+    {
+      "id": "dwarf-weapon-prof",
+      "name": "Dwarvish Weapon Training",
+      "description": "You have profiency with the battleaxe, handaxe, light hammer, and warhammer.",
+      "trigger": "onAdd",
+      "source_id": "race-0"
+    },
+    {
+      "id": "race-0-dwarf-tool-prof-smith_s_tools",
+      "name": "Tool Proficiency: Smith's Tools",
+      "description": "Proficient with Smith's Tools.",
+      "trigger": "passive",
+      "source_id": "race-0"
+    },
+    {
+      "id": "dwarf-tool-prof",
+      "name": "Tool Proficiency",
+      "description": "You gain proficiency with the artisan's tools of your choice: smith's tools, brewer's supplies, or mason's tools.",
+      "trigger": "onAdd",
+      "source_id": "race-0"
+    },
+    {
+      "id": "stonecunning",
+      "name": "Stonecunning",
+      "description": "Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus.",
+      "trigger": "onAdd",
+      "source_id": "race-0"
+    },
+    {
+      "id": "dwarf-lang",
+      "name": "Languages",
+      "description": "You can speak, read, and write Common and Dwarvish.",
+      "trigger": "onAdd",
+      "source_id": "race-0"
+    },
+    {
+      "id": "feat-asi-str-2",
+      "name": "Ability Score Increase (STR +2)",
+      "description": "Your Strength score increases by 2.",
+      "trigger": "onAdd",
+      "source_id": "race-0"
+    },
+    {
+      "id": "dwarf-armor-prof",
+      "name": "Dwarvish Armor Training",
+      "description": "You have profiency with light and medium armor.",
+      "trigger": "onAdd",
+      "source_id": "race-0"
+    },
+    {
+      "id": "background-0-skill-insight",
+      "name": "Skill Proficiency: Insight",
+      "description": "Proficiency in the Insight skill.",
+      "trigger": "passive",
+      "source_id": "background-0"
+    },
+    {
+      "id": "background-0-skill-religion",
+      "name": "Skill Proficiency: Religion",
+      "description": "Proficiency in the Religion skill.",
+      "trigger": "passive",
+      "source_id": "background-0"
+    },
+    {
+      "id": "background-0-tool-dragonchess_set",
+      "name": "Tool Proficiency: Dragonchess Set",
+      "description": "Proficient with Dragonchess Set.",
+      "trigger": "passive",
+      "source_id": "background-0"
+    },
+    {
+      "id": "shelter-faithful",
+      "name": "Shelter of the Faithful",
+      "description": "As an acolyte, you command the respect of those who share your faith, and you can perform the religious ceremonies of your deity. You and your adventuring companions can expect to receive free healing and care at a temple, shrine, or other established presence of your faith, though you must provide any material components needed for spells. Those who share your religion will support you (but only you) at a modest lifestyle. \n You might also have ties to a specific temple dedicated to your chosen deity or pantheon, and you have a residence there. This could be the temple where you used to serve, if you remain on good terms with it, or a temple where you have found a new home. While near your temple, you can call upon the priests for assistance, provided the assistance you ask for is not hazardous and you remain in good standing with your temple.",
+      "trigger": "onAdd",
+      "source_id": "background-0"
+    },
+    {
+      "id": "class-0-lvl1-fighting_style",
+      "name": "Fighting Style",
+      "description": "",
+      "trigger": "passive",
+      "source_id": "class-0"
+    },
+    {
+      "id": "class-0-lvl1-second_wind",
+      "name": "Second Wind",
+      "description": "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level. \n Once you use this feature, you must finish a short or long rest before you can use it again.",
+      "trigger": "passive",
+      "source_id": "class-0"
+    },
+    {
+      "id": "class-0-lvl2-action_surge",
+      "name": "Action Surge",
+      "description": "On your turn, you can take one additional action. Once you use this feature, you must finish a short or long rest before you can use it again.",
+      "trigger": "passive",
+      "source_id": "class-0"
+    },
+    {
+      "id": "class-0-sc-lvl3-combat_superiority-bait_and_switch",
+      "name": "Combat Superiority: Bait and Switch",
+      "description": "You learn maneuvers that are fueled by special dice called superiority dice. You learn three maneuvers of your choice. Many maneuvers enhance an attack in some way. You can use only one maneuver per attack. You learn two additional maneuvers of your choice at 7th, 10th, and 15th level. Each time you learn new maneuvers. You have four superiority dice, which are d8s. A superiority die is expended when you use it. You regain all of your expended superiority dice when you finish a short or long rest. You gain another superiority die at 7th level and one more at 15th level. Some of your maneuvers require your target to make a saving throw to resist the maneuver's effects.",
+      "trigger": "passive",
+      "source_id": "class-0"
+    },
+    {
+      "id": "class-0-sc-lvl3-combat_superiority-commander_s_strike",
+      "name": "Combat Superiority: Commander's Strike",
+      "description": "You learn maneuvers that are fueled by special dice called superiority dice. You learn three maneuvers of your choice. Many maneuvers enhance an attack in some way. You can use only one maneuver per attack. You learn two additional maneuvers of your choice at 7th, 10th, and 15th level. Each time you learn new maneuvers. You have four superiority dice, which are d8s. A superiority die is expended when you use it. You regain all of your expended superiority dice when you finish a short or long rest. You gain another superiority die at 7th level and one more at 15th level. Some of your maneuvers require your target to make a saving throw to resist the maneuver's effects.",
+      "trigger": "passive",
+      "source_id": "class-0"
+    },
+    {
+      "id": "class-0-sc-lvl3-combat_superiority-distracting_strike",
+      "name": "Combat Superiority: Distracting Strike",
+      "description": "You learn maneuvers that are fueled by special dice called superiority dice. You learn three maneuvers of your choice. Many maneuvers enhance an attack in some way. You can use only one maneuver per attack. You learn two additional maneuvers of your choice at 7th, 10th, and 15th level. Each time you learn new maneuvers. You have four superiority dice, which are d8s. A superiority die is expended when you use it. You regain all of your expended superiority dice when you finish a short or long rest. You gain another superiority die at 7th level and one more at 15th level. Some of your maneuvers require your target to make a saving throw to resist the maneuver's effects.",
+      "trigger": "passive",
+      "source_id": "class-0"
+    },
+    {
+      "id": "class-0-sc-lvl3-combat_superiority-goading_attack",
+      "name": "Combat Superiority: Goading Attack",
+      "description": "You learn maneuvers that are fueled by special dice called superiority dice. You learn three maneuvers of your choice. Many maneuvers enhance an attack in some way. You can use only one maneuver per attack. You learn two additional maneuvers of your choice at 7th, 10th, and 15th level. Each time you learn new maneuvers. You have four superiority dice, which are d8s. A superiority die is expended when you use it. You regain all of your expended superiority dice when you finish a short or long rest. You gain another superiority die at 7th level and one more at 15th level. Some of your maneuvers require your target to make a saving throw to resist the maneuver's effects.",
+      "trigger": "passive",
+      "source_id": "class-0"
+    },
+    {
+      "id": "class-0-sc-lvl3-combat_superiority-lunging_attack",
+      "name": "Combat Superiority: Lunging Attack",
+      "description": "You learn maneuvers that are fueled by special dice called superiority dice. You learn three maneuvers of your choice. Many maneuvers enhance an attack in some way. You can use only one maneuver per attack. You learn two additional maneuvers of your choice at 7th, 10th, and 15th level. Each time you learn new maneuvers. You have four superiority dice, which are d8s. A superiority die is expended when you use it. You regain all of your expended superiority dice when you finish a short or long rest. You gain another superiority die at 7th level and one more at 15th level. Some of your maneuvers require your target to make a saving throw to resist the maneuver's effects.",
+      "trigger": "passive",
+      "source_id": "class-0"
+    },
+    {
+      "id": "class-0-sc-lvl3-student_of_war-bait_and_switch",
+      "name": "Student of War: Bait and Switch",
+      "description": "",
+      "trigger": "passive",
+      "source_id": "class-0"
+    },
+    {
+      "id": "class-0-sc-lvl3-student_of_war-commander_s_strike",
+      "name": "Student of War: Commander's Strike",
+      "description": "",
+      "trigger": "passive",
+      "source_id": "class-0"
+    },
+    {
+      "id": "class-0-sc-lvl3-student_of_war-distracting_strike",
+      "name": "Student of War: Distracting Strike",
+      "description": "",
+      "trigger": "passive",
+      "source_id": "class-0"
+    },
+    {
+      "id": "class-0-sc-lvl3-student_of_war-goading_attack",
+      "name": "Student of War: Goading Attack",
+      "description": "",
+      "trigger": "passive",
+      "source_id": "class-0"
+    },
+    {
+      "id": "class-0-sc-lvl3-student_of_war-lunging_attack",
+      "name": "Student of War: Lunging Attack",
+      "description": "",
+      "trigger": "passive",
+      "source_id": "class-0"
+    },
+    {
+      "id": "class-0-lvl5-extra_attack",
+      "name": "Extra Attack",
+      "description": "You can attack twice when you take the Attack action on your turn.",
+      "trigger": "passive",
+      "source_id": "class-0"
+    },
+    {
+      "id": "class-0-sc-lvl7-know_your_enemy",
+      "name": "Know Your Enemy",
+      "description": "If you spend at least 1 minute observing or interacting with another creature outside combat, you can learn certain information about its capabilities compared to your own. The DM tells you if the creature is your equal, superior, or inferior in regard to two of the following characteristics of your choice: Strength score, Dexterity score, Constitution score, Armor Class, Current hit points, Total class levels, if any, Fighter class levels, if any.",
+      "trigger": "passive",
+      "source_id": "class-0"
+    },
+    {
+      "id": "class-0-sc-lvl7-combat_superiority_improvement",
+      "name": "Combat Superiority Improvement",
+      "description": "",
+      "trigger": "passive",
+      "source_id": "class-0"
+    },
+    {
+      "id": "class-0-sc-lvl7-combat_superiority_improvement",
+      "name": "Combat Superiority Improvement",
+      "description": "",
+      "trigger": "passive",
+      "source_id": "class-0"
+    }
+  ],
+  "inventory": {
+    "currency": [
+      {
+        "currencyName": "pp",
+        "amount": 0
+      },
+      {
+        "currencyName": "gp",
+        "amount": 0
+      },
+      {
+        "currencyName": "ep",
+        "amount": 0
+      },
+      {
+        "currencyName": "sp",
+        "amount": 0
+      },
+      {
+        "currencyName": "cp",
+        "amount": 0
+      }
+    ],
+    "items": [
+      {
+        "id": "class-0-equip-g0-i0",
+        "local_id": 0,
+        "name": "Chain Mail",
+        "type": "armor",
+        "description": "Heavy armor. AC 16. Requires Strength 13. Disadvantage on Stealth checks.",
+        "equipped": false,
+        "features_on_obtain": null,
+        "features_on_lose": null,
+        "features_on_equip": [
+          {
+            "id": "calc-ac-chain-mail",
+            "name": "calcAC",
+            "handler": "calcAC",
+            "data": {
+              "base_ac": 16,
+              "dex_cap": 0
+            },
+            "description": null,
+            "trigger": "onEquip"
+          }
+        ],
+        "features_on_unequip": [
+          {
+            "id": "calc-ac-chain-mail",
+            "name": "remove_feature",
+            "handler": null,
+            "data": null,
+            "description": null,
+            "trigger": "onUnequip"
+          }
+        ],
+        "prof": true,
+        "attuned": null,
+        "features_on_attune": null,
+        "features_on_detune": null
+      },
+      {
+        "type": "wp",
+        "id": "class-0-equip-g1-i0",
+        "local_id": 0,
+        "name": "Longsword",
+        "description": "A martial melee weapon.",
+        "equipped": false,
+        "features_on_obtain": null,
+        "features_on_lose": null,
+        "features_on_equip": [
+          {
+            "id": "attack-longsword-onehand",
+            "name": "Melee Attack (Longsword, One-Handed)",
+            "handler": "addAttack",
+            "data": {
+              "mode": "melee"
+            },
+            "description": null,
+            "trigger": "onEquip"
+          },
+          {
+            "id": "attack-longsword-twohand",
+            "name": "Melee Attack (Longsword, Two-Handed)",
+            "handler": "addAttack",
+            "data": {
+              "mode": "melee"
+            },
+            "description": null,
+            "trigger": "onEquip"
+          }
+        ],
+        "features_on_unequip": [
+          {
+            "id": "loss-attack-longsword",
+            "name": null,
+            "handler": null,
+            "data": null,
+            "description": null,
+            "trigger": "onUnequip"
+          }
+        ],
+        "dice": {
+          "oneHand": {
+            "num": 1,
+            "sides": 8
+          },
+          "twoHand": {
+            "num": 1,
+            "sides": 10
+          }
+        },
+        "range": [
+          5,
+          null,
+          null
+        ],
+        "primary_stat": [
+          "Strength"
+        ],
+        "martial": true,
+        "improvised": false,
+        "attack_bonus": 0,
+        "damage_bonus": 0,
+        "prof": true,
+        "attuned": false,
+        "features_on_attune": null,
+        "features_on_detune": null
+      },
+      {
+        "id": "class-0-equip-g1-i1",
+        "local_id": 0,
+        "name": "Shield",
+        "type": "armor",
+        "description": "Shield. +2 AC. Cannot be used with a two-handed weapon.",
+        "equipped": false,
+        "features_on_obtain": null,
+        "features_on_lose": null,
+        "features_on_equip": [
+          {
+            "id": "calc-ac-shield",
+            "name": "calcAC",
+            "handler": "calcAC",
+            "data": {
+              "base_ac": 2,
+              "dex_cap": null,
+              "is_shield": true
+            },
+            "description": null,
+            "trigger": "onEquip"
+          }
+        ],
+        "features_on_unequip": [
+          {
+            "id": "calc-ac-shield",
+            "name": "remove_feature",
+            "handler": null,
+            "data": null,
+            "description": null,
+            "trigger": "onUnequip"
+          }
+        ],
+        "prof": true,
+        "attuned": null,
+        "features_on_attune": null,
+        "features_on_detune": null
+      },
+      {
+        "type": "wp",
+        "id": "class-0-equip-g2-i0",
+        "local_id": 0,
+        "name": "Light Crossbow",
+        "description": "A simple ranged weapon",
+        "equipped": false,
+        "features_on_obtain": null,
+        "features_on_lose": null,
+        "features_on_equip": [
+          {
+            "id": "attack-lcrossbow",
+            "name": "Ranged Attack (Light Crossbow)",
+            "handler": "addAttack",
+            "data": {
+              "mode": "ranged"
+            },
+            "description": null,
+            "trigger": "onEquip"
+          }
+        ],
+        "features_on_unequip": [
+          {
+            "id": "loss-attack-lcrossbow",
+            "name": null,
+            "handler": null,
+            "data": null,
+            "description": null,
+            "trigger": "onUnequip"
+          }
+        ],
+        "dice": {
+          "oneHand": null,
+          "twoHand": {
+            "num": 1,
+            "sides": 8
+          }
+        },
+        "range": [
+          null,
+          80,
+          320
+        ],
+        "primary_stat": [
+          "Dexterity"
+        ],
+        "martial": false,
+        "improvised": false,
+        "attack_bonus": 0,
+        "damage_bonus": 0,
+        "prof": true,
+        "attuned": false,
+        "features_on_attune": null,
+        "features_on_detune": null
+      },
+      {
+        "id": "class-0-equip-g2-i1",
+        "local_id": null,
+        "name": "Bolts",
+        "type": "item",
+        "description": "",
+        "quantity": 20,
+        "features_on_obtain": null,
+        "features_on_lose": null,
+        "features_on_equip": null,
+        "features_on_unequip": null,
+        "dice": null,
+        "range": null,
+        "primary_stat": null,
+        "martial": null,
+        "improvised": null,
+        "attack_bonus": null,
+        "damage_bonus": null,
+        "prof": null,
+        "features_on_attune": null,
+        "features_on_detune": null
+      },
+      {
+        "id": "class-0-equip-g3-i0",
+        "local_id": null,
+        "name": "Dungeoneer's pack",
+        "type": "item",
+        "description": "",
+        "quantity": 1,
+        "features_on_obtain": null,
+        "features_on_lose": null,
+        "features_on_equip": null,
+        "features_on_unequip": null,
+        "dice": null,
+        "range": null,
+        "primary_stat": null,
+        "martial": null,
+        "improvised": null,
+        "attack_bonus": null,
+        "damage_bonus": null,
+        "prof": null,
+        "features_on_attune": null,
+        "features_on_detune": null
+      }
+    ]
+  },
+  "equipped_armor": {
+    "body": null,
+    "shield": null
+  },
+  "attuned_items": [],
+  "attuned_cap": 3,
+  "equipped_weapons": [],
+  "spell_slots": null,
+  "pact_slots": null,
+  "form_data": {
+    "name": "figtest",
+    "stats": {
+      "str": 20,
+      "dex": 10,
+      "con": 10,
+      "int": 10,
+      "wis": 10,
+      "cha": 10
+    },
+    "race": {
+      "id": 0,
+      "name": "Mountain Dwarf",
+      "decisions": {
+        "dwarf-tool-prof": "Smith's Tools"
+      }
+    },
+    "background": {
+      "id": 0,
+      "name": "Acolyte",
+      "decisions": {
+        "tool_0_0": "Dragonchess Set",
+        "lang_0_0": "Gnomish"
+      }
+    },
+    "classes": [
+      {
+        "id": "class-0",
+        "_uid": "1",
+        "name": "Fighter",
+        "level": 7,
+        "skills": [
+          "Athletics",
+          "Acrobatics"
+        ],
+        "decisions": {
+          "primaryClass": false,
+          "features": {
+            "extchoice_lvl3_uid1": [
+              "Bait and Switch",
+              "Commander's Strike",
+              "Distracting Strike",
+              "Goading Attack",
+              "Lunging Attack"
+            ],
+            "equip_1_0": "a)",
+            "equip_1_1": "a)",
+            "equip_1_2": "a)",
+            "equip_1_3": "a)",
+            "equip_weapon_1_1_0_0": "Longsword"
+          },
+          "asi": [
+            {
+              "num": 0,
+              "picks": [
+                "INT",
+                "CON"
+              ]
+            },
+            {
+              "num": 0,
+              "picks": [
+                "DEX",
+                "DEX"
+              ]
+            }
+          ]
+        },
+        "subclass": {
+          "id": "Battle Master",
+          "name": "Battle Master",
+          "decisions": {}
+        }
+      }
+    ]
+  },
+  "userId": "69d5ad083795f6e3aee79f51",
+  "_id": "69d5ad393795f6e3aee79f54"
+}
