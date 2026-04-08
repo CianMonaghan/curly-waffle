@@ -9,28 +9,53 @@
     <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 <body>
+    <header style="display:flex; align-items:center; gap:10px; padding:10px 16px; border-bottom:1px solid black; margin-bottom:16px;">
+        <img src="/Blite_Logo_Transparent.png" alt="Blite Logo" style="height:40px; width:auto;">
+        <span style="font-size:22px; font-weight:900; letter-spacing:4px; text-transform:uppercase; font-family:Georgia,serif;">Blite</span>
+    </header>
+
     <div class="login-container">
         <h1>Sign Up</h1>
-        <!-- The form element starts here -->
-        <form action="account.html">
-            <div class="input-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="Enter Username" required>
-            </div>
-            <div class="input-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter Password" required>
-            </div>
-            <div class="input-group">
-                <label for="password">Repeat Password</label>
-                <input type="password" id="password" name="password" placeholder="Repeat Password" required>
-            </div>
-            <button type="submit">Sign Up</button>
-        </form>
-        <!-- Optional: Links for other actions -->
-        <form action="login.html">
-            <button type="submit">Back to Login</button>
-        </form>
+        <div id="signup-error" style="color:red; display:none;"></div>
+        <div class="input-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Enter Username" required>
+        </div>
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter Password" required>
+        </div>
+        <div class="input-group">
+            <label for="password2">Repeat Password</label>
+            <input type="password" id="password2" placeholder="Repeat Password" required>
+        </div>
+        <button type="button" onclick="signup()">Sign Up</button>
+        <button type="button" onclick="window.location.href='login.html'">Back to Login</button>
     </div>
+    <script>
+    async function signup() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const password2 = document.getElementById('password2').value;
+        const err = document.getElementById('signup-error');
+        if (password !== password2) {
+            err.textContent = 'Passwords do not match';
+            err.style.display = 'block';
+            return;
+        }
+        const res = await fetch('/api/auth/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+        if (res.ok) {
+            window.location.href = '/account.html';
+        } else {
+            err.textContent = data.error;
+            err.style.display = 'block';
+        }
+    }
+    </script>
 </body>
 </html>

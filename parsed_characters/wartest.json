@@ -4,25 +4,10 @@
   "stats": [
     {
       "stat": "Strength",
-      "base": 10,
+      "base": 13,
       "modifiers": [
         {
-          "source_id": "class-0-asi-r0-p0",
-          "type": "add",
-          "value": 1
-        },
-        {
           "source_id": "class-0-asi-r0-p1",
-          "type": "add",
-          "value": 1
-        },
-        {
-          "source_id": "class-0-asi-r2-p1",
-          "type": "add",
-          "value": 1
-        },
-        {
-          "source_id": "class-0-asi-r4-p1",
           "type": "add",
           "value": 1
         }
@@ -34,100 +19,73 @@
       "base": 10,
       "modifiers": [
         {
-          "source_id": "class-0-asi-r1-p1",
-          "type": "add",
-          "value": 1
-        }
-      ],
-      "score": 11
-    },
-    {
-      "stat": "Constitution",
-      "base": 10,
-      "modifiers": [
-        {
-          "source_id": "race-1",
-          "type": "add",
-          "value": 2
-        },
-        {
           "source_id": "class-0-asi-r1-p0",
           "type": "add",
           "value": 1
         },
         {
-          "source_id": "class-0-asi-r4-p0",
+          "source_id": "class-0-asi-r1-p1",
           "type": "add",
           "value": 1
         }
       ],
-      "score": 14
+      "score": 12
+    },
+    {
+      "stat": "Constitution",
+      "base": 12,
+      "modifiers": [],
+      "score": 12
     },
     {
       "stat": "Intelligence",
       "base": 10,
-      "modifiers": [
-        {
-          "source_id": "class-0-asi-r2-p0",
-          "type": "add",
-          "value": 1
-        },
-        {
-          "source_id": "class-0-asi-r3-p0",
-          "type": "add",
-          "value": 1
-        },
-        {
-          "source_id": "class-0-asi-r3-p1",
-          "type": "add",
-          "value": 1
-        }
-      ],
-      "score": 13
+      "modifiers": [],
+      "score": 10
     },
     {
       "stat": "Wisdom",
       "base": 10,
+      "modifiers": [],
+      "score": 10
+    },
+    {
+      "stat": "Charisma",
+      "base": 16,
       "modifiers": [
         {
-          "source_id": "race-1",
+          "source_id": "class-0-asi-r0-p0",
           "type": "add",
           "value": 1
         }
       ],
-      "score": 11
-    },
-    {
-      "stat": "Charisma",
-      "base": 18,
-      "modifiers": [],
-      "score": 18
+      "score": 17
     },
     {
       "stat": "Speed",
-      "base": 25,
+      "base": 30,
       "modifiers": [],
-      "score": 25
+      "score": 30
     },
     {
       "stat": "Initiative",
-      "base": 0,
+      "base": 1,
       "modifiers": [],
-      "score": 0
+      "score": 1
     },
     {
       "stat": "MaxHP",
-      "base": 59,
+      "base": 19,
       "modifiers": [],
-      "score": 59
+      "score": 19
     }
   ],
   "hitpoints": {
-    "current_hit_points": 59,
+    "current_hit_points": 19,
     "temp_hp": 0
   },
   "size": "medium",
-  "prof_bonus": 6,
+  "prof_bonus": 4,
   "saves": [
     {
       "stat": "Strength",
@@ -135,40 +93,41 @@
     },
     {
       "stat": "Dexterity",
-      "save": 0
-    },
-    {
-      "stat": "Constitution",
-      "save": 2
-    },
-    {
-      "stat": "Intelligence",
       "save": 1
     },
     {
+      "stat": "Constitution",
+      "save": 1
+    },
+    {
+      "stat": "Intelligence",
+      "save": 0
+    },
+    {
       "stat": "Wisdom",
-      "save": 6
+      "save": 4
     },
     {
       "stat": "Charisma",
-      "save": 10
+      "save": 7
     }
   ],
   "ac_modifiers": [],
-  "armor_class": 10,
+  "armor_class": 11,
   "languages": [
     "Common",
     "Dwarvish",
-    "Deep Speech"
+    "Celestial",
+    "Goblin"
   ],
   "skill_proficiencies": [
     {
-      "skill": "History",
+      "skill": "Insight",
       "expertise": false,
       "source_id": "background-0"
     },
     {
-      "skill": "Persuaion",
+      "skill": "Religion",
       "expertise": false,
       "source_id": "background-0"
     },
@@ -183,41 +142,15 @@
       "source_id": "class-0"
     }
   ],
-  "tool_proficiencies": [
-    {
-      "tool": "Smith's Tools",
-      "source_id": "race-1"
-    },
-    {
-      "tool": "Three-Dragon Ante Set",
-      "source_id": "background-0"
-    }
-  ],
-  "item_proficiencies": [
-    {
-      "item": "battleaxe",
-      "source_id": "race-1"
-    },
-    {
-      "item": "handaxe",
-      "source_id": "race-1"
-    },
-    {
-      "item": "light hammer",
-      "source_id": "race-1"
-    },
-    {
-      "item": "warhammer",
-      "source_id": "race-1"
-    }
-  ],
+  "tool_proficiencies": [],
+  "item_proficiencies": [],
   "race": {
-    "id": "1",
-    "name": "Hill Dwarf"
+    "id": "2",
+    "name": "Human"
   },
   "background": {
     "id": "0",
-    "name": "Noble"
+    "name": "Acolyte"
   },
   "classes": [
     {
@@ -226,7 +159,7 @@
       "caster": true,
       "casterType": "pact_magic",
       "casterStat": "Charisma",
-      "level": 20,
+      "level": 10,
       "casterLevel": 0,
       "class_hp": 0,
       "features": [],
@@ -260,114 +193,48 @@
   ],
   "features": [
     {
-      "id": "feat-asi-con-2",
-      "name": "Ability Score Increase (CON +2)",
-      "description": "Your Constitution score increases by 2.",
+      "name": "Ability Score Increase (ALL +1)",
+      "description": "Your ability scores each increase by 1.",
       "trigger": "onAdd",
-      "source_id": "race-1"
+      "source_id": "race-2"
     },
     {
-      "id": "speed-25-dwarf",
       "name": "Speed",
-      "description": "Your base walking speed is 25 feet. Your speed is not reduced by heavy armor.",
+      "description": "Your base walking speed is 30 feet.",
       "trigger": "onAdd",
-      "source_id": "race-1"
+      "source_id": "race-2"
     },
     {
-      "id": "darkvision-60",
-      "name": "Darkvision",
-      "description": "Accustomed to life undergound, you have superior vision in dark and dim conditions. You can see in dim light within 60ft of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.",
-      "trigger": "onAdd",
-      "source_id": "race-1"
-    },
-    {
-      "id": "dwarf-resilience",
-      "name": "Dwarvish Resilience",
-      "description": "You have advantage on saving throws against poison, and you have resistance to poison damage.",
-      "trigger": "onAdd",
-      "source_id": "race-1"
-    },
-    {
-      "id": "race-1-weapon-prof",
-      "name": "Weapon Proficiency",
-      "description": "Proficient with: battleaxe, handaxe, light hammer, warhammer.",
+      "id": "race-2-undefined-dwarvish",
+      "name": "Languages: Dwarvish",
+      "description": "Can speak, read, and write Dwarvish.",
       "trigger": "passive",
-      "source_id": "race-1"
+      "source_id": "race-2"
     },
     {
-      "id": "dwarf-weapon-prof",
-      "name": "Dwarvish Weapon Training",
-      "description": "You have profiency with the battleaxe, handaxe, light hammer, and warhammer.",
-      "trigger": "onAdd",
-      "source_id": "race-1"
-    },
-    {
-      "id": "race-1-dwarf-tool-prof-smith_s_tools",
-      "name": "Tool Proficiency: Smith's Tools",
-      "description": "Proficient with Smith's Tools.",
-      "trigger": "passive",
-      "source_id": "race-1"
-    },
-    {
-      "id": "dwarf-tool-prof",
-      "name": "Tool Proficiency",
-      "description": "You gain proficiency with the artisan's tools of your choice: smith's tools, brewer's supplies, or mason's tools.",
-      "trigger": "onAdd",
-      "source_id": "race-1"
-    },
-    {
-      "id": "stonecunning",
-      "name": "Stonecunning",
-      "description": "Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus.",
-      "trigger": "onAdd",
-      "source_id": "race-1"
-    },
-    {
-      "id": "dwarf-lang",
       "name": "Languages",
-      "description": "You can speak, read, and write Common and Dwarvish.",
+      "description": "You can speak, read, and write Common and one extra language of your choice. Humans typically learn the languages of other peoples they deal with, including obscure dialects. They are fond of sprinkling their speech with words borrowed from other tongues: Orc curses, Elvish musical expressions, Dwarvish military phrases, and so on.",
       "trigger": "onAdd",
-      "source_id": "race-1"
+      "source_id": "race-2"
     },
     {
-      "id": "feat-asi-wis-1",
-      "name": "Ability Score Increase (WIS +1)",
-      "description": "Your Wisdom score increases by 1.",
-      "trigger": "onAdd",
-      "source_id": "race-1"
-    },
-    {
-      "id": "dwarf-toughness",
-      "name": "Dwarvish Toughness",
-      "description": "Your hit point maximum increases by 1, and it increases by 1 every time you gain a level.",
-      "trigger": "onAdd",
-      "source_id": "race-1"
-    },
-    {
-      "id": "background-0-skill-history",
-      "name": "Skill Proficiency: History",
-      "description": "Proficiency in the History skill.",
+      "id": "background-0-skill-insight",
+      "name": "Skill Proficiency: Insight",
+      "description": "Proficiency in the Insight skill.",
       "trigger": "passive",
       "source_id": "background-0"
     },
     {
-      "id": "background-0-skill-persuaion",
-      "name": "Skill Proficiency: Persuaion",
-      "description": "Proficiency in the Persuaion skill.",
+      "id": "background-0-skill-religion",
+      "name": "Skill Proficiency: Religion",
+      "description": "Proficiency in the Religion skill.",
       "trigger": "passive",
       "source_id": "background-0"
     },
     {
-      "id": "background-0-tool-three_dragon_ante_set",
-      "name": "Tool Proficiency: Three-Dragon Ante Set",
-      "description": "Proficient with Three-Dragon Ante Set.",
-      "trigger": "passive",
-      "source_id": "background-0"
-    },
-    {
-      "id": "position_of_privilege",
-      "name": "Positiion of Privilege",
-      "description": "Thanks to your noble birth, people are inclined to think the best of you. You are welcome in high society, and people assume you have the right to be wherever you are. The common folk make every effort to accommodate you and avoid your displeasure, and other people of high birth treat you as a member of the same social sphere. You can secure an audience with a local noble if you need to.",
+      "id": "shelter-faithful",
+      "name": "Shelter of the Faithful",
+      "description": "As an acolyte, you command the respect of those who share your faith, and you can perform the religious ceremonies of your deity. You and your adventuring companions can expect to receive free healing and care at a temple, shrine, or other established presence of your faith, though you must provide any material components needed for spells. Those who share your religion will support you (but only you) at a modest lifestyle. \n You might also have ties to a specific temple dedicated to your chosen deity or pantheon, and you have a residence there. This could be the temple where you used to serve, if you remain on good terms with it, or a temple where you have found a new home. While near your temple, you can call upon the priests for assistance, provided the assistance you ask for is not hazardous and you remain in good standing with your temple.",
       "trigger": "onAdd",
       "source_id": "background-0"
     },
@@ -421,29 +288,8 @@
       "source_id": "class-0"
     },
     {
-      "id": "class-0-lvl2-eldritch_invocations-beguiling_speech",
-      "name": "Eldritch Invocations: Beguiling Speech",
-      "description": "You gain two eldritch invocations of your choice. When you gain certain warlock levels, you gain additional invocations of your choice. A level prerequisite refers to your level in this class. Additionally, when you gain a level in this class, you can choose one of the invocations you know and replace it with another invocation that you could learn at that level.",
-      "trigger": "passive",
-      "source_id": "class-0"
-    },
-    {
-      "id": "class-0-lvl2-eldritch_invocations-bewitching_whispers",
-      "name": "Eldritch Invocations: Bewitching Whispers",
-      "description": "You gain two eldritch invocations of your choice. When you gain certain warlock levels, you gain additional invocations of your choice. A level prerequisite refers to your level in this class. Additionally, when you gain a level in this class, you can choose one of the invocations you know and replace it with another invocation that you could learn at that level.",
-      "trigger": "passive",
-      "source_id": "class-0"
-    },
-    {
-      "id": "class-0-lvl2-eldritch_invocations-bond_of_the_talisman",
-      "name": "Eldritch Invocations: Bond of the Talisman",
-      "description": "You gain two eldritch invocations of your choice. When you gain certain warlock levels, you gain additional invocations of your choice. A level prerequisite refers to your level in this class. Additionally, when you gain a level in this class, you can choose one of the invocations you know and replace it with another invocation that you could learn at that level.",
-      "trigger": "passive",
-      "source_id": "class-0"
-    },
-    {
-      "id": "class-0-lvl3-pact_boon-pact_of_the_blade",
-      "name": "Pact Boon: Pact of the Blade",
+      "id": "class-0-lvl3-pact_boon",
+      "name": "Pact Boon",
       "description": "",
       "trigger": "passive",
       "source_id": "class-0"
@@ -480,69 +326,6 @@
       "id": "class-0-sc-lvl10-fiendish_resilience",
       "name": "Fiendish Resilience",
       "description": "You can choose one damage type when you finish a short or long rest. You gain resistance to that damage type until you choose a different one with this feature. Damage from magical weapons or silver weapons ignores this resistance.",
-      "trigger": "passive",
-      "source_id": "class-0"
-    },
-    {
-      "id": "class-0-lvl11-mystic_arcanum__6th_level_",
-      "name": "Mystic Arcanum (6th level): Arcane Gate↗",
-      "description": "You gain a 6th-level spell from the warlock spell list as a mystic arcanum, you may cast this spell once per long rest without expending a spell slot.",
-      "trigger": "passive",
-      "source_id": "class-0"
-    },
-    {
-      "id": "class-0-lvl12-eldritch_invocations__additional_-upgrade",
-      "name": "Eldritch Invocations (Additional)",
-      "description": "You learn an additional Eldritch Invocation of your choice.",
-      "trigger": "passive",
-      "source_id": "class-0"
-    },
-    {
-      "id": "class-0-lvl13-mystic_arcanum__7th_level_",
-      "name": "Mystic Arcanum (7th level): Etherealness↗",
-      "description": "You gain a 7th-level spell from the warlock spell list as a mystic arcanum, you may cast this spell once per long rest without expending a spell slot.",
-      "trigger": "passive",
-      "source_id": "class-0"
-    },
-    {
-      "id": "class-0-sc-lvl14-hurl_through_hell",
-      "name": "Hurl Through Hell",
-      "description": "When you hit a creature with an attack, you can use this feature to instantly transport the target through the lower planes. The creature disappears and hurtles through a nightmare landscape. At the end of your next turn, the target returns to the space it previously occupied, or the nearest unoccupied space. If the target is not a fiend, it takes 10d10 psychic damage as it reels from its horrific experience. Once you use this feature, you can't use it again until you finish a long rest.",
-      "trigger": "passive",
-      "source_id": "class-0"
-    },
-    {
-      "id": "class-0-lvl15-mystic_arcanum__8th_level_",
-      "name": "Mystic Arcanum (8th level): Dominate Monster↗",
-      "description": "You gain a 8th-level spell from the warlock spell list as a mystic arcanum, you may cast this spell once per long rest without expending a spell slot.",
-      "trigger": "passive",
-      "source_id": "class-0"
-    },
-    {
-      "id": "class-0-lvl15-eldritch_invocations__additional_-upgrade",
-      "name": "Eldritch Invocations (Additional)",
-      "description": "You learn an additional Eldritch Invocation of your choice.",
-      "trigger": "passive",
-      "source_id": "class-0"
-    },
-    {
-      "id": "class-0-lvl17-mystic_arcanum__9th_level_",
-      "name": "Mystic Arcanum (9th level): Astral Projection↗",
-      "description": "You gain a 9th-level spell from the warlock spell list as a mystic arcanum, you may cast this spell once per long rest without expending a spell slot.",
-      "trigger": "passive",
-      "source_id": "class-0"
-    },
-    {
-      "id": "class-0-lvl18-eldritch_invocations__additional_-upgrade",
-      "name": "Eldritch Invocations (Additional)",
-      "description": "You learn an additional Eldritch Invocation of your choice.",
-      "trigger": "passive",
-      "source_id": "class-0"
-    },
-    {
-      "id": "class-0-lvl20-eldritch_master",
-      "name": "Eldritch Master",
-      "description": "You can spend 1 minute entreating your patron for aid to regain all your expended spell slots from your Pact Magic feature. Once you regain spell slots with this feature, you must finish a long rest before you can do so again.",
       "trigger": "passive",
       "source_id": "class-0"
     }
@@ -874,9 +657,85 @@
   "pact_slots": [
     {
       "level": 5,
-      "max": 4,
-      "current": 4
+      "max": 2,
+      "current": 2
     }
   ],
-  "_id": "69d42577e664b7655ba7828f"
+  "form_data": {
+    "name": "wartest",
+    "stats": {
+      "str": 13,
+      "dex": 10,
+      "con": 12,
+      "int": 10,
+      "wis": 10,
+      "cha": 16
+    },
+    "race": {
+      "id": 2,
+      "name": "Human",
+      "decisions": {
+        "undefined": "Dwarvish"
+      }
+    },
+    "background": {
+      "id": 0,
+      "name": "Acolyte",
+      "decisions": {
+        "lang_0_0": "Celestial",
+        "lang_0_1": "Goblin"
+      }
+    },
+    "classes": [
+      {
+        "id": "class-0",
+        "_uid": "1",
+        "name": "Warlock",
+        "level": 10,
+        "skills": [
+          "Arcana",
+          "Deception"
+        ],
+        "decisions": {
+          "primaryClass": false,
+          "features": {
+            "extchoice_lvl2_uid1": [
+              "Agonizing Blast",
+              "Armor of Shadows",
+              "Ascendant Step",
+              "Aspect of the Moon",
+              "Beast Speech"
+            ],
+            "equip_1_0": "a)",
+            "equip_1_1": "a)",
+            "equip_1_2": "a)",
+            "equip_weapon_1_4_0": "Light Hammer"
+          },
+          "asi": [
+            {
+              "num": 0,
+              "picks": [
+                "CHA",
+                "STR"
+              ]
+            },
+            {
+              "num": 0,
+              "picks": [
+                "DEX",
+                "DEX"
+              ]
+            }
+          ]
+        },
+        "subclass": {
+          "id": "Fiend",
+          "name": "Fiend",
+          "decisions": {}
+        }
+      }
+    ]
+  },
+  "userId": "69d5aaa97fca07eedcd11ff0",
+  "_id": "69d5ace2be61f962b7bcef26"
 }
