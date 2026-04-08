@@ -4,7 +4,7 @@
     "id": 1,
     "name": "Monk",
     "level": 0,
-    "class_hp": 0,
+    "class_hp": 8,
 
     "armor": null,
     "weapons": ["Simple", "Shortswords"],

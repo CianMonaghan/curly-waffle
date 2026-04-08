@@ -4,7 +4,7 @@
     "id": 2,
     "name": "Warlock",
     "level": 0,
-    "class_hp": 0,
+    "class_hp": 8,
 
     "armor": ["Light Armor"],
     "weapons": ["Simple"],

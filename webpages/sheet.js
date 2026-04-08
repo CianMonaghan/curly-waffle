@@ -378,7 +378,7 @@ async function addItemToCharacter(item, btn) {
             const charRes = await fetch(`/api/characters/${CURRENT_CHAR_ID}`);
             const char = await charRes.json();
             const inv = Array.isArray(char.inventory) ? char.inventory[0] : char.inventory;
-            renderInventoryItems(inv?.items ?? []);
+            renderInventoryItems(inv?.items ?? [], char);
         } else {
             btn.textContent = 'Error';
             btn.disabled = false;
@@ -396,7 +396,7 @@ document.getElementById('item-search-modal').addEventListener('click', function(
 
 /* Inventory Items Panel */
 
-function renderInventoryItems(items) {
+function renderInventoryItems(items, char = {}) {
     const el = document.getElementById('inventory-items-list');
     el.innerHTML = '';
     if (!items.length) {
@@ -420,17 +420,93 @@ function renderInventoryItems(items) {
             badge.style.cssText = 'font-size:11px; background:#e0e0e0; padding:1px 5px; border-radius:3px;';
             header.appendChild(badge);
         }
-        if (item.equipped) {
-            const b = document.createElement('span');
-            b.textContent = 'equipped';
-            b.style.cssText = 'font-size:11px; background:#c8e6c9; padding:1px 5px; border-radius:3px;';
-            header.appendChild(b);
-        }
+        // Attune toggle for items that require attunement
         if (item.attuned) {
-            const b = document.createElement('span');
-            b.textContent = 'attuned';
-            b.style.cssText = 'font-size:11px; background:#bbdefb; padding:1px 5px; border-radius:3px;';
-            header.appendChild(b);
+            const isAttuned = (char.attuned_items ?? []).some(a => a.item_id == item.id);
+
+            const attuneBtn = document.createElement('button');
+            attuneBtn.textContent = isAttuned ? 'Detune' : 'Attune';
+            attuneBtn.style.cssText = `font-size:11px; padding:1px 6px; cursor:pointer;
+                background:${isAttuned ? '#bbdefb' : '#e0e0e0'}; border:1px solid #aaa; border-radius:3px;`;
+
+            attuneBtn.onclick = async (e) => {
+                e.stopPropagation();
+                if (!CURRENT_CHAR_ID) return;
+                attuneBtn.disabled = true;
+                const action = isAttuned ? 'detune' : 'attune';
+                try {
+                    const res = await fetch(`/api/characters/${CURRENT_CHAR_ID}/inventory/items/attune`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ _uid: item._uid, action })
+                    });
+                    const data = await res.json();
+                    if (!res.ok) {
+                        alert(data.error ?? 'Could not attune item.');
+                        attuneBtn.disabled = false;
+                        return;
+                    }
+                    const charRes = await fetch(`/api/characters/${CURRENT_CHAR_ID}`);
+                    const newChar = await charRes.json();
+                    const newInv  = Array.isArray(newChar.inventory) ? newChar.inventory[0] : newChar.inventory;
+                    renderInventoryItems(newInv?.items ?? [], newChar);
+                    // Refresh stats in case attunement changed them (e.g. Amulet of Health sets CON)
+                    const STAT_NAMES = ['Strength','Dexterity','Constitution','Intelligence','Wisdom','Charisma'];
+                    STAT_NAMES.forEach((stat, i) => {
+                        const entry = newChar.stats?.find(s => s.stat === stat);
+                        if (!entry) return;
+                        document.getElementById(`score-${i}`).textContent = entry.score;
+                        document.getElementById(`mod-${i}`).textContent   =
+                            (entry.score >= 10 ? '+' : '') + Math.floor((entry.score - 10) / 2);
+                    });
+                    document.getElementById('ac-val').textContent = newChar.armor_class ?? '?';
+                } catch {
+                    alert('Network error while attuning item.');
+                    attuneBtn.disabled = false;
+                }
+            };
+            header.appendChild(attuneBtn);
+        }
+
+        // Equip toggle for armor
+        if (item.type === 'armor') {
+            // loose == because item.id may be number while equipped_armor stores it as-is
+            const isEquipped = char.equipped_armor?.body == item.id ||
+                               char.equipped_armor?.shield == item.id;
+
+            const equipBtn = document.createElement('button');
+            equipBtn.textContent = isEquipped ? 'Unequip' : 'Equip';
+            equipBtn.style.cssText = `font-size:11px; padding:1px 6px; cursor:pointer;
+                background:${isEquipped ? '#ffcdd2' : '#c8e6c9'}; border:1px solid #aaa; border-radius:3px;`;
+
+            equipBtn.onclick = async (e) => {
+                e.stopPropagation();
+                if (!CURRENT_CHAR_ID) return;
+                equipBtn.disabled = true;
+                const action = isEquipped ? 'unequip' : 'equip';
+                try {
+                    const res = await fetch(`/api/characters/${CURRENT_CHAR_ID}/inventory/items/equip`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ _uid: item._uid, action })
+                    });
+                    const data = await res.json();
+                    if (!res.ok) {
+                        alert(data.error ?? 'Could not equip item.');
+                        equipBtn.disabled = false;
+                        return;
+                    }
+                    const charRes = await fetch(`/api/characters/${CURRENT_CHAR_ID}`);
+                    const newChar = await charRes.json();
+                    const newInv  = Array.isArray(newChar.inventory) ? newChar.inventory[0] : newChar.inventory;
+                    renderInventoryItems(newInv?.items ?? [], newChar);
+                    document.getElementById('ac-val').textContent = newChar.armor_class ?? '?';
+                } catch {
+                    alert('Network error while equipping item.');
+                    equipBtn.disabled = false;
+                }
+            };
+            header.appendChild(equipBtn);
         }
 
         div.appendChild(header);
@@ -501,7 +577,7 @@ function renderInventoryItems(items) {
             if (res.ok) {
                 const char = await (await fetch(`/api/characters/${CURRENT_CHAR_ID}`)).json();
                 const inv = Array.isArray(char.inventory) ? char.inventory[0] : char.inventory;
-                renderInventoryItems(inv?.items ?? []);
+                renderInventoryItems(inv?.items ?? [], char);
             } else { removeBtn.disabled = false; }
         };
         // Make the item header a flex row so the × sits on the right
@@ -1050,7 +1126,15 @@ async function loadSheet() {
             // Resource uses tracker
             if (isResource && uses) {
                 const storageKey = `feat_used_${CURRENT_CHAR_ID}_${f.id ?? f.name}`;
-                let remaining = parseInt(localStorage.getItem(storageKey) ?? String(uses), 10);
+                const featureUseRecord = (char.feature_uses ?? [])
+                    .find(u => u.feature_id === (f.id ?? f.name));
+                let remaining;
+                if (featureUseRecord !== undefined) {
+                    remaining = featureUseRecord.remaining;
+                    localStorage.setItem(storageKey, String(remaining));
+                } else {
+                    remaining = parseInt(localStorage.getItem(storageKey) ?? String(uses), 10);
+                }
 
                 const tracker = document.createElement('div');
                 tracker.style.cssText = 'display:flex; gap:5px; align-items:center; margin-top:4px;';
@@ -1074,6 +1158,13 @@ async function loadSheet() {
                 const update = () => {
                     counter.textContent = `${remaining} / ${uses}`;
                     localStorage.setItem(storageKey, String(remaining));
+                    if (CURRENT_CHAR_ID) {
+                        fetch(`/api/characters/${CURRENT_CHAR_ID}/feature_uses`, {
+                            method:  'PATCH',
+                            headers: { 'Content-Type': 'application/json' },
+                            body:    JSON.stringify({ feature_id: f.id ?? f.name, remaining })
+                        }).catch(() => {});
+                    }
                 };
 
                 minusBtn.addEventListener('click', e => {
@@ -1365,7 +1456,7 @@ async function loadSheet() {
     });
 
     // Inventory items panel
-    renderInventoryItems(inv?.items ?? []);
+    renderInventoryItems(inv?.items ?? [], char);
 
     const notesEl = document.getElementById('inventory-notes');
     notesEl.textContent = char.notes ?? '';

@@ -4,7 +4,7 @@
     "id": 3,
     "name": "Wizard",
     "level": 0,
-    "class_hp": 0,
+    "class_hp": 6,
 
     "armor": null,
     "weapons": ["Daggers", "Darts", "Slings", "Quarterstaffs", "Light Crossbows"],

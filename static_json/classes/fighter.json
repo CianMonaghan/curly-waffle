@@ -4,7 +4,7 @@
     "id": 0,
     "name": "Fighter",
     "level": 0,
-    "class_hp": 0,
+    "class_hp": 10,
 
     "armor": ["All", "Shields"],
     "weapons": ["Simple", "Martial"],

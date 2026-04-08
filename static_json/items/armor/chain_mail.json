@@ -27,6 +27,7 @@
             "trigger": "onUnequip"
         }
     ],
+    "str_requirement": 13,
     "prof": true,
     "attuned": null,
     "features_on_attune": null,

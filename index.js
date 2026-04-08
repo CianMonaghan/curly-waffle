@@ -1,7 +1,9 @@
 const express = require("express");
 const fs = require('fs');
 const path = require('path');
-const { parseCharacter } = require('./parseCharacter');
+const { parseCharacter }              = require('./parseCharacter');
+const { obtainItem, equipArmor, unequipArmor, equipWeapon, unequipWeapon, attuneItem, detuneItem } = require('./applyItems');
+const { recomputeStats, recomputeAC } = require('./characterMods');
 const app = express();
 const port = 3000;
 require('dotenv').config();
@@ -125,6 +127,11 @@ const subclassSchema = new mongoose.Schema({
     features: [featureSchema]
 }, {_id: false});
 
+const featureUseSchema = new mongoose.Schema({
+    feature_id: { type: String, required: true },
+    remaining:  { type: Number, required: true }
+}, { _id: false });
+
 const characterSchema = new mongoose.Schema({//accountID?
     name: {type: String, required: true},
     alignment: String,
@@ -186,7 +193,8 @@ const characterSchema = new mongoose.Schema({//accountID?
         name:       String,
         damage:     String,
         mode:       String    // "melee" | "ranged"
-    }]
+    }],
+    feature_uses: { type: [featureUseSchema], default: [] }
 });
 
 const character = mongoose.model("character", characterSchema);
@@ -349,6 +357,33 @@ app.patch('/api/characters/:id/pact_slots', async (req, res) => {
     }
 });
 
+app.patch('/api/characters/:id/feature_uses', async (req, res) => {
+    try {
+        const { ObjectId } = require('mongodb');
+        const { feature_id, remaining } = req.body;
+        if (feature_id === undefined || remaining === undefined)
+            return res.status(400).json({ error: 'feature_id and remaining are required' });
+
+        const oid = new ObjectId(req.params.id);
+
+        const result = await characters.updateOne(
+            { _id: oid, 'feature_uses.feature_id': feature_id },
+            { $set: { 'feature_uses.$.remaining': remaining } }
+        );
+
+        if (result.matchedCount === 0) {
+            await characters.updateOne(
+                { _id: oid },
+                { $push: { feature_uses: { feature_id, remaining } } }
+            );
+        }
+
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 app.patch('/api/characters/:id/inventory/items/quantity', async (req, res) => {
     try {
         const { ObjectId } = require('mongodb');
@@ -380,13 +415,107 @@ app.patch('/api/characters/:id/inventory/items/quantity', async (req, res) => {
 app.patch('/api/characters/:id/inventory/items', async (req, res) => {
     try {
         const { ObjectId } = require('mongodb');
-        await characters.updateOne(
-            { _id: new ObjectId(req.params.id) },
-            { $push: { 'inventory.items': req.body } }
-        );
+        const oid  = new ObjectId(req.params.id);
+        const char = await characters.findOne({ _id: oid });
+        if (!char) return res.status(404).json({ error: 'Not found' });
+
+        // Normalize inventory — DB may store it as a Mongoose array or plain object
+        if (Array.isArray(char.inventory)) {
+            char.inventory = char.inventory[0] ?? { currency: [], items: [] };
+        }
+        char.inventory.items ??= [];
+
+        // Ensure item has a uid
+        const item = { ...req.body };
+        if (!item._uid) item._uid = `${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+
+        // Add to inventory and fire features_on_obtain handlers
+        obtainItem(char, item);
+
+        // Recompute stats/AC in case features_on_obtain changed something
+        recomputeStats(char);
+        recomputeAC(char);
+
+        await characters.replaceOne({ _id: oid }, char);
         res.json({ success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });
+    }
+});
+
+app.patch('/api/characters/:id/inventory/items/attune', async (req, res) => {
+    try {
+        const { ObjectId } = require('mongodb');
+        const { _uid, action } = req.body; // action: 'attune' | 'detune'
+        const oid  = new ObjectId(req.params.id);
+        const char = await characters.findOne({ _id: oid });
+        if (!char) return res.status(404).json({ error: 'Not found' });
+
+        if (Array.isArray(char.inventory)) char.inventory = char.inventory[0] ?? { currency: [], items: [] };
+        char.inventory.items ??= [];
+        char.attuned_items   ??= [];
+        char.attuned_cap     ??= 3;
+
+        const item = char.inventory.items.find(i => i._uid === _uid);
+        if (!item) return res.status(404).json({ error: 'Item not found in inventory' });
+
+        if (action === 'attune')      attuneItem(char, item.id);
+        else if (action === 'detune') detuneItem(char, item.id);
+        else return res.status(400).json({ error: 'action must be attune or detune' });
+
+        recomputeStats(char);
+        recomputeAC(char);
+        await characters.replaceOne({ _id: oid }, char);
+        res.json({ success: true });
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
+app.patch('/api/characters/:id/inventory/items/equip', async (req, res) => {
+    try {
+        const { ObjectId } = require('mongodb');
+        const { _uid, action, slot } = req.body; // action: 'equip' | 'unequip'
+        const oid  = new ObjectId(req.params.id);
+        const char = await characters.findOne({ _id: oid });
+        if (!char) return res.status(404).json({ error: 'Not found' });
+
+        if (Array.isArray(char.inventory)) char.inventory = char.inventory[0] ?? { currency: [], items: [] };
+        char.inventory.items  ??= [];
+        char.equipped_armor   ??= { body: null, shield: null };
+        char.equipped_weapons ??= [];
+        char.ac_modifiers     ??= [];
+
+        const item = char.inventory.items.find(i => i._uid === _uid);
+        if (!item) return res.status(404).json({ error: 'Item not found in inventory' });
+
+        if (action === 'equip') {
+            // Check strength requirement before equipping
+            if (item.str_requirement) {
+                const strScore = (char.stats ?? []).find(s => s.stat === 'Strength')?.score ?? 0;
+                if (strScore < item.str_requirement) {
+                    return res.status(400).json({
+                        error: `Requires Strength ${item.str_requirement} (you have ${strScore})`
+                    });
+                }
+            }
+            if (item.type === 'armor')    equipArmor(char, item.id);
+            else if (item.type === 'wp')  equipWeapon(char, item.id, slot ?? 'main_hand');
+            else return res.status(400).json({ error: 'Item is not equippable' });
+        } else if (action === 'unequip') {
+            if (item.type === 'armor')    unequipArmor(char, item.id);
+            else if (item.type === 'wp')  unequipWeapon(char, item.id);
+            else return res.status(400).json({ error: 'Item is not equippable' });
+        } else {
+            return res.status(400).json({ error: 'action must be equip or unequip' });
+        }
+
+        recomputeStats(char);
+        recomputeAC(char);
+        await characters.replaceOne({ _id: oid }, char);
+        res.json({ success: true });
+    } catch (err) {
+        res.status(400).json({ error: err.message });
     }
 });
 
@@ -537,7 +666,7 @@ app.put('/api/characters/:id', async (req, res) => {
 
         // Preserve sheet-level fields that live outside character creation
         for (const field of ['hitpoints', 'spell_slots', 'pact_slots', 'chosen_spells',
-                             'hit_dice_current', 'notes', 'inspiration']) {
+                             'hit_dice_current', 'notes', 'inspiration', 'feature_uses']) {
             if (existing[field] !== undefined) rebuilt[field] = existing[field];
         }
 
