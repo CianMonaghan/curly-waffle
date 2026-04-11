@@ -1,7 +1,16 @@
+:root {
+    --dnd-red:        #7B1A1A;
+    --dnd-parchment:  #fdf6e3;
+    --dnd-parchment2: #f5edd6;
+    --dnd-label-bg:   #e8dcc8;
+}
+
 body {
-    font-family: sans-serif;
+    font-family: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
     padding: 20px;
     min-width: 780px;
+    background-color: var(--dnd-parchment);
+    color: #1a1a1a;
 }
 
 .container {
@@ -41,11 +50,13 @@ body {
 /* Buttons */
 button {
     cursor: pointer;
-    border: 1px solid black;
-    background: white;
+    border: 1px solid var(--dnd-red);
+    background: var(--dnd-parchment);
     padding: 4px 10px;
+    font-family: inherit;
+    color: #1a1a1a;
 }
-button:hover { background: #eee; }
+button:hover { background: var(--dnd-label-bg); }
 
 #addClassBtn {
     margin-top: 14px;
@@ -78,8 +89,8 @@ button:hover { background: #eee; }
 
 /* Popup Modal */
 .popup-modal {
-    background: white;
-    border: 1px solid black;
+    background: var(--dnd-parchment);
+    border: 2px solid var(--dnd-red);
     display: flex;
     flex-direction: column;
     width: 760px;
@@ -93,7 +104,8 @@ button:hover { background: #eee; }
     justify-content: space-between;
     align-items: center;
     padding: 12px 16px;
-    border-bottom: 1px solid black;
+    border-bottom: 2px solid var(--dnd-red);
+    background: var(--dnd-label-bg);
     flex-shrink: 0;
 }
 
@@ -212,7 +224,8 @@ button:hover { background: #eee; }
 
 /* Modal Footer */
 .popup-modal-footer {
-    border-top: 1px solid black;
+    border-top: 2px solid var(--dnd-red);
+    background: var(--dnd-label-bg);
     padding: 10px 16px;
     display: flex;
     justify-content: flex-end;
@@ -228,8 +241,8 @@ button:hover { background: #eee; }
     cursor: not-allowed;
 }
 .popup-confirm-btn:not(:disabled):hover {
-    background: #222;
-    color: white;
+    background: var(--dnd-red);
+    color: var(--dnd-parchment);
 }
 
 
@@ -252,7 +265,7 @@ button:hover { background: #eee; }
 }
 
 .info-panel {
-    border: 1px solid black;
+    border: 2px solid var(--dnd-red);
 }
 .info-panel.hidden { display: none; }
 
@@ -261,8 +274,8 @@ button:hover { background: #eee; }
     justify-content: space-between;
     align-items: center;
     padding: 8px 12px;
-    border-bottom: 1px solid black;
-    background: #f2f2f2;
+    border-bottom: 2px solid var(--dnd-red);
+    background: var(--dnd-label-bg);
 }
 
 .info-panel-label {
@@ -290,10 +303,11 @@ button:hover { background: #eee; }
 .info-panel-content .popup-feature { background: #fafafa; }
 
 .character-class-box {
-    border: 1px solid black;
+    border: 2px solid var(--dnd-red);
     padding: 12px;
     margin-top: 12px;
     overflow-x: auto;
+    background: var(--dnd-parchment);
 }
 
 .class-box-header {
@@ -319,7 +333,7 @@ button:hover { background: #eee; }
 
 .class-right {
     flex: 1;
-    border-left: 1px solid black;
+    border-left: 1px solid var(--dnd-red);
     padding-left: 16px;
     min-width: 180px;
     overflow-wrap: break-word;
@@ -405,7 +419,7 @@ button:hover { background: #eee; }
 
 /* Class Features */
 .feature-block {
-    border-top: 1px solid black;
+    border-top: 1px solid var(--dnd-red);
     padding-top: 8px;
     margin-top: 8px;
 }
@@ -542,7 +556,9 @@ button:hover { background: #eee; }
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid black;
+    border: 2px solid var(--dnd-red);
+    border-radius: 4px;
+    overflow: hidden;
     width: 64px;
     text-align: center;
 }
@@ -552,19 +568,23 @@ button:hover { background: #eee; }
     font-size: 0.9rem;
     padding: 4px 0;
     width: 100%;
-    border-bottom: 1px solid black;
-    background: #f5f5f5;
+    border-bottom: 1px solid var(--dnd-red);
+    background: var(--dnd-label-bg);
+    color: var(--dnd-red);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .ability-score {
     width: 100%;
     text-align: center;
     border: none;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--dnd-red);
     font-size: 1rem;
     padding: 4px 0;
     box-sizing: border-box;
     -moz-appearance: textfield;
+    background: var(--dnd-parchment);
 }
 .ability-score::-webkit-outer-spin-button,
 .ability-score::-webkit-inner-spin-button {

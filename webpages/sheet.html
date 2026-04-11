@@ -17,9 +17,9 @@
     </script>
 </head>
 <span>
-    <header style="display:flex; align-items:center; gap:10px; padding:10px 16px; border-bottom:1px solid black; margin-bottom:16px;">
+    <header style="display:flex; align-items:center; gap:10px; padding:10px 16px; border-bottom:3px solid #7B1A1A; margin-bottom:16px; background:#e8dcc8;">
         <img src="/Blite_Logo_Transparent.png" alt="Blite Logo" style="height:40px; width:auto;">
-        <span style="font-size:22px; font-weight:900; letter-spacing:4px; text-transform:uppercase; font-family:Georgia,serif;">Blite</span>
+        <span style="font-size:22px; font-weight:900; letter-spacing:4px; text-transform:uppercase; font-family:Georgia,serif; color:#7B1A1A;">Blite</span>
     </header>
 
     <div class="container">
@@ -27,185 +27,210 @@
             <iframe src="character_box.html" width="100%" height="100%" frameborder=1></iframe>
         </div>
         <div> <!--Column 2-->
-            <div class="button-container" style="display:flex; gap:8px;">
-                <form action="account.html"> 
+            <div class="button-container" style="display:flex; gap:8px; margin-bottom:8px;">
+                <form action="account.html">
                     <button type="submit">Return to Account Page</button>
                 </form>
-                <button type="button" onclick="editCharacter()">  Edit Character  </button>
+                <button type="button" onclick="editCharacter()">Edit Character</button>
             </div>
-            
-            <div> <!--Character Sheet-->
-                <h1 id="char-name">  Character Name  </h1>
 
-                <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
-                    <div style="margin-right: 10px;">
-                        <div class="box" style="font-size: 12px; display:inline; margin-right: -5px;">  Race:  </div>
-                        <div class="box" style="font-size: 12px; display:inline;" id="race-val">  null  </div>
+            <div> <!--Character Sheet-->
+                <h1 id="char-name">Character Name</h1>
+
+                <!-- Character Identity Info Bar -->
+                <div class="info-bar">
+                    <div class="info-field">
+                        <span class="info-field-value" id="race-val">—</span>
+                        <span class="info-field-label">Race</span>
                     </div>
-                    <div style="margin-right: 10px;">
-                        <div class="box" style="font-size: 12px; display:inline; margin-right: -5px;">  Primary Class:  </div>
-                        <div class="box" style="font-size: 12px; display:inline;" id="class-val">  null  </div>
+                    <div class="info-field">
+                        <span class="info-field-value" id="class-val">—</span>
+                        <span class="info-field-label">Primary Class</span>
                     </div>
-                    <div style="margin-right: 10px;">
-                        <div class="box" style="font-size: 12px; display:inline; margin-right: -5px;">  Subclass:  </div>
-                        <div class="box" style="font-size: 12px; display:inline;" id="subclass-val">  null  </div>
+                    <div class="info-field">
+                        <span class="info-field-value" id="subclass-val">—</span>
+                        <span class="info-field-label">Subclass</span>
                     </div>
-                    <div style="margin-right: 10px;">
-                        <div class="box" style="font-size: 12px; display:inline; margin-right: -5px;">  Level:  </div>
-                        <div class="box" style="font-size: 12px; display:inline;" id="level-val">  0  </div>
+                    <div class="info-field">
+                        <span class="info-field-value" id="level-val">0</span>
+                        <span class="info-field-label">Level</span>
                     </div>
-                    <div style="margin-right: 10px;">
-                        <div class="box" style="font-size: 12px; display:inline; margin-right: -5px;">  Secondary Class:  </div>
-                        <div class="box" style="font-size: 12px; display:inline;" id="class2-val">  null  </div>
+                    <div class="info-field">
+                        <span class="info-field-value" id="class2-val">—</span>
+                        <span class="info-field-label">Secondary Class</span>
                     </div>
-                    <div style="margin-right: 10px;">
-                        <div class="box" style="font-size: 12px; display:inline; margin-right: -5px;">  Subclass:  </div>
-                        <div class="box" style="font-size: 12px; display:inline;" id="subclass2-val">  null  </div>
+                    <div class="info-field">
+                        <span class="info-field-value" id="subclass2-val">—</span>
+                        <span class="info-field-label">Subclass</span>
                     </div>
-                    <div style="margin-right: 10px;">
-                        <div class="box" style="font-size: 12px; display:inline; margin-right: -5px;">  Level:  </div>
-                        <div class="box" style="font-size: 12px; display:inline;" id="level2-val">  0  </div>
+                    <div class="info-field">
+                        <span class="info-field-value" id="level2-val">0</span>
+                        <span class="info-field-label">Level</span>
                     </div>
                 </div>
 
                 <div class="sheet-container">
-                    <div> <!--Ability Column-->
-                        <div class="ability-container">
-                            <div class="ability">  Str  </div>
-                            <div class="ability" id="score-0">  0  </div>
-                            <div class="ability" id="mod-0">  +0  </div>
-                        </div>
-                        <div class="ability-container">
-                            <div class="ability">  Dex  </div>
-                            <div class="ability" id="score-1">  0  </div>
-                            <div class="ability" id="mod-1">  +0  </div>
-                        </div>
-                        <div class="ability-container">
-                            <div class="ability">  Con  </div>
-                            <div class="ability" id="score-2">  0  </div>
-                            <div class="ability" id="mod-2">  +0  </div>
-                        </div>
-                        <div class="ability-container">
-                            <div class="ability">  Int  </div>
-                            <div class="ability" id="score-3">  0  </div>
-                            <div class="ability" id="mod-3">  +0  </div>
-                        </div>
-                        <div class="ability-container">
-                            <div class="ability">  Wis  </div>
-                            <div class="ability" id="score-4">  0  </div>
-                            <div class="ability" id="mod-4">  +0  </div>
-                        </div>
-                        <div class="ability-container">
-                            <div class="ability">  Cha  </div>
-                            <div class="ability" id="score-5">  0  </div>
-                            <div class="ability" id="mod-5">  +0  </div>
-                        </div>
-                    </div>
 
+                    <!-- ── Column 1: Ability Scores ── -->
                     <div>
-                        <div style="margin-top: 10px;">
-                            <div class="box" style="font-size: 14px; display:inline;"><u>  Inspiration:  </u></div>
-                            <div class="box" contenteditable="true" data-default="0" style="font-size: 14px; width: 30%; display:inline;" id="inspiration-val">  0  </div>
+                        <div class="ability-container">
+                            <div class="ability">Str</div>
+                            <div class="ability" id="score-0">0</div>
+                            <div class="ability" id="mod-0">+0</div>
                         </div>
-
-                        <div style="margin-top: 25px;">
-                            <div class="box" style="font-size: 14px; display:inline;"><u>  Proficiency:  </u></div>
-                            <div class="box" style="font-size: 14px; width: 30%; display:inline;" id="prof-val">  +0  </div>
+                        <div class="ability-container">
+                            <div class="ability">Dex</div>
+                            <div class="ability" id="score-1">0</div>
+                            <div class="ability" id="mod-1">+0</div>
                         </div>
-
-                        <!--Saving Throws-->
-                        <div class="box" style="margin-top: 25px;">
-                            <span>Saving Throws</span>
+                        <div class="ability-container">
+                            <div class="ability">Con</div>
+                            <div class="ability" id="score-2">0</div>
+                            <div class="ability" id="mod-2">+0</div>
                         </div>
-                        <div class="skill-container">
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="save-0">  0  </u></span><span>  Strength  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="save-1">  0  </u></span><span>  Dexterity  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="save-2">  0  </u></span><span>  Constitution  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="save-3">  0  </u></span><span>  Intelligence  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="save-4">  0  </u></span><span>  Wisdom  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="save-5">  0  </u></span><span>  Charisma  </span></div>
+                        <div class="ability-container">
+                            <div class="ability">Int</div>
+                            <div class="ability" id="score-3">0</div>
+                            <div class="ability" id="mod-3">+0</div>
                         </div>
-
-                        <p></p>
-
-                        <!--Skills-->
-                        <div class="box" style="margin-top: 25px;">
-                            <span>Skills</span>
+                        <div class="ability-container">
+                            <div class="ability">Wis</div>
+                            <div class="ability" id="score-4">0</div>
+                            <div class="ability" id="mod-4">+0</div>
                         </div>
-                        <div class="skill-container">
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-acrobatics">  0  </u></span><span>  Acrobatics  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-animal-handling">  0  </u></span><span>  Animal Handling  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-arcana">  0  </u></span><span>  Arcana  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-athletics">  0  </u></span><span>  Athletics  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-deception">  0  </u></span><span>  Deception  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-history">  0  </u></span><span>  History  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-insight">  0  </u></span><span>  Insight  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-intimidation">  0  </u></span><span>  Intimidation  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-investigation">  0  </u></span><span>  Investigation  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-medicine">  0  </u></span><span>  Medicine  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-nature">  0  </u></span><span>  Nature  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-perception">  0  </u></span><span>  Perception  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-performance">  0  </u></span><span>  Performance  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-persuasion">  0  </u></span><span>  Persuasion  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-religion">  0  </u></span><span>  Religion  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-sleight-of-hand">  0  </u></span><span>  Sleight of Hand  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-stealth">  0  </u></span><span>  Stealth  </span></div>
-                            <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-survival">  0  </u></span><span>  Survival  </span></div>
-                        </div>
-
-                        <p></p>
-
-                        <div style="margin-top: 25px;">
-                            <div class="box" style="font-size: 12px; display:inline;"><u>  Passive Perception:  </u></div>
-                            <div class="box" style="font-size: 12px; width: 30px; display:inline;" id="passive-perc">  +0  </div>
+                        <div class="ability-container">
+                            <div class="ability">Cha</div>
+                            <div class="ability" id="score-5">0</div>
+                            <div class="ability" id="mod-5">+0</div>
                         </div>
                     </div>
-                
-                    <div> <!-- Health and Attacks -->
-                        <div class="health-container">
-                            <div class="box">  Current Health  </div>
-                            <div class="box">  Max Health  </div>
-                        </div>
-                        <div class="health-container">
-                            <div class="box" contenteditable="true" data-default="0" style="height: 40px; font-size: 30px;" id="hp-current">  0  </div>
-                            <div class="box" style="height: 40px; font-size: 30px;" id="hp-max">  0  </div>
-                        </div>
 
-                        <p></p>
+                    <!-- ── Column 2: Inspiration / Prof / Saves / Skills / Passive ── -->
+                    <div style="display:flex; flex-direction:column; gap:8px;">
 
-                        <div class="health-container">
-                            <div class="box">  Temporary Health  </div>
-                            <div class="box">  Reduced Max Health  </div>
-                        </div>
-                        <div class="health-container">
-                            <div class="box" contenteditable="true" data-default="0" style="height: 40px; font-size: 30px;" id="hp-temp">  0  </div>
-                            <div class="box" contenteditable="true" data-default="0" style="height: 40px; font-size: 30px;" id="hp-reduced">  0  </div>
+                        <!-- Inspiration -->
+                        <div class="stat-block">
+                            <div class="stat-value" contenteditable="true" data-default="0" id="inspiration-val">0</div>
+                            <div class="stat-label">Inspiration</div>
                         </div>
 
-                        <p></p>
+                        <!-- Proficiency Bonus -->
+                        <div class="stat-block">
+                            <div class="stat-value" id="prof-val">+0</div>
+                            <div class="stat-label">Proficiency Bonus</div>
+                        </div>
 
-                        <div class="below-health-container">
-                            <div style="margin-right: 5px;">
-                                <div class="box" style="text-align: center;">  Hit Dice  </div>
-                                <div class="health-container" style="height: 59px;">
-                                    <div class="box" contenteditable="true" data-default="0" style="font-size: 25px; padding-top: 15px;" id="hit-dice-1">  0  </div>
-                                    <div class="box" data-default="0" style="font-size: 25px; padding-top: 15px;" id="hit-dice-2">  0  </div>
+                        <!-- Saving Throws -->
+                        <div class="list-block">
+                            <div class="list-header">Saving Throws</div>
+                            <div class="skill-container">
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="save-0">0</u></span><span>Strength</span></div>
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="save-1">0</u></span><span>Dexterity</span></div>
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="save-2">0</u></span><span>Constitution</span></div>
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="save-3">0</u></span><span>Intelligence</span></div>
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="save-4">0</u></span><span>Wisdom</span></div>
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="save-5">0</u></span><span>Charisma</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Skills -->
+                        <div class="list-block">
+                            <div class="list-header">Skills</div>
+                            <div class="skill-container">
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-acrobatics">0</u></span><span>Acrobatics</span></div>
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-animal-handling">0</u></span><span>Animal Handling</span></div>
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-arcana">0</u></span><span>Arcana</span></div>
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-athletics">0</u></span><span>Athletics</span></div>
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-deception">0</u></span><span>Deception</span></div>
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-history">0</u></span><span>History</span></div>
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-insight">0</u></span><span>Insight</span></div>
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-intimidation">0</u></span><span>Intimidation</span></div>
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-investigation">0</u></span><span>Investigation</span></div>
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-medicine">0</u></span><span>Medicine</span></div>
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-nature">0</u></span><span>Nature</span></div>
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-perception">0</u></span><span>Perception</span></div>
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-performance">0</u></span><span>Performance</span></div>
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-persuasion">0</u></span><span>Persuasion</span></div>
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-religion">0</u></span><span>Religion</span></div>
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-sleight-of-hand">0</u></span><span>Sleight of Hand</span></div>
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-stealth">0</u></span><span>Stealth</span></div>
+                                <div class="skill-row"><span class="bubble"></span><span class="skill-val"><u id="skill-survival">0</u></span><span>Survival</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Passive Perception -->
+                        <div class="stat-block">
+                            <div class="stat-value" id="passive-perc">+0</div>
+                            <div class="stat-label">Passive Perception</div>
+                        </div>
+
+                    </div>
+
+                    <!-- ── Column 3: Health / Combat / Weapons ── -->
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+
+                        <!-- AC / Initiative / Speed -->
+                        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px;">
+                            <div class="stat-block">
+                                <div class="stat-value" id="ac-val">0</div>
+                                <div class="stat-label">Armor Class</div>
+                            </div>
+                            <div class="stat-block">
+                                <div class="stat-value" id="init-val">0</div>
+                                <div class="stat-label">Initiative</div>
+                            </div>
+                            <div class="stat-block">
+                                <div class="stat-value" id="speed-val">0</div>
+                                <div class="stat-label">Speed</div>
+                            </div>
+                        </div>
+
+                        <!-- Current / Max HP -->
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+                            <div class="stat-block">
+                                <div class="stat-value" contenteditable="true" data-default="0" style="font-size:30px;" id="hp-current">0</div>
+                                <div class="stat-label">Current HP</div>
+                            </div>
+                            <div class="stat-block">
+                                <div class="stat-value" style="font-size:30px;" id="hp-max">0</div>
+                                <div class="stat-label">Max HP</div>
+                            </div>
+                        </div>
+
+                        <!-- Temp / Reduced HP -->
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+                            <div class="stat-block">
+                                <div class="stat-value" contenteditable="true" data-default="0" style="font-size:30px;" id="hp-temp">0</div>
+                                <div class="stat-label">Temporary HP</div>
+                            </div>
+                            <div class="stat-block">
+                                <div class="stat-value" contenteditable="true" data-default="0" style="font-size:30px;" id="hp-reduced">0</div>
+                                <div class="stat-label">Reduced Max HP</div>
+                            </div>
+                        </div>
+
+                        <!-- Hit Dice / Death Saves -->
+                        <div style="display:grid; grid-template-columns:1.25fr 1.75fr; gap:6px;">
+                            <div class="list-block">
+                                <div class="list-header">Hit Dice</div>
+                                <div style="display:grid; grid-template-columns:1fr 1fr;">
+                                    <div class="stat-value" contenteditable="true" data-default="0" style="font-size:22px; border-right:1px solid var(--dnd-red);" id="hit-dice-1">0</div>
+                                    <div class="stat-value" style="font-size:22px;" id="hit-dice-2">0</div>
                                 </div>
                             </div>
-                            
-                            <div>
-                                <div class="box" style="text-align: center;">  Death Saves  </div>
-                                <div class="health-container">
-                                    <div class="box">  Successes  </div>
-                                    <div class="box" id="death-success-bubbles">
+                            <div class="list-block">
+                                <div class="list-header">Death Saves</div>
+                                <div style="display:grid; grid-template-columns:auto 1fr; border-bottom:1px solid var(--dnd-red);">
+                                    <div style="padding:4px 6px; font-size:11px; border-right:1px solid var(--dnd-red); display:flex; align-items:center; color:var(--dnd-red); font-weight:bold; text-transform:uppercase; letter-spacing:0.05em;">Successes</div>
+                                    <div id="death-success-bubbles" style="padding:6px;">
                                         <span class="bubble"></span>
                                         <span class="bubble"></span>
                                         <span class="bubble"></span>
                                     </div>
                                 </div>
-                                <div class="health-container">
-                                    <div class="box">  Failures  </div>
-                                    <div class="box" id="death-failure-bubbles">
+                                <div style="display:grid; grid-template-columns:auto 1fr;">
+                                    <div style="padding:4px 6px; font-size:11px; border-right:1px solid var(--dnd-red); display:flex; align-items:center; color:var(--dnd-red); font-weight:bold; text-transform:uppercase; letter-spacing:0.05em;">Failures</div>
+                                    <div id="death-failure-bubbles" style="padding:6px;">
                                         <span class="bubble"></span>
                                         <span class="bubble"></span>
                                         <span class="bubble"></span>
@@ -213,140 +238,121 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        <p></p>
 
-                        <div class="movement-container">
-                            <div style="margin: 10px;">
-                                <div class="box" style="text-align: center;">  AC  </div>
-                                <div class="box" style="text-align: center;" id="ac-val">  0  </div>
+                        <!-- Weapons -->
+                        <div class="list-block">
+                            <div class="list-header" style="display:flex; justify-content:space-between; align-items:center; padding:3px 8px;">
+                                <span>Weapons</span>
+                                <button onclick="openWeaponModal()" style="font-size:11px; padding:1px 6px;">+ Add</button>
                             </div>
-
-                            <div style="margin: 10px;">
-                                <div class="box" style="text-align: center;">  Initiative  </div>
-                                <div class="box" style="text-align: center;" id="init-val">  0  </div>
-                            </div>
-
-                            <div style="margin: 10px;">
-                                <div class="box" style="text-align: center;">  Speed  </div>
-                                <div class="box" style="text-align: center;" id="speed-val">  0  </div>
-                            </div>
+                            <div style="height:120px; overflow-y:auto; padding:4px;" id="weapons-list"></div>
                         </div>
-                        
-                        <div class="box" style="display:flex; justify-content:space-between; align-items:center;">
-                            <span>Weapons</span>
-                            <button onclick="openWeaponModal()">+ Add Weapon</button>
-                        </div>
-                        <div class="box" style="height: 120px; overflow-y:auto;" id="weapons-list"></div>
 
-
-                        <div class="box">
-                            <span>  Proficiencies  </span>
-                        </div>
-                        <div class="box" style="height: 120px; overflow-y:auto;" id="prof-list">
-                            <span></span>
+                        <!-- Proficiencies -->
+                        <div class="list-block">
+                            <div class="list-header">Proficiencies</div>
+                            <div style="height:120px; overflow-y:auto; padding:4px; font-size:13px;" id="prof-list"></div>
                         </div>
 
                     </div>
 
-                    <div> <!-- Features -->
-                        <div class="box">
-                            <span>  Features  </span>
-                        </div>
-                        <div class="box" style="height: 650px; overflow-y: auto" id="features-list">
-                            <span></span>
+                    <!-- ── Column 4: Features ── -->
+                    <div>
+                        <div class="list-block" style="height:100%;">
+                            <div class="list-header">Features</div>
+                            <div style="height:700px; overflow-y:auto; padding:6px;" id="features-list"></div>
                         </div>
                     </div>
 
-                    <div> <!-- Inventory -->
-                        <div class="box">
-                            <span>  Inventory  </span>
-                        </div>
-                        <div class="currency-container" style="grid-template-columns:repeat(5,1fr);">
-                            <div style="border-right:1px solid black;">  CP  </div>
-                            <div style="border-right:1px solid black;">  SP  </div>
-                            <div style="border-right:1px solid black;">  EP  </div>
-                            <div style="border-right:1px solid black;">  GP  </div>
-                            <div>  PP  </div>
-                        </div>
-                        <div class="currency-container" style="grid-template-columns:repeat(5,1fr);">
-                            <div style="border-right:1px solid black;" contenteditable="true" id="currency-cp">  0  </div>
-                            <div style="border-right:1px solid black;" contenteditable="true" id="currency-sp">  0  </div>
-                            <div style="border-right:1px solid black;" contenteditable="true" id="currency-ep">  0  </div>
-                            <div style="border-right:1px solid black;" contenteditable="true" id="currency-gp">  0  </div>
-                            <div contenteditable="true" id="currency-pp">  0  </div>
-                        </div>
-                        <div class="inventory-split">
-                            <div class="box inventory-notes-box" contenteditable="true" id="inventory-notes">Notes...</div>
-                            <div class="box inventory-items-box">
-                                <div style="display:flex; justify-content:space-between; align-items:center; padding:2px 2px 6px 2px; border-bottom:1px solid #ccc;">
-                                    <strong style="font-size:13px;">Items</strong>
-                                    <button onclick="openItemSearchModal()">+ Add Item</button>
+                    <!-- ── Column 5: Inventory ── -->
+                    <div>
+                        <div class="list-block">
+                            <div class="list-header">Inventory</div>
+                            <!-- Currency labels -->
+                            <div class="currency-container currency-labels" style="grid-template-columns:repeat(5,1fr);">
+                                <div>CP</div>
+                                <div>SP</div>
+                                <div>EP</div>
+                                <div>GP</div>
+                                <div>PP</div>
+                            </div>
+                            <!-- Currency values -->
+                            <div class="currency-container" style="grid-template-columns:repeat(5,1fr); border-bottom:1px solid var(--dnd-red);">
+                                <div contenteditable="true" id="currency-cp">0</div>
+                                <div contenteditable="true" id="currency-sp">0</div>
+                                <div contenteditable="true" id="currency-ep">0</div>
+                                <div contenteditable="true" id="currency-gp">0</div>
+                                <div contenteditable="true" id="currency-pp">0</div>
+                            </div>
+                            <!-- Notes + Items -->
+                            <div class="inventory-split">
+                                <div class="inventory-notes-box" contenteditable="true" id="inventory-notes">Notes...</div>
+                                <div class="inventory-items-box">
+                                    <div style="display:flex; justify-content:space-between; align-items:center; padding:4px 6px; border-bottom:1px solid var(--dnd-red); background:var(--dnd-label-bg);">
+                                        <strong style="font-size:11px; text-transform:uppercase; letter-spacing:0.07em; color:var(--dnd-red);">Items</strong>
+                                        <button onclick="openItemSearchModal()" style="font-size:11px; padding:1px 6px;">+ Add</button>
+                                    </div>
+                                    <div id="inventory-items-list" style="overflow-y:auto; flex:1; padding:4px;"></div>
                                 </div>
-                                <div id="inventory-items-list" style="overflow-y:auto; height:calc(100% - 36px);"></div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+
+                </div><!-- end sheet-container -->
+            </div><!-- end Character Sheet -->
 
             <p></p>
 
-            <!-- Spells -->
+            <!-- ── Spellcasting Stats ── -->
             <div class="spell-stats-container">
-                <div style="margin: 10px;">
-                    <div class="box" style="text-align: center;">  Spellcasting Ability  </div>
-                    <div class="box" style="text-align: center;" id="spell-ability">  Null  </div>
+                <div class="stat-block">
+                    <div class="stat-value" id="spell-ability" style="font-size:16px;">—</div>
+                    <div class="stat-label">Spellcasting Ability</div>
                 </div>
-
-                <div style="margin: 10px;">
-                    <div class="box" style="text-align: center;">  Spell Save DC  </div>
-                    <div class="box" style="text-align: center;" id="spell-dc">  0  </div>
+                <div class="stat-block">
+                    <div class="stat-value" id="spell-dc">0</div>
+                    <div class="stat-label">Spell Save DC</div>
                 </div>
-
-                <div style="margin: 10px;">
-                    <div class="box" style="text-align: center;">  Spell Attack Bonus  </div>
-                    <div class="box" style="text-align: center;" id="spell-atk">  0  </div>
+                <div class="stat-block">
+                    <div class="stat-value" id="spell-atk">0</div>
+                    <div class="stat-label">Spell Attack Bonus</div>
                 </div>
-
-                <div style="margin: 10px;">
-                    <div class="box" style="text-align: center;">  Spell Lists  </div>
-                    <div class="box" style="text-align: center; display: flex; flex-direction: column; gap: 4px; padding: 6px;">
+                <div class="stat-block">
+                    <div class="stat-value" style="font-size:14px; display:flex; flex-direction:column; gap:4px; padding:6px;">
                         <button id="open-spell-list-btn" onclick="openSpellListModal()">Full Spell List</button>
                         <button id="open-choose-spell-btn" onclick="openChooseSpellModal()" style="display:none;">Choose Class Spells</button>
                     </div>
+                    <div class="stat-label">Spell Lists</div>
                 </div>
             </div>
 
             <!-- Spell / Pact Slots -->
-            <div id="spell-slots-section" style="display:none; margin: 4px 5px 8px;">
-                <div style="font-size:11px; font-weight:bold; color:#555; text-transform:uppercase;
-                            letter-spacing:0.5px; margin-bottom:5px;">Spell Slots</div>
+            <div id="spell-slots-section" style="display:none; margin:4px 5px 8px;">
+                <div style="font-size:11px; font-weight:bold; color:var(--dnd-red); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:5px;">Spell Slots</div>
                 <div id="spell-slots-list" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
             </div>
-            <div id="pact-slots-section" style="display:none; margin: 4px 5px 8px;">
-                <div style="font-size:11px; font-weight:bold; color:#555; text-transform:uppercase;
-                            letter-spacing:0.5px; margin-bottom:5px;">Pact Magic Slots</div>
+            <div id="pact-slots-section" style="display:none; margin:4px 5px 8px;">
+                <div style="font-size:11px; font-weight:bold; color:var(--dnd-red); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:5px;">Pact Magic Slots</div>
                 <div id="pact-slots-list" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
             </div>
 
-            <!-- Spell list Modal-->
+            <!-- ── Modals ── -->
+
+            <!-- Spell List Modal -->
             <div id="spell-list-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
                 background:rgba(0,0,0,0.5); z-index:1000; overflow-y:auto;">
-                <div style="background:white; margin:40px auto; padding:20px; max-width:800px;
-                    border:2px solid black; border-radius:4px; position:relative;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                        <h2 style="margin:0;">  Full Spell List  </h2>
+                <div style="background:#fdf6e3; margin:40px auto; padding:20px; max-width:800px;
+                    border:2px solid #7B1A1A; position:relative;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:2px solid #7B1A1A; padding-bottom:10px;">
+                        <h2 style="margin:0; color:#7B1A1A; font-size:1rem; text-transform:uppercase; letter-spacing:0.1em;">Full Spell List</h2>
                         <button onclick="closeSpellListModal()"
-                            style="font-size:20px; cursor:pointer; border:1px solid black; padding:2px 8px;">✕</button>
+                            style="font-size:20px; cursor:pointer; border:1px solid #7B1A1A; padding:2px 8px; background:#fdf6e3; color:#7B1A1A;">✕</button>
                     </div>
-
                     <div style="margin-bottom:12px;">
                         <input id="spell-search" type="text" placeholder="Search spells..."
                             oninput="filterSpells()"
-                            style="width:100%; padding:6px; box-sizing:border-box; border:1px solid black; font-size:14px;">
+                            style="width:100%; padding:6px; box-sizing:border-box; border:1px solid #7B1A1A; font-size:14px; background:#fdf6e3; font-family:inherit;">
                     </div>
-
                     <div id="spell-modal-body"></div>
                 </div>
             </div>
@@ -355,17 +361,17 @@
             <div id="choose-spell-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
                 background:rgba(0,0,0,0.5); z-index:1000; align-items:flex-start; justify-content:center;
                 padding-top:40px; box-sizing:border-box;">
-                <div style="background:white; padding:20px; width:100%; max-width:700px;
-                    max-height:calc(100vh - 80px); border:2px solid black; border-radius:4px;
+                <div style="background:#fdf6e3; padding:20px; width:100%; max-width:700px;
+                    max-height:calc(100vh - 80px); border:2px solid #7B1A1A;
                     display:flex; flex-direction:column;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-shrink:0;">
-                        <h2 style="margin:0;">Choose Class Spells</h2>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:2px solid #7B1A1A; padding-bottom:10px; flex-shrink:0;">
+                        <h2 style="margin:0; color:#7B1A1A; font-size:1rem; text-transform:uppercase; letter-spacing:0.1em;">Choose Class Spells</h2>
                         <button onclick="closeChooseSpellModal()"
-                            style="font-size:20px; cursor:pointer; border:1px solid black; padding:2px 8px;">✕</button>
+                            style="font-size:20px; cursor:pointer; border:1px solid #7B1A1A; padding:2px 8px; background:#fdf6e3; color:#7B1A1A;">✕</button>
                     </div>
                     <input id="choose-spell-search" type="text" placeholder="Search spells..."
                         oninput="filterChooseSpells()"
-                        style="width:100%; padding:6px; box-sizing:border-box; border:1px solid black; font-size:14px; margin-bottom:10px; flex-shrink:0;">
+                        style="width:100%; padding:6px; box-sizing:border-box; border:1px solid #7B1A1A; font-size:14px; margin-bottom:10px; flex-shrink:0; background:#fdf6e3; font-family:inherit;">
                     <div id="choose-spell-modal-body" style="overflow-y:auto; flex:1;"></div>
                 </div>
             </div>
@@ -374,17 +380,17 @@
             <div id="item-search-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
                 background:rgba(0,0,0,0.5); z-index:1000; align-items:flex-start; justify-content:center;
                 padding-top:40px; box-sizing:border-box;">
-                <div style="background:white; padding:20px; width:100%; max-width:700px;
-                    max-height:calc(100vh - 80px); border:2px solid black; border-radius:4px;
+                <div style="background:#fdf6e3; padding:20px; width:100%; max-width:700px;
+                    max-height:calc(100vh - 80px); border:2px solid #7B1A1A;
                     display:flex; flex-direction:column;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-shrink:0;">
-                        <h2 style="margin:0;">Add Item from Database</h2>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:2px solid #7B1A1A; padding-bottom:10px; flex-shrink:0;">
+                        <h2 style="margin:0; color:#7B1A1A; font-size:1rem; text-transform:uppercase; letter-spacing:0.1em;">Add Item from Database</h2>
                         <button onclick="closeItemSearchModal()"
-                            style="font-size:20px; cursor:pointer; border:1px solid black; padding:2px 8px;">✕</button>
+                            style="font-size:20px; cursor:pointer; border:1px solid #7B1A1A; padding:2px 8px; background:#fdf6e3; color:#7B1A1A;">✕</button>
                     </div>
                     <input id="item-search" type="text" placeholder="Search items..."
                         oninput="filterItemSearch()"
-                        style="width:100%; padding:6px; box-sizing:border-box; border:1px solid black; font-size:14px; margin-bottom:10px; flex-shrink:0;">
+                        style="width:100%; padding:6px; box-sizing:border-box; border:1px solid #7B1A1A; font-size:14px; margin-bottom:10px; flex-shrink:0; background:#fdf6e3; font-family:inherit;">
                     <div id="item-search-results" style="overflow-y:auto; flex:1;"></div>
                 </div>
             </div>
@@ -393,164 +399,88 @@
             <div id="weapon-search-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
                 background:rgba(0,0,0,0.5); z-index:1000; align-items:flex-start; justify-content:center;
                 padding-top:40px; box-sizing:border-box;">
-                <div style="background:white; padding:20px; width:100%; max-width:700px;
-                    max-height:calc(100vh - 80px); border:2px solid black; border-radius:4px;
+                <div style="background:#fdf6e3; padding:20px; width:100%; max-width:700px;
+                    max-height:calc(100vh - 80px); border:2px solid #7B1A1A;
                     display:flex; flex-direction:column;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-shrink:0;">
-                        <h2 style="margin:0;">Add Weapon</h2>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:2px solid #7B1A1A; padding-bottom:10px; flex-shrink:0;">
+                        <h2 style="margin:0; color:#7B1A1A; font-size:1rem; text-transform:uppercase; letter-spacing:0.1em;">Add Weapon</h2>
                         <button onclick="closeWeaponModal()"
-                            style="font-size:20px; cursor:pointer; border:1px solid black; padding:2px 8px;">✕</button>
+                            style="font-size:20px; cursor:pointer; border:1px solid #7B1A1A; padding:2px 8px; background:#fdf6e3; color:#7B1A1A;">✕</button>
                     </div>
                     <input id="weapon-search" type="text" placeholder="Search weapons..."
                         oninput="filterWeaponSearch()"
-                        style="width:100%; padding:6px; box-sizing:border-box; border:1px solid black; font-size:14px; margin-bottom:10px; flex-shrink:0;">
+                        style="width:100%; padding:6px; box-sizing:border-box; border:1px solid #7B1A1A; font-size:14px; margin-bottom:10px; flex-shrink:0; background:#fdf6e3; font-family:inherit;">
                     <div id="weapon-search-results" style="overflow-y:auto; flex:1;"></div>
                 </div>
             </div>
 
-            <!-- Cantrip-Level 3-->
+            <!-- ── Spell Lists ── -->
+
+            <!-- Cantrips + Levels 1–3 -->
             <div class="outside-spell-container">
                 <div class="spell-container">
-                    <div class="slot-container" style="grid-template-columns: 1fr;">
-                        <div class="slot" style="font-size: 16px;">  Cantrips  </div>
+                    <div class="slot-container" style="grid-template-columns:1fr;">
+                        <div class="slot" style="font-size:13px;">Cantrips</div>
                     </div>
-                    <div id="spell-list-0">  Put spells here  </div>
+                    <div id="spell-list-0">Put spells here</div>
                 </div>
-
                 <div class="spell-container">
-                    <div class="slot-container" style="align-items: center;">
-                        <div class="slot">  Spell Level  </div>
-                        <div class="slot">  Slot Amount  </div>
-                        <div class="slot">  Slots Used  </div>
-                    </div>
-                    <div class="slot-container" style="align-items: center;">
-                        <div class="slot">  1  </div>
-                        <div id="slot-amt-1">  0  </div>
-                        <div contenteditable="true" id="slot-used-1">  0  </div>
-                    </div>
-                    <div id="spell-list-1">  Put spells here  </div>
+                    <div class="slot-container"><div class="slot">Level</div><div class="slot">Slots</div><div class="slot">Used</div></div>
+                    <div class="slot-container"><div class="slot">1</div><div id="slot-amt-1">0</div><div contenteditable="true" id="slot-used-1">0</div></div>
+                    <div id="spell-list-1">Put spells here</div>
                 </div>
-
                 <div class="spell-container">
-                    <div class="slot-container" style="align-items: center;">
-                        <div class="slot">  Spell Level  </div>
-                        <div class="slot">  Slot Amount  </div>
-                        <div class="slot">  Slots Used  </div>
-                    </div>
-                    <div class="slot-container" style="align-items: center;">
-                        <div class="slot">  2  </div>
-                        <div id="slot-amt-2">  0  </div>
-                        <div contenteditable="true" id="slot-used-2">  0  </div>
-                    </div>
-                    <div id="spell-list-2">  Put spells here  </div>
+                    <div class="slot-container"><div class="slot">Level</div><div class="slot">Slots</div><div class="slot">Used</div></div>
+                    <div class="slot-container"><div class="slot">2</div><div id="slot-amt-2">0</div><div contenteditable="true" id="slot-used-2">0</div></div>
+                    <div id="spell-list-2">Put spells here</div>
                 </div>
-
                 <div class="spell-container">
-                    <div class="slot-container" style="align-items: center;">
-                        <div class="slot">  Spell Level  </div>
-                        <div class="slot">  Slot Amount  </div>
-                        <div class="slot">  Slots Used  </div>
-                    </div>
-                    <div class="slot-container" style="align-items: center;">
-                        <div class="slot">  3  </div>
-                        <div id="slot-amt-3">  0  </div>
-                        <div contenteditable="true" id="slot-used-3">  0  </div>
-                    </div>
-                    <div id="spell-list-3">  Put spells here  </div>
+                    <div class="slot-container"><div class="slot">Level</div><div class="slot">Slots</div><div class="slot">Used</div></div>
+                    <div class="slot-container"><div class="slot">3</div><div id="slot-amt-3">0</div><div contenteditable="true" id="slot-used-3">0</div></div>
+                    <div id="spell-list-3">Put spells here</div>
                 </div>
             </div>
 
-            <!--Levels 4-7-->
+            <!-- Levels 4–7 -->
             <div class="outside-spell-container">
                 <div class="spell-container">
-                    <div class="slot-container" style="align-items: center;">
-                        <div class="slot">  Spell Level  </div>
-                        <div class="slot">  Slot Amount  </div>
-                        <div class="slot">  Slots Used  </div>
-                    </div>
-                    <div class="slot-container" style="align-items: center;">
-                        <div class="slot">  4  </div>
-                        <div id="slot-amt-4">  0  </div>
-                        <div contenteditable="true" id="slot-used-4">  0  </div>
-                    </div>
-                    <div id="spell-list-4">  Put spells here  </div>
+                    <div class="slot-container"><div class="slot">Level</div><div class="slot">Slots</div><div class="slot">Used</div></div>
+                    <div class="slot-container"><div class="slot">4</div><div id="slot-amt-4">0</div><div contenteditable="true" id="slot-used-4">0</div></div>
+                    <div id="spell-list-4">Put spells here</div>
                 </div>
-
                 <div class="spell-container">
-                    <div class="slot-container" style="align-items: center;">
-                        <div class="slot">  Spell Level  </div>
-                        <div class="slot">  Slot Amount  </div>
-                        <div class="slot">  Slots Used  </div>
-                    </div>
-                    <div class="slot-container" style="align-items: center;">
-                        <div class="slot">  5  </div>
-                        <div id="slot-amt-5">  0  </div>
-                        <div contenteditable="true" id="slot-used-5">  0  </div>
-                    </div>
-                    <div id="spell-list-5">  Put spells here  </div>
+                    <div class="slot-container"><div class="slot">Level</div><div class="slot">Slots</div><div class="slot">Used</div></div>
+                    <div class="slot-container"><div class="slot">5</div><div id="slot-amt-5">0</div><div contenteditable="true" id="slot-used-5">0</div></div>
+                    <div id="spell-list-5">Put spells here</div>
                 </div>
-
                 <div class="spell-container">
-                    <div class="slot-container" style="align-items: center;">
-                        <div class="slot">  Spell Level  </div>
-                        <div class="slot">  Slot Amount  </div>
-                        <div class="slot">  Slots Used  </div>
-                    </div>
-                    <div class="slot-container" style="align-items: center;">
-                        <div class="slot">  6  </div>
-                        <div id="slot-amt-6">  0  </div>
-                        <div contenteditable="true" id="slot-used-6">  0  </div>
-                    </div>
-                    <div id="spell-list-6">  Put spells here  </div>
+                    <div class="slot-container"><div class="slot">Level</div><div class="slot">Slots</div><div class="slot">Used</div></div>
+                    <div class="slot-container"><div class="slot">6</div><div id="slot-amt-6">0</div><div contenteditable="true" id="slot-used-6">0</div></div>
+                    <div id="spell-list-6">Put spells here</div>
                 </div>
-
                 <div class="spell-container">
-                    <div class="slot-container" style="align-items: center;">
-                        <div class="slot">  Spell Level  </div>
-                        <div class="slot">  Slot Amount  </div>
-                        <div class="slot">  Slots Used  </div>
-                    </div>
-                    <div class="slot-container" style="align-items: center;">
-                        <div class="slot">  7  </div>
-                        <div id="slot-amt-7">  0  </div>
-                        <div contenteditable="true" id="slot-used-7">  0  </div>
-                    </div>
-                    <div id="spell-list-7">  Put spells here  </div>
+                    <div class="slot-container"><div class="slot">Level</div><div class="slot">Slots</div><div class="slot">Used</div></div>
+                    <div class="slot-container"><div class="slot">7</div><div id="slot-amt-7">0</div><div contenteditable="true" id="slot-used-7">0</div></div>
+                    <div id="spell-list-7">Put spells here</div>
                 </div>
             </div>
 
-            <!--Levels 8-9-->
+            <!-- Levels 8–9 -->
             <div class="outside-spell-container">
                 <div class="spell-container">
-                    <div class="slot-container" style="align-items: center;">
-                        <div class="slot">  Spell Level  </div>
-                        <div class="slot">  Slot Amount  </div>
-                        <div class="slot">  Slots Used  </div>
-                    </div>
-                    <div class="slot-container" style="align-items: center;">
-                        <div class="slot">  8  </div>
-                        <div id="slot-amt-8">  0  </div>
-                        <div contenteditable="true" id="slot-used-8">  0  </div>
-                    </div>
-                    <div id="spell-list-8">  Put spells here  </div>
+                    <div class="slot-container"><div class="slot">Level</div><div class="slot">Slots</div><div class="slot">Used</div></div>
+                    <div class="slot-container"><div class="slot">8</div><div id="slot-amt-8">0</div><div contenteditable="true" id="slot-used-8">0</div></div>
+                    <div id="spell-list-8">Put spells here</div>
                 </div>
-
                 <div class="spell-container">
-                    <div class="slot-container" style="align-items: center;">
-                        <div class="slot">  Spell Level  </div>
-                        <div class="slot">  Slot Amount  </div>
-                        <div class="slot">  Slots Used  </div>
-                    </div>
-                    <div class="slot-container" style="align-items: center;">
-                        <div class="slot">  9  </div>
-                        <div id="slot-amt-9">  0  </div>
-                        <div contenteditable="true" id="slot-used-9">  0  </div>
-                    </div>
-                    <div id="spell-list-9">  Put spells here  </div>
+                    <div class="slot-container"><div class="slot">Level</div><div class="slot">Slots</div><div class="slot">Used</div></div>
+                    <div class="slot-container"><div class="slot">9</div><div id="slot-amt-9">0</div><div contenteditable="true" id="slot-used-9">0</div></div>
+                    <div id="spell-list-9">Put spells here</div>
                 </div>
             </div>
-        </div>
-    </div>
+
+        </div><!-- end Column 2 -->
+    </div><!-- end container -->
 
     <script src="sheet.js"></script>
 </span>

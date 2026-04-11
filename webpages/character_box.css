@@ -1,10 +1,34 @@
+:root {
+    --dnd-red:       #7B1A1A;
+    --dnd-parchment: #fdf6e3;
+    --dnd-label-bg:  #e8dcc8;
+}
+
+body {
+    background-color: var(--dnd-parchment);
+    font-family: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+    margin: 0;
+    padding: 4px;
+}
+
 .box {
-    border: 2px solid black;
+    border: 2px solid var(--dnd-red);
     padding: 10px;
     height: 90px;
     margin: 5px;
+    background: var(--dnd-parchment);
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.box:hover {
+    background: var(--dnd-label-bg);
 }
 
 h2 {
-    margin-top: 5px
+    margin-top: 5px;
+    color: var(--dnd-red);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
 }

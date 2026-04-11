@@ -32,7 +32,7 @@ function buildSpellModal() {
 
         const heading = document.createElement('h3');
         heading.textContent = level;
-        heading.style.cssText = 'border-bottom:1px solid black; padding-bottom:4px; margin:0 0 6px 0;';
+        heading.style.cssText = 'border-bottom:1px solid #7B1A1A; color:#7B1A1A; padding-bottom:4px; margin:0 0 6px 0;';
         section.appendChild(heading);
 
         const list = document.createElement('div');
@@ -194,7 +194,7 @@ async function openChooseSpellModal() {
 
         const heading = document.createElement('h3');
         heading.textContent = levelKey;
-        heading.style.cssText = 'border-bottom:1px solid black; padding-bottom:4px; margin:0 0 6px 0;';
+        heading.style.cssText = 'border-bottom:1px solid #7B1A1A; color:#7B1A1A; padding-bottom:4px; margin:0 0 6px 0;';
         section.appendChild(heading);
 
         const list = document.createElement('div');

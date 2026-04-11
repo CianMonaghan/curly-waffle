@@ -1,0 +1,557 @@
+{
+  "name": "poop",
+  "alignment": "Neutral",
+  "stats": [
+    {
+      "stat": "Strength",
+      "base": 10,
+      "modifiers": [],
+      "score": 10
+    },
+    {
+      "stat": "Dexterity",
+      "base": 10,
+      "modifiers": [],
+      "score": 10
+    },
+    {
+      "stat": "Constitution",
+      "base": 10,
+      "modifiers": [],
+      "score": 10
+    },
+    {
+      "stat": "Intelligence",
+      "base": 10,
+      "modifiers": [
+        {
+          "source_id": "class-0-asi-r0-p0",
+          "type": "add",
+          "value": 1
+        },
+        {
+          "source_id": "class-0-asi-r0-p1",
+          "type": "add",
+          "value": 1
+        },
+        {
+          "source_id": "class-0-asi-r1-p0",
+          "type": "add",
+          "value": 1
+        },
+        {
+          "source_id": "class-0-asi-r1-p1",
+          "type": "add",
+          "value": 1
+        }
+      ],
+      "score": 14
+    },
+    {
+      "stat": "Wisdom",
+      "base": 10,
+      "modifiers": [],
+      "score": 10
+    },
+    {
+      "stat": "Charisma",
+      "base": 10,
+      "modifiers": [],
+      "score": 10
+    },
+    {
+      "stat": "Speed",
+      "base": 30,
+      "modifiers": [],
+      "score": 30
+    },
+    {
+      "stat": "Initiative",
+      "base": 0,
+      "modifiers": [],
+      "score": 0
+    },
+    {
+      "stat": "MaxHP",
+      "base": 10,
+      "modifiers": [],
+      "score": 10
+    }
+  ],
+  "hitpoints": {
+    "current_hit_points": 10,
+    "temp_hp": 0
+  },
+  "size": "medium",
+  "prof_bonus": 4,
+  "saves": [
+    {
+      "stat": "Strength",
+      "save": 0
+    },
+    {
+      "stat": "Dexterity",
+      "save": 0
+    },
+    {
+      "stat": "Constitution",
+      "save": 0
+    },
+    {
+      "stat": "Intelligence",
+      "save": 6
+    },
+    {
+      "stat": "Wisdom",
+      "save": 4
+    },
+    {
+      "stat": "Charisma",
+      "save": 0
+    }
+  ],
+  "ac_modifiers": [],
+  "armor_class": 10,
+  "languages": [
+    "Common",
+    "Dwarvish",
+    "Abyssal"
+  ],
+  "skill_proficiencies": [
+    {
+      "skill": "History",
+      "expertise": false,
+      "source_id": "background-0"
+    },
+    {
+      "skill": "Persuaion",
+      "expertise": false,
+      "source_id": "background-0"
+    },
+    {
+      "skill": "Arcana",
+      "expertise": false,
+      "source_id": "class-0"
+    },
+    {
+      "skill": "Insight",
+      "expertise": false,
+      "source_id": "class-0"
+    }
+  ],
+  "tool_proficiencies": [
+    {
+      "tool": "Dragonchess Set",
+      "source_id": "background-0"
+    }
+  ],
+  "item_proficiencies": [],
+  "race": {
+    "id": "2",
+    "name": "Human"
+  },
+  "background": {
+    "id": "0",
+    "name": "Noble"
+  },
+  "classes": [
+    {
+      "id": "class-0",
+      "name": "Wizard",
+      "caster": true,
+      "casterType": "full_caster",
+      "casterStat": "Intelligence",
+      "level": 10,
+      "casterLevel": 0,
+      "class_hp": 0,
+      "features": [],
+      "skill_prof": [
+        {
+          "skill": "Arcana",
+          "prof": true
+        },
+        {
+          "skill": "Insight",
+          "prof": true
+        }
+      ],
+      "saving_throws": [
+        "Intelligence",
+        "Wisdom"
+      ],
+      "spell_list": [],
+      "source_id": "class-0"
+    }
+  ],
+  "subclasses": [
+    {
+      "id": "Bladesinging",
+      "name": "Bladesinging",
+      "class": "Wizard",
+      "description": "",
+      "features": [],
+      "source_id": "class-0"
+    }
+  ],
+  "features": [
+    {
+      "name": "Ability Score Increase (ALL +1)",
+      "description": "Your ability scores each increase by 1.",
+      "trigger": "onAdd",
+      "source_id": "race-2"
+    },
+    {
+      "name": "Speed",
+      "description": "Your base walking speed is 30 feet.",
+      "trigger": "onAdd",
+      "source_id": "race-2"
+    },
+    {
+      "id": "race-2-undefined-dwarvish",
+      "name": "Languages: Dwarvish",
+      "description": "Can speak, read, and write Dwarvish.",
+      "trigger": "passive",
+      "source_id": "race-2"
+    },
+    {
+      "name": "Languages",
+      "description": "You can speak, read, and write Common and one extra language of your choice. Humans typically learn the languages of other peoples they deal with, including obscure dialects. They are fond of sprinkling their speech with words borrowed from other tongues: Orc curses, Elvish musical expressions, Dwarvish military phrases, and so on.",
+      "trigger": "onAdd",
+      "source_id": "race-2"
+    },
+    {
+      "id": "background-0-skill-history",
+      "name": "Skill Proficiency: History",
+      "description": "Proficiency in the History skill.",
+      "trigger": "passive",
+      "source_id": "background-0"
+    },
+    {
+      "id": "background-0-skill-persuaion",
+      "name": "Skill Proficiency: Persuaion",
+      "description": "Proficiency in the Persuaion skill.",
+      "trigger": "passive",
+      "source_id": "background-0"
+    },
+    {
+      "id": "background-0-tool-dragonchess_set",
+      "name": "Tool Proficiency: Dragonchess Set",
+      "description": "Proficient with Dragonchess Set.",
+      "trigger": "passive",
+      "source_id": "background-0"
+    },
+    {
+      "id": "position_of_privilege",
+      "name": "Positiion of Privilege",
+      "description": "Thanks to your noble birth, people are inclined to think the best of you. You are welcome in high society, and people assume you have the right to be wherever you are. The common folk make every effort to accommodate you and avoid your displeasure, and other people of high birth treat you as a member of the same social sphere. You can secure an audience with a local noble if you need to.",
+      "trigger": "onAdd",
+      "source_id": "background-0"
+    },
+    {
+      "id": "class-0-lvl1-arcane_recovery",
+      "name": "Arcane Recovery",
+      "description": "Once per day during a short rest, you can recover expended spell slots with a combined level equal to half your wizard level (rounded up).",
+      "trigger": "passive",
+      "source_id": "class-0"
+    },
+    {
+      "id": "class-0-sc-lvl2-training_in_war_and_song",
+      "name": "Training in War and Song",
+      "description": "You gain proficiency with light armor, and you gain proficiency with one type of one-handed melee weapon of your choice. You also gain proficiency in the Performance skill if you don’t already have it.",
+      "trigger": "passive",
+      "source_id": "class-0"
+    },
+    {
+      "id": "class-0-sc-lvl2-bladesong",
+      "name": "Bladesong",
+      "description": "you can invoke an elven magic called the Bladesong, provided that you aren't wearing medium or heavy armor or using a shield. It graces you with supernatural speed, agility, and focus. You can use a bonus action to start the Bladesong, which lasts for 1 minute. It ends early if you are incapacitated, if you don medium or heavy armor or a shield, or if you use two hands to make an attack with a weapon. You can also dismiss the Bladesong at any time (no action required). While your Bladesong is active, you gain the following benefits: You gain a bonus to your AC equal to your Intelligence modifier (minimum of +1) Your walking speed increases by 10 feet. You have advantage on Dexterity (Acrobatics) checks. You gain a bonus to any Constitution saving throw you make to maintain your concentration on a spell. The bonus equals your Intelligence modifier (minimum of +1). You can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses of it when you finish a long rest.",
+      "trigger": "passive",
+      "source_id": "class-0"
+    },
+    {
+      "id": "class-0-lvl3-cantrip_formulas__optional_",
+      "name": "Cantrip Formulas (Optional)",
+      "description": "You have scribed a set of arcane formulas in your spellbook that you can use to formulate a cantrip in your mind. Whenever you finish a long rest and consult those formulas in your spellbook, you can replace one wizard cantrip you know with another cantrip from the wizard spell list.",
+      "trigger": "passive",
+      "source_id": "class-0"
+    },
+    {
+      "id": "class-0-sc-lvl6-extra_attack",
+      "name": "Extra Attack",
+      "description": "You can attack twice, instead of once, whenever you take the Attack action on your turn. Moreover, you can cast one of your cantrips in place of one of those attacks.",
+      "trigger": "passive",
+      "source_id": "class-0"
+    },
+    {
+      "id": "class-0-sc-lvl10-song_of_defense",
+      "name": "Song of Defense",
+      "description": "You can direct your magic to absorb damage while your Bladesong is active. When you take damage, you can use your reaction to expend one spell slot and reduce that damage to you by an amount equal to five times the spell slot's level.",
+      "trigger": "passive",
+      "source_id": "class-0"
+    }
+  ],
+  "inventory": {
+    "currency": [
+      {
+        "currencyName": "pp",
+        "amount": 0
+      },
+      {
+        "currencyName": "gp",
+        "amount": 0
+      },
+      {
+        "currencyName": "ep",
+        "amount": 0
+      },
+      {
+        "currencyName": "sp",
+        "amount": 0
+      },
+      {
+        "currencyName": "cp",
+        "amount": 0
+      }
+    ],
+    "items": [
+      {
+        "type": "wp",
+        "id": "class-0-equip-g0-i0",
+        "local_id": 0,
+        "name": "Quarterstaff",
+        "description": "A simple melee weapon.",
+        "equipped": false,
+        "features_on_obtain": null,
+        "features_on_lose": null,
+        "features_on_equip": [
+          {
+            "id": "attack-quarterstaff-onehand",
+            "name": "Melee Attack (Quarterstaff, One-Handed)",
+            "handler": "addAttack",
+            "data": {
+              "mode": "melee"
+            },
+            "description": null,
+            "trigger": "onEquip"
+          },
+          {
+            "id": "attack-quarterstaff-twohand",
+            "name": "Melee Attack (Quarterstaff, Two-Handed)",
+            "handler": "addAttack",
+            "data": {
+              "mode": "melee"
+            },
+            "description": null,
+            "trigger": "onEquip"
+          }
+        ],
+        "features_on_unequip": [
+          {
+            "id": "loss-attack-quarterstaff",
+            "name": null,
+            "handler": null,
+            "data": null,
+            "description": null,
+            "trigger": "onUnequip"
+          }
+        ],
+        "dice": {
+          "oneHand": {
+            "num": 1,
+            "sides": 6
+          },
+          "twoHand": {
+            "num": 1,
+            "sides": 8
+          }
+        },
+        "range": [
+          5,
+          null,
+          null
+        ],
+        "primary_stat": [
+          "Strength"
+        ],
+        "martial": false,
+        "improvised": false,
+        "attack_bonus": 0,
+        "damage_bonus": 0,
+        "prof": true,
+        "attuned": false,
+        "features_on_attune": null,
+        "features_on_detune": null
+      },
+      {
+        "id": "class-0-equip-g1-i0",
+        "local_id": null,
+        "name": "Component Pouch",
+        "type": "item",
+        "description": "",
+        "quantity": 1,
+        "features_on_obtain": null,
+        "features_on_lose": null,
+        "features_on_equip": null,
+        "features_on_unequip": null,
+        "dice": null,
+        "range": null,
+        "primary_stat": null,
+        "martial": null,
+        "improvised": null,
+        "attack_bonus": null,
+        "damage_bonus": null,
+        "prof": null,
+        "features_on_attune": null,
+        "features_on_detune": null
+      },
+      {
+        "id": "class-0-equip-g2-i0",
+        "local_id": null,
+        "name": "Scholar's Pack",
+        "type": "item",
+        "description": "",
+        "quantity": 1,
+        "features_on_obtain": null,
+        "features_on_lose": null,
+        "features_on_equip": null,
+        "features_on_unequip": null,
+        "dice": null,
+        "range": null,
+        "primary_stat": null,
+        "martial": null,
+        "improvised": null,
+        "attack_bonus": null,
+        "damage_bonus": null,
+        "prof": null,
+        "features_on_attune": null,
+        "features_on_detune": null
+      },
+      {
+        "id": "class-0-equip-g3-i0",
+        "local_id": null,
+        "name": "Spellbook",
+        "type": "item",
+        "description": "",
+        "quantity": 1,
+        "features_on_obtain": null,
+        "features_on_lose": null,
+        "features_on_equip": null,
+        "features_on_unequip": null,
+        "dice": null,
+        "range": null,
+        "primary_stat": null,
+        "martial": null,
+        "improvised": null,
+        "attack_bonus": null,
+        "damage_bonus": null,
+        "prof": null,
+        "features_on_attune": null,
+        "features_on_detune": null
+      }
+    ]
+  },
+  "equipped_armor": {
+    "body": null,
+    "shield": null
+  },
+  "attuned_items": [],
+  "attuned_cap": 3,
+  "equipped_weapons": [],
+  "spell_slots": [
+    {
+      "level": 1,
+      "max": 4,
+      "current": 4
+    },
+    {
+      "level": 2,
+      "max": 3,
+      "current": 3
+    },
+    {
+      "level": 3,
+      "max": 3,
+      "current": 3
+    },
+    {
+      "level": 4,
+      "max": 3,
+      "current": 3
+    },
+    {
+      "level": 5,
+      "max": 2,
+      "current": 2
+    }
+  ],
+  "pact_slots": null,
+  "form_data": {
+    "name": "poop",
+    "stats": {
+      "str": 10,
+      "dex": 10,
+      "con": 10,
+      "int": 10,
+      "wis": 10,
+      "cha": 10
+    },
+    "race": {
+      "id": 2,
+      "name": "Human",
+      "decisions": {
+        "undefined": "Dwarvish"
+      }
+    },
+    "background": {
+      "id": 0,
+      "name": "Noble",
+      "decisions": {
+        "tool_0_0": "Dragonchess Set",
+        "lang_0_0": "Abyssal"
+      }
+    },
+    "classes": [
+      {
+        "id": "class-0",
+        "_uid": "1",
+        "name": "Wizard",
+        "level": 10,
+        "skills": [
+          "Arcana",
+          "Insight"
+        ],
+        "decisions": {
+          "primaryClass": false,
+          "features": {
+            "equip_1_0": "a)",
+            "equip_1_1": "a)",
+            "equip_1_2": "a)"
+          },
+          "asi": [
+            {
+              "num": 0,
+              "picks": [
+                "INT",
+                "INT"
+              ]
+            },
+            {
+              "num": 0,
+              "picks": [
+                "INT",
+                "INT"
+              ]
+            }
+          ]
+        },
+        "subclass": {
+          "id": "Bladesinging",
+          "name": "Bladesinging",
+          "decisions": {}
+        }
+      }
+    ]
+  },
+  "userId": "69d5ca29c4154616d2fb73e6",
+  "_id": "69d5ca5dc4154616d2fb73e9"
+}

@@ -1,4 +1,101 @@
+:root {
+    --dnd-red:       #7B1A1A;
+    --dnd-parchment: #fdf6e3;
+    --dnd-parchment2:#f5edd6;
+    --dnd-label-bg:  #e8dcc8;
+}
+
+body {
+    font-family: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+    background-color: var(--dnd-parchment);
+    color: #1a1a1a;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-bottom: 3px solid var(--dnd-red);
+    margin-bottom: 40px;
+    background: var(--dnd-label-bg);
+}
+
+header span {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-family: Georgia, serif;
+    color: var(--dnd-red);
+}
+
 .login-container {
-    width: 50%; /* Or any specific width/max-width */
+    width: 360px;
     margin: 0 auto;
+    padding: 28px 32px;
+    border: 2px solid var(--dnd-red);
+    background: var(--dnd-parchment);
+}
+
+.login-container h1 {
+    margin: 0 0 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--dnd-red);
+    border-bottom: 2px solid var(--dnd-red);
+    padding-bottom: 8px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 14px;
+}
+
+.input-group label {
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--dnd-red);
+}
+
+.input-group input {
+    padding: 6px 8px;
+    border: 1px solid var(--dnd-red);
+    background: var(--dnd-parchment);
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: #1a1a1a;
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: var(--dnd-red);
+    background: var(--dnd-parchment2);
+    box-shadow: 0 0 0 2px rgba(123,26,26,0.15);
+}
+
+button {
+    cursor: pointer;
+    border: 1px solid var(--dnd-red);
+    background: var(--dnd-parchment);
+    padding: 6px 16px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: #1a1a1a;
+    margin-right: 8px;
+    margin-top: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+button:hover {
+    background: var(--dnd-label-bg);
 }

@@ -1,5 +1,17 @@
+:root {
+    --dnd-red:       #7B1A1A;
+    --dnd-parchment: #fdf6e3;
+    --dnd-label-bg:  #e8dcc8;
+}
+
+body {
+    background-color: var(--dnd-parchment);
+    font-family: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+    color: #1a1a1a;
+}
+
 .container {
-  display: grid;
-  grid-template-columns: 1fr 2fr; /* Creates two equal-width columns */
-  gap: 20px; /* Adds space between columns */
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
 }
