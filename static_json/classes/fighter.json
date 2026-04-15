@@ -31,7 +31,7 @@
                 { 
                     "feature_name": "Fighting Style", 
                     "feature_type": "passive",
-                    "subtypetype": "external_choice", 
+                    "subtype": "external_choice",
                     "external_list": "fighting_styles",
                     "numChoices": 1,
                     "options": "all" 

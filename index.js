@@ -90,8 +90,9 @@ const raceSchema = new mongoose.Schema({
 }, { _id: false });
 
 const itemSchema = new mongoose.Schema({
-    id: { type: String, unique: true, required: true},
-    local_id: {type: Number, min: 0, required: true},
+    id: { type: String },
+    local_id: { type: Number },
+    item_type: { type: String },
     name: String,
     description: String,
     features_on_obtain: [featureSchema],
@@ -100,12 +101,12 @@ const itemSchema = new mongoose.Schema({
     features_on_unequip: [featureSchema],
     dice : {
         oneHand: {
-            num: {type: Number, min: 0, required: true},
-            sides: {type: Number, min: 1, required: true}
+            num: {type: Number, min: 0},
+            sides: {type: Number, min: 1}
         },
         twoHand: {
-            num: {type: Number, min: 0, required: true},
-            sides: {type: Number, min: 1, required: true}
+            num: {type: Number, min: 0},
+            sides: {type: Number, min: 1}
         }
     },
     range: [],
@@ -117,7 +118,7 @@ const itemSchema = new mongoose.Schema({
     prof: Boolean,
     features_on_attune: [featureSchema],
     features_on_detune: [featureSchema]
-}, {_id: false});
+}, { _id: false, strict: false });
 
 const subclassSchema = new mongoose.Schema({
     id: { type: String, unique: true, required: true},
@@ -488,6 +489,32 @@ app.patch('/api/characters/:id/feature_uses', async (req, res) => {
     }
 });
 
+app.patch('/api/characters/:id/inventory/currency', requireAuth, async (req, res) => {
+    try {
+        const { ObjectId } = require('mongodb');
+        const { currencyName, amount } = req.body;
+        const clamped = Math.max(0, Math.min(9999999, Math.floor(Number(amount) || 0)));
+        const oid = new ObjectId(req.params.id);
+        const char = await characters.findOne({ _id: oid });
+        if (!char) return res.status(404).json({ error: 'Not found' });
+
+        if (Array.isArray(char.inventory)) char.inventory = char.inventory[0] ?? { currency: [], items: [] };
+        char.inventory.currency ??= [];
+
+        const entry = char.inventory.currency.find(c => c.currencyName === currencyName);
+        if (entry) {
+            entry.amount = clamped;
+        } else {
+            char.inventory.currency.push({ currencyName, amount: clamped });
+        }
+
+        await characters.updateOne({ _id: oid }, { $set: { 'inventory.currency': char.inventory.currency } });
+        res.json({ success: true, amount: clamped });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 app.patch('/api/characters/:id/inventory/items/quantity', requireAuth, async (req, res) => {
     try {
         const { ObjectId } = require('mongodb');
@@ -820,7 +847,8 @@ app.post('/api/characters', requireAuth, async (req, res) => {
 
 app.get('/api/characters/:id', requireAuth, async (req, res) => {
     try {
-        const char = await character.findById(req.params.id);
+        const { ObjectId } = require('mongodb');
+        const char = await characters.findOne({ _id: new ObjectId(req.params.id) });
         if (!char) return res.status(404).json({ error: 'Not found' });
         res.json(char);
     } catch (err) {
@@ -846,6 +874,7 @@ app.put('/api/characters/:id', requireAuth, async (req, res) => {
 
         const rebuilt = parseCharacter(req.body);
         rebuilt.form_data = req.body;
+        rebuilt.userId = existing.userId;
 
         // Preserve sheet-level fields that live outside character creation
         for (const field of ['hitpoints', 'spell_slots', 'pact_slots', 'chosen_spells',

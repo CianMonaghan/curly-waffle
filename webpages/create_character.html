@@ -54,27 +54,27 @@
             <div class="ability-scores-row">
             <div class="ability-box">
                 <div class="ability-label">Str</div>
-                <input type="number" class="ability-score" id="ability-str" min="1" max="20" value="10" required oninput="if(this.value>20)this.value=20;">
+                <input type="number" class="ability-score" id="ability-str" min="1" max="20" value="10" required oninput="if(this.value>20)this.value=20;" onblur="if(this.value===''||this.value<1)this.value=10;">
             </div>
             <div class="ability-box">
                 <div class="ability-label">Dex</div>
-                <input type="number" class="ability-score" id="ability-dex" min="1" max="20" value="10" required oninput="if(this.value>20)this.value=20;">
+                <input type="number" class="ability-score" id="ability-dex" min="1" max="20" value="10" required oninput="if(this.value>20)this.value=20;" onblur="if(this.value===''||this.value<1)this.value=10;">
             </div>
             <div class="ability-box">
                 <div class="ability-label">Con</div>
-                <input type="number" class="ability-score" id="ability-con" min="1" max="20" value="10" required oninput="if(this.value>20)this.value=20;">
+                <input type="number" class="ability-score" id="ability-con" min="1" max="20" value="10" required oninput="if(this.value>20)this.value=20;" onblur="if(this.value===''||this.value<1)this.value=10;">
             </div>
             <div class="ability-box">
                 <div class="ability-label">Int</div>
-                <input type="number" class="ability-score" id="ability-int" min="1" max="20" value="10" required oninput="if(this.value>20)this.value=20;">
+                <input type="number" class="ability-score" id="ability-int" min="1" max="20" value="10" required oninput="if(this.value>20)this.value=20;" onblur="if(this.value===''||this.value<1)this.value=10;">
             </div>
             <div class="ability-box">
                 <div class="ability-label">Wis</div>
-                <input type="number" class="ability-score" id="ability-wis" min="1" max="20" value="10" required oninput="if(this.value>20)this.value=20;">
+                <input type="number" class="ability-score" id="ability-wis" min="1" max="20" value="10" required oninput="if(this.value>20)this.value=20;" onblur="if(this.value===''||this.value<1)this.value=10;">
             </div>
             <div class="ability-box">
                 <div class="ability-label">Cha</div>
-                <input type="number" class="ability-score" id="ability-cha" min="1" max="20" value="10" required oninput="if(this.value>20)this.value=20;">
+                <input type="number" class="ability-score" id="ability-cha" min="1" max="20" value="10" required oninput="if(this.value>20)this.value=20;" onblur="if(this.value===''||this.value<1)this.value=10;">
             </div>
         </div>
 
@@ -154,7 +154,7 @@
             </div>
             <div class="field-row">
                 <label>Level</label>
-                <input type="number" class="level-input" min="1" max="20" value="1" style="width:60px;">
+                <input type="number" class="level-input" min="1" max="20" value="1" style="width:60px;" oninput="if(this.value>20)this.value=20;" onblur="if(this.value===''||this.value<1)this.value=1;">
             </div>
 
             <div class="class-box-body">

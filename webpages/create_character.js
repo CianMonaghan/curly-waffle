@@ -946,12 +946,14 @@ function buildFeature(level, feature, uid, featureContainer = null) {
  
                 const rawList = Array.isArray(feature.options)
                     ? feature.options.map(o => typeof o === 'string' ? { name: o } : o)
-                    : (EXTERNAL_LISTS[feature.external_list] || []);
+                    : typeof feature.options === 'string' && feature.options !== 'all' && EXTERNAL_LISTS[feature.options]
+                        ? EXTERNAL_LISTS[feature.options]
+                        : (EXTERNAL_LISTS[feature.external_list] || []);
  
                 const list = rawList.flatMap(o =>
                     Array.isArray(o.options)
                         ? o.options.map(inner => typeof inner === 'string' ? { name: inner } : inner)
-                        : [o]
+                        : [typeof o === 'string' ? { name: o } : o]
                 );
  
                 const optionsWrapper = document.createElement('div');
@@ -1258,7 +1260,7 @@ async function populateFromCharacter(char) {
         if (isPrimary) {
             const cb = box.querySelector('.primary-class-cb');
             cb.checked = true;
-            cb.dispatchEvent(new Event('change'));
+            primaryClassUid = parseInt(box.dataset.uid);
         }
 
         // Skills
@@ -1530,7 +1532,19 @@ async function init() {
  
         clone.querySelector('.class-title').textContent = `Class ${classCount}`;
         clone.querySelector('.remove-btn').addEventListener('click', function () {
-            this.closest('.character-class-box').remove();
+            const removedBox = this.closest('.character-class-box');
+            const wasFirst = removedBox === document.getElementById('classContainer').firstElementChild;
+            removedBox.remove();
+            if (wasFirst) {
+                const remaining = document.getElementById('classContainer').firstElementChild;
+                if (remaining) {
+                    const cb = remaining.querySelector('.primary-class-cb');
+                    cb.disabled = false;
+                    cb.checked = true;
+                    primaryClassUid = parseInt(remaining.dataset.uid);
+                    cb.disabled = true;
+                }
+            }
         });
  
         const classSelect    = clone.querySelector('.class-select');
@@ -1543,16 +1557,12 @@ async function init() {
         box.dataset.uid = uid;
  
         const primaryCb = box.querySelector('.primary-class-cb');
-        primaryCb.addEventListener('change', () => {
-            if (primaryCb.checked) {
-                primaryClassUid = uid;
-                document.querySelectorAll('.character-class-box').forEach(b => {
-                    if (b.dataset.uid != uid) b.querySelector('.primary-class-cb').checked = false;
-                });
-            } else {
-                primaryClassUid = null;
-            }
-        });
+        const isFirstClass = document.getElementById('classContainer').children.length === 1;
+        if (isFirstClass) {
+            primaryCb.checked = true;
+            primaryClassUid = uid;
+        }
+        primaryCb.disabled = true;
  
         box.querySelector('.class-select').addEventListener('change',   () => renderClassBox(box, uid));
         box.querySelector('.level-input').addEventListener('change',    () => {
@@ -1734,7 +1744,7 @@ function buildCharacterPayload() {
   const classes = Array.from(document.querySelectorAll(".character-class-box")).map((box, idx) => {
     const className    = box.querySelector(".class-select")?.value || "";
     const subclassName = box.querySelector(".subclass-select")?.value || "";
-    const level        = Number(box.querySelector(".level-input")?.value || 1);
+    const level        = Math.min(20, Math.max(1, Number(box.querySelector(".level-input")?.value) || 1));
     const skills       = getClassPickedSkills(box);
     const { features, asi } = getFeatureChoices(box);
     const primaryClass = !!box.querySelector(".primary-class-cb")?.checked;

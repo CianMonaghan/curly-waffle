@@ -590,6 +590,33 @@ function renderInventoryItems(items, char = {}) {
 
 /* Weapon Modal */
 
+function getInvWeapons(char) {
+    const invObj = Array.isArray(char.inventory) ? char.inventory[0] : char.inventory;
+    return (invObj?.items ?? [])
+        .filter(i => i.type === 'wp')
+        .map(i => {
+            const oh = i.dice?.oneHand, th = i.dice?.twoHand;
+            let damage = '?';
+            if (oh && th && (oh.num !== th.num || oh.sides !== th.sides)) damage = `${oh.num}d${oh.sides} / ${th.num}d${th.sides}`;
+            else if (oh?.num > 0) damage = `${oh.num}d${oh.sides}`;
+            else if (th)          damage = `${th.num}d${th.sides}`;
+            const isRanged = (i.range ?? []).some((v, idx) => idx > 0 && v != null && v > 0);
+            return {
+                _fromInventory: true,
+                _invId: i._uid ?? i.id,
+                name: i.name ?? '?',
+                damage,
+                mode: isRanged ? 'ranged' : 'melee',
+                attack_bonus:  i.attack_bonus  ?? 0,
+                damage_bonus:  i.damage_bonus  ?? 0,
+                primary_stat:  i.primary_stat  ?? [],
+                features: (i.features_on_equip ?? [])
+                    .filter(f => f.name)
+                    .map(f => ({ name: f.name, description: f.description ?? null }))
+            };
+        });
+}
+
 function renderWeapons(weapons, char = null) {
     const el = document.getElementById('weapons-list');
     el.innerHTML = '';
@@ -674,14 +701,20 @@ function renderWeapons(weapons, char = null) {
         removeBtn.onclick = async () => {
             if (!CURRENT_CHAR_ID) return;
             removeBtn.disabled = true;
-            const res = await fetch(`/api/characters/${CURRENT_CHAR_ID}/equipped_weapons`, {
+            const endpoint = w._fromInventory
+                ? `/api/characters/${CURRENT_CHAR_ID}/inventory/items`
+                : `/api/characters/${CURRENT_CHAR_ID}/equipped_weapons`;
+            const body = w._fromInventory
+                ? { _uid: w._invId, name: w.name, type: 'wp' }
+                : { _uid: w._uid, item_id: w.item_id, name: w.name };
+            const res = await fetch(endpoint, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ _uid: w._uid, item_id: w.item_id, name: w.name })
+                body: JSON.stringify(body)
             });
             if (res.ok) {
                 const updated = await (await fetch(`/api/characters/${CURRENT_CHAR_ID}`)).json();
-                renderWeapons(updated.equipped_weapons ?? [], updated);
+                renderWeapons([...(updated.equipped_weapons ?? []), ...getInvWeapons(updated)], updated);
             } else { removeBtn.disabled = false; }
         };
         nameRow.appendChild(removeBtn);
@@ -772,7 +805,7 @@ async function addWeaponToCharacter(item, btn) {
         if (res.ok) {
             btn.textContent = 'Added!';
             const char = await (await fetch(`/api/characters/${CURRENT_CHAR_ID}`)).json();
-            renderWeapons(char.equipped_weapons ?? [], char);
+            renderWeapons([...(char.equipped_weapons ?? []), ...getInvWeapons(char)], char);
         } else { btn.textContent = 'Error'; btn.disabled = false; }
     } catch { btn.textContent = 'Error'; btn.disabled = false; }
 }
@@ -1224,29 +1257,7 @@ async function loadSheet() {
     }
 
     // Weapons
-    const invObj = Array.isArray(char.inventory) ? char.inventory[0] : char.inventory;
-    const invWeapons = (invObj?.items ?? [])
-        .filter(i => i.type === 'wp')
-        .map(i => {
-            const oh = i.dice?.oneHand, th = i.dice?.twoHand;
-            let damage = '?';
-            if (oh && th && (oh.num !== th.num || oh.sides !== th.sides)) damage = `${oh.num}d${oh.sides} / ${th.num}d${th.sides}`;
-            else if (oh?.num > 0) damage = `${oh.num}d${oh.sides}`;
-            else if (th)          damage = `${th.num}d${th.sides}`;
-            const isRanged = (i.range ?? []).some((v, idx) => idx > 0 && v != null && v > 0);
-            return {
-                name: i.name ?? '?',
-                damage,
-                mode: isRanged ? 'ranged' : 'melee',
-                attack_bonus:  i.attack_bonus  ?? 0,
-                damage_bonus:  i.damage_bonus  ?? 0,
-                primary_stat:  i.primary_stat  ?? [],
-                features: (i.features_on_equip ?? [])
-                    .filter(f => f.name)
-                    .map(f => ({ name: f.name, description: f.description ?? null }))
-            };
-        });
-    renderWeapons([...(char.equipped_weapons ?? []), ...invWeapons], char);
+    renderWeapons([...(char.equipped_weapons ?? []), ...getInvWeapons(char)], char);
 
     // Spell stats + slots
     if (primaryCaster) {
@@ -1453,6 +1464,39 @@ async function loadSheet() {
     (inv?.currency ?? []).forEach(c => {
         const el = document.getElementById(`currency-${c.currencyName.toLowerCase()}`);
         if (el) el.textContent = c.amount;
+    });
+
+    ['cp','sp','ep','gp','pp'].forEach(coin => {
+        const el = document.getElementById(`currency-${coin}`);
+        if (!el) return;
+        const coinName = { cp:'cp', sp:'sp', ep:'ep', gp:'gp', pp:'pp' }[coin];
+
+        el.addEventListener('input', () => {
+            // Strip everything except digits
+            const raw = el.innerText.replace(/[^0-9]/g, '');
+            const num = Math.min(9999999, parseInt(raw) || 0);
+            // Only rewrite if it changed to avoid resetting cursor
+            if (el.innerText !== String(num)) {
+                el.innerText = String(num);
+                // Move cursor to end
+                const range = document.createRange();
+                range.selectNodeContents(el);
+                range.collapse(false);
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+            }
+        });
+
+        el.addEventListener('blur', () => {
+            const amount = Math.min(9999999, parseInt(el.innerText.trim()) || 0);
+            el.innerText = String(amount);
+            if (!CURRENT_CHAR_ID) return;
+            fetch(`/api/characters/${CURRENT_CHAR_ID}/inventory/currency`, {
+                method:  'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body:    JSON.stringify({ currencyName: coinName, amount })
+            });
+        });
     });
 
     // Inventory items panel
