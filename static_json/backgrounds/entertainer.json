@@ -1,0 +1,26 @@
+{
+    "type": "background",
+    "id": 4,
+    "name": "Entertainer",
+    "description": "You thrive in front of an audience. You know how to entrance them, entertain them, and even inspire them. Your poetics can stir the hearts of those who hear you, awakening grief or joy, laughter or anger. Your music raises their spirits or captures their sorrow. Your dance steps captivate, your humor cuts to the quick. Whatever techniques you use, your art is your life.",
+
+    "skill_prof": [
+        { "skill": "Acrobatics", "prof": true },
+        { "skill": "Performance", "prof": true }
+    ],
+    "tool_prof": [
+        { "tool": "Disguise Kit", "prof": true },
+        { "tool": "One Musical Instrument", "prof": true }
+    ],
+    "lang_prof": [],
+
+    "features": [
+        {
+            "id": "by-popular-demand",
+            "feature_name": "By Popular Demand",
+            "description": "You can always find a place to perform, usually in an inn or tavern but possibly with a circus, at a theater, or even in a noble's court. At such a place, you receive free lodging and food of a modest or comfortable standard (depending on the quality of the establishment), as long as you perform each night. In addition, your performance makes you something of a local figure. When strangers recognize you in a town where you have performed, they typically take a liking to you.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        }
+    ]
+}

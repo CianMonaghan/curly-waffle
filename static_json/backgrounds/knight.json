@@ -1,0 +1,27 @@
+{
+    "type": "background",
+    "id": 10,
+    "name": "Knight",
+    "description": "A knight is a member of the lowest noble title, but it offers a pathway to higher status. You have been granted a knightly title by a lord or monarch in recognition of your service, and you are expected to uphold the values of chivalry and honor. You may be a seasoned warrior sworn to protect the weak, a fresh-faced squire newly elevated to knighthood, or a wandering knight-errant seeking glory.",
+
+    "skill_prof": [
+        { "skill": "History", "prof": true },
+        { "skill": "Persuasion", "prof": true }
+    ],
+    "tool_prof": [
+        { "type": "gaming_set" }
+    ],
+    "lang_prof": [
+        { "type": "any" }
+    ],
+
+    "features": [
+        {
+            "id": "retainers",
+            "feature_name": "Retainers",
+            "description": "You have the service of three retainers loyal to your family. These retainers can be commoners who perform mundane tasks for you, but they do not fight for you, will not follow you into obviously dangerous situations, and will leave if they are frequently endangered or abused.\n\nOne of your retainers is replaced by a noble squire who serves you in pursuit of their own knighthood. The other retainers might include a groom to care for your horse and a servant who polishes your armor.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        }
+    ]
+}

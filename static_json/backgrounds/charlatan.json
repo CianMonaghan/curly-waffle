@@ -1,0 +1,26 @@
+{
+    "type": "background",
+    "id": 2,
+    "name": "Charlatan",
+    "description": "You have always had a way with people. You know what makes them tick, you can tease out their hearts' desires after a few minutes of conversation, and with a few leading questions you can read them like they were children's books. It's a useful talent, and one that you're perfectly willing to use for your advantage.\n\nYou know what people want and you deliver, or rather, you promise to deliver. Common sense should steer people away from things that sound too good to be true, but common sense seems to be in short supply when you're around. The bottle of pink-colored liquid will surely cure that unseemly rash, this ointment — nothing more than a bit of fat with a sprinkle of silver dust — was tinctures by a most revered member of the clergy, and this piece of 'dragon bone' is sure to solve his problem for good.",
+
+    "skill_prof": [
+        { "skill": "Deception", "prof": true },
+        { "skill": "Sleight of Hand", "prof": true }
+    ],
+    "tool_prof": [
+        { "tool": "Disguise Kit", "prof": true },
+        { "tool": "Forgery Kit", "prof": true }
+    ],
+    "lang_prof": [],
+
+    "features": [
+        {
+            "id": "false-identity",
+            "feature_name": "False Identity",
+            "description": "You have created a second identity that includes documentation, established acquaintances, and disguises that allow you to assume that persona. Additionally, you can forge documents including official papers and personal letters, as long as you have seen an example of the kind of document or the handwriting you are trying to copy.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        }
+    ]
+}

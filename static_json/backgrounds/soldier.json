@@ -1,0 +1,26 @@
+{
+    "type": "background",
+    "id": 15,
+    "name": "Soldier",
+    "description": "War has been your life for as long as you care to remember. You trained as a youth, studied the use of weapons and armor, learned basic survival techniques, including how to stay alive on the battlefield. You might have been part of a standing national army, a mercenary company, or perhaps a village militia. Whatever the case, your life of service has given you experience and scars, though hopefully enough wisdom to use them wisely.",
+
+    "skill_prof": [
+        { "skill": "Athletics", "prof": true },
+        { "skill": "Intimidation", "prof": true }
+    ],
+    "tool_prof": [
+        { "tool": "One Gaming Set", "prof": true },
+        { "tool": "Vehicles (Land)", "prof": true }
+    ],
+    "lang_prof": [],
+
+    "features": [
+        {
+            "id": "military-rank",
+            "feature_name": "Military Rank",
+            "description": "You have a military rank from your career as a soldier. Soldiers loyal to your former military organization still recognize your authority and influence, and they defer to you if they are of a lower rank. You can invoke your rank to exert influence over other soldiers and requisition simple equipment or horses for temporary use. You can also usually gain access to friendly military encampments and fortresses where your rank is recognized.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        }
+    ]
+}

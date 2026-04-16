@@ -1,0 +1,26 @@
+{
+    "type": "background",
+    "id": 17,
+    "name": "Spy",
+    "description": "Although your capabilities are not much different from those of a burglar or smuggler, you learned and practiced them in a very different context: as an espionage agent. You might have been an officially sanctioned agent of the crown, or you might have sold the secrets you uncovered to the highest bidder.",
+
+    "skill_prof": [
+        { "skill": "Deception", "prof": true },
+        { "skill": "Stealth", "prof": true }
+    ],
+    "tool_prof": [
+        { "tool": "One Gaming Set", "prof": true },
+        { "tool": "Thieves' Tools", "prof": true }
+    ],
+    "lang_prof": [],
+
+    "features": [
+        {
+            "id": "criminal-contact-spy",
+            "feature_name": "Criminal Contact",
+            "description": "You have a reliable and trustworthy contact who acts as your liaison to a network of other criminals. You know how to get messages to and from your contact, even over great distances; specifically, you know the local messengers, corrupt caravan masters, and seedy sailors who can deliver messages for you.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        }
+    ]
+}

@@ -1,0 +1,26 @@
+{
+    "type": "background",
+    "id": 13,
+    "name": "Pirate",
+    "description": "You spent your years before becoming an adventurer as a pirate, raiding ships and ports for plunder. You faced down mighty storms, monsters of the deep, and the naval vessels that hunted you. Your ruthless reputation precedes you, and people know better than to cross someone with your history.",
+
+    "skill_prof": [
+        { "skill": "Athletics", "prof": true },
+        { "skill": "Perception", "prof": true }
+    ],
+    "tool_prof": [
+        { "tool": "Navigator's Tools", "prof": true },
+        { "tool": "Vehicles (Water)", "prof": true }
+    ],
+    "lang_prof": [],
+
+    "features": [
+        {
+            "id": "bad-reputation",
+            "feature_name": "Bad Reputation",
+            "description": "If you are in a civilized settlement, you can get away with minor criminal offenses, such as refusing to pay for food at a tavern or breaking down doors at a local shop, since most people will not report your activity to the authorities. You might be viewed as a criminal, but you are not too scary to be wanted.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        }
+    ]
+}

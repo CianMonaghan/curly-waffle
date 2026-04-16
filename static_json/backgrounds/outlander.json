@@ -1,0 +1,27 @@
+{
+    "type": "background",
+    "id": 11,
+    "name": "Outlander",
+    "description": "You grew up in the wilds, far from civilization and the comforts of town and technology. You've witnessed the migration of herds larger than forests, survived weather more extreme than any city-dweller could comprehend, and enjoyed the solitude of being the only thinking creature for miles in any direction. The wilds are in your blood, whether you were a nomad, an explorer, a recluse, a hunter-gatherer, or even a marauder.",
+
+    "skill_prof": [
+        { "skill": "Athletics", "prof": true },
+        { "skill": "Survival", "prof": true }
+    ],
+    "tool_prof": [
+        { "tool": "One Musical Instrument", "prof": true }
+    ],
+    "lang_prof": [
+        { "type": "any" }
+    ],
+
+    "features": [
+        {
+            "id": "wanderer",
+            "feature_name": "Wanderer",
+            "description": "You have an excellent memory for maps and geography, and you can always recall the general layout of terrain, settlements, and other features around you. In addition, you can find food and fresh water for yourself and up to five other people each day, provided that the land offers berries, small game, water, and so forth.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        }
+    ]
+}

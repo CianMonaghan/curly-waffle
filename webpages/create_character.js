@@ -359,7 +359,8 @@ function openPopup(field) {
     pendingSelection  = null;
     confirmBtn.disabled = true;
  
-    const dataset  = field === 'race' ? Object.values(RACE_DATA) : Object.values(BACKGROUND_DATA);
+    const dataset  = (field === 'race' ? Object.values(RACE_DATA) : Object.values(BACKGROUND_DATA))
+                        .sort((a, b) => a.name.localeCompare(b.name));
     popupTitle.textContent = field === 'race' ? 'Choose a Race' : 'Choose a Background';
  
     popupList.innerHTML = '';
