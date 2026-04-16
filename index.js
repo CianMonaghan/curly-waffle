@@ -877,9 +877,19 @@ app.put('/api/characters/:id', requireAuth, async (req, res) => {
         rebuilt.userId = existing.userId;
 
         // Preserve sheet-level fields that live outside character creation
-        for (const field of ['hitpoints', 'spell_slots', 'pact_slots', 'chosen_spells',
+        for (const field of ['hitpoints', 'chosen_spells',
                              'hit_dice_current', 'notes', 'inspiration', 'feature_uses']) {
             if (existing[field] !== undefined) rebuilt[field] = existing[field];
+        }
+
+        // For spell/pact slots, use the newly computed max values (from the updated level)
+        // but carry over current values so already-used slots stay consumed.
+        for (const slotField of ['spell_slots', 'pact_slots']) {
+            if (!rebuilt[slotField] || !existing[slotField]) continue;
+            for (const slot of rebuilt[slotField]) {
+                const old = existing[slotField].find(s => s.level === slot.level);
+                if (old) slot.current = Math.min(old.current, slot.max);
+            }
         }
 
         await characters.replaceOne({ _id: new ObjectId(req.params.id) }, rebuilt);

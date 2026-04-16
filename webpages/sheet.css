@@ -38,7 +38,10 @@ body {
 }
 
 .button-container {
-    float: right;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-bottom: 8px;
 }
 
 /* ── Character Name ───────────────────────────────────── */
@@ -363,6 +366,28 @@ body {
 
 .spell-entry:nth-child(odd) {
     background-color: var(--dnd-parchment2);
+}
+
+/* ── Buttons ──────────────────────────────────────────── */
+button {
+    cursor: pointer;
+    border: 1px solid var(--dnd-red);
+    background: var(--dnd-parchment);
+    padding: 6px 16px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: #1a1a1a;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+button:hover {
+    background: var(--dnd-label-bg);
+}
+
+.button-container button {
+    margin-right: 8px;
+    margin-top: 8px;
 }
 
 /* ── Generic utility ──────────────────────────────────── */

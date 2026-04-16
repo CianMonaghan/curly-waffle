@@ -5,29 +5,8 @@
     {
       "stat": "Strength",
       "base": 10,
-      "modifiers": [
-        {
-          "source_id": "class-0-asi-r0-p0",
-          "type": "add",
-          "value": 1
-        },
-        {
-          "source_id": "class-0-asi-r0-p1",
-          "type": "add",
-          "value": 1
-        },
-        {
-          "source_id": "class-0-asi-r1-p0",
-          "type": "add",
-          "value": 1
-        },
-        {
-          "source_id": "class-0-asi-r1-p1",
-          "type": "add",
-          "value": 1
-        }
-      ],
-      "score": 14
+      "modifiers": [],
+      "score": 10
     },
     {
       "stat": "Dexterity",
@@ -44,8 +23,19 @@
     {
       "stat": "Intelligence",
       "base": 10,
-      "modifiers": [],
-      "score": 10
+      "modifiers": [
+        {
+          "source_id": "class-0-asi-r0-p0",
+          "type": "add",
+          "value": 1
+        },
+        {
+          "source_id": "class-0-asi-r0-p1",
+          "type": "add",
+          "value": 1
+        }
+      ],
+      "score": 12
     },
     {
       "stat": "Wisdom",
@@ -73,21 +63,21 @@
     },
     {
       "stat": "MaxHP",
-      "base": 11,
+      "base": 26,
       "modifiers": [],
-      "score": 11
+      "score": 26
     }
   ],
   "hitpoints": {
-    "current_hit_points": 11,
+    "current_hit_points": 26,
     "temp_hp": 0
   },
   "size": "medium",
-  "prof_bonus": 4,
+  "prof_bonus": 3,
   "saves": [
     {
       "stat": "Strength",
-      "save": 2
+      "save": 0
     },
     {
       "stat": "Dexterity",
@@ -103,7 +93,7 @@
     },
     {
       "stat": "Wisdom",
-      "save": 4
+      "save": 3
     },
     {
       "stat": "Charisma",
@@ -114,18 +104,18 @@
   "armor_class": 10,
   "languages": [
     "Common",
-    "Dwarvish",
+    "Deep Speech",
     "Draconic",
-    "Abyssal"
+    "Sylvan"
   ],
   "skill_proficiencies": [
     {
-      "skill": "History",
+      "skill": "Insight",
       "expertise": false,
       "source_id": "background-0"
     },
     {
-      "skill": "Persuaion",
+      "skill": "Religion",
       "expertise": false,
       "source_id": "background-0"
     },
@@ -148,7 +138,7 @@
   },
   "background": {
     "id": "0",
-    "name": "Noble"
+    "name": "Acolyte"
   },
   "classes": [
     {
@@ -157,9 +147,9 @@
       "caster": true,
       "casterType": "full_caster",
       "casterStat": "Intelligence",
-      "level": 11,
+      "level": 6,
       "casterLevel": 0,
-      "class_hp": 0,
+      "class_hp": 6,
       "features": [],
       "skill_prof": [
         {
@@ -203,9 +193,9 @@
       "source_id": "race-2"
     },
     {
-      "id": "race-2-undefined-dwarvish",
-      "name": "Languages: Dwarvish",
-      "description": "Can speak, read, and write Dwarvish.",
+      "id": "race-2-undefined-deep_speech",
+      "name": "Languages: Deep Speech",
+      "description": "Can speak, read, and write Deep Speech.",
       "trigger": "passive",
       "source_id": "race-2"
     },
@@ -216,23 +206,23 @@
       "source_id": "race-2"
     },
     {
-      "id": "background-0-skill-history",
-      "name": "Skill Proficiency: History",
-      "description": "Proficiency in the History skill.",
+      "id": "background-0-skill-insight",
+      "name": "Skill Proficiency: Insight",
+      "description": "Proficiency in the Insight skill.",
       "trigger": "passive",
       "source_id": "background-0"
     },
     {
-      "id": "background-0-skill-persuaion",
-      "name": "Skill Proficiency: Persuaion",
-      "description": "Proficiency in the Persuaion skill.",
+      "id": "background-0-skill-religion",
+      "name": "Skill Proficiency: Religion",
+      "description": "Proficiency in the Religion skill.",
       "trigger": "passive",
       "source_id": "background-0"
     },
     {
-      "id": "position_of_privilege",
-      "name": "Positiion of Privilege",
-      "description": "Thanks to your noble birth, people are inclined to think the best of you. You are welcome in high society, and people assume you have the right to be wherever you are. The common folk make every effort to accommodate you and avoid your displeasure, and other people of high birth treat you as a member of the same social sphere. You can secure an audience with a local noble if you need to.",
+      "id": "shelter-faithful",
+      "name": "Shelter of the Faithful",
+      "description": "As an acolyte, you command the respect of those who share your faith, and you can perform the religious ceremonies of your deity. You and your adventuring companions can expect to receive free healing and care at a temple, shrine, or other established presence of your faith, though you must provide any material components needed for spells. Those who share your religion will support you (but only you) at a modest lifestyle. \n You might also have ties to a specific temple dedicated to your chosen deity or pantheon, and you have a residence there. This could be the temple where you used to serve, if you remain on good terms with it, or a temple where you have found a new home. While near your temple, you can call upon the priests for assistance, provided the assistance you ask for is not hazardous and you remain in good standing with your temple.",
       "trigger": "onAdd",
       "source_id": "background-0"
     },
@@ -268,13 +258,6 @@
       "id": "class-0-sc-lvl6-extra_attack",
       "name": "Extra Attack",
       "description": "You can attack twice, instead of once, whenever you take the Attack action on your turn. Moreover, you can cast one of your cantrips in place of one of those attacks.",
-      "trigger": "passive",
-      "source_id": "class-0"
-    },
-    {
-      "id": "class-0-sc-lvl10-song_of_defense",
-      "name": "Song of Defense",
-      "description": "You can direct your magic to absorb damage while your Bladesong is active. When you take damage, you can use your reaction to expend one spell slot and reduce that damage to you by an amount equal to five times the spell slot's level.",
       "trigger": "passive",
       "source_id": "class-0"
     }
@@ -461,23 +444,69 @@
       "level": 3,
       "max": 3,
       "current": 3
-    },
-    {
-      "level": 4,
-      "max": 3,
-      "current": 3
-    },
-    {
-      "level": 5,
-      "max": 2,
-      "current": 2
-    },
-    {
-      "level": 6,
-      "max": 1,
-      "current": 1
     }
   ],
   "pact_slots": null,
-  "_id": "69d19c3ca9ac817b4df82f8d"
+  "form_data": {
+    "name": "wiztest",
+    "stats": {
+      "str": 10,
+      "dex": 10,
+      "con": 10,
+      "int": 10,
+      "wis": 10,
+      "cha": 10
+    },
+    "race": {
+      "id": 2,
+      "name": "Human",
+      "decisions": {
+        "undefined": "Deep Speech"
+      }
+    },
+    "background": {
+      "id": 0,
+      "name": "Acolyte",
+      "decisions": {
+        "lang_0_0": "Draconic",
+        "lang_0_1": "Sylvan"
+      }
+    },
+    "classes": [
+      {
+        "id": "class-0",
+        "_uid": "1",
+        "name": "Wizard",
+        "level": 6,
+        "skills": [
+          "Arcana",
+          "History"
+        ],
+        "decisions": {
+          "primaryClass": true,
+          "features": {
+            "equip_1_0": "a)",
+            "equip_1_1": "a)",
+            "equip_1_2": "a)"
+          },
+          "asi": [
+            {
+              "num": 0,
+              "picks": [
+                "INT",
+                "INT"
+              ]
+            }
+          ]
+        },
+        "subclass": {
+          "id": "Bladesinging",
+          "name": "Bladesinging",
+          "decisions": {}
+        }
+      }
+    ]
+  },
+  "userId": "69d5aaa97fca07eedcd11ff0",
+  "_id": "69def7e3f33c978838b49ebe"
 }
