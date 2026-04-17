@@ -1,0 +1,99 @@
+{
+    "type": "race",
+    "id": 5,
+    "name": "Dark Elf",
+    "description": "Descended from an earlier subrace of dark-skinned elves, the drow were banished from the surface world for following the goddess Lolth down the path to evil and corruption. Now they have built their own civilization in the depths of the Underdark, patterned after the Way of Lolth. Also called dark elves, the drow have black skin that resembles polished obsidian and stark white or pale yellow hair. They commonly have very pale eyes in shades of lilac, silver, pink, red, and blue. They tend to be smaller and thinner than most elves.",
+    "features": [
+        {
+            "id": "elf-asi-dex-2",
+            "feature_name": "Ability Score Increase (DEX +2)",
+            "description": "Your Dexterity score increases by 2.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "speed-30-elf",
+            "feature_name": "Speed",
+            "description": "Your base walking speed is 30 feet.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "darkvision-120-drow",
+            "feature_name": "Superior Darkvision",
+            "description": "Accustomed to the depths of the Underdark, you have superior vision in dark and dim conditions. You can see in dim light within 120 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "keen-senses-elf",
+            "feature_name": "Keen Senses",
+            "description": "You have proficiency in the Perception skill.",
+            "feature_type": "passive",
+            "subtype": "prof_addition",
+            "prof_to_add": [
+                { "skills": ["Perception"] }
+            ],
+            "trigger": "onAdd"
+        },
+        {
+            "id": "fey-ancestry-elf",
+            "feature_name": "Fey Ancestry",
+            "description": "You have advantage on saving throws against being charmed, and magic can't put you to sleep.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "trance-elf",
+            "feature_name": "Trance",
+            "description": "Elves don't need to sleep. Instead, they meditate deeply, remaining semiconscious, for 4 hours a day. While meditating, you can dream after a fashion; such dreams are actually mental exercises that have become reflexive through years of practice. After resting in this way, you gain the same benefit that a human does from 8 hours of sleep.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "sunlight-sensitivity-drow",
+            "feature_name": "Sunlight Sensitivity",
+            "description": "You have disadvantage on attack rolls and on Wisdom (Perception) checks that rely on sight when you, the target of your attack, or whatever you are trying to perceive is in direct sunlight.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "elf-lang",
+            "feature_name": "Languages",
+            "description": "You can speak, read, and write Common and Elvish.",
+            "feature_type": "passive",
+            "subtype": "prof_addition",
+            "prof_to_add": [
+                { "lang_prof": ["Common", "Elvish"] }
+            ],
+            "trigger": "onAdd"
+        },
+        {
+            "id": "dark-elf-asi-cha-1",
+            "feature_name": "Ability Score Increase (CHA +1)",
+            "description": "Your Charisma score increases by 1.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "drow-weapon-training",
+            "feature_name": "Drow Weapon Training",
+            "description": "You have proficiency with rapiers, shortswords, and hand crossbows.",
+            "feature_type": "passive",
+            "subtype": "prof_addition",
+            "prof_to_add": [
+                { "weapons": ["rapier", "shortsword", "hand crossbow"] }
+            ],
+            "trigger": "onAdd"
+        },
+        {
+            "id": "drow-magic",
+            "feature_name": "Drow Magic",
+            "description": "You know the Dancing Lights cantrip. When you reach 3rd level, you can cast the Faerie Fire spell once per day; you must finish a long rest in order to cast the spell again using this trait. When you reach 5th level, you can also cast the Darkness spell once per day; you must finish a long rest in order to cast the spell again using this trait. Charisma is your spellcasting ability for these spells.",
+            "feature_type": "passive",
+            "subtype": "resource",
+            "uses": "1/Long Rest (Faerie Fire, Darkness)",
+            "trigger": "onAdd"
+        }
+    ]
+}

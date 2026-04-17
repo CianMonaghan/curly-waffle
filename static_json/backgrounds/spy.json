@@ -9,8 +9,8 @@
         { "skill": "Stealth", "prof": true }
     ],
     "tool_prof": [
-        { "tool": "One Gaming Set", "prof": true },
-        { "tool": "Thieves' Tools", "prof": true }
+        { "type": "gaming_set" },
+        { "type": "fixed", "value": "Thieves Tools" }
     ],
     "lang_prof": [],
 

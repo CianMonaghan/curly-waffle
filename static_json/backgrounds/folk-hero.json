@@ -9,8 +9,8 @@
         { "skill": "Survival", "prof": true }
     ],
     "tool_prof": [
-        { "tool": "One Artisan's Tools", "prof": true },
-        { "tool": "Vehicles (Land)", "prof": true }
+        { "type": "artisans_tools" },
+        { "type": "fixed", "value": "Vehicles (Land)" }
     ],
     "lang_prof": [],
 

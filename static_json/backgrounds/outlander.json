@@ -9,7 +9,7 @@
         { "skill": "Survival", "prof": true }
     ],
     "tool_prof": [
-        { "tool": "One Musical Instrument", "prof": true }
+        { "type": "musical_instrument" }
     ],
     "lang_prof": [
         { "type": "any" }

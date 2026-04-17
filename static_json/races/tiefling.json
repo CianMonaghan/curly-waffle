@@ -1,0 +1,64 @@
+{
+    "type": "race",
+    "id": 12,
+    "name": "Tiefling",
+    "description": "To be greeted with stares and whispers, to suffer violence and insult on the street, to see mistrust and fear in every eye: this is the lot of the tiefling. And to twist the knife, tieflings know that this is because a pact struck generations ago infused the essence of Asmodeus — overlord of the Nine Hells — into their bloodline. Their appearance and their nature are not their fault but are the burden they must bear.",
+
+    "features": [
+        {
+            "id": "tiefling-asi-int-1",
+            "feature_name": "Ability Score Increase (INT +1)",
+            "description": "Your Intelligence score increases by 1.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "tiefling-asi-cha-2",
+            "feature_name": "Ability Score Increase (CHA +2)",
+            "description": "Your Charisma score increases by 2.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "speed-30-tiefling",
+            "feature_name": "Speed",
+            "description": "Your base walking speed is 30 feet.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "darkvision-60-tiefling",
+            "feature_name": "Darkvision",
+            "description": "Thanks to your infernal heritage, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "hellish-resistance",
+            "feature_name": "Hellish Resistance",
+            "description": "You have resistance to fire damage.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "infernal-legacy",
+            "feature_name": "Infernal Legacy",
+            "description": "You know the Thaumaturgy cantrip. When you reach 3rd level, you can cast the Hellish Rebuke spell as a 2nd-level spell once with this trait and regain the ability to do so when you finish a long rest. When you reach 5th level, you can also cast the Darkness spell once with this trait and regain the ability to do so when you finish a long rest. Charisma is your spellcasting ability for these spells.",
+            "feature_type": "passive",
+            "subtype": "resource",
+            "uses": "1/Long Rest (Hellish Rebuke, Darkness)",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "tiefling-lang",
+            "feature_name": "Languages",
+            "description": "You can speak, read, and write Common and Infernal.",
+            "feature_type": "passive",
+            "subtype": "prof_addition",
+            "prof_to_add": [
+                { "lang_prof": ["Common", "Infernal"] }
+            ],
+            "trigger": "onAdd"
+        }
+    ]
+}

@@ -9,8 +9,8 @@
         { "skill": "Performance", "prof": true }
     ],
     "tool_prof": [
-        { "tool": "Disguise Kit", "prof": true },
-        { "tool": "One Musical Instrument", "prof": true }
+        { "type": "fixed", "value": "Disguise Kit" },
+        { "type": "musical_instrument" }
     ],
     "lang_prof": [],
 

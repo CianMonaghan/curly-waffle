@@ -9,8 +9,8 @@
         { "skill": "Sleight of Hand", "prof": true }
     ],
     "tool_prof": [
-        { "tool": "Disguise Kit", "prof": true },
-        { "tool": "Forgery Kit", "prof": true }
+        { "type": "fixed", "value": "Disguise Kit" },
+        { "type": "fixed", "value": "Forgery Kit" }
     ],
     "lang_prof": [],
 

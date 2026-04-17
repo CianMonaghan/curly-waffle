@@ -1,0 +1,75 @@
+{
+    "type": "race",
+    "id": 11,
+    "name": "Half-Orc",
+    "description": "Whether united under the leadership of a mighty warlock or having fought to a standstill after years of conflict, orc and human communities sometimes form alliances, and occasionally, especially in places where such alliances are longstanding, half-orcs are born. Some half-orcs rise to become proud chiefs of orc tribes, their human blood giving them an edge over full-blooded orc rivals. Some venture into the world to prove their worth among humans and other more civilized races. Many of these become adventurers, achieving greatness for their mighty deeds and notoriety for their barbaric customs and savage fury.",
+
+    "features": [
+        {
+            "id": "half-orc-asi-str-2",
+            "feature_name": "Ability Score Increase (STR +2)",
+            "description": "Your Strength score increases by 2.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "half-orc-asi-con-1",
+            "feature_name": "Ability Score Increase (CON +1)",
+            "description": "Your Constitution score increases by 1.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "speed-30-half-orc",
+            "feature_name": "Speed",
+            "description": "Your base walking speed is 30 feet.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "darkvision-60-half-orc",
+            "feature_name": "Darkvision",
+            "description": "Thanks to your orc blood, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "half-orc-menacing",
+            "feature_name": "Menacing",
+            "description": "You gain proficiency in the Intimidation skill.",
+            "feature_type": "passive",
+            "subtype": "prof_addition",
+            "prof_to_add": [
+                { "skills": ["Intimidation"] }
+            ],
+            "trigger": "onAdd"
+        },
+        {
+            "id": "relentless-endurance",
+            "feature_name": "Relentless Endurance",
+            "description": "When you are reduced to 0 hit points but not killed outright, you can drop to 1 hit point instead. You can't use this feature again until you finish a long rest.",
+            "feature_type": "passive",
+            "subtype": "resource",
+            "uses": 1,
+            "trigger": "onAdd"
+        },
+        {
+            "id": "savage-attacks",
+            "feature_name": "Savage Attacks",
+            "description": "When you score a critical hit with a melee weapon attack, you can roll one of the weapon's damage dice one additional time and add it to the extra damage of the critical hit.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "half-orc-lang",
+            "feature_name": "Languages",
+            "description": "You can speak, read, and write Common and Orc.",
+            "feature_type": "passive",
+            "subtype": "prof_addition",
+            "prof_to_add": [
+                { "lang_prof": ["Common", "Orc"] }
+            ],
+            "trigger": "onAdd"
+        }
+    ]
+}

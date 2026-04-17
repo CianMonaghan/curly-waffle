@@ -9,8 +9,8 @@
         { "skill": "Stealth", "prof": true }
     ],
     "tool_prof": [
-        { "tool": "Disguise Kit", "prof": true },
-        { "tool": "Thieves' Tools", "prof": true }
+        { "type": "fixed", "value": "Disguise Kit" },
+        { "type": "fixed", "value": "Thieves Tools" }
     ],
     "lang_prof": [],
 

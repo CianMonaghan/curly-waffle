@@ -9,7 +9,7 @@
         { "skill": "Persuasion", "prof": true }
     ],
     "tool_prof": [
-        { "tool": "One Artisan's Tools", "prof": true }
+        { "type": "artisans_tools" }
     ],
     "lang_prof": [
         { "type": "any" }

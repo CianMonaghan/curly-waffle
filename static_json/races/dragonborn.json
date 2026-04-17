@@ -1,0 +1,78 @@
+{
+    "type": "race",
+    "id": 13,
+    "name": "Dragonborn",
+    "description": "Born of dragons, as their name proclaims, the dragonborn walk proudly through a world that greets them with fearful incomprehension. Shaped by draconic gods or the dragons themselves, dragonborn originally hatched from dragon eggs as a unique race, combining the best attributes of dragons and humanoids. Some dragonborn are faithful servants to true dragons, others form the ranks of soldiers in great wars, and still others find themselves adrift, with no clear calling in life.",
+
+    "features": [
+        {
+            "id": "dragonborn-asi-str-2",
+            "feature_name": "Ability Score Increase (STR +2)",
+            "description": "Your Strength score increases by 2.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "dragonborn-asi-cha-1",
+            "feature_name": "Ability Score Increase (CHA +1)",
+            "description": "Your Charisma score increases by 1.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "speed-30-dragonborn",
+            "feature_name": "Speed",
+            "description": "Your base walking speed is 30 feet.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "draconic-ancestry",
+            "feature_name": "Draconic Ancestry",
+            "description": "You have draconic ancestry of a particular type of dragon. Choose one type from the following: Black (Acid, 5×30 ft. line), Blue (Lightning, 5×30 ft. line), Brass (Fire, 5×30 ft. line), Bronze (Lightning, 5×30 ft. line), Copper (Acid, 5×30 ft. line), Gold (Fire, 15 ft. cone), Green (Poison, 15 ft. cone), Red (Fire, 15 ft. cone), Silver (Cold, 15 ft. cone), or White (Cold, 15 ft. cone). Your breath weapon and damage resistance are determined by your ancestry type.",
+            "feature_type": "passive",
+            "subtype": "choice",
+            "options": [
+                "Black (Acid)",
+                "Blue (Lightning)",
+                "Brass (Fire)",
+                "Bronze (Lightning)",
+                "Copper (Acid)",
+                "Gold (Fire)",
+                "Green (Poison)",
+                "Red (Fire)",
+                "Silver (Cold)",
+                "White (Cold)"
+            ],
+            "trigger": "onAdd"
+        },
+        {
+            "id": "breath-weapon",
+            "feature_name": "Breath Weapon",
+            "description": "You can use your action to exhale destructive energy. Your draconic ancestry determines the size, shape, and damage type of the exhalation. When you use your breath weapon, each creature in the area of the exhalation must make a saving throw, the type of which is determined by your draconic ancestry. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 damage on a failed save, and half as much damage on a successful one. The damage increases to 3d6 at 6th level, 4d6 at 11th level, and 5d6 at 16th level. After you use your breath weapon, you can't use it again until you finish a short or long rest.",
+            "feature_type": "passive",
+            "subtype": ["resource", "save_dc"],
+            "uses": 1,
+            "save_dc": "8 + CON mod + Proficiency Bonus",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "damage-resistance",
+            "feature_name": "Damage Resistance",
+            "description": "You have resistance to the damage type associated with your draconic ancestry.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "dragonborn-lang",
+            "feature_name": "Languages",
+            "description": "You can speak, read, and write Common and Draconic.",
+            "feature_type": "passive",
+            "subtype": "prof_addition",
+            "prof_to_add": [
+                { "lang_prof": ["Common", "Draconic"] }
+            ],
+            "trigger": "onAdd"
+        }
+    ]
+}

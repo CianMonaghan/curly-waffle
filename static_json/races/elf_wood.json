@@ -1,0 +1,97 @@
+{
+    "type": "race",
+    "id": 4,
+    "name": "Wood Elf",
+    "description": "As a wood elf, you have keen senses and intuition, and your fleet feet carry you quickly and stealthily through your native forests. This category includes the wild elves of Greyhawk, the Kagonesti of Dragonlance, and the races called wood elves in Greyhawk and the Forgotten Realms. In Faerun, wood elves (also called wild elves, green elves, or forest elves) are reclusive and distrusting of non-elves.",
+    "features": [
+        {
+            "id": "elf-asi-dex-2",
+            "feature_name": "Ability Score Increase (DEX +2)",
+            "description": "Your Dexterity score increases by 2.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "speed-30-elf",
+            "feature_name": "Speed",
+            "description": "Your base walking speed is 30 feet.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "darkvision-60-elf",
+            "feature_name": "Darkvision",
+            "description": "Accustomed to twilit forests and the night sky, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "keen-senses-elf",
+            "feature_name": "Keen Senses",
+            "description": "You have proficiency in the Perception skill.",
+            "feature_type": "passive",
+            "subtype": "prof_addition",
+            "prof_to_add": [
+                { "skills": ["Perception"] }
+            ],
+            "trigger": "onAdd"
+        },
+        {
+            "id": "fey-ancestry-elf",
+            "feature_name": "Fey Ancestry",
+            "description": "You have advantage on saving throws against being charmed, and magic can't put you to sleep.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "trance-elf",
+            "feature_name": "Trance",
+            "description": "Elves don't need to sleep. Instead, they meditate deeply, remaining semiconscious, for 4 hours a day. While meditating, you can dream after a fashion; such dreams are actually mental exercises that have become reflexive through years of practice. After resting in this way, you gain the same benefit that a human does from 8 hours of sleep.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "elf-lang",
+            "feature_name": "Languages",
+            "description": "You can speak, read, and write Common and Elvish.",
+            "feature_type": "passive",
+            "subtype": "prof_addition",
+            "prof_to_add": [
+                { "lang_prof": ["Common", "Elvish"] }
+            ],
+            "trigger": "onAdd"
+        },
+        {
+            "id": "wood-elf-asi-wis-1",
+            "feature_name": "Ability Score Increase (WIS +1)",
+            "description": "Your Wisdom score increases by 1.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "wood-elf-weapon-training",
+            "feature_name": "Elf Weapon Training",
+            "description": "You have proficiency with the longsword, shortsword, shortbow, and longbow.",
+            "feature_type": "passive",
+            "subtype": "prof_addition",
+            "prof_to_add": [
+                { "weapons": ["longsword", "shortsword", "shortbow", "longbow"] }
+            ],
+            "trigger": "onAdd"
+        },
+        {
+            "id": "wood-elf-fleet-of-foot",
+            "feature_name": "Fleet of Foot",
+            "description": "Your base walking speed increases to 35 feet.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "wood-elf-mask-of-wild",
+            "feature_name": "Mask of the Wild",
+            "description": "You can attempt to hide even when you are only lightly obscured by foliage, heavy rain, falling snow, mist, and other natural phenomena.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        }
+    ]
+}

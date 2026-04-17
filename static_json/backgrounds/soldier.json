@@ -9,8 +9,8 @@
         { "skill": "Intimidation", "prof": true }
     ],
     "tool_prof": [
-        { "tool": "One Gaming Set", "prof": true },
-        { "tool": "Vehicles (Land)", "prof": true }
+        { "type": "gaming_set" },
+        { "type": "fixed", "value": "Vehicles (Land)" }
     ],
     "lang_prof": [],
 

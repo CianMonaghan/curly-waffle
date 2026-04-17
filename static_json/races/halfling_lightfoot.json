@@ -1,0 +1,69 @@
+{
+    "type": "race",
+    "id": 6,
+    "name": "Lightfoot Halfling",
+    "description": "As a lightfoot halfling, you can easily hide from notice, even using other people as cover. You're inclined to be affable and get along well with others. Lightfoots are more prone to wanderlust than other halflings, and often dwell alongside other races or take up a nomadic life.",
+
+    "features": [
+        {
+            "id": "halfling-asi-dex-2",
+            "feature_name": "Ability Score Increase (DEX +2)",
+            "description": "Your Dexterity score increases by 2.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "speed-25-halfling",
+            "feature_name": "Speed",
+            "description": "Your base walking speed is 25 feet.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "halfling-lucky",
+            "feature_name": "Lucky",
+            "description": "When you roll a 1 on the d20 for an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "halfling-brave",
+            "feature_name": "Brave",
+            "description": "You have advantage on saving throws against being frightened.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "halfling-nimbleness",
+            "feature_name": "Halfling Nimbleness",
+            "description": "You can move through the space of any creature that is of a size larger than yours.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "halfling-lang",
+            "feature_name": "Languages",
+            "description": "You can speak, read, and write Common and Halfling.",
+            "feature_type": "passive",
+            "subtype": "prof_addition",
+            "prof_to_add": [
+                { "lang_prof": ["Common", "Halfling"] }
+            ],
+            "trigger": "onAdd"
+        },
+        {
+            "id": "lightfoot-asi-cha-1",
+            "feature_name": "Ability Score Increase (CHA +1)",
+            "description": "Your Charisma score increases by 1.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        },
+        {
+            "id": "naturally-stealthy",
+            "feature_name": "Naturally Stealthy",
+            "description": "You can attempt to hide even when you are obscured only by a creature that is at least one size larger than you.",
+            "feature_type": "passive",
+            "trigger": "onAdd"
+        }
+    ]
+}

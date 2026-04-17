@@ -9,7 +9,7 @@
         { "skill": "Religion", "prof": true }
     ],
     "tool_prof": [
-        { "tool": "Herbalism Kit", "prof": true }
+        { "type": "fixed", "value": "Herbalism Kit" }
     ],
     "lang_prof": [
         { "type": "any" }

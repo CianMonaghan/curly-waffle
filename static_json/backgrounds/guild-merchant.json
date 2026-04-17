@@ -9,7 +9,7 @@
         { "skill": "Persuasion", "prof": true }
     ],
     "tool_prof": [
-        { "tool": "Navigator's Tools", "prof": true }
+        { "type": "fixed", "value": "Navigator's Tools" }
     ],
     "lang_prof": [
         { "type": "any" }

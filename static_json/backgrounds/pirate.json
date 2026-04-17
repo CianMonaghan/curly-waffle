@@ -9,8 +9,8 @@
         { "skill": "Perception", "prof": true }
     ],
     "tool_prof": [
-        { "tool": "Navigator's Tools", "prof": true },
-        { "tool": "Vehicles (Water)", "prof": true }
+        { "type": "fixed", "value": "Navigator's Tools" },
+        { "type": "fixed", "value": "Vehicles (Water)" }
     ],
     "lang_prof": [],
 
